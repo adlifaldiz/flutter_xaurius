@@ -86,4 +86,27 @@ class ApiProvider {
       return null;
     }
   }
+
+  Future<ResponseKyc1> kyc1(nama, nomor, tanggal, alamat, kota, kodePos, negara, jwt) async {
+    final response = await http.post(Uri.parse("$_url/kyc/kyc_1_personal_info"), headers: {
+      "JWT": jwt
+    }, body: {
+      'orang[orang_name]': nama,
+      'orang[orang_phone]': nomor,
+      'orang[orang_birthday]': tanggal,
+      'orang[orang_addr_street]': alamat,
+      'orang[orang_addr_city]': kota,
+      'orang[orang_addr_postal]': kodePos,
+      'orang[orang_addr_country]': negara,
+    });
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      ResponseKyc1 kyc1Response = ResponseKyc1.fromJson(jsonResponse);
+      return kyc1Response;
+    } else {
+      return null;
+    }
+  }
 }

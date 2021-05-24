@@ -25,6 +25,7 @@ class XauTextField extends StatefulWidget {
   final Color fillColor;
   final OutlineInputBorder border;
   final bool readOnly;
+  final VoidCallback ontap;
 
   const XauTextField(
       {Key key,
@@ -48,7 +49,8 @@ class XauTextField extends StatefulWidget {
       this.autofillHints,
       this.fillColor,
       this.border,
-      this.readOnly})
+      this.readOnly,
+      this.ontap})
       : super(key: key);
   @override
   _XauTextFieldState createState() => _XauTextFieldState();
@@ -127,6 +129,7 @@ class _XauTextFieldState extends State<XauTextField> {
     //   ),
     // );
     return TextFormField(
+      onTap: widget.ontap,
       controller: widget.controller,
       validator: widget.validator,
       textInputAction: TextInputAction.next,

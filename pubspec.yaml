@@ -43,6 +43,8 @@ dependencies:
   syncfusion_flutter_charts: ^18.4.47
   toast: ^0.1.5
   expansion_tile_card: ^2.0.0
+  flutter_datetime_picker: ^1.5.1
+  country_currency_pickers: ^2.0.0
 
 dev_dependencies:
   flutter_test:

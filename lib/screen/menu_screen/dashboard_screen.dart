@@ -8,6 +8,7 @@ import 'package:flutter_xaurius/model/Sales.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
+import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item1.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item2.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item3.dart';
@@ -37,6 +38,9 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
   bool _isLoading = false;
   bool _statusKyc = true;
   bool _statusKycReview = false;
+  String nama;
+  String email;
+
   List cardList = [Item1(), Item2(), Item3()];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -71,6 +75,8 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
         setState(() {
           _statusKyc = response.data.orang.orangKycEditAvailable;
           _statusKycReview = response.data.orang.orangKycAskForReview;
+          nama = response.data.orang.orangName;
+          email = response.data.orang.orangEmail;
         });
       } else {
         print(response);
@@ -156,10 +162,10 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                               FlatButton(
                                 color: primaryColor,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                onPressed: () {},
+                                onPressed: () => Get.to(DataPersonalScreen()),
                                 child: Text(
                                   'KYC Sekarang',
-                                  style: buttonStyle,
+                                  style: stylePrimaryDark,
                                 ),
                               ),
                             ],
@@ -184,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                             ),
                             SizedBox(height: 5),
                             Text(
-                              'Sandhika Sugiono',
+                              nama ?? email,
                               overflow: TextOverflow.fade,
                               style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.bold, fontSize: 16),
                             ),
