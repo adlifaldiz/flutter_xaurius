@@ -42,6 +42,7 @@ dependencies:
   splash_screen_view: ^2.0.1
   syncfusion_flutter_charts: ^18.4.47
   toast: ^0.1.5
+  expansion_tile_card: ^2.0.0
 
 dev_dependencies:
   flutter_test:

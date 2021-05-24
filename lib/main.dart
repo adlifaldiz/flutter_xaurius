@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        disabledColor: brokenWhiteColor,
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: textWhiteColor,
             ),

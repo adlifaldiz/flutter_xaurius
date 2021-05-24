@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/model/Sales.dart';
-import 'package:flutter_xaurius/screen/rupiahtransaction/deposit_screen.dart';
+import 'package:flutter_xaurius/screen/cryptotransaction/deposit_screen.dart';
+import 'package:flutter_xaurius/screen/topup/top_up_screen.dart';
+
 import 'package:flutter_xaurius/screen/xautransaction/buy_screen.dart';
 import 'package:flutter_xaurius/screen/xautransaction/sell_screen.dart';
 import 'package:flutter_xaurius/widget/coming_soon.dart';
@@ -44,16 +46,42 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            FontAwesomeIcons.wallet,
-                            color: primaryColor,
+                          Row(
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.wallet,
+                                color: primaryColor,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Saldo',
+                                style: textTitle,
+                              )
+                            ],
                           ),
-                          SizedBox(width: 10),
-                          Text(
-                            'Saldo',
-                            style: textTitle,
-                          )
+                          GestureDetector(
+                            onTap: () => Get.to(TopUpScreen()),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                              decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(20)),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.plus,
+                                    color: textBlackColor,
+                                    size: 10,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'Top Up',
+                                    style: stylePrimaryDark,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -174,12 +202,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
-                            FontAwesomeIcons.moneyBillWave,
+                            FontAwesomeIcons.globeEurope,
                             color: accentColor,
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Transaksi rupiah',
+                            'Transaksi Crypto',
                             style: textTitle,
                           ),
                         ],
