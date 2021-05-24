@@ -9,6 +9,7 @@ import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
+import 'package:flutter_xaurius/screen/test.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item1.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item2.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item3.dart';
@@ -190,7 +191,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                             ),
                             SizedBox(height: 5),
                             Text(
-                              nama ?? email,
+                              nama == null ? email.toString() : nama.toString(),
                               overflow: TextOverflow.fade,
                               style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.bold, fontSize: 16),
                             ),

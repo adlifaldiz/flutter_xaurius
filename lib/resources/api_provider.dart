@@ -80,7 +80,7 @@ class ApiProvider {
       final jsonResponse = json.decode(response.body);
       ResponseKyc1 kyc1Response = ResponseKyc1.fromJson(jsonResponse);
 
-      print(kyc1Response.msg);
+      print(jsonResponse);
       return kyc1Response;
     } else {
       return null;
