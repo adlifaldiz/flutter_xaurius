@@ -5,15 +5,15 @@ SignUpModel responseRequestFromJson(String str) => SignUpModel.fromJson(json.dec
 String responseRequestToJson(SignUpModel data) => json.encode(data.toJson());
 
 class SignUpModel {
-  String status;
+  bool success;
   String message;
 
-  SignUpModel({this.status, this.message});
+  SignUpModel({this.success, this.message});
 
   factory SignUpModel.fromJson(Map<String, dynamic> json) => SignUpModel(
-        status: json["status"],
+        success: json["success"],
         message: json["msg"],
       );
 
-  Map<String, dynamic> toJson() => {"status": status, "msg": message};
+  Map<String, dynamic> toJson() => {"success": success, "msg": message};
 }

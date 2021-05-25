@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState.validate()) {
       try {
         response = await service.addEmail(_emailControl.text);
-        if (response.status == "success") {
+        if (response.success) {
           Get.to(VerifCode(email: _emailControl.text));
           setState(() {
             isLoading = false;

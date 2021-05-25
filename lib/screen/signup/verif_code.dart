@@ -37,7 +37,7 @@ class _VerifCodeState extends State<VerifCode> {
     if (_formKey.currentState.validate()) {
       try {
         response = await service.addCode(widget.email, _codeControl.text);
-        if (response.status == "success") {
+        if (response.success) {
           Get.to(CreatePin(email: widget.email, code: _codeControl.text));
           setState(() {
             isLoading = false;

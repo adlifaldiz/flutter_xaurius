@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState.validate()) {
       try {
         response = await service.login(_usernameControl.text, _passwordControl.text);
-        if (response.status == "success") {
+        if (response.success) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setBool('isUser', true);
           prefs.setString('token', response.token.toString());

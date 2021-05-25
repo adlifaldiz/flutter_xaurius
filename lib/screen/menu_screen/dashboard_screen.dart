@@ -9,7 +9,7 @@ import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
-import 'package:flutter_xaurius/screen/test.dart';
+
 import 'package:flutter_xaurius/widget/carousel_widget/item1.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item2.dart';
 import 'package:flutter_xaurius/widget/carousel_widget/item3.dart';
@@ -113,48 +113,62 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return _isLoading
-        ? Center(
-            child: JumpingDotsProgressIndicator(
-              numberOfDots: 3,
-              fontSize: 40,
-              color: primaryColor,
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: Image.asset(
-                'assets/images/xaurius_full_logo_yellow.png',
-                height: kToolbarHeight / 2,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Image.asset(
+          'assets/images/xaurius_full_logo_yellow.png',
+          height: kToolbarHeight / 2,
+        ),
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              icon: FaIcon(
+                FontAwesomeIcons.solidBell,
+                color: brokenWhiteColor,
+                size: 20,
               ),
-              centerTitle: false,
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                    icon: FaIcon(
-                      FontAwesomeIcons.solidBell,
-                      color: brokenWhiteColor,
-                      size: 20,
-                    ),
-                    onPressed: () {}),
-                IconButton(
-                    icon: FaIcon(
-                      FontAwesomeIcons.bullhorn,
-                      color: brokenWhiteColor,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      _chekKyc1();
-                    }),
-              ],
-            ),
-            body: SafeArea(
+              onPressed: () {}),
+          IconButton(
+              icon: FaIcon(
+                FontAwesomeIcons.bullhorn,
+                color: brokenWhiteColor,
+                size: 20,
+              ),
+              onPressed: () {
+                _chekKyc1();
+              }),
+        ],
+      ),
+      body: _isLoading
+          ? Center(
+              child: JumpingDotsProgressIndicator(
+                numberOfDots: 3,
+                fontSize: 40,
+                color: primaryColor,
+              ),
+            )
+          : SafeArea(
               child: ListView(
                 shrinkWrap: true,
                 padding: EdgeInsets.all(20),
                 children: [
+                  _statusKycReview
+                      ? XauriusContainer(
+                          child: Column(
+                            children: [
+                              Text('Akun kamu sedang di review'),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  _statusKycReview
+                      ? SizedBox(
+                          height: 20,
+                        )
+                      : Container(),
                   _statusKyc
                       ? XauriusContainer(
                           child: Column(
@@ -172,12 +186,12 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                             ],
                           ),
                         )
-                      : null,
+                      : Container(),
                   _statusKyc
                       ? SizedBox(
                           height: 20,
                         )
-                      : null,
+                      : Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -548,7 +562,7 @@ class _DashboardScreenState extends State<DashboardScreen> with AutomaticKeepAli
                 ],
               ),
             ),
-          );
+    );
   }
 
   @override

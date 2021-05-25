@@ -35,7 +35,7 @@ class _VerifPinState extends State<VerifPin> {
     if (_formKey.currentState.validate()) {
       try {
         response = await service.addpin(widget.email, widget.code, widget.pin, _pinControl.text);
-        if (response.status == "success") {
+        if (response.success) {
           Get.offAll(LoginScreen());
           setState(() {
             isLoading = false;

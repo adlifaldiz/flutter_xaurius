@@ -7,6 +7,7 @@ import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:country_currency_pickers/currency_picker_cupertino.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_xaurius/screen/personal/identity_document_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -27,9 +28,10 @@ class DataPersonalScreen extends StatefulWidget {
 
 class _DataPersonalScreenState extends State<DataPersonalScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Country _selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
+  Country _selectedCupertinoCurrency;
   DateFormat formatter = DateFormat('yyyy-MM-dd');
   bool _autoValidate = false;
+
   SharedPreferences localStorage;
 
   ApiProvider service = ApiProvider();
@@ -112,6 +114,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
               backgroundColor: backgroundPanelColor.withOpacity(0.8),
               colorText: textWhiteColor,
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
+          Get.to(IdentityScreen());
         } else {
           setState(() {
             _isFormLoading = false;
@@ -162,7 +165,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
   @override
   void initState() {
     _chekKyc1();
-
+    _selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
     super.initState();
   }
 
@@ -194,7 +197,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         XauTextField(
                           useObscure: false,
                           validator: _validateName,
-                          controller: _namaControl ?? '',
+                          controller: _namaControl == null ? '' : _namaControl,
                           keyboardType: TextInputType.text,
                           maxLines: 1,
                           labelText: 'Nama lengkap (KTP)',
@@ -203,7 +206,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         XauTextField(
                           useObscure: false,
                           validator: _validatePhone,
-                          controller: _nomorControl ?? '',
+                          controller: _nomorControl == null ? '' : _nomorControl,
                           keyboardType: TextInputType.number,
                           maxLines: 1,
                           labelText: 'Nomor telepon',
@@ -230,7 +233,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                           readOnly: true,
                           useObscure: false,
                           validator: _validateDate,
-                          controller: _tanggalControl ?? '',
+                          controller: _tanggalControl == null ? '' : _tanggalControl,
                           suffixIcon: Icon(
                             FontAwesomeIcons.calendarAlt,
                             color: primaryColor,
@@ -243,7 +246,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         XauTextField(
                           useObscure: false,
                           validator: _validateAddress,
-                          controller: _alamatControl ?? '',
+                          controller: _alamatControl == null ? '' : _alamatControl,
                           keyboardType: TextInputType.text,
                           maxLines: 1,
                           labelText: 'Alamat rumah',
@@ -252,7 +255,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         XauTextField(
                           useObscure: false,
                           validator: _validateCity,
-                          controller: _kotaControl ?? '',
+                          controller: _kotaControl == null ? '' : _kotaControl,
                           keyboardType: TextInputType.text,
                           maxLines: 1,
                           labelText: 'Kota',
@@ -261,7 +264,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         XauTextField(
                           useObscure: false,
                           validator: _validateKode,
-                          controller: _kodePosControl ?? '',
+                          controller: _kodePosControl == null ? '' : _kodePosControl,
                           keyboardType: TextInputType.number,
                           maxLines: 1,
                           labelText: 'Kode pos',
@@ -276,26 +279,30 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                                     diameterRatio: 5,
                                     backgroundColor: backgroundPanelColor,
                                     initialCountry: _selectedCupertinoCurrency,
+                                    pickerSheetHeight: percentHeight(context, 50),
+                                    pickerItemHeight: percentHeight(context, 5),
                                     itemBuilder: (Country country) {
                                       return Row(
                                         children: [
-                                          CountryPickerUtils.getDefaultFlagImage(country),
+                                          // country == null
+                                          //     ? CountryPickerUtils.getDefaultFlagImage(null)
+                                          //     : CountryPickerUtils.getDefaultFlagImage(country),
                                           SizedBox(width: 10),
                                           Text(
-                                            country.name,
+                                            '(${country.isoCode}) ${country.name}',
                                             style: stylePrimary,
                                           ),
                                         ],
                                       );
                                     },
-                                    onValuePicked: (Country country) => setState(() => _negaraControl.text = country.name),
+                                    onValuePicked: (Country country) => setState(() => _negaraControl.text = country.isoCode),
                                   );
                                 });
                           },
                           readOnly: true,
                           useObscure: false,
                           validator: _validateCountry,
-                          controller: _negaraControl ?? '',
+                          controller: _negaraControl == null ? '' : _negaraControl,
                           keyboardType: TextInputType.text,
                           maxLines: 1,
                           labelText: 'Negara',

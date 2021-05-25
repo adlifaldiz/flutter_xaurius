@@ -5,17 +5,17 @@ LoginModel responseRequestFromJson(String str) => LoginModel.fromJson(json.decod
 String responseRequestToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  String status;
+  bool success;
   String message;
   String token;
 
-  LoginModel({this.status, this.message, this.token});
+  LoginModel({this.success, this.message, this.token});
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        status: json["status"],
+        success: json["success"],
         message: json["msg"],
         token: json["token"],
       );
 
-  Map<String, dynamic> toJson() => {"status": status, "msg": message, "token": token};
+  Map<String, dynamic> toJson() => {"success": success, "msg": message, "token": token};
 }
