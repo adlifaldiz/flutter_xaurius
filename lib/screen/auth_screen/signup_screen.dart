@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/blocs/bloc.dart';
+
 import 'package:flutter_xaurius/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:flutter_xaurius/screen/signup/verif_code.dart';

@@ -1,20 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_xaurius/api/host.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
 
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/model/auth/login_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 
 class ApiProvider {
-  Dio dio = new Dio();
-  FormData formdata = new FormData();
-  final _url = 'https://sim-b.xaurius.com/api/v1/';
+  final _url = hostAPI;
 
   Future<SignUpModel> addEmail(email) async {
     final response = await http.post(Uri.parse("$_url/auth/register"), body: {'email': email});
@@ -131,27 +127,6 @@ class ApiProvider {
       return null;
     }
   }
-
-  // Future<ResponseKyc2> kyc2(idType, idNum, String idFile, npwpNum, String npwpFile, jwt) async {
-  //   final response = await http.post(Uri.parse("$_url/kyc/kyc_2_identity_document"), headers: {
-  //     "JWT": jwt
-  //   }, body: {
-  //     'orang[orang_id_type]': idType,
-  //     'orang[orang_id_num]': idNum,
-  //     'orang[orang_id_file]': idFile,
-  //     'orang[orang_npwp_num]': npwpNum,
-  //     'orang[orang_npwp_file]': npwpFile,
-  //   });
-  //   print(response.body);
-
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = json.decode(response.body);
-  //     ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
-  //     return kyc2Response;
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   Future<ResponseKyc2> kyc2(idType, idNum, File idFile, npwpNum, File npwpFile, jwt) async {
     final request = http.MultipartRequest('POST', Uri.parse("$_url/kyc/kyc_2_identity_document"));

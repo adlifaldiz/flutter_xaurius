@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/host.dart';
+import 'package:flutter_xaurius/api/host.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
