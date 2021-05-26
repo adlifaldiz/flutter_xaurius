@@ -9,6 +9,7 @@ const brokenWhiteColor = Color(0xFFcccccc);
 const textBlackColor = Color(0xFF141414);
 const redColor = Color(0xFFee5253);
 const greenColor = Color(0xFF10ac84);
+const disableColor = Color(0xFFbbbbbb);
 
 Color fillColor = Color(0xFF141414).withOpacity(0.8);
 

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_xaurius/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/model/auth/login_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
-import 'package:http/http.dart' as http;
 
 class ApiProvider {
   Dio dio = new Dio();
@@ -131,51 +132,46 @@ class ApiProvider {
     }
   }
 
-  Future<ResponseKyc2> kyc2(idType, idNum, String idFile, npwpNum, String npwpFile, jwt) async {
-    final response = await http.post(Uri.parse("$_url/kyc/kyc_2_identity_document"), headers: {
-      "JWT": jwt
-    }, body: {
-      'orang[orang_id_type]': idType,
-      'orang[orang_id_num]': idNum,
-      'orang[orang_id_file]': idFile,
-      'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file]': npwpFile,
-    });
-    print(response.body);
+  // Future<ResponseKyc2> kyc2(idType, idNum, String idFile, npwpNum, String npwpFile, jwt) async {
+  //   final response = await http.post(Uri.parse("$_url/kyc/kyc_2_identity_document"), headers: {
+  //     "JWT": jwt
+  //   }, body: {
+  //     'orang[orang_id_type]': idType,
+  //     'orang[orang_id_num]': idNum,
+  //     'orang[orang_id_file]': idFile,
+  //     'orang[orang_npwp_num]': npwpNum,
+  //     'orang[orang_npwp_file]': npwpFile,
+  //   });
+  //   print(response.body);
+
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse = json.decode(response.body);
+  //     ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
+  //     return kyc2Response;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  Future<ResponseKyc2> kyc2(idType, idNum, File idFile, npwpNum, File npwpFile, jwt) async {
+    final request = http.MultipartRequest('POST', Uri.parse("$_url/kyc/kyc_2_identity_document"));
+    request.headers['JWT'] = jwt;
+    request.fields['orang[orang_id_type]'] = idType;
+    request.fields['orang[orang_id_num]'] = idNum;
+    request.files.add(
+      await http.MultipartFile.fromPath('orang[orang_id_file]', idFile.path),
+    );
+    request.fields['orang[orang_npwp_num]'] = npwpNum;
+    request.files.add(await http.MultipartFile.fromPath('orang[orang_npwp_file]', npwpFile.path));
+    var response = await http.Response.fromStream(await request.send());
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
+      final jsonResponse = await json.decode(response.body);
       ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
+      print(jsonResponse);
       return kyc2Response;
     } else {
       return null;
     }
   }
-
-  // Future<ResponseKyc2> kyc2(idType, idNum, idFile, npwpNum, npwpFile, jwt) async {
-  //   final request = http.MultipartRequest('POST', Uri.parse("$_url/kyc/kyc_2_identity_document"));
-  //   request.headers['JWT'] = jwt;
-  //   request.fields['orang[orang_id_type]'] = idType;
-  //   request.fields['orang[orang_id_num]'] = idNum;
-  //   request.files.add(
-  //     http.MultipartFile.fromString('orang[orang_id_file]', idFile),
-  //   );
-  //   request.fields['orang[orang_npwp_num]'] = idNum;
-  //   request.files.add(
-  //     http.MultipartFile.fromString('orang[orang_npwp_file]', npwpFile),
-  //   );
-  //   var response = await request.send();
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse = json.decode(response.reasonPhrase);
-  //     ResponseKyc2 kyc1Response = ResponseKyc2.fromJson(jsonResponse);
-  //     // print(kyc1Response.success.toString());
-  //     return kyc1Response;
-  //   } else {
-  //     print('Fail!');
-
-  //     return null;
-  //   }
-  // }
 }
-
-class MediaType {}

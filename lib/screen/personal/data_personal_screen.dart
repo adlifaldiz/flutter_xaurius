@@ -40,6 +40,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
   bool _isFormLoading = false;
   bool _statusKyc = true;
   bool _statusKycReview = false;
+  bool _isReadOnly = false;
 
   DateTime _tempDate;
 
@@ -70,6 +71,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
           _kotaControl.text = response.data.orang.orangAddrCity;
           _kodePosControl.text = response.data.orang.orangAddrPostal;
           _negaraControl.text = response.data.orang.orangAddrCountry;
+          _statusKyc = response.data.orang.orangKycEditAvailable;
         });
       } else {
         print(response);
@@ -164,9 +166,14 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
 
   @override
   void initState() {
+    super.initState();
     _chekKyc1();
     _selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
-    super.initState();
+    if (_statusKyc) {
+      _isReadOnly = true;
+    } else {
+      _isReadOnly = false;
+    }
   }
 
   @override
@@ -195,6 +202,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                       children: [
                         SizedBox(height: 10),
                         XauTextField(
+                          readOnly: _isReadOnly,
                           useObscure: false,
                           validator: _validateName,
                           controller: _namaControl == null ? '' : _namaControl,
@@ -204,6 +212,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         ),
                         SizedBox(height: 10),
                         XauTextField(
+                          readOnly: _isReadOnly,
                           useObscure: false,
                           validator: _validatePhone,
                           controller: _nomorControl == null ? '' : _nomorControl,
@@ -214,21 +223,23 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         SizedBox(height: 10),
                         XauTextField(
                           ontap: () {
-                            DatePicker.showDatePicker(context,
-                                theme: DatePickerTheme(
-                                    backgroundColor: backgroundPanelColor,
-                                    itemStyle: stylePrimary,
-                                    doneStyle: stylePrimary,
-                                    cancelStyle: stylePrimary.copyWith(color: primaryColor)),
-                                showTitleActions: true,
-                                // minTime: DateTime(2018, 3, 5),
-                                maxTime: DateTime.now(), onChanged: (date) {
-                              setState(() {
-                                _tanggalControl.text = formatter.format(date);
-                              });
-                            }, onConfirm: (date) {
-                              _tanggalControl.text = formatter.format(date);
-                            }, currentTime: DateTime.now(), locale: LocaleType.id);
+                            !_statusKyc
+                                ? null
+                                : DatePicker.showDatePicker(context,
+                                    theme: DatePickerTheme(
+                                        backgroundColor: backgroundPanelColor,
+                                        itemStyle: stylePrimary,
+                                        doneStyle: stylePrimary,
+                                        cancelStyle: stylePrimary.copyWith(color: primaryColor)),
+                                    showTitleActions: true,
+                                    // minTime: DateTime(2018, 3, 5),
+                                    maxTime: DateTime.now(), onChanged: (date) {
+                                    setState(() {
+                                      _tanggalControl.text = formatter.format(date);
+                                    });
+                                  }, onConfirm: (date) {
+                                    _tanggalControl.text = formatter.format(date);
+                                  }, currentTime: DateTime.now(), locale: LocaleType.id);
                           },
                           readOnly: true,
                           useObscure: false,
@@ -244,6 +255,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         ),
                         SizedBox(height: 10),
                         XauTextField(
+                          readOnly: _isReadOnly,
                           useObscure: false,
                           validator: _validateAddress,
                           controller: _alamatControl == null ? '' : _alamatControl,
@@ -253,6 +265,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         ),
                         SizedBox(height: 10),
                         XauTextField(
+                          readOnly: _isReadOnly,
                           useObscure: false,
                           validator: _validateCity,
                           controller: _kotaControl == null ? '' : _kotaControl,
@@ -262,6 +275,7 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         ),
                         SizedBox(height: 10),
                         XauTextField(
+                          readOnly: _isReadOnly,
                           useObscure: false,
                           validator: _validateKode,
                           controller: _kodePosControl == null ? '' : _kodePosControl,
@@ -272,32 +286,34 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                         SizedBox(height: 10),
                         XauTextField(
                           ontap: () {
-                            showCupertinoModalPopup<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CurrencyPickerCupertino(
-                                    diameterRatio: 5,
-                                    backgroundColor: backgroundPanelColor,
-                                    initialCountry: _selectedCupertinoCurrency,
-                                    pickerSheetHeight: percentHeight(context, 50),
-                                    pickerItemHeight: percentHeight(context, 5),
-                                    itemBuilder: (Country country) {
-                                      return Row(
-                                        children: [
-                                          // country == null
-                                          //     ? CountryPickerUtils.getDefaultFlagImage(null)
-                                          //     : CountryPickerUtils.getDefaultFlagImage(country),
-                                          SizedBox(width: 10),
-                                          Text(
-                                            '(${country.isoCode}) ${country.name}',
-                                            style: stylePrimary,
-                                          ),
-                                        ],
+                            !_statusKyc
+                                ? null
+                                : showCupertinoModalPopup<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CurrencyPickerCupertino(
+                                        diameterRatio: 5,
+                                        backgroundColor: backgroundPanelColor,
+                                        initialCountry: _selectedCupertinoCurrency,
+                                        pickerSheetHeight: percentHeight(context, 50),
+                                        pickerItemHeight: percentHeight(context, 5),
+                                        itemBuilder: (Country country) {
+                                          return Row(
+                                            children: [
+                                              // country == null
+                                              //     ? CountryPickerUtils.getDefaultFlagImage(null)
+                                              //     : CountryPickerUtils.getDefaultFlagImage(country),
+                                              SizedBox(width: 10),
+                                              Text(
+                                                '(${country.isoCode}) ${country.name}',
+                                                style: stylePrimary,
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        onValuePicked: (Country country) => setState(() => _negaraControl.text = country.isoCode),
                                       );
-                                    },
-                                    onValuePicked: (Country country) => setState(() => _negaraControl.text = country.isoCode),
-                                  );
-                                });
+                                    });
                           },
                           readOnly: true,
                           useObscure: false,
@@ -334,10 +350,10 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
                               )
                             : RaisedButton(
                                 onPressed: () {
-                                  _saveKyc1(context);
+                                  !_statusKyc ? null : _saveKyc1(context);
                                 },
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                color: primaryColor,
+                                color: _statusKyc ? primaryColor : disableColor,
                                 child: Center(
                                   child: Text(
                                     'Simpan',

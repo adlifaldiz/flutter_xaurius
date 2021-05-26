@@ -8,6 +8,7 @@ import 'package:flutter_xaurius/screen/info/privacy_policy_screen.dart';
 import 'package:flutter_xaurius/screen/info/tnc_screen.dart';
 import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
 import 'package:flutter_xaurius/screen/personal/menu_profile.dart';
+import 'package:flutter_xaurius/widget/coming_soon.dart';
 import 'package:flutter_xaurius/widget/menu_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -76,15 +77,15 @@ class _SettingScreenState extends State<SettingScreen> with AutomaticKeepAliveCl
                       title: 'Akun bank',
                       onTap: () => Get.to(BankScreen()),
                     ),
-                    MenuTile(
-                      icon: FontAwesomeIcons.addressBook,
-                      title: 'Alamat',
-                      onTap: () {},
-                    ),
+                    // MenuTile(
+                    //   icon: FontAwesomeIcons.addressBook,
+                    //   title: 'Alamat',
+                    //   onTap: () {},
+                    // ),
                     MenuTile(
                       icon: FontAwesomeIcons.gift,
                       title: 'Kode Refferal',
-                      onTap: () {},
+                      onTap: () => Get.to(ComingSoonScreen()),
                     ),
                   ],
                 ),

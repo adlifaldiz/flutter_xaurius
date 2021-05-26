@@ -167,6 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               controller: _usernameControl,
                               validator: _validateUsername,
+                              keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               style: stylePrimary,
                               decoration: InputDecoration(
@@ -203,6 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: _passwordControl,
                               validator: _validatePassword,
                               obscureText: true,
+                              keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.done,
                               style: stylePrimary,
                               decoration: InputDecoration(
