@@ -230,11 +230,6 @@ class _IdentityScreenState extends State<IdentityScreen> {
   void initState() {
     super.initState();
     _chekKyc2();
-    if (_statusKyc) {
-      _isReadOnly = true;
-    } else {
-      _isReadOnly = false;
-    }
   }
 
   @override
@@ -273,13 +268,6 @@ class _IdentityScreenState extends State<IdentityScreen> {
                               iconEnabledColor: primaryColor,
                               iconDisabledColor: brokenWhiteColor,
                               dropdownColor: backgroundPanelColor,
-                              onTap: () {
-                                Get.snackbar('Test', _valueIdType,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: backgroundPanelColor.withOpacity(0.8),
-                                    colorText: textWhiteColor,
-                                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-                              },
                               value: _value.floor(),
                               items: [
                                 DropdownMenuItem(
@@ -311,7 +299,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
                         ),
                         SizedBox(height: 10),
                         XauTextField(
-                          readOnly: _isReadOnly,
+                          readOnly: !_statusKyc,
                           useObscure: false,
                           validator: _validateKTP,
                           controller: _nomorKTP == null ? '' : _nomorKTP,
@@ -343,7 +331,7 @@ class _IdentityScreenState extends State<IdentityScreen> {
                               ),
                         SizedBox(height: 10),
                         XauTextField(
-                          readOnly: _isReadOnly,
+                          readOnly: !_statusKyc,
                           useObscure: false,
                           validator: _validateNPWP,
                           controller: _nomorNPWP == null ? '' : _nomorNPWP,

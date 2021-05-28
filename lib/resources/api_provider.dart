@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
+import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_xaurius/model/auth/signup_model.dart';
@@ -145,6 +146,22 @@ class ApiProvider {
       ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
       print(jsonResponse);
       return kyc2Response;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ResponseBuys> getBuys(String jwt) async {
+    final response = await http.get(
+      Uri.parse('$_url/buys'),
+      headers: {"JWT": jwt},
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      ResponseBuys responseBuys = ResponseBuys.fromJson(jsonResponse);
+      print(jsonResponse);
+      return responseBuys;
     } else {
       return null;
     }

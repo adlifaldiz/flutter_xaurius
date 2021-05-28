@@ -169,11 +169,6 @@ class _DataPersonalScreenState extends State<DataPersonalScreen> {
     super.initState();
     _chekKyc1();
     _selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
-    if (_statusKyc) {
-      _isReadOnly = true;
-    } else {
-      _isReadOnly = false;
-    }
   }
 
   @override
