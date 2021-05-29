@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_xaurius/model/auth/signup_model.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_xaurius/model/auth/login_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 
-class ApiProvider {
+class ApiProvider extends GetConnect{
   final _url = hostAPI;
 
   Future<SignUpModel> addEmail(email) async {

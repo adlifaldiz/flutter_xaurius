@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   curved_navigation_bar: ^0.3.7
   dio: ^4.0.0
+  encrypt: ^4.1.0
   flutter_smart_dialog: ^2.0.5
   font_awesome_flutter: ^9.0.0
   get: ^4.1.4
