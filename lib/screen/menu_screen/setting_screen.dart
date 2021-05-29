@@ -12,42 +12,19 @@ import 'package:flutter_xaurius/widget/coming_soon.dart';
 import 'package:flutter_xaurius/widget/menu_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
-class SettingScreen extends StatefulWidget {
-  SettingScreen({Key key}) : super(key: key);
+class SettingScreen extends StatelessWidget {
+  var appData = GetStorage();
 
-  @override
-  _SettingScreenState createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> with AutomaticKeepAliveClientMixin {
   void _logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('isUser');
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
-  }
-
-  bool isProfileVisible = false;
-
-  void showToast() {
-    setState(() {
-      isProfileVisible = !isProfileVisible;
-    });
+    appData.erase();
+    Get.offAll(LoginScreen());
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: backgroundPanelColor,
-      //   title: Text(
-      //     'Pengaturan',
-      //     style: textAppbarStyleWhite,
-      //   ),
-      //   automaticallyImplyLeading: false,
-      // ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
@@ -144,9 +121,6 @@ class _SettingScreenState extends State<SettingScreen> with AutomaticKeepAliveCl
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
-
   void _showLogout(BuildContext context) {
     Get.defaultDialog(
       title: 'Kamu yakin',
@@ -171,48 +145,5 @@ class _SettingScreenState extends State<SettingScreen> with AutomaticKeepAliveCl
         ),
       ),
     );
-    // showDialog(
-    //   context: context,
-    //   builder: (context) => Dialog(
-    //     backgroundColor: backgroundColor,
-    //     child: Padding(
-    //       padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
-    //       child: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: [
-    //           Text(
-    //             'Yakin Ingin Keluar dari aplikasi ?',
-    //             style: stylePrimary,
-    //           ),
-    //           SizedBox(height: 30),
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //             children: [
-    //               FlatButton(
-    //                 color: backgroundPanelColor,
-    //                 onPressed: () {
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: Text(
-    //                   'Batal',
-    //                   style: stylePrimary,
-    //                 ),
-    //               ),
-    //               FlatButton(
-    //                 onPressed: () {
-    //                   _logout();
-    //                 },
-    //                 child: Text(
-    //                   'Ya',
-    //                   style: stylePrimary,
-    //                 ),
-    //               )
-    //             ],
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

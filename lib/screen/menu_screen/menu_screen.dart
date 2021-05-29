@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/controller/menu_controller.dart';
 import 'package:flutter_xaurius/screen/menu_screen/history_screen.dart';
 import 'package:flutter_xaurius/screen/menu_screen/setting_screen.dart';
 import 'package:flutter_xaurius/screen/menu_screen/dashboard_screen.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_xaurius/screen/menu_screen/transaction_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuScreen extends StatefulWidget {
   MenuScreen({Key key}) : super(key: key);
@@ -19,7 +19,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   PageController _pageController = PageController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   DateTime currentBackPressTime;
   int currentIndex = 0;
   List<Widget> _screens = [
@@ -28,25 +28,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     HistoryScreen(),
     SettingScreen(),
   ];
-  SharedPreferences prefs;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
     currentIndex = int.parse(_pageController.initialPage.toString());
-    _checkToken();
   }
-
-  _checkToken() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  // void _onPageChanged(int index) {}
-
-  // void _onItemTapped(int selectedIndex) {
-  //   _pageController.animateToPage(selectedIndex, duration: Duration(milliseconds: 300), curve: Curves.ease);
-  // }
 
   @override
   void dispose() {

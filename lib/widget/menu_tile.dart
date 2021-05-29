@@ -31,14 +31,12 @@ class MenuTile extends StatelessWidget {
                   FaIcon(
                     icon,
                     color: color ?? primaryColor,
-                    size: 20,
+                    size: iconSize ?? 20,
                   ),
               SizedBox(
                 width: 16,
               ),
-              Text(title,
-                  // style: style ?? AppTheme.stylePrimaryBold,
-                  style: stylePrimary)
+              Text(title, style: style ?? stylePrimary)
             ],
           ),
         ),

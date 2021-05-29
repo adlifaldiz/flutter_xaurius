@@ -6,8 +6,9 @@ class MenuTransaction extends StatelessWidget {
   final VoidCallback onTap;
   final String labelTxt;
   final Widget menuIcon;
+  final TextStyle labelStyle;
 
-  const MenuTransaction({@required this.labelTxt, @required this.menuIcon, @required this.onTap});
+  const MenuTransaction({@required this.labelTxt, @required this.menuIcon, @required this.onTap, this.labelStyle});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,11 +24,12 @@ class MenuTransaction extends StatelessWidget {
               labelTxt,
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
-              style: TextStyle(
-                color: brokenWhiteColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
+              style: labelStyle ??
+                  TextStyle(
+                    color: brokenWhiteColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
           ],
         ),

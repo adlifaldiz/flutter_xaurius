@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/screen/intro/splash_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -51,10 +52,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _initCheck() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool('isUser') != null) {
+    final appdata = GetStorage();
+
+    if (appdata.read('isUser') != null) {
       setState(() {
-        isUser = prefs.getBool('isUser');
+        isUser = appdata.read('isUser');
       });
     }
   }

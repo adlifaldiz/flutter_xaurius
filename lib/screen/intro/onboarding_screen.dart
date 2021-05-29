@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/screen/auth_screen/login_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:onboarding/onboarding.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   @override

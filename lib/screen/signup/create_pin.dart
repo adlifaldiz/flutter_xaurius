@@ -1,60 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/screen/signup/verif_pin.dart';
+import 'package:flutter_xaurius/helper/validator.dart';
+import 'package:flutter_xaurius/controller/create_pin_controller.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:toast/toast.dart';
 
-class CreatePin extends StatefulWidget {
+class CreatePin extends StatelessWidget {
+  CreatePinController _controller = Get.put(CreatePinController());
+
   final String email, code;
   CreatePin({Key key, this.email, this.code}) : super(key: key);
-
-  @override
-  _CreatePinState createState() => _CreatePinState();
-}
-
-class _CreatePinState extends State<CreatePin> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool isLoading = false;
-  var _autoValidate = false;
-  final _pinControl = TextEditingController();
-
-  void _savePref(BuildContext context) {
-    setState(() {
-      isLoading = true;
-    });
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        isLoading = false;
-      });
-      Get.to(VerifPin(email: widget.email, code: widget.code, pin: _pinControl.text));
-      Get.snackbar('Ok', 'Berhasil',
-          backgroundColor: backgroundPanelColor.withOpacity(0.8),
-          snackPosition: SnackPosition.BOTTOM,
-          colorText: textWhiteColor,
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-    } else {
-      if (_pinControl.text.isEmpty) {
-        Get.snackbar('Pin kosong', 'Pin tidak boleh kosong',
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-      } else if (_pinControl.text.length < 6) {
-        Get.snackbar('6 digit', 'Pin harus 6 digit',
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-      }
-      setState(() {
-        _autoValidate = true;
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +49,8 @@ class _CreatePinState extends State<CreatePin> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: _formKey,
-                autovalidate: _autoValidate,
+                key: _controller.formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -101,8 +58,16 @@ class _CreatePinState extends State<CreatePin> {
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
-                      controller: _pinControl,
-                      validator: _validatePin,
+                      onChanged: (value) {
+                        _controller.pin = value;
+                      },
+                      onSaved: (value) {
+                        _controller.pin = value;
+                      },
+                      controller: _controller.pinController,
+                      validator: (value) {
+                        return validatePin(value);
+                      },
                       pinLength: 6,
                       cursor: Cursor(
                         enabled: true,
@@ -113,33 +78,38 @@ class _CreatePinState extends State<CreatePin> {
                           color: redColor,
                           height: 0,
                         ),
+                        obscureStyle: ObscureStyle(isTextObscure: true),
                         textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
                         colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
-                    Container(
-                      width: double.infinity,
-                      child: isLoading
-                          ? JumpingDotsProgressIndicator(
-                              numberOfDots: 3,
-                              fontSize: 40,
-                              color: primaryColor,
-                            )
-                          : RaisedButton(
-                              color: accentColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                child: Text('Lanjutkan', style: buttonStyle),
-                              ),
-                              onPressed: () {
-                                _savePref(context);
-                              },
-                            ),
-                    ),
+                    Obx(() {
+                      if (_controller.isLoading.value) {
+                        return JumpingDotsProgressIndicator(
+                          numberOfDots: 3,
+                          fontSize: 40,
+                          color: primaryColor,
+                        );
+                      }
+
+                      return Container(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          color: accentColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text('Lanjutkan', style: buttonStyle),
+                          ),
+                          onPressed: () {
+                            _controller.checkPin(email, code);
+                          },
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -148,15 +118,5 @@ class _CreatePinState extends State<CreatePin> {
         ),
       ),
     );
-  }
-}
-
-String _validatePin(String value) {
-  if (value.isEmpty) {
-    return 'Pin tidak boleh kosong';
-  } else if (value.length < 6) {
-    return 'Pin harus 6 digit';
-  } else {
-    return null;
   }
 }

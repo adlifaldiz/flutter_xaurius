@@ -1,110 +1,16 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/helper/validator.dart';
 
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
-import 'package:flutter_xaurius/screen/signup/create_pin.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
+import 'package:flutter_xaurius/controller/verif_code_controller.dart';
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:toast/toast.dart';
 
-class VerifCode extends StatefulWidget {
+class VerifCode extends StatelessWidget {
+  VerifCodeController _controller = Get.put(VerifCodeController());
   final String email;
-
   VerifCode({Key key, this.email}) : super(key: key);
-
-  @override
-  _VerifCodeState createState() => _VerifCodeState();
-}
-
-class _VerifCodeState extends State<VerifCode> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  ApiProvider service = ApiProvider();
-  SignUpModel response;
-  bool isLoading = false;
-
-  var _autoValidate = false;
-  final _codeControl = TextEditingController();
-
-  void _savePref(BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
-    if (_formKey.currentState.validate()) {
-      try {
-        response = await service.addCode(widget.email, _codeControl.text);
-        if (response.success) {
-          Get.to(CreatePin(email: widget.email, code: _codeControl.text));
-          setState(() {
-            isLoading = false;
-          });
-          Get.snackbar('Ok', response.message,
-              backgroundColor: backgroundPanelColor.withOpacity(0.8),
-              snackPosition: SnackPosition.BOTTOM,
-              colorText: textWhiteColor,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-        } else {
-          setState(() {
-            isLoading = false;
-          });
-          Get.snackbar('Oops', response.message,
-              backgroundColor: backgroundPanelColor.withOpacity(0.8),
-              snackPosition: SnackPosition.BOTTOM,
-              colorText: textWhiteColor,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-        }
-      } on TimeoutException {
-        Get.snackbar('Oops', 'Terjadi kesalahan, silahkan coba lagi',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-        setState(() {
-          isLoading = false;
-        });
-      } on SocketException {
-        Get.snackbar('Tidak ada koneksi internet', "Cek kembali koneksi internet",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-        setState(() {
-          isLoading = false;
-        });
-      } on Error {
-        Get.snackbar('Oops', 'Terjadi kesalahan',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } else {
-      if (_codeControl.text.isEmpty) {
-        Get.snackbar('Kode', 'Kode verifikasi tidak boleh kosong',
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-      } else if (_codeControl.text.length < 6) {
-        Get.snackbar('6 Digit', 'Kode verifikasi harus 6 digit',
-            backgroundColor: backgroundPanelColor.withOpacity(0.8),
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: textWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10));
-      }
-      setState(() {
-        _autoValidate = true;
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,19 +48,27 @@ class _VerifCodeState extends State<VerifCode> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                autovalidate: _autoValidate,
-                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                key: _controller.formKey,
                 child: Column(
                   children: [
                     Text(
-                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${widget.email.replaceRange(2, widget.email.length - 10, '*' * (4))}',
+                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${email.replaceRange(3, email.length - 10, '*' * (4))}',
                       style: TextStyle(color: textWhiteColor),
                     ),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
-                      controller: _codeControl,
-                      validator: _validateCode,
+                      onChanged: (value) {
+                        _controller.code = value;
+                      },
+                      onSaved: (value) {
+                        _controller.code = value;
+                      },
+                      controller: _controller.codeController,
+                      validator: (value) {
+                        return validateCode(value);
+                      },
                       pinLength: 6,
                       enabled: true,
                       cursor: Cursor(
@@ -176,28 +90,33 @@ class _VerifCodeState extends State<VerifCode> {
                           colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
                     ),
                     Spacer(),
-                    Container(
-                      width: double.infinity,
-                      child: isLoading
-                          ? JumpingDotsProgressIndicator(
-                              numberOfDots: 3,
-                              fontSize: 40,
-                              color: primaryColor,
-                            )
-                          : RaisedButton(
-                              color: accentColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                child: Text('Lanjutkan', style: buttonStyle),
-                              ),
-                              onPressed: () {
-                                _savePref(context);
-                              },
-                            ),
-                    ),
+                    Obx(() {
+                      if (_controller.isLoading.value) {
+                        return JumpingDotsProgressIndicator(
+                          numberOfDots: 3,
+                          fontSize: 40,
+                          color: primaryColor,
+                        );
+                      }
+
+                      return Container(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          color: accentColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Text('Lanjutkan', style: buttonStyle),
+                          ),
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            _controller.checkCode(email);
+                          },
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -206,15 +125,5 @@ class _VerifCodeState extends State<VerifCode> {
         ),
       ),
     );
-  }
-}
-
-String _validateCode(String value) {
-  if (value.isEmpty) {
-    return 'Kode verifikasi tidak boleh kosong';
-  } else if (value.length < 6) {
-    return 'Kode verifikasi harus 6 digit';
-  } else {
-    return null;
   }
 }
