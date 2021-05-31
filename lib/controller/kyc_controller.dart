@@ -67,6 +67,10 @@ class KycController extends GetxController {
   TextEditingController nomorKTP = TextEditingController();
   TextEditingController nomorNPWP = TextEditingController();
 
+  TextEditingController namaBankControl = TextEditingController();
+  TextEditingController namaAkunControl = TextEditingController();
+  TextEditingController nomorAkunControl = TextEditingController();
+
   @override
   void onInit() {
     checkKyc1();
@@ -124,6 +128,9 @@ class KycController extends GetxController {
         negaraControl.text = kycResponse.value.data.orang.orangAddrCountry;
         nomorKTP.text = kycResponse.value.data.orang.orangIdNum;
         nomorNPWP.text = kycResponse.value.data.orang.orangNpwpNum;
+        namaAkunControl.text = kycResponse.value.data.orang.orangBankHolder;
+        namaBankControl.text = kycResponse.value.data.orang.orangBankName;
+        nomorAkunControl.text = kycResponse.value.data.orang.orangBankNumber;
         valueIdType = kycResponse.value.data.orang.orangIdType;
         selectedImageNetworkKtp.value = kycResponse.value.data.orang.orangIdFile.url;
         selectedImageNetworkNpwp.value = kycResponse.value.data.orang.orangNpwpFile.url;

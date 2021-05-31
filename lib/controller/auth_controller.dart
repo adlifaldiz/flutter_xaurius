@@ -75,7 +75,7 @@ class AuthController extends GetxController {
       if (loginResponse.value.success) {
         appdata.write('token', loginResponse.value.token);
         appdata.write('isUser', true);
-        Get.to(MenuScreen());
+        Get.offAll(MenuScreen());
 
         successSnackbar('Sukses', 'Berhasil login');
       } else {

@@ -6,7 +6,7 @@ import 'package:flutter_xaurius/model/Sales.dart';
 import 'package:flutter_xaurius/screen/cryptotransaction/deposit_screen.dart';
 import 'package:flutter_xaurius/screen/topup/top_up_screen.dart';
 
-import 'package:flutter_xaurius/screen/xautransaction/buy_screen.dart';
+import 'package:flutter_xaurius/screen/xautransaction/buy/buy_screen.dart';
 import 'package:flutter_xaurius/screen/xautransaction/sell_screen.dart';
 import 'package:flutter_xaurius/widget/coming_soon.dart';
 import 'package:flutter_xaurius/widget/menu_produk.dart';

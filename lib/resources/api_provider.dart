@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
 import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
+import 'package:flutter_xaurius/model/buys/response_checkout_model.dart';
 import 'package:flutter_xaurius/model/buys/response_create_buys_model.dart';
+import 'package:flutter_xaurius/model/buys/response_detail_invoice_model.dart';
+import 'package:flutter_xaurius/model/buys/response_post_checkout_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -166,6 +169,49 @@ class ApiProvider {
       final jsonResponse = json.decode(response.body);
       ResponseCreateBuy responseCreateBuy = ResponseCreateBuy.fromJson(jsonResponse);
       return responseCreateBuy;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ResponsePostCheckOut> postCheckOut(_buyId, orangId, walletAddress, merchantId, voucherCode) async {
+    final response = await http.post(Uri.parse("$_url/buys/$_buyId/checkout"), headers: {
+      "JWT": appData.read(token)
+    }, body: {
+      'buy_id': orangId,
+      'buy_address': walletAddress,
+      'merchant_id': merchantId,
+      'voucher_code': voucherCode,
+    });
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      ResponsePostCheckOut responsePostCheckOut = ResponsePostCheckOut.fromJson(jsonResponse);
+      return responsePostCheckOut;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ResponseCheckOut> getCheckOut(_buyId) async {
+    final response = await http.get(Uri.parse("$_url/buys/$_buyId/checkout"), headers: {"JWT": appData.read(token)});
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      ResponseCheckOut responseCheckOut = ResponseCheckOut.fromJson(jsonResponse);
+      return responseCheckOut;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ResponseDetailInvoice> getDetailInvoice(invoiceId) async {
+    final response = await http.get(Uri.parse("$_url/buys/$invoiceId/invoice"), headers: {"JWT": appData.read(token)});
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      ResponseDetailInvoice responseDetailInvoice = ResponseDetailInvoice.fromJson(jsonResponse);
+      return responseDetailInvoice;
     } else {
       return null;
     }

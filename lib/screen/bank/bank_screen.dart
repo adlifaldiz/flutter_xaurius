@@ -8,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class BankScreen extends StatelessWidget {
-  BankController _bankController = Get.put(BankController());
   @override
   Widget build(BuildContext context) {
-    _bankController.kycController.checkKyc1();
+    BankController _bankController = Get.put(BankController());
+    _bankController.onInit();
 
     return Scaffold(
       appBar: AppBar(
@@ -56,7 +56,7 @@ class BankScreen extends StatelessWidget {
                   XauTextField(
                     useObscure: false,
                     validator: validateNumAccBank,
-                    controller: _bankController.nomorAkunControl == null ? '' : _bankController.nomorAkunControl,
+                    controller: _bankController.nomorAkunControl,
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     labelText: 'Nomor Akun Bank',

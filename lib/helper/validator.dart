@@ -130,24 +130,32 @@ String validateNumAccBank(String value) {
 
 //buy create
 String validateToken(String value) {
-  double token = double.parse(value);
-  if (value.isEmpty) {
+  if (value.isEmpty || value[0] == '.') {
     return 'Kuantitas tidak boleh kosong';
-  } else if (token <= 0.0) {
+  } else if (double.parse(value) <= 0) {
     return 'Kuantitas tidak bisa 0';
   } else {
+    // token = double.parse(value);
     return null;
   }
 }
 
 String validateSubTotal(String value) {
-  double subTotal = double.parse(value);
   if (value.isEmpty) {
-    return 'Harga tidak boleh kosong';
-  } else if (subTotal <= 0.0) {
-    return 'Harga tidak bisa 0';
-  } else if (subTotal < 50000) {
+    return 'Total harga tidak boleh kosong';
+  } else if (double.parse(value) <= 0) {
+    return 'Total harga tidak bisa 0';
+  } else if (double.parse(value) < 50000) {
     return 'Minimum pembelian IDR 50000';
+  } else {
+    return null;
+  }
+}
+
+//checkout
+String validateWallet(String value) {
+  if (value.isEmpty) {
+    return 'Wallet Address tidak boleh kosong';
   } else {
     return null;
   }
@@ -236,29 +244,29 @@ String validateSubTotal(String value) {
 //   return true;
 // }
 
-final reverseError = StreamTransformer<String, String>.fromHandlers(handleData: (error, sink) {
-  if (error == null) {
-    sink.add(' ');
-  } else {
-    sink.addError(error);
-  }
-});
+// final reverseError = StreamTransformer<String, String>.fromHandlers(handleData: (error, sink) {
+//   if (error == null) {
+//     sink.add(' ');
+//   } else {
+//     sink.addError(error);
+//   }
+// });
 
-final validateStreamEmptyForm = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
-  if (input.length != 0) {
-    sink.add(input);
-  } else {
-    sink.addError('wajib diisi');
-  }
-});
+// final validateStreamEmptyForm = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
+//   if (input.length != 0) {
+//     sink.add(input);
+//   } else {
+//     sink.addError('wajib diisi');
+//   }
+// });
 
-final validatePassword = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
-  if (input.length >= 6) {
-    sink.add(input);
-  } else {
-    sink.addError('minimal 6 karakter');
-  }
-});
+// final validatePassword = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
+//   if (input.length >= 6) {
+//     sink.add(input);
+//   } else {
+//     sink.addError('minimal 6 karakter');
+//   }
+// });
 
 // final validatePin = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
 //   if (input.length == 6) {
@@ -281,33 +289,33 @@ final validatePassword = StreamTransformer<String, String>.fromHandlers(handleDa
 //   }
 // });
 
-final validateNumber = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
-  RegExp regExp = new RegExp(numberValidationRule);
-  if (regExp.hasMatch(input)) {
-    sink.add(input);
-  } else {
-    sink.addError('hanya dapat diisi dengan angka');
-  }
-});
+// final validateNumber = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
+//   RegExp regExp = new RegExp(numberValidationRule);
+//   if (regExp.hasMatch(input)) {
+//     sink.add(input);
+//   } else {
+//     sink.addError('hanya dapat diisi dengan angka');
+//   }
+// });
 
-final validatePhoneNumber = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
-  RegExp regExp = new RegExp(numberValidationRule);
-  if (regExp.hasMatch(input)) {
-    if (input.startsWith('08')) {
-      sink.add(input);
-    } else {
-      sink.addError("harus diawali dengan angka '08'");
-    }
-  } else {
-    sink.addError('hanya dapat diisi dengan angka');
-  }
-});
+// final validatePhoneNumber = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
+//   RegExp regExp = new RegExp(numberValidationRule);
+//   if (regExp.hasMatch(input)) {
+//     if (input.startsWith('08')) {
+//       sink.add(input);
+//     } else {
+//       sink.addError("harus diawali dengan angka '08'");
+//     }
+//   } else {
+//     sink.addError('hanya dapat diisi dengan angka');
+//   }
+// });
 
-final validateAlphabet = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
-  RegExp regExp = new RegExp(alphabetValidationRule);
-  if (regExp.hasMatch(input)) {
-    sink.add(input);
-  } else {
-    sink.addError('Hanya dapat diisi dengan huruf');
-  }
-});
+// final validateAlphabet = StreamTransformer<String, String>.fromHandlers(handleData: (input, sink) {
+//   RegExp regExp = new RegExp(alphabetValidationRule);
+//   if (regExp.hasMatch(input)) {
+//     sink.add(input);
+//   } else {
+//     sink.addError('Hanya dapat diisi dengan huruf');
+//   }
+// });

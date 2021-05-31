@@ -26,6 +26,7 @@ class BankController extends GetxController {
   @override
   void onInit() {
     kycController.checkKyc1();
+    checkBank();
     super.onInit();
   }
 
@@ -35,9 +36,10 @@ class BankController extends GetxController {
   }
 
   void checkBank() {
-    namaBankControl.text = kycController.kycResponse.value.data.orang.orangBankName;
-    namaAkunControl.text = kycController.kycResponse.value.data.orang.orangBankName;
-    nomorAkunControl.text = kycController.kycResponse.value.data.orang.orangBankNumber;
+    namaBankControl.text = kycController.namaBankControl.text;
+    namaAkunControl.text = kycController.namaAkunControl.text;
+    nomorAkunControl.text = kycController.nomorAkunControl.text;
+    update();
   }
 
   Future postBank() async {

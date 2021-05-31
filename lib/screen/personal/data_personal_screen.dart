@@ -15,10 +15,9 @@ import 'package:progress_indicators/progress_indicators.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class DataPersonalScreen extends StatelessWidget {
-  KycController _kycController = Get.put(KycController());
-
   @override
   Widget build(BuildContext context) {
+    KycController _kycController = Get.put(KycController());
     _kycController.onInit();
 
     return GestureDetector(

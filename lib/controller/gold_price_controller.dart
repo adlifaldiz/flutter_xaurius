@@ -3,20 +3,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
-import 'package:flutter_xaurius/screen/signup/create_pin.dart';
 import 'package:get/get.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class GoldPriceController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ApiProvider provider = ApiProvider();
 
   var buysResponse = ResponseBuys().obs;
+  var listBuys = List<Buy>().obs;
 
   var isLoading = false.obs;
   var isTimeout = false.obs;
@@ -67,6 +63,7 @@ class GoldPriceController extends GetxController {
         // successSnackbar('Sukses', buysResponse.value.msg);
         buyPrice = buysResponse.value.data.currentGoldPrice.buy.toString();
         sellPrice = buysResponse.value.data.currentGoldPrice.sell.toString();
+        listBuys.value = buysResponse.value.data.buys;
       } else {
         failSnackbar('Fail', buysResponse.value.msg);
       }

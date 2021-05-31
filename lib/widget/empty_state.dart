@@ -21,7 +21,7 @@ class EmptyState extends StatelessWidget {
                     width: percentWidth(context, 30),
                   ),
                   Text(
-                    'Coming Soon',
+                    'Belum ada data',
                     style: stylePrimary.copyWith(fontSize: 40, color: primaryColor, fontWeight: FontWeight.w600),
                   ),
                   FlatButton(
