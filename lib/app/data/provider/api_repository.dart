@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
+import 'package:flutter_xaurius/model/base_model.dart';
+import 'package:flutter_xaurius/service/api_service.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,32 +12,24 @@ import 'package:flutter_xaurius/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 
-class ApiProvider extends GetConnect{
+import 'api_url.dart';
+
+class ApiRepository {
+  final _http = ApiService();
   final _url = hostAPI;
 
-  Future<SignUpModel> addEmail(email) async {
-    final response = await http.post(Uri.parse("$_url/auth/register"), body: {'email': email});
-    print(response.body);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      SignUpModel authResponse = SignUpModel.fromJson(jsonResponse);
-      return authResponse;
-    } else {
-      return null;
-    }
+  Future<BaseResp> addEmail(email) async {
+    final response = await _http.call(register, method: MethodRequest.POST, request: {'email': email});
+    final jsonResponse = json.decode(response.body);
+    BaseResp authResponse = BaseResp.fromJson(jsonResponse);
+    return authResponse;
   }
 
-  Future<SignUpModel> addCode(email, otp) async {
-    final response = await http.post(Uri.parse("$_url/auth/register_verification"), body: {'email': email, 'otp': otp});
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      SignUpModel authResponse = SignUpModel.fromJson(jsonResponse);
-      return authResponse;
-    } else {
-      return null;
-    }
+  Future<BaseResp> addCode(email, otp) async {
+    final response = await _http.call(registerVerification, method: MethodRequest.POST, request:  {'email': email, 'otp': otp});
+    final jsonResponse = json.decode(response.body);
+    BaseResp authResponse = BaseResp.fromJson(jsonResponse);
+    return authResponse;
   }
 
   Future<SignUpModel> addpin(email, otp, pin, pinConfirm) async {

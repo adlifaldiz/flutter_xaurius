@@ -1,36 +1,34 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_xaurius/helper/debug_utils.dart';
+import 'package:get/get.dart';
 
 enum MethodRequest { POST, GET, PUT, DELETE }
 
-class ApiService {
-  static Dio _dio = Dio();
+class ApiService extends GetConnect {
 
-  ApiService(String baseUrl) {
-    _dio.options.baseUrl = baseUrl;
-    _dio.options.connectTimeout = 90000; //90s
-    _dio.options.receiveTimeout = 10000;
-    _dio.options.headers = {'Accept': 'application/json'};
+  @override
+  void onInit() {
+    httpClient.baseUrl = 'YOUR-API-URL';
   }
 
-  Future<Response> call(String url, {MethodRequest method = MethodRequest.POST, Map<String, dynamic> request, Map<String, String> header, String token, bool useFormData = false, CancelToken cancelToken}) async {
+  Future<Response> call(String url, {MethodRequest method = MethodRequest.POST, Map<String, dynamic> request, Map<String, String> header, String token, bool useFormData = false,}) async {
+    var headers = {'Accept': 'application/json'};
     if(header != null){
-      _dio.options.headers = header;
+      headers = header;
     }
     if(token != null){
       if(header != null){
         header.addAll({
           'Authorization': 'Bearer $token'
         });
-        _dio.options.headers = header;
+        headers = header;
       }else{
-        _dio.options.headers = {
+        headers = {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
         };
       }
       if(method == MethodRequest.PUT){
-        _dio.options.headers = {
+        headers = {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -38,53 +36,52 @@ class ApiService {
       }
     }
 
-    printDebug('URL : ${_dio.options.baseUrl}$url');
-    printDebug('Method : $method');
-    printDebug("Header : ${_dio.options.headers}");
-    printDebug("Request : $request");
-    printDebug("FormData : $useFormData");
+    // printDebug('URL : ${_dio.options.baseUrl}$url');
+    // printDebug('Method : $method');
+    // printDebug("Header : ${_dio.options.headers}");
+    // printDebug("Request : $request");
+    // printDebug("FormData : $useFormData");
     var selectedMethod;
     try{
       Response response;
       switch (method) {
         case MethodRequest.GET:
           selectedMethod = method;
-          response = await _dio.get(url, queryParameters: request, cancelToken: cancelToken);
+          response = await httpClient.get(url, headers: headers, query: request);
           break;
         case MethodRequest.PUT:
           selectedMethod = method;
-          response = await _dio.put(url,
-            data: request, cancelToken: cancelToken
+          response = await httpClient.put(url, body: request, headers: headers,
           );
           break;
         case MethodRequest.DELETE:
           selectedMethod = method;
-          response = await _dio.delete(
-            url,cancelToken: cancelToken,
-            data: useFormData ? FormData.fromMap(request) : request,
+          response = await httpClient.delete(
+            url, headers: headers, query: useFormData ? FormData(request) : request,
           );
           break;
         default:
           selectedMethod = MethodRequest.POST;
-          response = await _dio.post(
-            url,cancelToken: cancelToken,
-            data: useFormData ? FormData.fromMap(request) : request,
+          response = await httpClient.post(
+            url, body: useFormData ? FormData(request) : request, headers: headers,
           );
       }
 
-      if (response?.data is Map) {
-        printWrapped('Success $selectedMethod $url: \nResponse : ${response.data}');
+      if (response?.body is Map) {
+        printWrapped('Success $selectedMethod $url: \nResponse : ${response.body}');
         return response;
       } else {
-        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.data}');
-        Response error = Response(statusCode: 400, data: {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(statusCode: 400, body: {
           "error": "Terjadi kesalahan, coba lagi nanti",
           "result": false,
         });
         return error;
       }
-    } on DioError catch (e){
+    } catch (e){
       printWrapped('Error $selectedMethod $url: $e\nData: ${e.response?.data}');
+      // TODO do logout when auth is not valid here
+
       if(e.response?.data is Map && (e.response?.data['result'] == null || e.response?.data['error'] == null)){
         (e.response.data as Map).addAll(
             <String, dynamic>{
@@ -95,7 +92,7 @@ class ApiService {
         return e.response;
       }else{
         Response response = Response(
-            data: {
+            body: {
               "error": "Terjadi kesalahan, coba lagi nanti",
               "result": false,
             }
