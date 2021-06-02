@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/gold_price_controller.dart';
-import 'package:flutter_xaurius/controller/kyc_controller.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+
+import 'gold_price_controller.dart';
+import 'kyc_controller.dart';
 
 class DashboardController extends GetxController {
   final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();

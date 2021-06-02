@@ -7,7 +7,6 @@ import 'package:flutter_xaurius/model/buys/response_checkout_model.dart';
 import 'package:flutter_xaurius/model/buys/response_create_buys_model.dart';
 import 'package:flutter_xaurius/model/buys/response_detail_invoice_model.dart';
 import 'package:flutter_xaurius/model/buys/response_post_checkout_model.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 

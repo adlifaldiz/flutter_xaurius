@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/api/host.dart';
-import 'package:flutter_xaurius/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/widget/xau_text_field.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class IdentityScreen extends StatefulWidget {
   @override

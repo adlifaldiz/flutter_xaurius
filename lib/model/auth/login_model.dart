@@ -1,21 +1,15 @@
-import 'dart:convert';
+import '../base_model.dart';
 
-LoginModel responseRequestFromJson(String str) => LoginModel.fromJson(json.decode(str));
-
-String responseRequestToJson(LoginModel data) => json.encode(data.toJson());
-
-class LoginModel {
-  bool success;
-  String message;
+class LoginModel extends BaseResp {
   String token;
 
-  LoginModel({this.success, this.message, this.token});
+  LoginModel({this.token}) : super();
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        success: json["success"],
-        message: json["msg"],
-        token: json["token"],
-      );
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel()
+    ..token = json["token"]
+    ..success = json["success"]
+    ..message = json["msg"];
 
-  Map<String, dynamic> toJson() => {"success": success, "msg": message, "token": token};
+  Map<String, dynamic> toJson() =>
+      {"success": success, "msg": message, "token": token};
 }

@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/dashboard_controller.dart';
-import 'package:flutter_xaurius/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/controller/dashboard_controller.dart';
+import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/model/Sales.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/controller/gold_price_controller.dart';
 import 'package:flutter_xaurius/screen/artikel/article.dart';
 import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
 import 'package:flutter_xaurius/screen/social/media.dart';

@@ -1,16 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_xaurius/controller/checkout_controller.dart';
+import 'package:flutter_xaurius/app/controller/checkout_controller.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/helper/validator.dart';
 import 'package:flutter_xaurius/screen/info/faq_screen.dart';
-import 'package:flutter_xaurius/widget/xau_alert.dart';
 import 'package:flutter_xaurius/widget/xau_container.dart';
 import 'package:flutter_xaurius/widget/xau_text_field.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:url_launcher/url_launcher.dart';

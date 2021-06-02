@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/kyc_controller.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
+
+import 'kyc_controller.dart';
 
 class BankController extends GetxController {
   KycController kycController = Get.put(KycController());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/controller/create_pin_controller.dart';
 import 'package:flutter_xaurius/helper/validator.dart';
-import 'package:flutter_xaurius/controller/create_pin_controller.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 
 import 'package:get/get.dart';

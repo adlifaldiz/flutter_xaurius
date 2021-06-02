@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 
 import 'package:flutter_xaurius/screen/intro/splash_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      getPages: AppPages.routes,
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/helper/validator.dart';
-
-import 'package:flutter_xaurius/controller/auth_controller.dart';
 import 'package:flutter_xaurius/widget/xau_text_field.dart';
+
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import '../../helper/theme.dart';
+import '../controllers/register_controller.dart';
 
-class SignUpScreen extends StatelessWidget {
-  AuthController _controller = Get.put(AuthController());
-
+class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,21 +47,21 @@ class SignUpScreen extends StatelessWidget {
                       Text(
                         'Selamat datang',
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                              color: textWhiteColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          color: textWhiteColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 30),
                       Text(
                         'Untuk mendaftarkan diri.\nSilahkan mendaftar dengan\nmengisi alamat email kamu',
                         style: Theme.of(context).textTheme.subhead.copyWith(
-                              color: brokenWhiteColor,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          color: brokenWhiteColor,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       SizedBox(height: 50),
                       Form(
-                        key: _controller.signKey,
+                        key: controller.signKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,9 +71,9 @@ class SignUpScreen extends StatelessWidget {
                             XauTextField(
                               useObscure: false,
                               onSaved: (value) {
-                                _controller.signUpEmail = value;
+                                controller.signUpEmail = value;
                               },
-                              controller: _controller.addEmailController,
+                              controller: controller.addEmailController,
                               validator: (value) {
                                 return validateEmail(value);
                               },
@@ -97,9 +95,9 @@ class SignUpScreen extends StatelessWidget {
                                       'Sudah punya akun?',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.subhead.copyWith(
-                                            color: textWhiteColor,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                        color: textWhiteColor,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                     GestureDetector(
                                       onTap: () => Get.back(),
@@ -107,9 +105,9 @@ class SignUpScreen extends StatelessWidget {
                                         'Login disini',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
-                                              color: accentColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                          color: accentColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -117,7 +115,7 @@ class SignUpScreen extends StatelessWidget {
                               ),
                             ),
                             Obx(() {
-                              if (_controller.isLoading.value) {
+                              if (controller.isLoading.value) {
                                 return JumpingDotsProgressIndicator(
                                   numberOfDots: 3,
                                   fontSize: 40,
@@ -138,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    _controller.checkEmail();
+                                    controller.checkEmail();
                                   },
                                 ),
                               );
@@ -153,8 +151,8 @@ class SignUpScreen extends StatelessWidget {
                           '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                color: accentColor,
-                              ),
+                            color: accentColor,
+                          ),
                         ),
                       ),
                     ],

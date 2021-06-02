@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/controller/verif_code_controller.dart';
 import 'package:flutter_xaurius/helper/validator.dart';
 
 import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/controller/verif_code_controller.dart';
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';

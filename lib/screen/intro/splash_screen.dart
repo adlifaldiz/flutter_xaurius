@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/screen/menu_screen/menu_screen.dart';
-
-import 'package:flutter_xaurius/screen/auth_screen/login_screen.dart';
 import 'package:flutter_xaurius/screen/intro/onboarding_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';

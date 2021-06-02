@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/validator.dart';
-import 'package:flutter_xaurius/controller/auth_controller.dart';
-import 'package:flutter_xaurius/screen/auth_screen/signup_screen.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/widget/no_connection.dart';
+import 'package:flutter_xaurius/helper/validator.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-class LoginScreen extends StatelessWidget {
-  AuthController _controller = Get.put(AuthController());
+import '../controllers/login_controller.dart';
 
+class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -48,21 +46,21 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         'Selamat Datang:)',
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                              color: textWhiteColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          color: textWhiteColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 30),
                       Text(
                         'Untuk memulai aplikasi\nSilahkan login dengan email dan pin kamu',
                         style: Theme.of(context).textTheme.subhead.copyWith(
-                              color: brokenWhiteColor,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          color: brokenWhiteColor,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       SizedBox(height: 50),
                       Form(
-                        key: _controller.formKey,
+                        key: controller.formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,9 +69,9 @@ class LoginScreen extends StatelessWidget {
                             SizedBox(height: 5),
                             TextFormField(
                               onSaved: (value) {
-                                _controller.email = value;
+                                controller.email = value;
                               },
-                              controller: _controller.emailController,
+                              controller: controller.emailController,
                               validator: (value) {
                                 return validateEmail(value);
                               },
@@ -109,9 +107,9 @@ class LoginScreen extends StatelessWidget {
                             SizedBox(height: 5),
                             TextFormField(
                               onSaved: (value) {
-                                _controller.pin = value;
+                                controller.pin = value;
                               },
-                              controller: _controller.pinController,
+                              controller: controller.pinController,
                               validator: (value) {
                                 return validatePin(value);
                               },
@@ -154,19 +152,19 @@ class LoginScreen extends StatelessWidget {
                                       'Belum punya akun?',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.subhead.copyWith(
-                                            color: textWhiteColor,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                        color: textWhiteColor,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                     GestureDetector(
-                                      onTap: () => Get.to(SignUpScreen()),
+                                      onTap: () => Get.toNamed(Routes.REGISTER),
                                       child: Text(
                                         'Daftar disini',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
-                                              color: accentColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                          color: accentColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -174,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             Obx(() {
-                              if (_controller.isLoading.value) {
+                              if (controller.isLoading.value) {
                                 return JumpingDotsProgressIndicator(
                                   numberOfDots: 3,
                                   fontSize: 40,
@@ -195,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    _controller.checkLogin();
+                                    controller.checkLogin();
                                   },
                                 ),
                               );
@@ -210,8 +208,8 @@ class LoginScreen extends StatelessWidget {
                           '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                color: accentColor,
-                              ),
+                            color: accentColor,
+                          ),
                         ),
                       ),
                     ],

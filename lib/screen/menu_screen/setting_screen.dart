@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/screen_utils.dart';
-import 'package:flutter_xaurius/screen/auth_screen/login_screen.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/screen/bank/bank_screen.dart';
 import 'package:flutter_xaurius/screen/info/faq_screen.dart';
 import 'package:flutter_xaurius/screen/info/privacy_policy_screen.dart';
 import 'package:flutter_xaurius/screen/info/tnc_screen.dart';
-import 'package:flutter_xaurius/screen/personal/data_personal_screen.dart';
 import 'package:flutter_xaurius/screen/personal/menu_profile.dart';
 import 'package:flutter_xaurius/widget/coming_soon.dart';
 import 'package:flutter_xaurius/widget/menu_tile.dart';
@@ -19,7 +16,7 @@ class SettingScreen extends StatelessWidget {
 
   void _logout() async {
     appData.erase();
-    Get.offAll(LoginScreen());
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   @override
@@ -52,7 +49,7 @@ class SettingScreen extends StatelessWidget {
                     MenuTile(
                       icon: FontAwesomeIcons.building,
                       title: 'Akun bank',
-                      onTap: () => Get.to(BankScreen()),
+                      onTap: () => Get.toNamed(Routes.BANK),
                     ),
                     // MenuTile(
                     //   icon: FontAwesomeIcons.addressBook,

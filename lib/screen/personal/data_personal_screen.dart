@@ -1,8 +1,7 @@
-// import 'package:country_picker/country_picker.dart';
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/currency_picker_cupertino.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_xaurius/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_xaurius/widget/xau_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class DataPersonalScreen extends StatelessWidget {
   @override

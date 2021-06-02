@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/screen/xautransaction/buy/invoice_screen.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_xaurius/controller/buy_controller.dart';
-import 'package:flutter_xaurius/helper/regex_rule.dart';
-
+import 'package:flutter_xaurius/app/controller/buy_controller.dart';
 import 'package:flutter_xaurius/helper/screen_utils.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:flutter_xaurius/helper/validator.dart';

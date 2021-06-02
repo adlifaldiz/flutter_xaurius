@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/buy_controller.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
 import 'package:flutter_xaurius/model/buys/response_checkout_model.dart';
 import 'package:flutter_xaurius/model/buys/response_post_checkout_model.dart';
@@ -10,6 +9,8 @@ import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:flutter_xaurius/screen/xautransaction/buy/checkout_screen.dart';
 import 'package:flutter_xaurius/widget/xau_alert.dart';
 import 'package:get/get.dart';
+
+import 'buy_controller.dart';
 
 class CheckOutController extends GetxController {
   BuyController buyController = Get.put(BuyController());

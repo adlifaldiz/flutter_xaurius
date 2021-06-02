@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/gold_price_controller.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
 import 'package:flutter_xaurius/helper/text_controller_utils.dart';
 import 'package:flutter_xaurius/helper/validator.dart';
@@ -11,6 +10,8 @@ import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:flutter_xaurius/screen/xautransaction/buy/checkout_screen.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
+
+import 'gold_price_controller.dart';
 
 class BuyController extends GetxController {
   GoldPriceController goldPriceController = Get.put(GoldPriceController());

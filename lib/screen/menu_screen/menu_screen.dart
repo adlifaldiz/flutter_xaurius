@@ -1,7 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/controller/menu_controller.dart';
 import 'package:flutter_xaurius/screen/menu_screen/history_screen.dart';
 import 'package:flutter_xaurius/screen/menu_screen/setting_screen.dart';
 import 'package:flutter_xaurius/screen/menu_screen/dashboard_screen.dart';
