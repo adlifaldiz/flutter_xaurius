@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../app/helpers/theme.dart';
 
 class MenuTile extends StatelessWidget {
   final IconData icon;

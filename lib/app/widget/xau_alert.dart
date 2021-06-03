@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
-import 'package:flutter_xaurius/widget/xaurius_card.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -123,7 +123,7 @@ class _XauAlertState extends State<XauAlert> {
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_xaurius/helper/theme.dart';
-// import 'package:flutter_xaurius/widget/xaurius_card.dart';
+// import 'package:flutter_xaurius/app/widget/xaurius_card.dart';
 // import 'package:flutter/services.dart';
 
 // class XauriusAlert extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
-import 'package:flutter_xaurius/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';

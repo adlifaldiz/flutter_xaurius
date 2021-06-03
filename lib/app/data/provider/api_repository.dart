@@ -5,8 +5,8 @@ import 'package:flutter_xaurius/api/host.dart';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
+import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
+import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_2_model.dart';
 import 'package:get/get.dart';
 
 import 'api_url.dart' as url;

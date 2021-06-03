@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/api/host.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
-import 'package:flutter_xaurius/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';

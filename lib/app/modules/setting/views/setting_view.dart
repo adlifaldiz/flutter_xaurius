@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-import 'package:flutter_xaurius/widget/coming_soon.dart';
-import 'package:flutter_xaurius/widget/menu_tile.dart';
+import 'package:flutter_xaurius/app/widget/coming_soon.dart';
+import 'package:flutter_xaurius/app/widget/menu_tile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';

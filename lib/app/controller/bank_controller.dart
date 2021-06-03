@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
+import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';

@@ -12,8 +12,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
-import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
+import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
+import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_2_model.dart';
 
 class ApiProvider {
   final appData = GetStorage();
