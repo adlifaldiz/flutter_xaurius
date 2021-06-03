@@ -9,6 +9,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,7 +62,7 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                       SizedBox(height: 50),
                       Form(
-                        key: controller.signKey,
+                        key: _formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,13 +71,8 @@ class RegisterView extends GetView<RegisterController> {
                             SizedBox(height: 5),
                             XauTextField(
                               useObscure: false,
-                              onSaved: (value) {
-                                controller.signUpEmail = value;
-                              },
-                              controller: controller.addEmailController,
-                              validator: (value) {
-                                return validateEmail(value);
-                              },
+                              onChanged: (val) => controller.email = val,
+                              validator: validateEmail,
                               hintText: 'Alamat email',
                               prefixIcon: Icon(
                                 Icons.account_circle_rounded,
@@ -136,7 +132,12 @@ class RegisterView extends GetView<RegisterController> {
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    controller.checkEmail();
+                                    final isValidEmail = _formKey.currentState.validate();
+                                    if (!isValidEmail) {
+                                      return;
+                                    }
+                                    _formKey.currentState.save();
+                                    controller.register();
                                   },
                                 ),
                               );

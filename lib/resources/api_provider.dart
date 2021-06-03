@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_create_buys_model.dart';
@@ -10,42 +11,40 @@ import 'package:flutter_xaurius/app/data/provider/api_url.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_2_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 
 class ApiProvider {
   final appData = GetStorage();
   final token = 'token';
   final _url = hostAPI;
 
-  Future<SignUpModel> addEmail(email) async {
+  Future<BaseResp> addEmail(email) async {
     final response = await http.post(Uri.parse("$_url/auth/register"), body: {'email': email});
     if (response.statusCode == 200) {
       print(response.body);
       final jsonResponse = json.decode(response.body);
-      SignUpModel signUpResponse = SignUpModel.fromJson(jsonResponse);
+      BaseResp signUpResponse = BaseResp.fromJson(jsonResponse);
       return signUpResponse;
     } else {
       return null;
     }
   }
 
-  Future<SignUpModel> addCode(email, otp) async {
+  Future<BaseResp> addCode(email, otp) async {
     final response = await http.post(Uri.parse("$_url/auth/register_verification"), body: {'email': email, 'otp': otp});
     print(response.body);
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      SignUpModel authResponse = SignUpModel.fromJson(jsonResponse);
+      BaseResp authResponse = BaseResp.fromJson(jsonResponse);
       return authResponse;
     } else {
       return null;
     }
   }
 
-  Future<SignUpModel> addpin(email, otp, pin, pinConfirm) async {
+  Future<BaseResp> addpin(email, otp, pin, pinConfirm) async {
     final response = await http.post(Uri.parse("$_url/auth/register_pin"), body: {
       'email': email,
       'otp': otp,
@@ -56,14 +55,14 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      SignUpModel authResponse = SignUpModel.fromJson(jsonResponse);
+      BaseResp authResponse = BaseResp.fromJson(jsonResponse);
       return authResponse;
     } else {
       return null;
     }
   }
 
-  Future<LoginModel> login(email, pin) async {
+  Future<LoginResp> login(email, pin) async {
     final response = await http.post(Uri.parse("$_url/auth/login"), body: {
       'email': email,
       'pin': pin,
@@ -72,14 +71,14 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      LoginModel authResponse = LoginModel.fromJson(jsonResponse);
+      LoginResp authResponse = LoginResp.fromJson(jsonResponse);
       return authResponse;
     } else {
       return null;
     }
   }
 
-  Future<ResponseKyc1> getKyc1() async {
+  Future<UserResp> getKyc1() async {
     final response = await http.get(
       Uri.parse('$_url/kyc/kyc_1_personal_info'),
       headers: {"JWT": appData.read(token)},
@@ -87,7 +86,7 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      ResponseKyc1 kyc1Response = ResponseKyc1.fromJson(jsonResponse);
+      UserResp kyc1Response = UserResp.fromJson(jsonResponse);
 
       print(jsonResponse);
       return kyc1Response;
@@ -96,7 +95,7 @@ class ApiProvider {
     }
   }
 
-  Future<ResponseKyc2> getKyc2() async {
+  Future<UserResp> getKyc2() async {
     final response = await http.get(
       Uri.parse('$_url/kyc/kyc_1_personal_info'),
       headers: {"JWT": appData.read(token)},
@@ -104,7 +103,7 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
+      UserResp kyc2Response = UserResp.fromJson(jsonResponse);
 
       print(jsonResponse);
       return kyc2Response;
@@ -113,7 +112,7 @@ class ApiProvider {
     }
   }
 
-  Future<ResponseKyc1> kyc1(nama, nomor, tanggal, alamat, kota, kodePos, negara) async {
+  Future<UserResp> kyc1(nama, nomor, tanggal, alamat, kota, kodePos, negara) async {
     final response = await http.post(Uri.parse("$_url/kyc/kyc_1_personal_info"), headers: {
       "JWT": appData.read(token)
     }, body: {
@@ -129,14 +128,14 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      ResponseKyc1 kyc1Response = ResponseKyc1.fromJson(jsonResponse);
+      UserResp kyc1Response = UserResp.fromJson(jsonResponse);
       return kyc1Response;
     } else {
       return null;
     }
   }
 
-  Future<ResponseKyc1> bank(namaBank, namaAkun, noBank) async {
+  Future<UserResp> bank(namaBank, namaAkun, noBank) async {
     final response = await http.post(Uri.parse("$_url/profile/bank"), headers: {
       "JWT": appData.read(token)
     }, body: {
@@ -148,7 +147,7 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      ResponseKyc1 kyc1Response = ResponseKyc1.fromJson(jsonResponse);
+      UserResp kyc1Response = UserResp.fromJson(jsonResponse);
       return kyc1Response;
     } else {
       return null;
@@ -216,7 +215,7 @@ class ApiProvider {
     }
   }
 
-  Future<ResponseKyc2> kyc2(idType, idNum, File idFile, npwpNum, File npwpFile) async {
+  Future<UserResp> kyc2(idType, idNum, File idFile, npwpNum, File npwpFile) async {
     final request = http.MultipartRequest('POST', Uri.parse("$_url/kyc/kyc_2_identity_document"));
     request.headers['JWT'] = appData.read(token);
     request.fields['orang[orang_id_type]'] = idType;
@@ -230,7 +229,7 @@ class ApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = await json.decode(response.body);
-      ResponseKyc2 kyc2Response = ResponseKyc2.fromJson(jsonResponse);
+      UserResp kyc2Response = UserResp.fromJson(jsonResponse);
       print(jsonResponse);
       return kyc2Response;
     } else {

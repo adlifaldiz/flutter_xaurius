@@ -8,7 +8,6 @@ import 'package:get/get_connect/http/src/exceptions/exceptions.dart';
 enum MethodRequest { POST, GET, PUT, DELETE }
 
 class ApiProvider extends GetConnect {
-  FormData ad = FormData({});
 
   ApiProvider(String baseUrl){
     httpClient.baseUrl = baseUrl;
@@ -40,11 +39,11 @@ class ApiProvider extends GetConnect {
       }
     }
 
-    // printDebug('URL : ${_dio.options.baseUrl}$url');
-    // printDebug('Method : $method');
-    // printDebug("Header : ${_dio.options.headers}");
-    // printDebug("Request : $request");
-    // printDebug("FormData : $useFormData");
+    printDebug('URL : $baseUrl$url');
+    printDebug('Method : $method');
+    printDebug("Header : $headers");
+    printDebug("Request : $request");
+    printDebug("FormData : $useFormData");
     var selectedMethod;
     try{
       Response response;
@@ -70,7 +69,6 @@ class ApiProvider extends GetConnect {
             url, body: useFormData ? FormData(request) : request, headers: headers,
           );
       }
-
       if (response?.body is Map) {
         printWrapped('Success $selectedMethod $url: \nResponse : ${response.body}');
         return response;
@@ -102,15 +100,16 @@ class ApiProvider extends GetConnect {
       return response;
     } catch (e){
       printWrapped('Error $selectedMethod $url: $e\nData: ${e.response?.data}');
-      if(e.response?.data is Map && (e.response?.data['result'] == null || e.response?.data['error'] == null)){
+      if(e.response?.data is Map && (e.response?.data['result'] == null || e.response?.data['error'] == null)) {
         (e.response.data as Map).addAll(
             <String, dynamic>{
           "msg": "Terjadi kesalahan, coba lagi nanti",
-          "success": false,});
+          "success": false,},
+        );
         return e.response;
-      }else if(e.response?.data is Map){
+      } else if (e.response?.data is Map) {
         return e.response;
-      }else{
+      } else {
         Response response = Response(
             body: {
               "msg": "Terjadi kesalahan, coba lagi nanti",

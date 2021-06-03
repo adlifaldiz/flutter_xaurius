@@ -4,6 +4,8 @@ import 'package:flutter_xaurius/app/modules/Social_Media/bindings/social_media_b
 import 'package:flutter_xaurius/app/modules/Social_Media/views/social_media_view.dart';
 import 'package:flutter_xaurius/app/modules/article/bindings/article_binding.dart';
 import 'package:flutter_xaurius/app/modules/article/views/article_view.dart';
+import 'package:flutter_xaurius/app/modules/auth/bindings/auth_binding.dart';
+import 'package:flutter_xaurius/app/modules/auth/views/auth_view.dart';
 import 'package:flutter_xaurius/app/modules/bank/bindings/bank_binding.dart';
 import 'package:flutter_xaurius/app/modules/bank/views/bank_view.dart';
 import 'package:flutter_xaurius/app/modules/buy_xau/bindings/buy_xau_binding.dart';
@@ -204,6 +206,11 @@ class AppPages {
       name: _Paths.SELL_XAU,
       page: () => SellXauView(),
       binding: SellXauBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUTH,
+      page: () => AuthView(),
+      binding: AuthBinding(),
     ),
   ];
 }

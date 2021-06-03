@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
@@ -10,7 +10,7 @@ class CreatePinController extends GetxController {
   ApiProvider provider = ApiProvider();
   TextEditingController pinController;
 
-  var signUpResponse = SignUpModel().obs;
+  var signUpResponse = BaseResp().obs;
 
   var isLoading = false.obs;
   var isTimeout = false.obs;

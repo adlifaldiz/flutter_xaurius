@@ -1,11 +1,11 @@
 import '../base_resp.dart';
 
-class LoginModel extends BaseResp {
+class LoginResp extends BaseResp {
   String token;
 
-  LoginModel({this.token}) : super();
+  LoginResp({this.token}) : super();
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel()
+  factory LoginResp.fromJson(Map<String, dynamic> json) => LoginResp()
     ..token = json["token"]
     ..success = json["success"]
     ..message = json["msg"];

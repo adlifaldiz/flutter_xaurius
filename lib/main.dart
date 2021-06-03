@@ -4,6 +4,8 @@ import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'app/modules/auth/bindings/auth_binding.dart';
+
 
 void main() async {
   await GetStorage.init();
@@ -29,6 +31,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
+      initialBinding: AuthBinding(),
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,

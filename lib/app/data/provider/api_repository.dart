@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_2_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 import 'package:get/get.dart';
 
 import 'api_url.dart' as url;
@@ -13,14 +11,13 @@ import 'api_url.dart' as url;
 class ApiRepository {
   final _http = ApiProvider(url.hostAPI);
 
-  Future<BaseResp> register(email) async {
+  Future<BaseResp> register(String email) async {
     final response = await _http.call(
       url.register,
       method: MethodRequest.POST,
       request: {'email': email},
     );
-    final jsonResponse = json.decode(response.body);
-    return BaseResp.fromJson(jsonResponse);
+    return BaseResp.fromJson(response.body);
   }
 
   Future<BaseResp> registerVerification(email, otp) async {
@@ -29,8 +26,7 @@ class ApiRepository {
       method: MethodRequest.POST,
       request: {'email': email, 'otp': otp},
     );
-    final jsonResponse = json.decode(response.body);
-    return BaseResp.fromJson(jsonResponse);
+    return BaseResp.fromJson(response.body);
   }
 
   Future<BaseResp> registerPin(email, otp, pin, pinConfirm) async {
@@ -44,11 +40,10 @@ class ApiRepository {
         'pin_confirm': pinConfirm,
       },
     );
-    final jsonResponse = json.decode(response.body);
-    return BaseResp.fromJson(jsonResponse);
+    return BaseResp.fromJson(response.body);
   }
 
-  Future<LoginModel> login(email, pin) async {
+  Future<LoginResp> login(email, pin) async {
     final response = await _http.call(
       url.login,
       method: MethodRequest.POST,
@@ -57,21 +52,19 @@ class ApiRepository {
         'pin': pin,
       },
     );
-    final jsonResponse = json.decode(response.body);
-    return LoginModel.fromJson(jsonResponse);
+    return LoginResp.fromJson(response.body);
   }
 
-  Future<ResponseKyc1> getPersonalInfo(String token) async {
+  Future<UserResp> getPersonalInfo(String token) async {
     final response = await _http.call(
       url.kycPersonalInfo,
       token: token,
       method: MethodRequest.GET,
     );
-    final jsonResponse = json.decode(response.body);
-    return ResponseKyc1.fromJson(jsonResponse);
+    return UserResp.fromJson(response.body);
   }
 
-  Future<ResponseKyc1> kycPersonalData(
+  Future<UserResp> kycPersonalData(
       nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
     final response = await _http.call(
       url.kycPersonalInfo,
@@ -86,11 +79,10 @@ class ApiRepository {
         'orang[orang_addr_country]': negara,
       },
     );
-    final jsonResponse = json.decode(response.body);
-    return ResponseKyc1.fromJson(jsonResponse);
+    return UserResp.fromJson(response.body);
   }
 
-  Future<ResponseKyc2> kycDocument(
+  Future<UserResp> kycDocument(
       idType, idNum, File idFile, npwpNum, File npwpFile, jwt) async {
     final response = await _http.call(url.kycDocument,
         token: jwt,
@@ -105,7 +97,6 @@ class ApiRepository {
           'orang[orang_npwp_file]': MultipartFile(npwpFile.path,
               filename: npwpFile.path.split('/').last),
         });
-    final jsonResponse = json.decode(response.body);
-    return ResponseKyc2.fromJson(jsonResponse);
+    return UserResp.fromJson(response.body);
   }
 }

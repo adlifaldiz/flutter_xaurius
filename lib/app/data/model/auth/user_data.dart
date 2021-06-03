@@ -1,55 +1,5 @@
-// To parse this JSON data, do
-//
-//     final responseKyc1 = responseKyc1FromJson(jsonString);
-
-import 'dart:convert';
-
-ResponseKyc1 responseKyc1FromJson(String str) => ResponseKyc1.fromJson(json.decode(str));
-
-String responseKyc1ToJson(ResponseKyc1 data) => json.encode(data.toJson());
-
-class ResponseKyc1 {
-  bool success;
-  String msg;
-  Data data;
-
-  ResponseKyc1({
-    this.success,
-    this.msg,
-    this.data,
-  });
-
-  factory ResponseKyc1.fromJson(Map<String, dynamic> json) => ResponseKyc1(
-        success: json["success"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "success": success,
-        "msg": msg,
-        "data": data.toJson(),
-      };
-}
-
-class Data {
-  Data({
-    this.orang,
-  });
-
-  Orang orang;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        orang: Orang.fromJson(json["orang"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "orang": orang.toJson(),
-      };
-}
-
-class Orang {
-  Orang({
+class UserData {
+  UserData({
     this.id,
     this.orangEmail,
     this.orangName,
@@ -76,28 +26,28 @@ class Orang {
 
   int id;
   String orangEmail;
-  dynamic orangName;
+  String orangName;
   String orangKycStatus;
   bool orangKycEditAvailable;
   bool orangKycAskForReview;
-  dynamic orangPhone;
-  dynamic orangBirthday;
-  dynamic orangAddrStreet;
-  dynamic orangAddrCity;
-  dynamic orangAddrPostal;
-  dynamic orangAddrCountry;
-  dynamic orangBankHolder;
-  dynamic orangBankNumber;
-  dynamic orangBankName;
-  dynamic orangIdType;
-  dynamic orangIdNum;
-  OrangFile orangIdFile;
-  dynamic orangNpwpNum;
-  OrangFile orangNpwpFile;
-  dynamic orangRefcode;
+  String orangPhone;
+  String orangBirthday;
+  String orangAddrStreet;
+  String orangAddrCity;
+  String orangAddrPostal;
+  String orangAddrCountry;
+  String orangBankHolder;
+  String orangBankNumber;
+  String orangBankName;
+  String orangIdType;
+  String orangIdNum;
+  UserFile orangIdFile;
+  String orangNpwpNum;
+  UserFile orangNpwpFile;
+  String orangRefcode;
   int orangRefupline;
 
-  factory Orang.fromJson(Map<String, dynamic> json) => Orang(
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         id: json["id"],
         orangEmail: json["orang_email"],
         orangName: json["orang_name"],
@@ -115,9 +65,9 @@ class Orang {
         orangBankName: json["orang_bank_name"],
         orangIdType: json["orang_id_type"],
         orangIdNum: json["orang_id_num"],
-        orangIdFile: OrangFile.fromJson(json["orang_id_file"]),
+        orangIdFile: UserFile.fromJson(json["orang_id_file"]),
         orangNpwpNum: json["orang_npwp_num"],
-        orangNpwpFile: OrangFile.fromJson(json["orang_npwp_file"]),
+        orangNpwpFile: UserFile.fromJson(json["orang_npwp_file"]),
         orangRefcode: json["orang_refcode"],
         orangRefupline: json["orang_refupline"],
       );
@@ -148,14 +98,14 @@ class Orang {
       };
 }
 
-class OrangFile {
-  OrangFile({
+class UserFile {
+  UserFile({
     this.url,
   });
 
-  dynamic url;
+  String url;
 
-  factory OrangFile.fromJson(Map<String, dynamic> json) => OrangFile(
+  factory UserFile.fromJson(Map<String, dynamic> json) => UserFile(
         url: json["url"],
       );
 

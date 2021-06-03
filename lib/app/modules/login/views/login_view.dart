@@ -8,6 +8,8 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,7 +62,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                       SizedBox(height: 50),
                       Form(
-                        key: controller.formKey,
+                        key: formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,13 +70,8 @@ class LoginView extends GetView<LoginController> {
                             Text('Alamat Email', style: styleLabel),
                             SizedBox(height: 5),
                             TextFormField(
-                              onSaved: (value) {
-                                controller.email = value;
-                              },
-                              controller: controller.emailController,
-                              validator: (value) {
-                                return validateEmail(value);
-                              },
+                              onSaved: (value) => controller.email = value,
+                              validator: validateEmail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               style: stylePrimary,
@@ -106,13 +103,8 @@ class LoginView extends GetView<LoginController> {
                             Text('Pin', style: styleLabel),
                             SizedBox(height: 5),
                             TextFormField(
-                              onSaved: (value) {
-                                controller.pin = value;
-                              },
-                              controller: controller.pinController,
-                              validator: (value) {
-                                return validatePin(value);
-                              },
+                              onSaved: (value) => controller.pin = value,
+                              validator: validatePin,
                               obscureText: true,
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.done,
@@ -193,7 +185,12 @@ class LoginView extends GetView<LoginController> {
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    controller.checkLogin();
+                                    final isValid = formKey.currentState.validate();
+                                    if (!isValid) {
+                                      return;
+                                    }
+                                    formKey.currentState.save();
+                                    controller.login();
                                   },
                                 ),
                               );

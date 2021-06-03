@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class VerifyPinController extends GetxController {
   ApiProvider provider = ApiProvider();
   TextEditingController verifPinController;
 
-  var signUpResponse = SignUpModel().obs;
+  var signUpResponse = BaseResp().obs;
 
   var isLoading = false.obs;
   var isTimeout = false.obs;

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
@@ -14,7 +14,7 @@ class BankController extends GetxController {
   KycController kycController = Get.put(KycController());
   final GlobalKey<FormState> bankKey = GlobalKey<FormState>();
   ApiProvider provider = ApiProvider();
-  var kycResponse = ResponseKyc1().obs;
+  var kycResponse = UserResp().obs;
 
   var isLoadingForm = false.obs;
   var isTimeoutForm = false.obs;
@@ -49,7 +49,7 @@ class BankController extends GetxController {
       var bankPost = await provider.bank(namaBankControl.text, namaAkunControl.text, nomorAkunControl.text);
       if (bankPost == null) {
         kycResponse.value.success = false;
-        kycResponse.value.msg = 'Terjadi masalah';
+        kycResponse.value.message = 'Terjadi masalah';
       } else {
         kycResponse.value = bankPost;
       }
@@ -74,7 +74,7 @@ class BankController extends GetxController {
       if (kycResponse.value.success) {
         successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
       } else {
-        failSnackbar('Fail', kycResponse.value.msg);
+        failSnackbar('Fail', kycResponse.value.message);
       }
     }
     update();

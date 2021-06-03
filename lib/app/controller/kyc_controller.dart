@@ -8,8 +8,7 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_1_model.dart';
-import 'package:flutter_xaurius/app/data/model/kyc/response_kyc_2_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
 
@@ -21,8 +20,8 @@ class KycController extends GetxController {
   Country selectedCupertinoCurrency;
 
   ApiProvider provider = ApiProvider();
-  var kycResponse = ResponseKyc1().obs;
-  var kyc2Response = ResponseKyc2().obs;
+  var kycResponse = UserResp().obs;
+  var kyc2Response = UserResp().obs;
 
   var isLoading = false.obs;
   var isTimeout = false.obs;
@@ -84,7 +83,7 @@ class KycController extends GetxController {
       var kyc1 = await provider.getKyc1();
       if (kyc1 == null) {
         kycResponse.value.success = false;
-        kycResponse.value.msg = 'Terjadi masalah';
+        kycResponse.value.message = 'Terjadi masalah';
       } else {
         kycResponse.value = kyc1;
       }
@@ -139,7 +138,7 @@ class KycController extends GetxController {
         }
         update();
       } else {
-        failSnackbar('Fail', kycResponse.value.msg);
+        failSnackbar('Fail', kycResponse.value.message);
       }
     }
     update();
@@ -159,7 +158,7 @@ class KycController extends GetxController {
       );
       if (kyc1 == null) {
         kycResponse.value.success = false;
-        kycResponse.value.msg = 'Terjadi masalah';
+        kycResponse.value.message = 'Terjadi masalah';
       } else {
         kycResponse.value = kyc1;
       }
@@ -184,7 +183,7 @@ class KycController extends GetxController {
       if (kycResponse.value.success) {
         successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
       } else {
-        failSnackbar('Fail', kycResponse.value.msg);
+        failSnackbar('Fail', kycResponse.value.message);
       }
     }
     update();
@@ -196,7 +195,7 @@ class KycController extends GetxController {
       var kyc2 = await provider.kyc2(idType, nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value));
       if (kyc2 == null) {
         kyc2Response.value.success = false;
-        kyc2Response.value.msg = 'Terjadi masalah';
+        kyc2Response.value.message = 'Terjadi masalah';
       } else {
         kyc2Response.value = kyc2;
       }
@@ -221,7 +220,7 @@ class KycController extends GetxController {
       if (kyc2Response.value.success) {
         successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
       } else {
-        failSnackbar('Fail', kyc2Response.value.msg);
+        failSnackbar('Fail', kyc2Response.value.message);
       }
     }
     update();
