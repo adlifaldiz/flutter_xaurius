@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/helper/validator.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 

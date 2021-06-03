@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
 

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-
-import 'package:flutter_xaurius/screen/intro/splash_screen.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-// import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await GetStorage.init();
@@ -30,6 +27,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -46,9 +44,6 @@ class _MyAppState extends State<MyApp> {
           iconTheme: IconThemeData(color: textWhiteColor),
           actionsIconTheme: IconThemeData(color: textWhiteColor),
         ),
-      ),
-      home: SplashScreen(
-        isUser: isUser,
       ),
     );
   }

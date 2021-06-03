@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
-import 'package:flutter_xaurius/model/base_model.dart';
-import 'package:flutter_xaurius/service/api_service.dart';
-import 'package:flutter_xaurius/model/auth/login_model.dart';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
+import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
+import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 import 'api_url.dart' as url;
 
 class ApiRepository {
-  final _http = ApiService(hostAPI);
+  final _http = ApiProvider(hostAPI);
 
   Future<BaseResp> register(email) async {
     final response = await _http.call(

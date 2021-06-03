@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/screen_utils.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
 
 class XauriusContainer extends StatelessWidget {
   final Widget child;

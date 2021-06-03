@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_xaurius/api/host.dart';
-import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
-import 'package:flutter_xaurius/model/buys/response_checkout_model.dart';
-import 'package:flutter_xaurius/model/buys/response_create_buys_model.dart';
-import 'package:flutter_xaurius/model/buys/response_detail_invoice_model.dart';
-import 'package:flutter_xaurius/model/buys/response_post_checkout_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_create_buys_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_detail_invoice_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_post_checkout_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
-import 'package:flutter_xaurius/model/auth/login_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 

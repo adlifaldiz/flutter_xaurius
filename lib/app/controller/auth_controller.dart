@@ -2,17 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/model/auth/login_model.dart';
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
+import 'package:flutter_xaurius/app/data/model/auth/signup_model.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
-import 'package:flutter_xaurius/screen/menu_screen/dashboard_screen.dart';
-import 'package:flutter_xaurius/screen/menu_screen/menu_screen.dart';
-import 'package:flutter_xaurius/screen/signup/verif_code.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
@@ -75,7 +71,7 @@ class AuthController extends GetxController {
       if (loginResponse.value.success) {
         appdata.write('token', loginResponse.value.token);
         appdata.write('isUser', true);
-        Get.offAll(MenuScreen());
+        Get.offAllNamed(Routes.MENU);
 
         successSnackbar('Sukses', 'Berhasil login');
       } else {
@@ -112,11 +108,11 @@ class AuthController extends GetxController {
       isLoading(false);
 
       if (signUpResponse.value.success) {
-        Get.to(VerifCode(email: addEmailController.text));
+        Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': addEmailController.text});
         successSnackbar('Sukses', 'Berhasil');
       } else {
         if (isNoConnection.value != true) {
-          Get.to(VerifCode(email: addEmailController.text));
+          Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': addEmailController.text});
           failSnackbar('Fail', signUpResponse.value.message);
         }
       }

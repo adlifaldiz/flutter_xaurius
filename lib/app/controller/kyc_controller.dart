@@ -7,16 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
-import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
-import 'package:flutter_xaurius/screen/signup/create_pin.dart';
 import 'package:get/get.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class KycController extends GetxController {
   final GlobalKey<FormState> kyc1Key = GlobalKey<FormState>();
