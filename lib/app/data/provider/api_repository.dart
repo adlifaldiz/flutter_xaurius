@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_xaurius/api/host.dart';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
@@ -12,7 +11,7 @@ import 'package:get/get.dart';
 import 'api_url.dart' as url;
 
 class ApiRepository {
-  final _http = ApiProvider(hostAPI);
+  final _http = ApiProvider(url.hostAPI);
 
   Future<BaseResp> register(email) async {
     final response = await _http.call(
