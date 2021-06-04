@@ -33,6 +33,7 @@ abstract class Routes {
   static const BUY_XAU = _Paths.BUY_XAU;
   static const SELL_XAU = _Paths.SELL_XAU;
   static const AUTH = _Paths.AUTH;
+  static const VERIFY_CODE = _Paths.VERIFY_CODE;
 }
 
 abstract class _Paths {
@@ -65,4 +66,5 @@ abstract class _Paths {
   static const BUY_XAU = '/buy-xau';
   static const SELL_XAU = '/sell-xau';
   static const AUTH = '/auth';
+  static const VERIFY_CODE = '/verify-code';
 }

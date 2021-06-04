@@ -56,6 +56,8 @@ import 'package:flutter_xaurius/app/modules/transaction/bindings/transaction_bin
 import 'package:flutter_xaurius/app/modules/transaction/views/transaction_view.dart';
 import 'package:flutter_xaurius/app/modules/upload_document/bindings/upload_document_binding.dart';
 import 'package:flutter_xaurius/app/modules/upload_document/views/upload_document_view.dart';
+import 'package:flutter_xaurius/app/modules/verify_code/bindings/verify_code_binding.dart';
+import 'package:flutter_xaurius/app/modules/verify_code/views/verify_code_view.dart';
 import 'package:flutter_xaurius/app/modules/verify_pin/bindings/verify_pin_binding.dart';
 import 'package:flutter_xaurius/app/modules/verify_pin/views/verify_pin_view.dart';
 
@@ -211,6 +213,11 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => AuthView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY_CODE,
+      page: () => VerifyCodeView(),
+      binding: VerifyCodeBinding(),
     ),
   ];
 }
