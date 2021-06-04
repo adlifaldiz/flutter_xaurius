@@ -10,6 +10,7 @@ class VerifyPinController extends GetxController {
 
   @override
   void onInit() {
+    successSnackbar('Sukses', 'Silahkan melanjutkan');
     super.onInit();
   }
 
@@ -22,8 +23,8 @@ class VerifyPinController extends GetxController {
     isLoading(true);
     var resp = await _repo.registerPin(email, otp, pin, pinConfirmation);
     if (resp.success) {
-      Get.offAllNamed(Routes.LOGIN);
       successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
+      Get.offAllNamed(Routes.LOGIN);
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

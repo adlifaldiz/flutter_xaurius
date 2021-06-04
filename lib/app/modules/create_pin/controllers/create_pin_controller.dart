@@ -17,8 +17,7 @@ class CreatePinController extends GetxController {
     super.onClose();
   }
 
-  void createPin(email, code) async {
-    Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': email, 'code': code, 'pin': pin});
-    successSnackbar('Sukses', 'Silahkan melanjutkan');
+  void createPin() async {
+    Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': Get.arguments['email'], 'code': Get.arguments['code'], 'pin': pin});
   }
 }

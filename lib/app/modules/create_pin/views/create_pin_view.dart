@@ -108,8 +108,7 @@ class CreatePinView extends GetView<CreatePinController> {
                                 return;
                               }
                               formKey.currentState.save();
-                              controller.createPin(Get.arguments['email'],
-                                  Get.arguments['code']);
+                              controller.createPin();
                             },
                           ),
                         );
