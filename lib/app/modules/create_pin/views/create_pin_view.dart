@@ -8,6 +8,8 @@ import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class CreatePinView extends GetView<CreatePinController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,25 +46,20 @@ class CreatePinView extends GetView<CreatePinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: controller.formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat', style: stylePrimary),
+                    Text(
+                        'Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat',
+                        style: stylePrimary),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        controller.pin = value;
-                      },
-                      onSaved: (value) {
-                        controller.pin = value;
-                      },
-                      controller: controller.pinController,
-                      validator: (value) {
-                        return validatePin(value);
-                      },
+                      onChanged: (value) => controller.pin = value,
+                      onSaved: (value) => controller.pin = value,
+                      validator: validatePin,
                       pinLength: 6,
                       cursor: Cursor(
                         enabled: true,
@@ -74,37 +71,50 @@ class CreatePinView extends GetView<CreatePinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
-                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(
+                            color: textWhiteColor,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                        colorBuilder:
+                            PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
-                    Obx(() {
-                      if (controller.isLoading.value) {
-                        return JumpingDotsProgressIndicator(
-                          numberOfDots: 3,
-                          fontSize: 40,
-                          color: primaryColor,
-                        );
-                      }
+                    Obx(
+                      () {
+                        if (controller.isLoading.value) {
+                          return JumpingDotsProgressIndicator(
+                            numberOfDots: 3,
+                            fontSize: 40,
+                            color: primaryColor,
+                          );
+                        }
 
-                      return Container(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          color: accentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        return Container(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            color: accentColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Text('Lanjutkan', style: buttonStyle),
+                            ),
+                            onPressed: () {
+                              final isValid = formKey.currentState.validate();
+                              if (!isValid) {
+                                return;
+                              }
+                              formKey.currentState.save();
+                              controller.createPin(Get.arguments['email'],
+                                  Get.arguments['code']);
+                            },
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('Lanjutkan', style: buttonStyle),
-                          ),
-                          onPressed: () {
-                            controller.checkPin(Get.arguments['email'], Get.arguments['code']);
-                          },
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

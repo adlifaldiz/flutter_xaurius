@@ -8,6 +8,8 @@ import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class VerifyPinView extends GetView<VerifyPinController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: controller.formKey,
+
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,8 +109,17 @@ class VerifyPinView extends GetView<VerifyPinController> {
                             child: Text('Selesai', style: buttonStyle),
                           ),
                           onPressed: () {
-                            controller.checkVerifPin(Get.arguments['email'],
-                                Get.arguments['code'], Get.arguments['pin']);
+                            final isValid = formKey.currentState.validate();
+                            if (!isValid) {
+                              return;
+                            }
+                            formKey.currentState.save();
+
+                            controller.postVerifPin(
+                                Get.arguments['email'],
+                                Get.arguments['code'],
+                                Get.arguments['pin'],
+                                controller.verifPin);
                           },
                         ),
                       );

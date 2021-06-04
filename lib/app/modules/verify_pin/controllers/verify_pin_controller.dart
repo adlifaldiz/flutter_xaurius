@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
 
 class VerifyPinController extends GetxController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  ApiProvider provider = ApiProvider();
+  ApiRepository _repo = ApiRepository();
   TextEditingController verifPinController;
 
   var signUpResponse = BaseResp().obs;
@@ -35,7 +34,7 @@ class VerifyPinController extends GetxController {
   void postVerifPin(email, otp, pin, verifPin) async {
     isLoading(true);
     try {
-      var verifCode = await provider.addpin(email, otp, pin, verifPin);
+      var verifCode = await _repo.registerPin(email, otp, pin, verifPin);
       if (verifCode == null) {
         signUpResponse.value.success = false;
         signUpResponse.value.message = 'Terjadi masalah';
@@ -66,14 +65,5 @@ class VerifyPinController extends GetxController {
         failSnackbar('Fail', signUpResponse.value.message);
       }
     }
-  }
-
-  void checkVerifPin(email, code, pin) {
-    final isValid = formKey.currentState.validate();
-    if (!isValid) {
-      return;
-    }
-    formKey.currentState.save();
-    postVerifPin(email, code, pin, verifPin);
   }
 }
