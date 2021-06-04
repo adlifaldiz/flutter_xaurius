@@ -20,7 +20,7 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> registerVerification(email, otp) async {
+  Future<BaseResp> verifyRegistrationCode(String email, String otp) async {
     final response = await _http.call(
       url.registerVerification,
       method: MethodRequest.POST,
@@ -29,7 +29,7 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> registerPin(email, otp, pin, pinConfirm) async {
+  Future<BaseResp> registerPin(String email, String otp, String pin, String pinConfirm) async {
     final response = await _http.call(
       url.registerPin,
       method: MethodRequest.POST,

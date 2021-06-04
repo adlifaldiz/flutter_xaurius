@@ -22,7 +22,7 @@ class RegisterController extends GetxController {
     isLoading(true);
     var resp = await _repo.register(email);
     if (resp.success) {
-      Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': email});
+      Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
       successSnackbar('Sukses', 'Berhasil');
     } else {
       dialogConnection(

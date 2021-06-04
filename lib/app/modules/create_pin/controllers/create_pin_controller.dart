@@ -4,7 +4,6 @@ import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class CreatePinController extends GetxController {
-  ApiRepository _repo = ApiRepository();
   var isLoading = false.obs;
   var pin = '';
 
@@ -19,12 +18,7 @@ class CreatePinController extends GetxController {
   }
 
   void createPin(email, code) async {
-    final resp = await _repo.registerVerification(email, code);
-    if (resp.success) {
-      Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': email, 'code': code, 'pin': pin});
-      successSnackbar('Sukses', 'Silahkan melanjutkan');
-    } else {
-
-    }
+    Get.toNamed(Routes.VERIFY_PIN, arguments: {'email': email, 'code': code, 'pin': pin});
+    successSnackbar('Sukses', 'Silahkan melanjutkan');
   }
 }

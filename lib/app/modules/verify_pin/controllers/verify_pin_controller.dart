@@ -1,69 +1,34 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class VerifyPinController extends GetxController {
   ApiRepository _repo = ApiRepository();
-  TextEditingController verifPinController;
-
-  var signUpResponse = BaseResp().obs;
-
   var isLoading = false.obs;
-  var isTimeout = false.obs;
-  var isNoConnection = false.obs;
-
-  var verifPin = '';
+  var pinConfirmation = '';
 
   @override
   void onInit() {
-    verifPinController = TextEditingController();
     super.onInit();
   }
 
   @override
   void onClose() {
-    verifPinController.dispose();
     super.onClose();
   }
 
-  void postVerifPin(email, otp, pin, verifPin) async {
+  void verifyPin(email, otp, pin) async {
     isLoading(true);
-    try {
-      var verifCode = await _repo.registerPin(email, otp, pin, verifPin);
-      if (verifCode == null) {
-        signUpResponse.value.success = false;
-        signUpResponse.value.message = 'Terjadi masalah';
-      } else {
-        signUpResponse.value = verifCode;
-      }
-    } on TimeoutException {
-      isTimeout(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Waktu habis', () {
+    var resp = await _repo.registerPin(email, otp, pin, pinConfirmation);
+    if (resp.success) {
+      Get.offAllNamed(Routes.LOGIN);
+      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
+    } else {
+      dialogConnection('Oops', resp.message, () {
         Get.back();
-        isTimeout(false);
       });
-    } on SocketException {
-      isNoConnection(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnection(false);
-      });
-    } finally {
-      isLoading(false);
-      isTimeout(false);
-      isNoConnection(false);
-      if (signUpResponse.value.success) {
-        successSnackbar('Sukses', signUpResponse.value.message);
-      } else {
-        failSnackbar('Fail', signUpResponse.value.message);
-      }
     }
+    isLoading(false);
   }
 }

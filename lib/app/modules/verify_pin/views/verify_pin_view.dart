@@ -46,7 +46,6 @@ class VerifyPinView extends GetView<VerifyPinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
@@ -57,13 +56,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
-                      controller: controller.verifPinController,
-                      onChanged: (value) {
-                        controller.verifPin = value;
-                      },
-                      onSaved: (value) {
-                        controller.verifPin = value;
-                      },
+                      onChanged: (value) => controller.pinConfirmation = value,
                       validator: (value) {
                         return validateVerifPin(value, Get.arguments['pin']);
                       },
@@ -114,12 +107,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
                               return;
                             }
                             formKey.currentState.save();
-
-                            controller.postVerifPin(
-                                Get.arguments['email'],
-                                Get.arguments['code'],
-                                Get.arguments['pin'],
-                                controller.verifPin);
+                            controller.verifyPin(Get.arguments['email'],
+                                Get.arguments['code'], Get.arguments['pin']);
                           },
                         ),
                       );
