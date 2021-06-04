@@ -7,6 +7,7 @@ class VerifyCodeController extends GetxController {
   ApiRepository _repo = ApiRepository();
   var isLoading = false.obs;
   var code = '';
+  String email = '';
 
   @override
   void onInit() {
@@ -18,12 +19,18 @@ class VerifyCodeController extends GetxController {
     super.onClose();
   }
 
+  @override
+  void onReady() {
+    email = Get.arguments['email'];
+    successSnackbar('Sukses', 'Berhasil terkirim ke $email');
+    super.onReady();
+  }
+
   void verifyCode(String email) async {
     isLoading(true);
     var resp = await _repo.verifyRegistrationCode(email, code);
     if (resp.success) {
       Get.toNamed(Routes.CREATE_PIN, arguments: {'email': email, 'code': code});
-      successSnackbar('Sukses', resp.message);
     } else {
       failSnackbar('Fail', resp.message);
     }

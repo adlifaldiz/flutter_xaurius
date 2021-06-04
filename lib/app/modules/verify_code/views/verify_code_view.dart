@@ -10,9 +10,10 @@ import 'package:progress_indicators/progress_indicators.dart';
 
 class VerifyCodeView extends GetView<VerifyCodeController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final String _email = Get.arguments['email'];
   @override
   Widget build(BuildContext context) {
+    final String _email = Get.arguments != null ? Get.arguments['email'] : 'xxxxxxxxx*xxxxx';
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -52,7 +53,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                 child: Column(
                   children: [
                     Text(
-                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${_email.replaceRange(3, _email.length - 10, '*' * (4))}',
+                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${_email}',
                       style: TextStyle(color: textWhiteColor),
                     ),
                     SizedBox(height: 20),

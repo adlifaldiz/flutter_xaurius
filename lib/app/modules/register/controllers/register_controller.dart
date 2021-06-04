@@ -23,7 +23,6 @@ class RegisterController extends GetxController {
     var resp = await _repo.register(email);
     if (resp.success) {
       Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
-      successSnackbar('Sukses', 'Berhasil');
     } else {
       dialogConnection(
         'Oops',

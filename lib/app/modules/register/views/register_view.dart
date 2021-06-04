@@ -48,17 +48,17 @@ class RegisterView extends GetView<RegisterController> {
                       Text(
                         'Selamat datang',
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                          color: textWhiteColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: textWhiteColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       SizedBox(height: 30),
                       Text(
                         'Untuk mendaftarkan diri.\nSilahkan mendaftar dengan\nmengisi alamat email kamu',
                         style: Theme.of(context).textTheme.subhead.copyWith(
-                          color: brokenWhiteColor,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: brokenWhiteColor,
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                       SizedBox(height: 50),
                       Form(
@@ -90,20 +90,26 @@ class RegisterView extends GetView<RegisterController> {
                                     Text(
                                       'Sudah punya akun?',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.subhead.copyWith(
-                                        color: textWhiteColor,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subhead
+                                          .copyWith(
+                                            color: textWhiteColor,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
                                     GestureDetector(
                                       onTap: () => Get.back(),
                                       child: Text(
                                         'Login disini',
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.subhead.copyWith(
-                                          color: accentColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subhead
+                                            .copyWith(
+                                              color: accentColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -127,12 +133,15 @@ class RegisterView extends GetView<RegisterController> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
-                                    child: Text('Daftar Sekarang', style: buttonStyle),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    child: Text('Daftar Sekarang',
+                                        style: buttonStyle),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    final isValidEmail = _formKey.currentState.validate();
+                                    final isValidEmail =
+                                        _formKey.currentState.validate();
                                     if (!isValidEmail) {
                                       return;
                                     }
@@ -152,8 +161,8 @@ class RegisterView extends GetView<RegisterController> {
                           '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: accentColor,
-                          ),
+                                color: accentColor,
+                              ),
                         ),
                       ),
                     ],
