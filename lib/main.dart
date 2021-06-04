@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 
-import 'package:flutter_xaurius/screen/intro/splash_screen.dart';
 import 'package:flutter_xaurius/helper/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -31,6 +30,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       getPages: AppPages.routes,
+      initialRoute: AppPages.INITIAL,
+      defaultTransition: Transition.cupertino,
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
@@ -47,9 +48,9 @@ class _MyAppState extends State<MyApp> {
           actionsIconTheme: IconThemeData(color: textWhiteColor),
         ),
       ),
-      home: SplashScreen(
-        isUser: isUser,
-      ),
+      // home: SplashScreen(
+      //   isUser: isUser,
+      // ),
     );
   }
 

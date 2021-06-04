@@ -22,17 +22,17 @@ class EmptyState extends StatelessWidget {
                   ),
                   Text(
                     'Belum ada data',
-                    style: stylePrimary.copyWith(fontSize: 40, color: primaryColor, fontWeight: FontWeight.w600),
+                    style: stylePrimary.copyWith(fontSize: 30, color: primaryColor, fontWeight: FontWeight.w600),
                   ),
-                  FlatButton(
-                    onPressed: () => Get.back(),
-                    color: primaryColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      'Kembali',
-                      style: buttonStyle,
-                    ),
-                  )
+                  // FlatButton(
+                  //   onPressed: () => Get.back(),
+                  //   color: primaryColor,
+                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  //   child: Text(
+                  //     'Kembali',
+                  //     style: buttonStyle,
+                  //   ),
+                  // )
                 ],
               ),
             ),

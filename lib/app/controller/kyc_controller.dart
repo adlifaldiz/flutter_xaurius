@@ -8,15 +8,10 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/model/auth/signup_model.dart';
-import 'package:flutter_xaurius/model/buys/response_buys_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_1_model.dart';
 import 'package:flutter_xaurius/model/kyc/response_kyc_2_model.dart';
 import 'package:flutter_xaurius/resources/api_provider.dart';
-import 'package:flutter_xaurius/screen/signup/create_pin.dart';
 import 'package:get/get.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class KycController extends GetxController {
   final GlobalKey<FormState> kyc1Key = GlobalKey<FormState>();
@@ -83,6 +78,10 @@ class KycController extends GetxController {
     super.onClose();
   }
 
+  onChangeIdType(valueIdInt) {
+    valueId = valueIdInt;
+  }
+
   Future checkKyc1() async {
     isLoading(true);
     try {
@@ -112,10 +111,11 @@ class KycController extends GetxController {
       isTimeout(false);
       isNoConnection(false);
       if (kycResponse.value.success) {
-        nama(kycResponse.value.data.orang.orangName);
         email(kycResponse.value.data.orang.orangEmail);
         isKycStatus(kycResponse.value.data.orang.orangKycEditAvailable);
         isKycReview(kycResponse.value.data.orang.orangKycAskForReview);
+
+        nama(kycResponse.value.data.orang.orangName);
 
         tempDate = DateTime.parse(kycResponse.value.data.orang.orangBirthday);
 
@@ -287,17 +287,4 @@ class KycController extends GetxController {
       log(e.toString());
     }
   }
-
-  // Future takeImageNPWP() async {
-  //   final imageNpwp = await pickedFile.getImage(source: ImageSource.gallery);
-
-  //   if (imageNpwp != null) {
-  //     getImageNPWP = File(imageNpwp.path);
-
-  //     print('image selected.');
-  //   } else {
-  //     print('No image selected.');
-  //   }
-  //   update();
-  // }
 }

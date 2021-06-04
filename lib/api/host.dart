@@ -1,2 +1,2 @@
-String hostImage = 'https://sim-b.xaurius.com/';
-String hostAPI = 'https://sim-b.xaurius.com/api/v1/';
+const String hostImage = 'https://sim-b.xaurius.com/';
+const String hostAPI = 'https://sim-b.xaurius.com/api/v1/';

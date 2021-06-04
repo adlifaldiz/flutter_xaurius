@@ -40,7 +40,7 @@ dependencies:
   json_annotation: ^4.0.1
   liquid_pull_to_refresh: ^3.0.0
   modal_bottom_sheet: ^2.0.0
-  onboarding: ^1.0.5
+  onboarding: ^1.1.0
   pin_input_text_field: ^4.0.0
   progress_indicators: ^1.0.0
   rxdart: ^0.20.0
