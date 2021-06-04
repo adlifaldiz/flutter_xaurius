@@ -1,11 +1,12 @@
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class MenuController extends GetxController {
-  //TODO: Implement MenuController
+  final _auth = Get.find<AuthController>();
 
-  final count = 0.obs;
   @override
   void onInit() {
+    _auth.getProfileData();
     super.onInit();
   }
 
@@ -16,5 +17,4 @@ class MenuController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }
