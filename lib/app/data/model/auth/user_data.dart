@@ -28,7 +28,7 @@ class UserData {
   String orangEmail;
   String orangName;
   String orangKycStatus;
-  bool orangKycEditAvailable;
+  bool orangKycEditAvailable = false;
   bool orangKycAskForReview;
   String orangPhone;
   String orangBirthday;

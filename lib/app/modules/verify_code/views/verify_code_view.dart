@@ -12,8 +12,6 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final String _email = Get.arguments != null ? Get.arguments['email'] : 'xxxxxxxxx*xxxxx';
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -53,7 +51,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                 child: Column(
                   children: [
                     Text(
-                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${_email}',
+                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${controller.email}',
                       style: TextStyle(color: textWhiteColor),
                     ),
                     SizedBox(height: 20),
@@ -109,7 +107,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                               return;
                             }
                             formKey.currentState.save();
-                            controller.verifyCode(_email);
+                            controller.verifyCode();
                           },
                         ),
                       );

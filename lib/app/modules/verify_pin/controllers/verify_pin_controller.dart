@@ -6,10 +6,16 @@ import 'package:get/get.dart';
 class VerifyPinController extends GetxController {
   ApiRepository _repo = ApiRepository();
   var isLoading = false.obs;
+  var code;
+  var email;
+  var pin;
   var pinConfirmation = '';
 
   @override
   void onInit() {
+    pin = Get.arguments['pin'];
+    email = Get.arguments['email'];
+    code = Get.arguments['code'];
     successSnackbar('Sukses', 'Silahkan melanjutkan');
     super.onInit();
   }
@@ -19,12 +25,12 @@ class VerifyPinController extends GetxController {
     super.onClose();
   }
 
-  void verifyPin(email, otp, pin) async {
+  void verifyPin() async {
     isLoading(true);
-    var resp = await _repo.registerPin(email, otp, pin, pinConfirmation);
+    var resp = await _repo.registerPin(email, code, pin, pinConfirmation);
     if (resp.success) {
-      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.LOGIN).then((value) => successSnackbar(
+          'Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi'));
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class DashboardController extends GetxController {
+  final auth = Get.find<AuthController>();
   final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
-
   GoldPriceController goldPriceController = Get.put(GoldPriceController());
-  KycController kycController = Get.put(KycController());
-
   var isBuy = true.obs;
 
   @override
   void onInit() {
     goldPriceController.getBuys();
-    kycController.checkKyc1();
-    greeting();
+    auth.getProfileData();
     super.onInit();
   }
 
   Future onRefresh() async {
-    goldPriceController.getBuys();
-    kycController.checkKyc1();
+    await goldPriceController.getBuys();
     update();
   }
 
-  onChangeBuy(bool change) {
-    goldPriceController.getBuys();
-
+  Future onChangeBuy(bool change) async{
+    await goldPriceController.getBuys();
     isBuy.value = change;
     update();
   }
 
   String greeting() {
     var hour = DateTime.now().hour;
-
     if (hour < 12) {
       return 'Selamat Pagi';
     }

@@ -39,7 +39,7 @@ class ApiProvider extends GetConnect {
       }
     }
 
-    printDebug('URL : $baseUrl$url');
+    printDebug('URL : ${httpClient.baseUrl}$url');
     printDebug('Method : $method');
     printDebug("Header : $headers");
     printDebug("Request : $request");

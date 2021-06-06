@@ -137,7 +137,12 @@ class AppPages {
     GetPage(
       name: _Paths.MENU,
       page: () => MenuView(),
-      binding: MenuBinding(),
+      bindings: [
+        MenuBinding(),
+        DashboardBinding(),
+        HistoryBinding(),
+        SettingBinding(),
+      ]
     ),
     GetPage(
       name: _Paths.SETTING,

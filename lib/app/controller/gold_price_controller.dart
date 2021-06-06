@@ -1,22 +1,18 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class GoldPriceController extends GetxController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  ApiProvider provider = ApiProvider();
+  final auth = Get.find<AuthController>();
+  ApiRepository _repo = ApiRepository();
 
   var buysResponse = ResponseBuys().obs;
-  var listBuys = List<Buy>().obs;
+  var listBuys = <Buy>[].obs;
 
   var isLoading = false.obs;
-  var isTimeout = false.obs;
-  var isNoConnection = false.obs;
   var buyPrice = '';
   var sellPrice = '';
 
@@ -33,41 +29,17 @@ class GoldPriceController extends GetxController {
 
   Future getBuys() async {
     isLoading(true);
-    try {
-      var verifCode = await provider.getBuys();
-      if (verifCode == null) {
-        buysResponse.value.success = false;
-        buysResponse.value.msg = 'Terjadi masalah';
-      } else {
-        buysResponse.value = verifCode;
-      }
-    } on TimeoutException {
-      isTimeout(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Waktu habis', () {
+    final resp = await _repo.getBuys(auth.token);
+    if (resp.success) {
+      buyPrice = resp.data.currentGoldPrice.buy.toString();
+      sellPrice = resp.data.currentGoldPrice.sell.toString();
+      listBuys(resp.data.buys);
+      update();
+    } else {
+      dialogConnection('Oops', resp.msg, () {
         Get.back();
-        isTimeout(false);
       });
-    } on SocketException {
-      isNoConnection(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnection(false);
-      });
-    } finally {
-      isLoading(false);
-      isTimeout(false);
-      isNoConnection(false);
-      if (buysResponse.value.success) {
-        // successSnackbar('Sukses', buysResponse.value.msg);
-        buyPrice = buysResponse.value.data.currentGoldPrice.buy.toString();
-        sellPrice = buysResponse.value.data.currentGoldPrice.sell.toString();
-        listBuys.value = buysResponse.value.data.buys;
-      } else {
-        failSnackbar('Fail', buysResponse.value.msg);
-      }
     }
-    update();
+    isLoading(false);
   }
 }

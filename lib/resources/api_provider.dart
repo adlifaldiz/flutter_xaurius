@@ -236,20 +236,4 @@ class ApiProvider {
       return null;
     }
   }
-
-  Future<ResponseBuys> getBuys() async {
-    final response = await http.get(
-      Uri.parse('$_url/buys'),
-      headers: {"JWT": appData.read(token)},
-    );
-
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      ResponseBuys responseBuys = ResponseBuys.fromJson(jsonResponse);
-      print(jsonResponse);
-      return responseBuys;
-    } else {
-      return null;
-    }
-  }
 }

@@ -11,6 +11,7 @@ class VerifyCodeController extends GetxController {
 
   @override
   void onInit() {
+    email = Get.arguments['email'];
     super.onInit();
   }
 
@@ -26,7 +27,7 @@ class VerifyCodeController extends GetxController {
     super.onReady();
   }
 
-  void verifyCode(String email) async {
+  void verifyCode() async {
     isLoading(true);
     var resp = await _repo.verifyRegistrationCode(email, code);
     if (resp.success) {
@@ -34,5 +35,6 @@ class VerifyCodeController extends GetxController {
     } else {
       failSnackbar('Fail', resp.message);
     }
+    isLoading(false);
   }
 }

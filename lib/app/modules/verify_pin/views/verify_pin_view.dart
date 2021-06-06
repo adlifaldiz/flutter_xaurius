@@ -58,7 +58,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                       keyboardType: TextInputType.number,
                       onChanged: (value) => controller.pinConfirmation = value,
                       validator: (value) {
-                        return validateVerifPin(value, Get.arguments['pin']);
+                        return validateVerifPin(value, controller.pin);
                       },
                       pinLength: 6,
                       cursor: Cursor(
@@ -107,8 +107,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                               return;
                             }
                             formKey.currentState.save();
-                            controller.verifyPin(Get.arguments['email'],
-                                Get.arguments['code'], Get.arguments['pin']);
+                            controller.verifyPin();
                           },
                         ),
                       );

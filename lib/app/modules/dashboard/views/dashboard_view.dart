@@ -49,8 +49,8 @@ class DashboardView extends GetView<DashboardController> {
       ),
       body: Obx(() {
         if (controller.goldPriceController.isLoading.value ||
-            controller.kycController.isLoading.value) {
-          Center(
+            controller.auth.isLoading.value || controller.auth.userData == null) {
+          return Center(
             child: JumpingDotsProgressIndicator(
               numberOfDots: 3,
               fontSize: 40,
@@ -69,44 +69,40 @@ class DashboardView extends GetView<DashboardController> {
               shrinkWrap: true,
               padding: EdgeInsets.all(20),
               children: [
-                controller.kycController.isKycReview.value
-                    ? XauriusContainer(
-                        child: Column(
-                          children: [
-                            Text('Akun kamu sedang di review'),
-                          ],
+                if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
+                  XauriusContainer(
+                    child: Column(
+                      children: [
+                        Text('Akun kamu sedang di review'),
+                      ],
+                    ),
+                  ),
+                if (controller?.auth?.userData?.orangKycAskForReview ?? false)
+                  SizedBox(
+                    height: 20,
+                  ),
+                if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
+                  XauriusContainer(
+                    child: Column(
+                      children: [
+                        Text('Kamu Belum melakukan KYC'),
+                        FlatButton(
+                          color: primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
+                          child: Text(
+                            'KYC Sekarang',
+                            style: stylePrimaryDark,
+                          ),
                         ),
-                      )
-                    : Container(),
-                controller.kycController.isKycReview.value
-                    ? SizedBox(
-                        height: 20,
-                      )
-                    : Container(),
-                controller.kycController.isKycStatus.value
-                    ? XauriusContainer(
-                        child: Column(
-                          children: [
-                            Text('Kamu Belum melakukan KYC'),
-                            FlatButton(
-                              color: primaryColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
-                              child: Text(
-                                'KYC Sekarang',
-                                style: stylePrimaryDark,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Container(),
-                controller.kycController.isKycStatus.value
-                    ? SizedBox(
-                        height: 20,
-                      )
-                    : Container(),
+                      ],
+                    ),
+                  ),
+                if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
+                  SizedBox(
+                    height: 20,
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -123,11 +119,11 @@ class DashboardView extends GetView<DashboardController> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            controller.kycController.isLoading.value
+                            controller.auth.isLoading.value
                                 ? '-'
-                                : controller.kycController.nama.string == null
-                                    ? controller.kycController.email.string
-                                    : controller.kycController.nama.string,
+                                : controller.auth.userData.orangName == null
+                                    ? controller.auth.userData.orangEmail
+                                    : controller.auth.userData.orangName,
                             overflow: TextOverflow.fade,
                             style: TextStyle(
                                 letterSpacing: 1,

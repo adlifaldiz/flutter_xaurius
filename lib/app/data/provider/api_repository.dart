@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
@@ -98,5 +99,13 @@ class ApiRepository {
               filename: npwpFile.path.split('/').last),
         });
     return UserResp.fromJson(response.body);
+  }
+
+  Future<ResponseBuys> getBuys(String token) async {
+    final response = await _http.call(url.buys,
+      token: token,
+      method: MethodRequest.GET,
+    );
+    return ResponseBuys.fromJson(response.body);
   }
 }
