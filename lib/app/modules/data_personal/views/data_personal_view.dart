@@ -46,7 +46,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                   children: [
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateName,
                       controller: controller.namaControl == null ? '' : controller.namaControl,
@@ -56,7 +56,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validatePhone,
                       controller: controller.nomorControl == null ? '' : controller.nomorControl,
@@ -66,7 +66,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: !controller.isKycStatus.value
+                      ontap: controller.isKycStatus.value
                           ? () {}
                           : () {
                         DatePicker.showDatePicker(context,
@@ -83,7 +83,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                               controller.tanggalControl.text = controller.formatter.format(date);
                             }, currentTime: DateTime.now(), locale: LocaleType.id);
                       },
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateDate,
                       controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
@@ -97,7 +97,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateAddress,
                       controller: controller.alamatControl == null ? '' : controller.alamatControl,
@@ -107,7 +107,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCity,
                       controller: controller.kotaControl == null ? '' : controller.kotaControl,
@@ -117,7 +117,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateKode,
                       controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
@@ -127,7 +127,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: !controller.isKycStatus.value
+                      ontap: controller.isKycStatus.value
                           ? () {}
                           : () {
                         showCupertinoModalPopup<void>(
@@ -159,7 +159,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                               );
                             });
                       },
-                      readOnly: !controller.isKycStatus.value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCountry,
                       controller: controller.negaraControl == null ? '' : controller.negaraControl,
@@ -193,13 +193,13 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         );
                       }
                       return RaisedButton(
-                        onPressed: !controller.isKycStatus.value
+                        onPressed: controller.isKycStatus.value
                             ? () {}
                             : () {
-                          controller.postKyc1();
+                          controller.kycPersonalData();
                         },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: controller.isKycStatus.value ? primaryColor : disableColor,
+                        color: !controller.isKycStatus.value ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
                             'Simpan',

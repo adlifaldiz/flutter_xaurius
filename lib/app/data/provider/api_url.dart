@@ -1,5 +1,5 @@
 const String hostImage = 'https://sim-b.xaurius.com/';
-const String hostAPI = 'https://sim-b.xaurius.com/api/v1/';
+const String hostAPI = 'https://sim-b.xaurius.com/api/v1';
 
 const register = '/auth/register';
 const registerVerification = '/auth/register_verification';

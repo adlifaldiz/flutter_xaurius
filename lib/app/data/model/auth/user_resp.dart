@@ -11,7 +11,7 @@ class UserResp extends BaseResp {
   factory UserResp.fromJson(Map<String, dynamic> json) => UserResp()
     ..success = json["success"]
     ..message = json["msg"]
-    ..data = Data.fromJson(json["data"]);
+    ..data = json["data"] != null ? Data.fromJson(json["data"]) : Data();
 
   Map<String, dynamic> toJson() => {
         "success": success,

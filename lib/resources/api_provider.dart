@@ -79,26 +79,4 @@ class ApiProvider {
       return null;
     }
   }
-
-  Future<UserResp> kyc2(idType, idNum, File idFile, npwpNum, File npwpFile) async {
-    final request = http.MultipartRequest('POST', Uri.parse("$_url/kyc/kyc_2_identity_document"));
-    request.headers['JWT'] = appData.read(token);
-    request.fields['orang[orang_id_type]'] = idType;
-    request.fields['orang[orang_id_num]'] = idNum;
-    request.files.add(
-      await http.MultipartFile.fromPath('orang[orang_id_file]', idFile.path),
-    );
-    request.fields['orang[orang_npwp_num]'] = npwpNum;
-    request.files.add(await http.MultipartFile.fromPath('orang[orang_npwp_file]', npwpFile.path));
-    var response = await http.Response.fromStream(await request.send());
-
-    if (response.statusCode == 200) {
-      final jsonResponse = await json.decode(response.body);
-      UserResp kyc2Response = UserResp.fromJson(jsonResponse);
-      print(jsonResponse);
-      return kyc2Response;
-    } else {
-      return null;
-    }
-  }
 }

@@ -143,7 +143,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                     ),
                     SizedBox(height: 30),
                     Obx(() {
-                      if (controller.isLoadingForm.value) {
+                      if (controller.isLoading.value) {
                         return JumpingDotsProgressIndicator(
                           numberOfDots: 3,
                           fontSize: 40,
@@ -151,9 +151,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         );
                       }
                       return RaisedButton(
-                        onPressed: () {
-                          controller.checkIdentity();
-                        },
+                        onPressed: () => controller.checkIdentity(),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         color: controller.isKycStatus.value ? primaryColor : disableColor,
                         child: Center(

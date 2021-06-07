@@ -70,6 +70,7 @@ class ApiRepository {
       nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
     final response = await _http.call(
       url.kycPersonalInfo,
+      useFormData: true,
       token: token,
       request: {
         'orang[orang_name]': nama,

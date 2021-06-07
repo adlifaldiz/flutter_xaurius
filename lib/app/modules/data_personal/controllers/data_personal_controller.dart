@@ -40,7 +40,7 @@ class DataPersonalController extends GetxController {
     super.onClose();
   }
 
-  Future postKyc1() async {
+  Future kycPersonalData() async {
     isLoading(true);
     final resp = await provider.kycPersonalData(
       namaControl.text,
