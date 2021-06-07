@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
-import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -8,7 +7,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 class DashboardController extends GetxController {
   final auth = Get.find<AuthController>();
   final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
-  GoldPriceController goldPriceController = Get.put(GoldPriceController());
+  final goldPriceController = Get.find<GoldPriceController>();
   var isBuy = true.obs;
 
   @override

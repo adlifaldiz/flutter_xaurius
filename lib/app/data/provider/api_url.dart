@@ -8,3 +8,4 @@ const login = '/auth/login';
 const kycPersonalInfo = '/kyc/kyc_1_personal_info';
 const kycDocument = '/kyc/kyc_2_identity_document';
 const buys = '/buys';
+const profileBank = '/profile/bank';

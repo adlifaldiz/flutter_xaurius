@@ -11,7 +11,7 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var isError = false.obs;
 
-  void getProfileData() async {
+  Future<void> getProfileData() async {
     isLoading(true);
     final resp = await _repo.getPersonalInfo(token);
     if (resp.success) {

@@ -15,6 +15,8 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/data_personal_controller.dart';
 
 class DataPersonalView extends GetView<DataPersonalController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +26,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
           title: Text('Data Personal'),
         ),
         body: Obx(() {
-          if (controller.kycController.isLoading.value) {
+          if (controller.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 numberOfDots: 3,
@@ -38,33 +40,33 @@ class DataPersonalView extends GetView<DataPersonalController> {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
               child: Form(
-                key: controller.kycController.kyc1Key,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateName,
-                      controller: controller.kycController.namaControl == null ? '' : controller.kycController.namaControl,
+                      controller: controller.namaControl == null ? '' : controller.namaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Nama lengkap (KTP)',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validatePhone,
-                      controller: controller.kycController.nomorControl == null ? '' : controller.kycController.nomorControl,
+                      controller: controller.nomorControl == null ? '' : controller.nomorControl,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
                       labelText: 'Nomor telepon',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: !controller.kycController.isKycStatus.value
+                      ontap: !controller.isKycStatus.value
                           ? () {}
                           : () {
                         DatePicker.showDatePicker(context,
@@ -76,15 +78,15 @@ class DataPersonalView extends GetView<DataPersonalController> {
                             showTitleActions: true,
                             // minTime: DateTime(2018, 3, 5),
                             maxTime: DateTime.now(), onChanged: (date) {
-                              controller.kycController.tanggalControl.text = controller.kycController.formatter.format(date);
+                              controller.tanggalControl.text = controller.formatter.format(date);
                             }, onConfirm: (date) {
-                              controller.kycController.tanggalControl.text = controller.kycController.formatter.format(date);
+                              controller.tanggalControl.text = controller.formatter.format(date);
                             }, currentTime: DateTime.now(), locale: LocaleType.id);
                       },
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateDate,
-                      controller: controller.kycController.tanggalControl == null ? '' : controller.kycController.tanggalControl,
+                      controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
                       suffixIcon: Icon(
                         FontAwesomeIcons.calendarAlt,
                         color: primaryColor,
@@ -95,37 +97,37 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateAddress,
-                      controller: controller.kycController.alamatControl == null ? '' : controller.kycController.alamatControl,
+                      controller: controller.alamatControl == null ? '' : controller.alamatControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Alamat rumah',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCity,
-                      controller: controller.kycController.kotaControl == null ? '' : controller.kycController.kotaControl,
+                      controller: controller.kotaControl == null ? '' : controller.kotaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Kota',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateKode,
-                      controller: controller.kycController.kodePosControl == null ? '' : controller.kycController.kodePosControl,
+                      controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
                       labelText: 'Kode pos',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: !controller.kycController.isKycStatus.value
+                      ontap: !controller.isKycStatus.value
                           ? () {}
                           : () {
                         showCupertinoModalPopup<void>(
@@ -134,7 +136,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                               return CurrencyPickerCupertino(
                                 diameterRatio: 5,
                                 backgroundColor: backgroundPanelColor,
-                                initialCountry: controller.kycController.selectedCupertinoCurrency,
+                                initialCountry: controller.selectedCupertinoCurrency,
                                 pickerSheetHeight: percentHeight(context, 50),
                                 pickerItemHeight: percentHeight(context, 5),
                                 itemBuilder: (Country country) {
@@ -152,15 +154,15 @@ class DataPersonalView extends GetView<DataPersonalController> {
                                   );
                                 },
                                 onValuePicked: (Country country) {
-                                  controller.kycController.negaraControl.text = country.isoCode;
+                                  controller.negaraControl.text = country.isoCode;
                                 },
                               );
                             });
                       },
-                      readOnly: !controller.kycController.isKycStatus.value,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCountry,
-                      controller: controller.kycController.negaraControl == null ? '' : controller.kycController.negaraControl,
+                      controller: controller.negaraControl == null ? '' : controller.negaraControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Negara',
@@ -183,7 +185,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 30),
                     Obx(() {
-                      if (controller.kycController.isLoadingForm.value) {
+                      if (controller.isLoading.value) {
                         return JumpingDotsProgressIndicator(
                           numberOfDots: 3,
                           fontSize: 40,
@@ -191,13 +193,13 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         );
                       }
                       return RaisedButton(
-                        onPressed: !controller.kycController.isKycStatus.value
+                        onPressed: !controller.isKycStatus.value
                             ? () {}
                             : () {
-                          controller.kycController.postKyc1();
+                          controller.postKyc1();
                         },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: controller.kycController.isKycStatus.value ? primaryColor : disableColor,
+                        color: controller.isKycStatus.value ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
                             'Simpan',

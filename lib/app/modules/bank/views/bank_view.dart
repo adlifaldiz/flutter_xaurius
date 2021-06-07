@@ -10,6 +10,8 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/bank_controller.dart';
 
 class BankView extends GetView<BankController> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class BankView extends GetView<BankController> {
         title: Text('Bank'),
       ),
       body: Obx(() {
-        if (controller.kycController.isLoading.value) {
+        if (controller.auth.isLoading.value) {
           return Center(
             child: JumpingDotsProgressIndicator(
               numberOfDots: 3,
@@ -30,7 +32,7 @@ class BankView extends GetView<BankController> {
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
             child: Form(
-              key: controller.bankKey,
+              key: _formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -62,7 +64,7 @@ class BankView extends GetView<BankController> {
                   ),
                   SizedBox(height: 30),
                   Obx(() {
-                    if (controller.isLoadingForm.value) {
+                    if (controller.isLoading.value) {
                       return Center(
                         child: JumpingDotsProgressIndicator(
                           numberOfDots: 3,
@@ -73,7 +75,12 @@ class BankView extends GetView<BankController> {
                     }
                     return RaisedButton(
                       onPressed: () {
-                        controller.checkPostBank();
+                        final isValid = _formKey.currentState.validate();
+                        if (!isValid) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        controller.updateBank();
                       },
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       color: primaryColor,

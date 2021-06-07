@@ -1,24 +1,17 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/controller/kyc_controller.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
 
 class BankController extends GetxController {
-  KycController kycController = Get.put(KycController());
-  final GlobalKey<FormState> bankKey = GlobalKey<FormState>();
-  ApiProvider provider = ApiProvider();
-  var kycResponse = UserResp().obs;
-
-  var isLoadingForm = false.obs;
-  var isTimeoutForm = false.obs;
-  var isNoConnectionForm = false.obs;
+  final auth = Get.find<AuthController>();
+  final _repo = ApiRepository();
+  var isLoading = false.obs;
 
   TextEditingController namaBankControl = TextEditingController();
   TextEditingController namaAkunControl = TextEditingController();
@@ -26,7 +19,7 @@ class BankController extends GetxController {
 
   @override
   void onInit() {
-    kycController.checkKyc1();
+    auth.getProfileData();
     checkBank();
     super.onInit();
   }
@@ -37,56 +30,21 @@ class BankController extends GetxController {
   }
 
   void checkBank() {
-    namaBankControl.text = kycController.namaBankControl.text;
-    namaAkunControl.text = kycController.namaAkunControl.text;
-    nomorAkunControl.text = kycController.nomorAkunControl.text;
+    namaBankControl.text = auth.userData.orangBankName;
+    namaAkunControl.text = auth.userData.orangBankHolder;
+    nomorAkunControl.text = auth.userData.orangBankNumber;
     update();
   }
 
-  Future postBank() async {
-    isLoadingForm(true);
-    try {
-      var bankPost = await provider.bank(namaBankControl.text, namaAkunControl.text, nomorAkunControl.text);
-      if (bankPost == null) {
-        kycResponse.value.success = false;
-        kycResponse.value.message = 'Terjadi masalah';
-      } else {
-        kycResponse.value = bankPost;
-      }
-    } on TimeoutException {
-      isTimeoutForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Waktu habis', () {
+  Future updateBank() async {
+    isLoading(true);
+    final resp = await _repo.updateBankProfile(auth.token, namaBankControl.text, namaAkunControl.text, nomorAkunControl.text);
+    if (resp.success) {
+      successSnackbar('Sukses', 'Berhasil menambahkan data bank');
+    } else {
+      dialogConnection('Oops', resp.message, () {
         Get.back();
-        isTimeoutForm(false);
       });
-    } on SocketException {
-      isNoConnectionForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnectionForm(false);
-      });
-    } finally {
-      isLoadingForm(false);
-      isTimeoutForm(false);
-      isNoConnectionForm(false);
-      if (kycResponse.value.success) {
-        successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
-      } else {
-        failSnackbar('Fail', kycResponse.value.message);
-      }
     }
-    update();
-  }
-
-  void checkPostBank() {
-    final isValid = bankKey.currentState.validate();
-
-    if (!isValid) {
-      return;
-    }
-    bankKey.currentState.save();
-    postBank();
   }
 }

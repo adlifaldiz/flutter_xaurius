@@ -30,7 +30,8 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> registerPin(String email, String otp, String pin, String pinConfirm) async {
+  Future<BaseResp> registerPin(
+      String email, String otp, String pin, String pinConfirm) async {
     final response = await _http.call(
       url.registerPin,
       method: MethodRequest.POST,
@@ -102,10 +103,24 @@ class ApiRepository {
   }
 
   Future<ResponseBuys> getBuys(String token) async {
-    final response = await _http.call(url.buys,
+    final response = await _http.call(
+      url.buys,
       token: token,
       method: MethodRequest.GET,
     );
     return ResponseBuys.fromJson(response.body);
+  }
+
+  Future<UserResp> updateBankProfile(String token, String bankName,
+      String holderName, String holderNumber) async {
+    final response = await _http.call(url.profileBank,
+        token: token,
+        method: MethodRequest.POST,
+        request: {
+          'orang[orang_bank_name]': bankName,
+          'orang[orang_bank_holder]': holderName,
+          'orang[orang_bank_number]': holderNumber,
+        });
+    return UserResp.fromJson(response.body);
   }
 }

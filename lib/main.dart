@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,9 @@ class _MyAppState extends State<MyApp> {
       initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
       initialBinding: AuthBinding(),
+      onInit: () {
+        Get.lazyPut(() => GoldPriceController());
+      },
       theme: ThemeData(
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,

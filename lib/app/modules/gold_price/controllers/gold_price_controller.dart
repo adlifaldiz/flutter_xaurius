@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class GoldPriceController extends GetxController {
   final auth = Get.find<AuthController>();
-  ApiRepository _repo = ApiRepository();
+  final _repo = ApiRepository();
 
   var buysResponse = ResponseBuys().obs;
   var listBuys = <Buy>[].obs;
@@ -31,6 +31,7 @@ class GoldPriceController extends GetxController {
     isLoading(true);
     final resp = await _repo.getBuys(auth.token);
     if (resp.success) {
+      buysResponse(resp);
       buyPrice = resp.data.currentGoldPrice.buy.toString();
       sellPrice = resp.data.currentGoldPrice.sell.toString();
       listBuys(resp.data.buys);
