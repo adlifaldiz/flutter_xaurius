@@ -1,4 +1,4 @@
-const String hostImage = 'https://sim-b.xaurius.com/';
+const String hostImage = 'https://sim-b.xaurius.com';
 const String hostAPI = 'https://sim-b.xaurius.com/api/v1/';
 
 const register = '/auth/register';

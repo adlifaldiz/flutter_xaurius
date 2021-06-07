@@ -48,8 +48,7 @@ class DashboardView extends GetView<DashboardController> {
         ],
       ),
       body: Obx(() {
-        if (controller.goldPriceController.isLoading.value ||
-            controller.auth.isLoading.value || controller.auth.userData == null) {
+        if (controller.goldPriceController.isLoading.value || controller.auth.isLoading.value || controller.auth.userData == null) {
           return Center(
             child: JumpingDotsProgressIndicator(
               numberOfDots: 3,
@@ -70,38 +69,44 @@ class DashboardView extends GetView<DashboardController> {
               padding: EdgeInsets.all(20),
               children: [
                 if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
-                  XauriusContainer(
-                    child: Column(
-                      children: [
-                        Text('Akun kamu sedang di review'),
-                      ],
-                    ),
+                  Column(
+                    children: [
+                      XauriusContainer(
+                        child: Column(
+                          children: [
+                            Text('Kamu Belum melakukan KYC'),
+                            FlatButton(
+                              color: primaryColor,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                              onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
+                              child: Text(
+                                'KYC Sekarang',
+                                style: stylePrimaryDark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 if (controller?.auth?.userData?.orangKycAskForReview ?? false)
-                  SizedBox(
-                    height: 20,
-                  ),
-                if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
-                  XauriusContainer(
-                    child: Column(
-                      children: [
-                        Text('Kamu Belum melakukan KYC'),
-                        FlatButton(
-                          color: primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
-                          child: Text(
-                            'KYC Sekarang',
-                            style: stylePrimaryDark,
-                          ),
+                  Column(
+                    children: [
+                      XauriusContainer(
+                        child: Column(
+                          children: [
+                            Text('Akun kamu sedang di review'),
+                            Text('Mohon tunggu approval'),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
-                  SizedBox(
-                    height: 20,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,10 +117,7 @@ class DashboardView extends GetView<DashboardController> {
                         children: [
                           Text(
                             controller.greeting(),
-                            style: TextStyle(
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16),
+                            style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.normal, fontSize: 16),
                           ),
                           SizedBox(height: 5),
                           Text(
@@ -125,10 +127,7 @@ class DashboardView extends GetView<DashboardController> {
                                     ? controller.auth.userData.orangEmail
                                     : controller.auth.userData.orangName,
                             overflow: TextOverflow.fade,
-                            style: TextStyle(
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                            style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ],
                       ),
@@ -139,16 +138,9 @@ class DashboardView extends GetView<DashboardController> {
                         RichText(
                           text: TextSpan(
                             text: 'XAU: ',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
                             children: <TextSpan>[
-                              TextSpan(
-                                  text: '00.00',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: brokenWhiteColor)),
+                              TextSpan(text: '00.00', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
                             ],
                           ),
                         ),
@@ -157,19 +149,10 @@ class DashboardView extends GetView<DashboardController> {
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
                             text: 'IDR: ',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
                             children: <TextSpan>[
-                              TextSpan(
-                                  text: 'no',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: brokenWhiteColor)),
-                              TextSpan(
-                                  text: '.00',
-                                  style: TextStyle(color: brokenWhiteColor)),
+                              TextSpan(text: 'no', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
+                              TextSpan(text: '.00', style: TextStyle(color: brokenWhiteColor)),
                             ],
                           ),
                         ),
@@ -214,12 +197,9 @@ class DashboardView extends GetView<DashboardController> {
                                 controller.goldPriceController.isLoading.value
                                     ? '-'
                                     : controller.isBuy.value
-                                        ? "IDR: ${controller.goldPriceController.buyPrice}" ??
-                                            '-'
-                                        : "IDR: ${controller.goldPriceController.sellPrice}" ??
-                                            '-',
-                                style: stylePrimary.copyWith(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                        ? "IDR: ${controller.goldPriceController.buyPrice}" ?? '-'
+                                        : "IDR: ${controller.goldPriceController.sellPrice}" ?? '-',
+                                style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -232,12 +212,9 @@ class DashboardView extends GetView<DashboardController> {
                                     controller.onChangeBuy(true);
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
-                                      color: controller.isBuy.value
-                                          ? textBlackColor
-                                          : Colors.transparent,
+                                      color: controller.isBuy.value ? textBlackColor : Colors.transparent,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
@@ -255,12 +232,9 @@ class DashboardView extends GetView<DashboardController> {
                                     controller.onChangeBuy(false);
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
-                                      color: controller.isBuy.value
-                                          ? Colors.transparent
-                                          : textBlackColor,
+                                      color: controller.isBuy.value ? Colors.transparent : textBlackColor,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
@@ -303,9 +277,7 @@ class DashboardView extends GetView<DashboardController> {
                           legend: Legend(
                             isVisible: false,
                           ),
-                          title: ChartTitle(
-                              text: "XAU/IDR 2021",
-                              textStyle: TextStyle(color: textWhiteColor)),
+                          title: ChartTitle(text: "XAU/IDR 2021", textStyle: TextStyle(color: textWhiteColor)),
                           indicators: <TechnicalIndicators<SalesData, dynamic>>[
                             BollingerBandIndicator<SalesData, dynamic>(
                               seriesName: "XAU Stock",
@@ -313,27 +285,17 @@ class DashboardView extends GetView<DashboardController> {
                               isVisible: false,
                             ),
                             MacdIndicator(
-                                seriesName: "XAU Stock",
-                                period: 1,
-                                shortPeriod: 3,
-                                longPeriod: 5,
-                                yAxisName: "secondyaxis",
-                                isVisible: false),
+                                seriesName: "XAU Stock", period: 1, shortPeriod: 3, longPeriod: 5, yAxisName: "secondyaxis", isVisible: false),
                           ],
                           series: <ChartSeries>[
                             HiloOpenCloseSeries<SalesData, dynamic>(
                                 dataSource: chartData,
                                 xValueMapper: (SalesData sales, _) => sales.x,
-                                highValueMapper: (SalesData sales, _) =>
-                                    sales.high,
-                                lowValueMapper: (SalesData sales, _) =>
-                                    sales.low,
-                                openValueMapper: (SalesData sales, _) =>
-                                    sales.open,
-                                closeValueMapper: (SalesData sales, _) =>
-                                    sales.close,
-                                volumeValueMapper: (SalesData sales, _) =>
-                                    sales.close,
+                                highValueMapper: (SalesData sales, _) => sales.high,
+                                lowValueMapper: (SalesData sales, _) => sales.low,
+                                openValueMapper: (SalesData sales, _) => sales.open,
+                                closeValueMapper: (SalesData sales, _) => sales.close,
+                                volumeValueMapper: (SalesData sales, _) => sales.close,
                                 name: "XAU Stock",
                                 bearColor: textWhiteColor,
                                 bullColor: accentColor)
@@ -376,9 +338,7 @@ class DashboardView extends GetView<DashboardController> {
                 Container(
                   height: percentHeight(context, 20),
                   width: percentWidth(context, 100),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: percentWidth(context, 5),
-                      vertical: percentHeight(context, 2)),
+                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: backgroundPanelColor,
@@ -393,9 +353,7 @@ class DashboardView extends GetView<DashboardController> {
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           width: percentWidth(context, 50),
-                          decoration: BoxDecoration(
-                              color: textBlackColor,
-                              borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: textBlackColor, borderRadius: BorderRadius.circular(20)),
                           child: Column(
                             children: [
                               ClipRRect(
@@ -413,8 +371,7 @@ class DashboardView extends GetView<DashboardController> {
                               SizedBox(height: 5),
                               Expanded(
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   child: Text(
                                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                                     style: stylePrimary.copyWith(fontSize: 10),
@@ -475,9 +432,7 @@ class DashboardView extends GetView<DashboardController> {
                           launch("https://t.me/xauriusindonesia");
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: percentWidth(context, 5),
-                              vertical: percentHeight(context, 2)),
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -501,13 +456,10 @@ class DashboardView extends GetView<DashboardController> {
                       InkWell(
                         borderRadius: BorderRadius.circular(20),
                         onTap: () {
-                          launch(
-                              'https://www.instagram.com/xaurius/?igshid=1nv4wja78ge4i');
+                          launch('https://www.instagram.com/xaurius/?igshid=1nv4wja78ge4i');
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: percentWidth(context, 5),
-                              vertical: percentHeight(context, 2)),
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

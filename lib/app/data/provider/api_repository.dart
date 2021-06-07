@@ -65,11 +65,11 @@ class ApiRepository {
     return UserResp.fromJson(response.body);
   }
 
-  Future<UserResp> kycPersonalData(
-      nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
+  Future<UserResp> kycPersonalData(nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
     final response = await _http.call(
       url.kycPersonalInfo,
       token: token,
+      useFormData: true,
       request: {
         'orang[orang_name]': nama,
         'orang[orang_phone]': nomor,
@@ -83,26 +83,20 @@ class ApiRepository {
     return UserResp.fromJson(response.body);
   }
 
-  Future<UserResp> kycDocument(
-      idType, idNum, File idFile, npwpNum, File npwpFile, jwt) async {
-    final response = await _http.call(url.kycDocument,
-        token: jwt,
-        method: MethodRequest.POST,
-        useFormData: true,
-        request: {
-          'orang[orang_id_type]': idType,
-          'orang[orang_id_num]': idNum,
-          'orang[orang_id_file]':
-              MultipartFile(idFile.path, filename: idFile.path.split('/').last),
-          'orang[orang_npwp_num]': npwpNum,
-          'orang[orang_npwp_file]': MultipartFile(npwpFile.path,
-              filename: npwpFile.path.split('/').last),
-        });
+  Future<UserResp> kycDocument(idType, idNum, File idFile, npwpNum, File npwpFile, jwt) async {
+    final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
+      'orang[orang_id_type]': idType,
+      'orang[orang_id_num]': idNum,
+      'orang[orang_id_file]': MultipartFile(idFile.path, filename: idFile.path.split('/').last),
+      'orang[orang_npwp_num]': npwpNum,
+      'orang[orang_npwp_file]': MultipartFile(npwpFile.path, filename: npwpFile.path.split('/').last),
+    });
     return UserResp.fromJson(response.body);
   }
 
   Future<ResponseBuys> getBuys(String token) async {
-    final response = await _http.call(url.buys,
+    final response = await _http.call(
+      url.buys,
       token: token,
       method: MethodRequest.GET,
     );
