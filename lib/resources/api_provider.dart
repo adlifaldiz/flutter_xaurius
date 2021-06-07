@@ -19,65 +19,6 @@ class ApiProvider {
   final token = 'token';
   final _url = hostAPI;
 
-  Future<BaseResp> addEmail(email) async {
-    final response = await http.post(Uri.parse("$_url/auth/register"), body: {'email': email});
-    if (response.statusCode == 200) {
-      print(response.body);
-      final jsonResponse = json.decode(response.body);
-      BaseResp signUpResponse = BaseResp.fromJson(jsonResponse);
-      return signUpResponse;
-    } else {
-      return null;
-    }
-  }
-
-  Future<BaseResp> addCode(email, otp) async {
-    final response = await http.post(Uri.parse("$_url/auth/register_verification"), body: {'email': email, 'otp': otp});
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      BaseResp authResponse = BaseResp.fromJson(jsonResponse);
-      return authResponse;
-    } else {
-      return null;
-    }
-  }
-
-  Future<BaseResp> addpin(email, otp, pin, pinConfirm) async {
-    final response = await http.post(Uri.parse("$_url/auth/register_pin"), body: {
-      'email': email,
-      'otp': otp,
-      'pin': pin,
-      'pin_confirm': pinConfirm,
-    });
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      BaseResp authResponse = BaseResp.fromJson(jsonResponse);
-      return authResponse;
-    } else {
-      return null;
-    }
-  }
-
-  Future<LoginResp> login(email, pin) async {
-    final response = await http.post(Uri.parse("$_url/auth/login"), body: {
-      'email': email,
-      'pin': pin,
-    });
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      LoginResp authResponse = LoginResp.fromJson(jsonResponse);
-      return authResponse;
-    } else {
-      return null;
-    }
-  }
-
   Future<UserResp> getKyc1() async {
     final response = await http.get(
       Uri.parse('$_url/kyc/kyc_1_personal_info'),

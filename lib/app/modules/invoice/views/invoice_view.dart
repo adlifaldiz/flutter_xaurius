@@ -13,7 +13,7 @@ class InvoiceView extends GetView<InvoiceController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Get.arguments == null ? 'Invoice' : 'Invoice #${Get.arguments}',
+          Get.arguments == null ? 'Invoice' : 'Invoice #${controller.invoiceNumber}',
         ),
       ),
       body: Obx(() {

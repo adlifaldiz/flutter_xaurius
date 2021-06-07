@@ -9,13 +9,14 @@ import 'package:get/get.dart';
 class InvoiceController extends GetxController {
   ApiProvider provider = ApiProvider();
   var responseDetailInvoice = ResponseDetailInvoice().obs;
-
+  var invoiceNumber;
   var isLoadingForm = false.obs;
   var isTimeoutForm = false.obs;
   var isNoConnectionForm = false.obs;
 
   @override
   void onInit() {
+    invoiceNumber = Get.arguments;
     super.onInit();
   }
 

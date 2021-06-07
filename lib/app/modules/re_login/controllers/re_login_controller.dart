@@ -5,7 +5,7 @@ import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class LoginController extends GetxController {
+class ReLoginController extends GetxController {
   final auth = Get.find<AuthController>();
   final storage = GetStorage();
   ApiRepository _repo = ApiRepository();
@@ -15,6 +15,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    email = storage.read('username');
     super.onInit();
   }
 

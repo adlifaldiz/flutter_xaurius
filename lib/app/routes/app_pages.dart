@@ -1,3 +1,5 @@
+import 'package:flutter_xaurius/app/modules/re_login/bindings/re_login_binding.dart';
+import 'package:flutter_xaurius/app/modules/re_login/views/re_login_view.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_xaurius/app/modules/Social_Media/bindings/social_media_binding.dart';
@@ -134,16 +136,12 @@ class AppPages {
       page: () => HistoryView(),
       binding: HistoryBinding(),
     ),
-    GetPage(
-      name: _Paths.MENU,
-      page: () => MenuView(),
-      bindings: [
-        MenuBinding(),
-        DashboardBinding(),
-        HistoryBinding(),
-        SettingBinding(),
-      ]
-    ),
+    GetPage(name: _Paths.MENU, page: () => MenuView(), bindings: [
+      MenuBinding(),
+      DashboardBinding(),
+      HistoryBinding(),
+      SettingBinding(),
+    ]),
     GetPage(
       name: _Paths.SETTING,
       page: () => SettingView(),
@@ -223,6 +221,11 @@ class AppPages {
       name: _Paths.VERIFY_CODE,
       page: () => VerifyCodeView(),
       binding: VerifyCodeBinding(),
+    ),
+    GetPage(
+      name: _Paths.RE_LOGIN,
+      page: () => ReLoginView(),
+      binding: ReLoginBinding(),
     ),
   ];
 }
