@@ -1,50 +1,41 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
-import 'package:intl/intl.dart';
-
-import 'package:country_currency_pickers/country.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadDocumentController extends GetxController {
-  final _repo = ApiRepository();
-  final auth = Get.find<AuthController>();
   final GlobalKey<FormState> kyc2Key = GlobalKey<FormState>();
-
-  DateFormat formatter = DateFormat('yyyy-MM-dd');
-  Country selectedCupertinoCurrency;
-
+  ApiRepository _repo = ApiRepository();
+  final auth = Get.find<AuthController>();
   var isLoading = false.obs;
+  var idTypeValue = 'KTP'.obs;
 
-  var isBuy = true.obs;
-  var isKycStatus = true.obs;
-  var isKycReview = false.obs;
-
-  var valueId = 2;
-
-  String valueIdType = 'KTP';
+  List<String> listIdType = [
+    'KTP',
+    'Passport',
+  ];
 
   var selectedImagePathKtp = ''.obs;
   var selectedImageNetworkKtp = ''.obs;
   var selectedImagePathNpwp = ''.obs;
   var selectedImageNetworkNpwp = ''.obs;
 
-  File ktpPath;
-  File npwpPath;
+  TextEditingController nomorKTP;
+  TextEditingController nomorNPWP;
 
-  //kyc2
-  TextEditingController nomorKTP = TextEditingController();
-  TextEditingController nomorNPWP = TextEditingController();
+  void updateValueId(RxString changeIdType) {
+    idTypeValue.value = changeIdType.value;
+    update();
+  }
 
   @override
   void onInit() {
-    selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
+    setTextController();
+    auth.getProfileData();
+    setText();
     super.onInit();
   }
 
@@ -53,39 +44,32 @@ class UploadDocumentController extends GetxController {
     super.onClose();
   }
 
-  Future kycDocument(idType) async {
-    isLoading(true);
-    final resp = await _repo.kycDocument(idType, nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value), auth.token);
-    if(resp.success) {
-      successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
-    } else {
-      dialogConnection('Oops', resp.message, () {
-        Get.back();
-      });
-    }
-    isLoading(false);
+  // Future kycDocument(idType) async {
+  //   isLoading(true);
+  //   final resp = await _repo.kycDocument(idType, nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value), auth.token);
+  //   if(resp.success) {
+  //     successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
+  //   } else {
+  //     dialogConnection('Oops', resp.message, () {
+  //       Get.back();
+  //     });
+  //   }
+  //   isLoading(false);
+  // }
+
+
+  void setTextController() {
+    nomorKTP = TextEditingController();
+    nomorNPWP = TextEditingController();
   }
 
-  void checkIdentity() {
-    final isValid = kyc2Key.currentState.validate();
-    if (valueId == 1) {
-      valueIdType = 'KTP';
-    } else {
-      valueIdType = 'Passport';
-    }
-
-    if (selectedImagePathKtp.value.isEmpty) {
-      failSnackbar('KTP', 'Foto identitas belum kamu pilih');
-    } else if (selectedImagePathNpwp.isEmpty) {
-      failSnackbar('NPWP', 'Foto NPWP belum kamu pilih');
-    } else {
-      if (isValid) {
-        kyc2Key.currentState.save();
-        kycDocument(valueIdType);
-      } else {
-        failSnackbar('Form', 'Form tidak valid');
-      }
-    }
+  void setText() {
+    nomorKTP.text = auth.userData.orangIdNum;
+    nomorNPWP.text = auth.userData.orangNpwpNum;
+    auth.userData.orangIdType != null ? idTypeValue.value = auth.userData.orangIdType : idTypeValue.value = 'KTP';
+    auth.userData.orangIdFile.url != null ? selectedImageNetworkKtp.value = auth.userData.orangIdFile.url : selectedImageNetworkKtp.value = '';
+    auth.userData.orangNpwpFile.url != null ? selectedImageNetworkNpwp.value = auth.userData.orangNpwpFile.url : selectedImageNetworkNpwp.value = '';
+    update();
   }
 
   void takeImageKTP() async {
@@ -96,7 +80,6 @@ class UploadDocumentController extends GetxController {
         print('image selected.');
       } else {
         failSnackbar('Fail', 'Kamu belum memilih foto');
-        print('No image selected.');
       }
       update();
     } catch (e) {
@@ -112,11 +95,41 @@ class UploadDocumentController extends GetxController {
         print('image selected.');
       } else {
         failSnackbar('Fail', 'Kamu belum memilih foto');
-        print('No image selected.');
       }
       update();
     } catch (e) {
       failSnackbar('Fail', 'Terjadi Kesalahan $e');
     }
+  }
+
+  void checkDocumentIdentity() {
+    if (selectedImagePathKtp.value.isEmpty) {
+      failSnackbar('KTP', "Kamu belum meilih foto Identitas");
+    } else if (selectedImagePathNpwp.value.isEmpty) {
+      failSnackbar('NPWP', 'Kamu belum memilih foto NPWP');
+    } else {
+      final isValid = kyc2Key.currentState.validate();
+      if (!isValid) {
+        return;
+      }
+      kyc2Key.currentState.save();
+      kycDocument();
+    }
+  }
+
+  void kycDocument() async {
+    isLoading(true);
+    var resp = await _repo.kycDocument(
+        idTypeValue.value.toString(), nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value), auth.token);
+    if (resp.success) {
+      onInit();
+      Get.back();
+      successSnackbar('Berhasil', 'Kamu berhasil melengkapi Dokumen Identitas');
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
+    }
+    isLoading(false);
   }
 }

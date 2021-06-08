@@ -103,6 +103,22 @@ String validateCountry(String value) {
   }
 }
 
+String validateKTP(String value) {
+  if (value.isEmpty) {
+    return 'Nomor KTP tidak boleh kosong';
+  } else {
+    return null;
+  }
+}
+
+String validateNPWP(String value) {
+  if (value.isEmpty) {
+    return 'Nomor NPWP tidak boleh kosong';
+  } else {
+    return null;
+  }
+}
+
 //bank
 String validateNameBank(String value) {
   if (value.isEmpty) {

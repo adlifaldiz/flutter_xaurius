@@ -26,7 +26,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
           title: Text('Data Personal'),
         ),
         body: Obx(() {
-          if (controller.isLoading.value) {
+          if (controller.auth.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 numberOfDots: 3,
@@ -35,28 +35,29 @@ class DataPersonalView extends GetView<DataPersonalController> {
               ),
             );
           }
-
           return SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
               child: Form(
-                key: formKey,
+                key: controller.kyc1Key,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.isKycStatus.value,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      onSaved: (value) => controller.nama = value,
                       useObscure: false,
                       validator: validateName,
-                      controller: controller.namaControl == null ? '' : controller.namaControl,
+                      controller: controller.namaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Nama lengkap (KTP)',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.isKycStatus.value,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      onSaved: (value) => controller.phone = value,
                       useObscure: false,
                       validator: validatePhone,
                       controller: controller.nomorControl == null ? '' : controller.nomorControl,
@@ -66,24 +67,25 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: controller.isKycStatus.value
+                      onSaved: (value) => controller.birthDate = value,
+                      ontap: !controller.auth.userData.orangKycEditAvailable
                           ? () {}
                           : () {
-                        DatePicker.showDatePicker(context,
-                            theme: DatePickerTheme(
-                                backgroundColor: backgroundPanelColor,
-                                itemStyle: stylePrimary,
-                                doneStyle: stylePrimary,
-                                cancelStyle: stylePrimary.copyWith(color: primaryColor)),
-                            showTitleActions: true,
-                            // minTime: DateTime(2018, 3, 5),
-                            maxTime: DateTime.now(), onChanged: (date) {
-                              controller.tanggalControl.text = controller.formatter.format(date);
-                            }, onConfirm: (date) {
-                              controller.tanggalControl.text = controller.formatter.format(date);
-                            }, currentTime: DateTime.now(), locale: LocaleType.id);
-                      },
-                      readOnly: controller.isKycStatus.value,
+                              DatePicker.showDatePicker(context,
+                                  theme: DatePickerTheme(
+                                      backgroundColor: backgroundPanelColor,
+                                      itemStyle: stylePrimary,
+                                      doneStyle: stylePrimary,
+                                      cancelStyle: stylePrimary.copyWith(color: primaryColor)),
+                                  showTitleActions: true,
+                                  // minTime: DateTime(2018, 3, 5),
+                                  maxTime: DateTime.now(), onChanged: (date) {
+                                controller.tanggalControl.text = controller.formatter.format(date);
+                              }, onConfirm: (date) {
+                                controller.tanggalControl.text = controller.formatter.format(date);
+                              }, currentTime: DateTime.now(), locale: LocaleType.id);
+                            },
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
                       useObscure: false,
                       validator: validateDate,
                       controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
@@ -97,7 +99,8 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.isKycStatus.value,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      onSaved: (value) => controller.addressStreet = value,
                       useObscure: false,
                       validator: validateAddress,
                       controller: controller.alamatControl == null ? '' : controller.alamatControl,
@@ -107,7 +110,8 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.isKycStatus.value,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      onSaved: (value) => controller.addressCity = value,
                       useObscure: false,
                       validator: validateCity,
                       controller: controller.kotaControl == null ? '' : controller.kotaControl,
@@ -117,7 +121,8 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.isKycStatus.value,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      onSaved: (value) => controller.addressPostal = value,
                       useObscure: false,
                       validator: validateKode,
                       controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
@@ -127,39 +132,40 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      ontap: controller.isKycStatus.value
+                      onSaved: (value) => controller.addressCountry = value,
+                      ontap: !controller.auth.userData.orangKycEditAvailable
                           ? () {}
                           : () {
-                        showCupertinoModalPopup<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CurrencyPickerCupertino(
-                                diameterRatio: 5,
-                                backgroundColor: backgroundPanelColor,
-                                initialCountry: controller.selectedCupertinoCurrency,
-                                pickerSheetHeight: percentHeight(context, 50),
-                                pickerItemHeight: percentHeight(context, 5),
-                                itemBuilder: (Country country) {
-                                  return Row(
-                                    children: [
-                                      // country == null
-                                      //     ? CountryPickerUtils.getDefaultFlagImage(null)
-                                      //     : CountryPickerUtils.getDefaultFlagImage(country),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        '(${country.isoCode}) ${country.name}',
-                                        style: stylePrimary,
-                                      ),
-                                    ],
-                                  );
-                                },
-                                onValuePicked: (Country country) {
-                                  controller.negaraControl.text = country.isoCode;
-                                },
-                              );
-                            });
-                      },
-                      readOnly: controller.isKycStatus.value,
+                              showCupertinoModalPopup<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CurrencyPickerCupertino(
+                                      diameterRatio: 5,
+                                      backgroundColor: backgroundPanelColor,
+                                      initialCountry: controller.selectedCupertinoCurrency,
+                                      pickerSheetHeight: percentHeight(context, 50),
+                                      pickerItemHeight: percentHeight(context, 5),
+                                      itemBuilder: (Country country) {
+                                        return Row(
+                                          children: [
+                                            // country == null
+                                            //     ? CountryPickerUtils.getDefaultFlagImage(null)
+                                            //     : CountryPickerUtils.getDefaultFlagImage(country),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              '(${country.isoCode}) ${country.name}',
+                                              style: stylePrimary,
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                      onValuePicked: (Country country) {
+                                        controller.negaraControl.text = country.isoCode;
+                                      },
+                                    );
+                                  });
+                            },
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
                       useObscure: false,
                       validator: validateCountry,
                       controller: controller.negaraControl == null ? '' : controller.negaraControl,
@@ -187,19 +193,19 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     Obx(() {
                       if (controller.isLoading.value) {
                         return JumpingDotsProgressIndicator(
-                          numberOfDots: 3,
-                          fontSize: 40,
                           color: primaryColor,
+                          fontSize: 40,
                         );
                       }
                       return RaisedButton(
-                        onPressed: controller.isKycStatus.value
+                        onPressed: !controller.auth.userData.orangKycEditAvailable
                             ? () {}
                             : () {
-                          controller.kycPersonalData();
-                        },
+                                Get.focusScope.unfocus();
+                                controller.checkPersonalData();
+                              },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: !controller.isKycStatus.value ? primaryColor : disableColor,
+                        color: !controller.auth.userData.orangKycEditAvailable ? disableColor : primaryColor,
                         child: Center(
                           child: Text(
                             'Simpan',
@@ -207,7 +213,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                           ),
                         ),
                       );
-                    })
+                    }),
                   ],
                 ),
               ),
