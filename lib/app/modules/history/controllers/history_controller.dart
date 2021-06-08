@@ -1,8 +1,8 @@
-import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:get/get.dart';
 
 class HistoryController extends GetxController {
-  GoldPriceController goldPriceController = GoldPriceController();
+  final goldPriceController = Get.find<GoldPriceController>();
   @override
   void onInit() {
     goldPriceController.getBuys();

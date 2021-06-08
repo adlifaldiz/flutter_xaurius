@@ -1,5 +1,3 @@
-import 'package:flutter_xaurius/app/modules/re_login/bindings/re_login_binding.dart';
-import 'package:flutter_xaurius/app/modules/re_login/views/re_login_view.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_xaurius/app/modules/Social_Media/bindings/social_media_binding.dart';
@@ -24,6 +22,8 @@ import 'package:flutter_xaurius/app/modules/deposit/bindings/deposit_binding.dar
 import 'package:flutter_xaurius/app/modules/deposit/views/deposit_view.dart';
 import 'package:flutter_xaurius/app/modules/faq/bindings/faq_binding.dart';
 import 'package:flutter_xaurius/app/modules/faq/views/faq_view.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/bindings/gold_price_binding.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/views/gold_price_view.dart';
 import 'package:flutter_xaurius/app/modules/history/bindings/history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
 import 'package:flutter_xaurius/app/modules/home/bindings/home_binding.dart';
@@ -40,6 +40,8 @@ import 'package:flutter_xaurius/app/modules/privacy_policy/bindings/privacy_poli
 import 'package:flutter_xaurius/app/modules/privacy_policy/views/privacy_policy_view.dart';
 import 'package:flutter_xaurius/app/modules/profile/bindings/profile_binding.dart';
 import 'package:flutter_xaurius/app/modules/profile/views/profile_view.dart';
+import 'package:flutter_xaurius/app/modules/re_login/bindings/re_login_binding.dart';
+import 'package:flutter_xaurius/app/modules/re_login/views/re_login_view.dart';
 import 'package:flutter_xaurius/app/modules/register/bindings/register_binding.dart';
 import 'package:flutter_xaurius/app/modules/register/views/register_view.dart';
 import 'package:flutter_xaurius/app/modules/sell_xau/bindings/sell_xau_binding.dart';
@@ -226,6 +228,11 @@ class AppPages {
       name: _Paths.RE_LOGIN,
       page: () => ReLoginView(),
       binding: ReLoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOLD_PRICE,
+      page: () => GoldPriceView(),
+      binding: GoldPriceBinding(),
     ),
   ];
 }

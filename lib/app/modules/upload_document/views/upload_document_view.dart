@@ -22,7 +22,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
           title: Text('Dokumen Identitas'),
         ),
         body: Obx(() {
-          if (controller.auth.isLoading.value) {
+          if (controller.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 color: primaryColor,
@@ -50,24 +50,30 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           iconEnabledColor: primaryColor,
                           iconDisabledColor: brokenWhiteColor,
                           dropdownColor: backgroundPanelColor,
-                          value: controller.idTypeValue.value,
-                          items: controller.listIdType.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: !controller.auth.userData.orangKycEditAvailable
+                          value: controller.valueId.floor(),
+                          items: [
+                            DropdownMenuItem(
+                              child: Text('KTP'),
+                              value: 1,
+                              onTap: () => controller.valueId = 1,
+                            ),
+                            DropdownMenuItem(
+                              child: Text('Passport'),
+                              value: 2,
+                              onTap: () => controller.valueId = 2,
+                            ),
+                          ],
+                          onChanged: !controller.isKycStatus.value
                               ? null
                               : (value) {
-                                  controller.idTypeValue.value = value;
+                                  controller.valueId = controller.valueId;
                                 },
                         ),
                       ),
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      readOnly: !controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateKTP,
                       controller: controller.nomorKTP == null ? '' : controller.nomorKTP,
@@ -97,69 +103,66 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                     style: stylePrimaryDark,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                    SizedBox(height: 10),
-                    XauTextField(
-                      readOnly: controller.auth.userData.orangKycEditAvailable,
-                      useObscure: false,
-                      validator: validateNPWP,
-                      controller: controller.nomorNPWP == null ? '' : controller.nomorNPWP,
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      labelText: 'Nomor NPWP',
-                    ),
-                    SizedBox(height: 10),
-                    controller.selectedImageNetworkNpwp.value != ''
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20), child: Image.network(hostImage + controller.selectedImageNetworkNpwp.value))
-                        : Container(
-                            child: Column(
-                              children: [
-                                controller.selectedImagePathNpwp.value != ''
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathNpwp.value)))
-                                    : Text('Kamu belum melampirkan foto NPWP'),
-                                FlatButton(
-                                  color: primaryColor,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  onPressed: () {
-                                    controller.takeImageNPWP();
-                                  },
-                                  child: Text(
-                                    controller.selectedImagePathNpwp.value != '' ? 'Ganti gambar' : 'Pilih gambar',
-                                    style: stylePrimaryDark,
-                                  ),
+                                SizedBox(height: 10),
+                                XauTextField(
+                                  readOnly: !controller.isKycStatus.value,
+                                  useObscure: false,
+                                  validator: validateNPWP,
+                                  controller: controller.nomorNPWP == null ? '' : controller.nomorNPWP,
+                                  keyboardType: TextInputType.number,
+                                  maxLines: 1,
+                                  labelText: 'Nomor NPWP',
                                 ),
+                                SizedBox(height: 10),
+                                controller.selectedImageNetworkKtp.value != ''
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(hostImage + controller.selectedImageNetworkNpwp.value))
+                                    : Container(
+                                        child: Column(
+                                          children: [
+                                            controller.selectedImagePathNpwp.value != ''
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    child: Image.file(File(controller.selectedImagePathNpwp.value)))
+                                                : Text('Kamu belum melampirkan foto NPWP'),
+                                            FlatButton(
+                                              color: primaryColor,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                              onPressed: () {
+                                                controller.takeImageNPWP();
+                                              },
+                                              child: Text(
+                                                controller.selectedImagePathNpwp.value != '' ? 'Ganti gambar' : 'Pilih gambar',
+                                                style: stylePrimaryDark,
+                                              ),
+                                            ),
+                                            SizedBox(height: 30),
+                                            Obx(() {
+                                              if (controller.isLoading.value) {
+                                                return JumpingDotsProgressIndicator(
+                                                  color: primaryColor,
+                                                  fontSize: 40,
+                                                );
+                                              }
+                                              return RaisedButton(
+                                                onPressed: () => controller.checkIdentity(),
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                                color: controller.isKycStatus.value ? primaryColor : disableColor,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Simpan',
+                                                    style: buttonStyle,
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                          ],
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
-                    SizedBox(height: 30),
-                    Obx(() {
-                      if (controller.isLoading.value) {
-                        return JumpingDotsProgressIndicator(
-                          color: primaryColor,
-                          fontSize: 40,
-                        );
-                      }
-                      return RaisedButton(
-                        onPressed: !controller.auth.userData.orangKycEditAvailable
-                            ? null
-                            : () {
-                                Get.focusScope.unfocus();
-                                controller.checkDocumentIdentity();
-                              },
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
-                        child: Center(
-                          child: Text(
-                            'Simpan',
-                            style: buttonStyle,
-                          ),
-                        ),
-                      );
-                    }),
                   ],
                 ),
               ),

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_create_buys_model.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
 
 class BuyXauController extends GetxController {
-  GoldPriceController goldPriceController = Get.put(GoldPriceController());
+  final goldPriceController = Get.find<GoldPriceController>();
   final GlobalKey<FormState> buyKey = GlobalKey<FormState>();
 
   TextEditingController qtyController;

@@ -15,6 +15,8 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/data_personal_controller.dart';
 
 class DataPersonalView extends GetView<DataPersonalController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +26,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
           title: Text('Data Personal'),
         ),
         body: Obx(() {
-          if (controller.auth.isLoading.value) {
+          if (controller.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 numberOfDots: 3,
@@ -37,25 +39,23 @@ class DataPersonalView extends GetView<DataPersonalController> {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
               child: Form(
-                key: controller.kyc1Key,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.nama = value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateName,
-                      controller: controller.namaControl,
+                      controller: controller.namaControl == null ? '' : controller.namaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Nama lengkap (KTP)',
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.phone = value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validatePhone,
                       controller: controller.nomorControl == null ? '' : controller.nomorControl,
@@ -65,8 +65,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      onSaved: (value) => controller.birthDate = value,
-                      ontap: !controller.auth.userData.orangKycEditAvailable
+                      ontap: controller.isKycStatus.value
                           ? () {}
                           : () {
                               DatePicker.showDatePicker(context,
@@ -83,7 +82,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                                 controller.tanggalControl.text = controller.formatter.format(date);
                               }, currentTime: DateTime.now(), locale: LocaleType.id);
                             },
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateDate,
                       controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
@@ -97,8 +96,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressStreet = value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateAddress,
                       controller: controller.alamatControl == null ? '' : controller.alamatControl,
@@ -108,8 +106,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressCity = value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCity,
                       controller: controller.kotaControl == null ? '' : controller.kotaControl,
@@ -119,8 +116,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressPostal = value,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateKode,
                       controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
@@ -130,8 +126,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      onSaved: (value) => controller.addressCountry = value,
-                      ontap: !controller.auth.userData.orangKycEditAvailable
+                      ontap: controller.isKycStatus.value
                           ? () {}
                           : () {
                               showCupertinoModalPopup<void>(
@@ -163,7 +158,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                                     );
                                   });
                             },
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      readOnly: controller.isKycStatus.value,
                       useObscure: false,
                       validator: validateCountry,
                       controller: controller.negaraControl == null ? '' : controller.negaraControl,
@@ -196,14 +191,13 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         );
                       }
                       return RaisedButton(
-                        onPressed: !controller.auth.userData.orangKycEditAvailable
+                        onPressed: controller.isKycStatus.value
                             ? () {}
                             : () {
-                                Get.focusScope.unfocus();
-                                controller.checkPersonalData();
+                                controller.kycPersonalData();
                               },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: !controller.auth.userData.orangKycEditAvailable ? disableColor : primaryColor,
+                        color: !controller.isKycStatus.value ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
                             'Simpan',
