@@ -24,7 +24,7 @@ class HistoryView extends GetView<HistoryController> {
           );
         }
 
-        if (controller.goldPriceController.listBuys == null) {
+        if (controller.goldPriceController.listBuys == null || controller.goldPriceController.listBuys.isEmpty) {
           return EmptyState();
         }
 
@@ -33,11 +33,9 @@ class HistoryView extends GetView<HistoryController> {
             itemCount: controller.goldPriceController.listBuys.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
+                padding: EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
                 child: GestureDetector(
-                  onTap: () => Get.toNamed(Routes.INVOICE, arguments: controller
-                      .goldPriceController.listBuys[index].invoiceId),
+                  onTap: () => Get.toNamed(Routes.INVOICE, arguments: controller.goldPriceController.listBuys[index].invoiceId),
                   child: XauriusContainer(
                       child: Column(
                     children: [
@@ -52,17 +50,12 @@ class HistoryView extends GetView<HistoryController> {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                '#' +
-                                    controller.goldPriceController
-                                        .listBuys[index].invoiceId
-                                        .toString(),
+                                '#' + controller.goldPriceController.listBuys[index].invoiceId.toString(),
                               ),
                             ],
                           ),
                           Text(
-                            controller
-                                .goldPriceController.listBuys[index].buyStatus
-                                .toString(),
+                            controller.goldPriceController.listBuys[index].buyStatus.toString(),
                             style: textTitle.copyWith(color: primaryColor),
                           ),
                         ],
@@ -76,9 +69,7 @@ class HistoryView extends GetView<HistoryController> {
                             style: stylePrimary,
                           ),
                           Text(
-                            controller.goldPriceController.listBuys[index]
-                                    .buyQty +
-                                ' XAU',
+                            controller.goldPriceController.listBuys[index].buyQty + ' XAU',
                           ),
                         ],
                       ),
@@ -91,9 +82,7 @@ class HistoryView extends GetView<HistoryController> {
                             style: stylePrimary,
                           ),
                           Text(
-                            controller.goldPriceController.listBuys[index]
-                                    .buyAmount +
-                                ' XAU',
+                            controller.goldPriceController.listBuys[index].buyAmount + ' XAU',
                           ),
                         ],
                       ),

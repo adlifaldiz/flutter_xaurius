@@ -2,32 +2,23 @@
 //
 //     final responseDetailInvoice = responseDetailInvoiceFromJson(jsonString);
 
-import 'dart:convert';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 
-ResponseDetailInvoice responseDetailInvoiceFromJson(String str) => ResponseDetailInvoice.fromJson(json.decode(str));
-
-String responseDetailInvoiceToJson(ResponseDetailInvoice data) => json.encode(data.toJson());
-
-class ResponseDetailInvoice {
+class ResponseDetailInvoice extends BaseResp {
   ResponseDetailInvoice({
-    this.success,
-    this.msg,
     this.data,
   });
 
-  bool success;
-  String msg;
   Data data;
 
-  factory ResponseDetailInvoice.fromJson(Map<String, dynamic> json) => ResponseDetailInvoice(
-        success: json["success"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
-      );
+  factory ResponseDetailInvoice.fromJson(Map<String, dynamic> json) => ResponseDetailInvoice()
+    ..success = json["success"]
+    ..message = json["msg"]
+    ..data = Data.fromJson(json["data"]);
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "msg": msg,
+        "msg": message,
         "data": data.toJson(),
       };
 }

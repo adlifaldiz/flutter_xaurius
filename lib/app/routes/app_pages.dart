@@ -142,6 +142,7 @@ class AppPages {
       MenuBinding(),
       DashboardBinding(),
       HistoryBinding(),
+      TransactionBinding(),
       SettingBinding(),
     ]),
     GetPage(

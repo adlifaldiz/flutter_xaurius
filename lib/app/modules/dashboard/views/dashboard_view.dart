@@ -148,11 +148,12 @@ class DashboardView extends GetView<DashboardController> {
                         RichText(
                           overflow: TextOverflow.ellipsis,
                           text: TextSpan(
-                            text: 'IDR: ',
+                            text: controller.auth.userBalance[0].balanceSymbol + ': ',
                             style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
                             children: <TextSpan>[
-                              TextSpan(text: 'no', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
-                              TextSpan(text: '.00', style: TextStyle(color: brokenWhiteColor)),
+                              TextSpan(
+                                  text: controller.auth.userBalance[0].balanceValue,
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
                             ],
                           ),
                         ),
