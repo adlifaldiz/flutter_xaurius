@@ -11,6 +11,7 @@ import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/checkout_controller.dart';
 
@@ -187,7 +188,11 @@ class CheckoutView extends GetView<CheckoutController> {
                                 'Biaya admin',
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.invoiceCalculation.admfee + ' IDR'),
+                              Expanded(
+                                  child: Text(
+                                controller.responseCheckOut.value.data.invoiceCalculation.admfee + ' IDR',
+                                textAlign: TextAlign.end,
+                              )),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -253,7 +258,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                           color: primaryColor,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        // recognizer: TapGestureRecognizer()..onTap = () => launch('https://metamask.io/download.html'),
+                                        recognizer: TapGestureRecognizer()..onTap = () => launch('https://metamask.io/download.html'),
                                       ),
                                     ],
                                   ),

@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:get/get.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/login_controller.dart';
@@ -48,17 +49,17 @@ class LoginView extends GetView<LoginController> {
                       Text(
                         'Selamat Datang:)',
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                          color: textWhiteColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: textWhiteColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       SizedBox(height: 30),
                       Text(
                         'Untuk memulai aplikasi\nSilahkan login dengan email dan pin kamu',
                         style: Theme.of(context).textTheme.subhead.copyWith(
-                          color: brokenWhiteColor,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: brokenWhiteColor,
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                       SizedBox(height: 50),
                       Form(
@@ -102,37 +103,58 @@ class LoginView extends GetView<LoginController> {
                             SizedBox(height: 20),
                             Text('Pin', style: styleLabel),
                             SizedBox(height: 5),
-                            TextFormField(
-                              onSaved: (value) => controller.pin = value,
-                              validator: validatePin,
-                              obscureText: true,
+                            PinInputTextFormField(
                               keyboardType: TextInputType.number,
-                              textInputAction: TextInputAction.done,
-                              style: stylePrimary,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                                fillColor: fillColor,
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                              onChanged: (value) => controller.pin = value,
+                              validator: (value) {
+                                return validateVerifPin(value, controller.pin);
+                              },
+                              pinLength: 6,
+                              cursor: Cursor(
+                                enabled: true,
+                                color: textWhiteColor,
+                              ),
+                              decoration: UnderlineDecoration(
+                                errorTextStyle: TextStyle(
+                                  color: redColor,
+                                  height: 0,
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(color: primaryColor, width: 2),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(color: brokenWhiteColor),
-                                ),
-                                errorStyle: styleError,
-                                hintStyle: stylePrimary,
-                                hintText: 'Pin',
-                                prefixIcon: Icon(
-                                  Icons.lock_outline_rounded,
-                                  color: primaryColor,
-                                ),
+                                obscureStyle: ObscureStyle(isTextObscure: true),
+                                textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                                colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                               ),
                             ),
+                            // TextFormField(
+                            //   onSaved: (value) => controller.pin = value,
+                            //   validator: validatePin,
+                            //   obscureText: true,
+                            //   keyboardType: TextInputType.number,
+                            //   textInputAction: TextInputAction.done,
+                            //   style: stylePrimary,
+                            //   decoration: InputDecoration(
+                            //     contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                            //     fillColor: fillColor,
+                            //     filled: true,
+                            //     border: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(10.0),
+                            //     ),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(10.0),
+                            //       borderSide: BorderSide(color: primaryColor, width: 2),
+                            //     ),
+                            //     enabledBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(10.0),
+                            //       borderSide: BorderSide(color: brokenWhiteColor),
+                            //     ),
+                            //     errorStyle: styleError,
+                            //     hintStyle: stylePrimary,
+                            //     hintText: 'Pin',
+                            //     prefixIcon: Icon(
+                            //       Icons.lock_outline_rounded,
+                            //       color: primaryColor,
+                            //     ),
+                            //   ),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Container(
@@ -144,9 +166,9 @@ class LoginView extends GetView<LoginController> {
                                       'Belum punya akun?',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.subhead.copyWith(
-                                        color: textWhiteColor,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                            color: textWhiteColor,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
                                     GestureDetector(
                                       onTap: () => Get.toNamed(Routes.REGISTER),
@@ -154,9 +176,9 @@ class LoginView extends GetView<LoginController> {
                                         'Daftar disini',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
-                                          color: accentColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                              color: accentColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -205,8 +227,8 @@ class LoginView extends GetView<LoginController> {
                           '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: accentColor,
-                          ),
+                                color: accentColor,
+                              ),
                         ),
                       ),
                     ],

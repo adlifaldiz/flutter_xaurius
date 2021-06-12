@@ -4,7 +4,6 @@ import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 
 class UserResp extends BaseResp {
   Data data;
-
   UserResp({this.data}) : super();
 
   factory UserResp.fromJson(Map<String, dynamic> json) => UserResp()
@@ -22,19 +21,27 @@ class UserResp extends BaseResp {
 class Data {
   UserData orang;
   List<Balance> balances;
+  List<dynamic> refbons;
+  List<dynamic> vouchers;
 
   Data({
     this.orang,
     this.balances,
+    this.refbons,
+    this.vouchers,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         orang: UserData.fromJson(json["orang"]),
         balances: List<Balance>.from(json["balances"].map((x) => Balance.fromJson(x))),
+        refbons: List<dynamic>.from(json["refbons"].map((x) => x)),
+        vouchers: List<dynamic>.from(json["vouchers"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "orang": orang.toJson(),
         "balances": List<dynamic>.from(balances.map((x) => x.toJson())),
+        "refbons": List<dynamic>.from(refbons.map((x) => x)),
+        "vouchers": List<dynamic>.from(vouchers.map((x) => x)),
       };
 }

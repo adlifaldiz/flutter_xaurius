@@ -48,17 +48,17 @@ class LoginView extends GetView<LoginController> {
                       Text(
                         'Selamat Datang:)',
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                          color: textWhiteColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: textWhiteColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                       SizedBox(height: 30),
                       Text(
                         'Untuk memulai aplikasi\nSilahkan login dengan email dan pin kamu',
                         style: Theme.of(context).textTheme.subhead.copyWith(
-                          color: brokenWhiteColor,
-                          fontWeight: FontWeight.normal,
-                        ),
+                              color: brokenWhiteColor,
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                       SizedBox(height: 50),
                       Form(
@@ -144,9 +144,9 @@ class LoginView extends GetView<LoginController> {
                                       'Belum punya akun?',
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.subhead.copyWith(
-                                        color: textWhiteColor,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                            color: textWhiteColor,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
                                     GestureDetector(
                                       onTap: () => Get.toNamed(Routes.REGISTER),
@@ -154,9 +154,9 @@ class LoginView extends GetView<LoginController> {
                                         'Daftar disini',
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
-                                          color: accentColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                              color: accentColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -205,8 +205,8 @@ class LoginView extends GetView<LoginController> {
                           '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: accentColor,
-                          ),
+                                color: accentColor,
+                              ),
                         ),
                       ),
                     ],

@@ -20,15 +20,11 @@ class UploadDocumentController extends GetxController {
   DateFormat formatter = DateFormat('yyyy-MM-dd');
   Country selectedCupertinoCurrency;
 
+  List<String> listIdType = ['KTP', 'Passport'];
+
   var isLoading = false.obs;
 
-  var isBuy = true.obs;
-  var isKycStatus = true.obs;
-  var isKycReview = false.obs;
-
-  var valueId = 2;
-
-  String valueIdType = 'KTP';
+  var valueIdType = 'KTP'.obs;
 
   var selectedImagePathKtp = ''.obs;
   var selectedImageNetworkKtp = ''.obs;
@@ -39,12 +35,14 @@ class UploadDocumentController extends GetxController {
   File npwpPath;
 
   //kyc2
-  TextEditingController nomorKTP = TextEditingController();
-  TextEditingController nomorNPWP = TextEditingController();
+  TextEditingController nomorKTP;
+  TextEditingController nomorNPWP;
 
   @override
   void onInit() {
     selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
+    setTextControlelr();
+    setText();
     super.onInit();
   }
 
@@ -53,12 +51,26 @@ class UploadDocumentController extends GetxController {
     super.onClose();
   }
 
-  Future kycDocument(idType) async {
+  void setTextControlelr() {
+    nomorKTP = TextEditingController();
+    nomorNPWP = TextEditingController();
+  }
+
+  void setText() {
+    nomorKTP.text = auth.userData.orangIdNum;
+    nomorNPWP.text = auth.userData.orangNpwpNum;
+    selectedImageNetworkKtp.value = auth.userData.orangIdFile.url;
+    selectedImageNetworkNpwp.value = auth.userData.orangNpwpFile.url;
+    update();
+  }
+
+  Future kycDocument() async {
     isLoading(true);
     final resp = await _repo.kycDocument(
-        idType, nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value), auth.token);
+        valueIdType.value.toString(), nomorKTP.text, File(selectedImagePathKtp.value), nomorNPWP.text, File(selectedImagePathNpwp.value), auth.token);
     if (resp.success) {
-      successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
+      onInit();
+      successSnackbar('Sukses', 'Berhasil melengkapi Data Personal');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
@@ -69,11 +81,6 @@ class UploadDocumentController extends GetxController {
 
   void checkIdentity() {
     final isValid = kyc2Key.currentState.validate();
-    if (valueId == 1) {
-      valueIdType = 'KTP';
-    } else {
-      valueIdType = 'Passport';
-    }
 
     if (selectedImagePathKtp.value.isEmpty) {
       failSnackbar('KTP', 'Foto identitas belum kamu pilih');
@@ -82,7 +89,7 @@ class UploadDocumentController extends GetxController {
     } else {
       if (isValid) {
         kyc2Key.currentState.save();
-        kycDocument(valueIdType);
+        kycDocument();
       } else {
         failSnackbar('Form', 'Form tidak valid');
       }

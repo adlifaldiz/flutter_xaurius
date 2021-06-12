@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class DashboardController extends GetxController {
+  final goldPriceController = Get.find<GoldPriceController>();
   final auth = Get.find<AuthController>();
   final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
-  final goldPriceController = Get.find<GoldPriceController>();
   var isBuy = true.obs;
 
   @override
@@ -19,10 +19,12 @@ class DashboardController extends GetxController {
 
   Future onRefresh() async {
     await goldPriceController.getBuys();
+    await auth.getProfileData();
+
     update();
   }
 
-  Future onChangeBuy(bool change) async{
+  Future onChangeBuy(bool change) async {
     await goldPriceController.getBuys();
     isBuy.value = change;
     update();

@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_detail_invoice_model.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceController extends GetxController {
   ApiRepository _repo = ApiRepository();
@@ -14,14 +13,15 @@ class InvoiceController extends GetxController {
   var responseDetailInvoice = ResponseDetailInvoice().obs;
   var invoiceNumber;
   var isLoading = false.obs;
-  var isTimeout = false.obs;
-  var isNoConnection = false.obs;
+  var isLoadingForm = false.obs;
+  var formattedDate = ''.obs;
+  var isFromBuy = false.obs;
 
   @override
   void onInit() {
-    invoiceNumber = Get.arguments;
+    invoiceNumber = Get.arguments['invoiceId'];
+    isFromBuy.value = Get.arguments['fromBuy'];
     getDetailInvoice();
-    // successSnackbar('title', invoiceNumber.toString());
     super.onInit();
   }
 
@@ -35,13 +35,27 @@ class InvoiceController extends GetxController {
     final resp = await _repo.getInvoice(invoiceNumber.toString(), auth.token);
     if (resp.success) {
       responseDetailInvoice.value = resp;
-      successSnackbar('Sukses', resp.message);
-      update();
+      formattedDate.value = DateFormat('yyyy-MM-dd kk:mm:ss').format(resp.data.invoice.invoiceVa.vaExpiryDate);
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
       });
     }
     isLoading(false);
+  }
+
+  Future madePayment() async {
+    isLoadingForm(true);
+    final resp = await _repo.postMadePayment(invoiceNumber.toString(), auth.token);
+    if (resp.success) {
+      successSnackbar('Status', resp.message);
+      getDetailInvoice();
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        getDetailInvoice();
+        Get.back();
+      });
+    }
+    isLoadingForm(false);
   }
 }

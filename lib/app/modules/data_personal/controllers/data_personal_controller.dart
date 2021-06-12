@@ -33,12 +33,28 @@ class DataPersonalController extends GetxController {
   @override
   void onInit() {
     selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
+    setText();
     super.onInit();
   }
 
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void setText() {
+    namaControl.text = auth.userData.orangName;
+    nomorControl.text = auth.userData.orangPhone;
+    if (auth.userData.orangBirthday == null || auth.userData.orangBirthday.isEmpty) {
+      tanggalControl.text = auth.userData.orangBirthday;
+    } else {
+      DateTime tempDate = DateTime.parse(auth.userData.orangBirthday);
+      tanggalControl.text = formatter.format(tempDate);
+    }
+    alamatControl.text = auth.userData.orangAddrStreet;
+    kotaControl.text = auth.userData.orangAddrCity;
+    kodePosControl.text = auth.userData.orangAddrPostal;
+    negaraControl.text = auth.userData.orangAddrCountry;
   }
 
   Future kycPersonalData() async {
@@ -54,7 +70,7 @@ class DataPersonalController extends GetxController {
       auth.token,
     );
     if (resp.success) {
-      successSnackbar('Sukses', 'Berhasil melengkapi data kyc tahap pertama');
+      successSnackbar('Sukses', 'Berhasil melengkapi Data Personal');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

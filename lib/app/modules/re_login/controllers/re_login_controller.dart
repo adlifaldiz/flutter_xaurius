@@ -27,7 +27,7 @@ class ReLoginController extends GetxController {
   void login() async {
     isLoading(true);
     var resp = await _repo.login(email, pin);
-    if(resp.success) {
+    if (resp.success) {
       auth.token = resp.token;
       storage.write('username', email);
       Get.offAllNamed(Routes.MENU);
@@ -37,5 +37,12 @@ class ReLoginController extends GetxController {
       });
     }
     isLoading(false);
+  }
+
+  void onPinChange(String value) {
+    pin = value;
+    if (value.length == 6) {
+      login();
+    }
   }
 }

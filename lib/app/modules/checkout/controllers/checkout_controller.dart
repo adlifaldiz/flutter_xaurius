@@ -5,11 +5,13 @@ import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/buy_xau/controllers/buy_xau_controller.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class CheckoutController extends GetxController {
-  BuyXauController buyController = Get.put(BuyXauController());
+  final goldPriceController = Get.find<GoldPriceController>();
+
   final GlobalKey<FormState> checkOutKey = GlobalKey<FormState>();
   final auth = Get.find<AuthController>();
   ApiRepository _repo = ApiRepository();
@@ -71,10 +73,15 @@ class CheckoutController extends GetxController {
   void postCheckOut() async {
     isLoadingForm(true);
     final resp = await _repo.postCheckout(buyId.value.toString(), walletController.text, merchantId, voucherController.text, auth.token);
-    if (resp.success) {
-      Get.toNamed(Routes.INVOICE, arguments: responseCheckOut.value.data.buy.invoiceId);
-      successSnackbar('Sukses', resp.message);
 
+    if (resp.success) {
+      responsePostCheckOut.value = resp;
+      successSnackbar('Sukses', 'Berhasil memuat invoice');
+      Get.toNamed(Routes.INVOICE, arguments: {
+        'invoiceId': responsePostCheckOut.value.data.buy.invoiceId,
+        'fromBuy': true,
+      });
+      goldPriceController.getBuys();
       update();
     } else {
       dialogConnection('Oops', resp.message, () {

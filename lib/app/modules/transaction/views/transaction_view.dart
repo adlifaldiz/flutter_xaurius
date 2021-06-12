@@ -8,6 +8,7 @@ import 'package:flutter_xaurius/app/widget/menu_transaction.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/transaction_controller.dart';
 
@@ -15,8 +16,17 @@ class TransactionView extends GetView<TransactionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
+      backgroundColor: Colors.transparent,
+      body: Obx(() {
+        if (controller.auth.isLoading.value) {
+          return Center(
+            child: JumpingDotsProgressIndicator(
+              color: primaryColor,
+              fontSize: 40,
+            ),
+          );
+        }
+        return SafeArea(
           child: Stack(
             children: [
               Positioned(
@@ -81,29 +91,31 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            '100000.00',
+                            controller.auth.userBalance.isEmpty ? '0' : controller.auth.userBalance[0].balanceValue,
                             style: textTitle.copyWith(fontSize: 30),
                           )
                         ],
                       ),
                       SizedBox(height: 20),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Kamu memiliki voucher',
-                            style: textTitle,
-                          ),
-                          SizedBox(width: 5),
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              'Claim',
-                              style: textTitle.copyWith(color: primaryColor),
+                      controller.auth.userVouchers.isEmpty
+                          ? Container()
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Kamu memiliki voucher',
+                                  style: textTitle,
+                                ),
+                                SizedBox(width: 5),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    'Claim',
+                                    style: textTitle.copyWith(color: primaryColor),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
                       Divider(
                         thickness: 2,
                         height: 50,
@@ -294,6 +306,8 @@ class TransactionView extends GetView<TransactionController> {
               ),
             ],
           ),
-        ));
+        );
+      }),
+    );
   }
 }

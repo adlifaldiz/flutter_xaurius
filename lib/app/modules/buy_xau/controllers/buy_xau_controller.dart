@@ -16,9 +16,6 @@ class BuyXauController extends GetxController {
   TextEditingController totalController;
   ApiRepository _repo = ApiRepository();
 
-  // var responseCreateBuy = ResponseCreateBuy().obs;
-  // var listBuys = List<Data>().obs;
-
   var isLoading = false.obs;
   var isTimeout = false.obs;
   var isNoConnection = false.obs;
@@ -52,7 +49,6 @@ class BuyXauController extends GetxController {
     if (resp.success) {
       Get.toNamed(Routes.CHECKOUT, arguments: resp.data.buy.id.toString());
       // successSnackbar('Sukses', resp.data.buy.id.toString());
-
       update();
     } else {
       dialogConnection('Oops', resp.message, () {
@@ -109,10 +105,10 @@ class BuyXauController extends GetxController {
       totalController.text = '5';
       totalController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val.contains('..')) {
-      totalController.text = val.replaceAll(RegExp('..'), '.');
+      totalController.text = val.replaceAll(RegExp('..'), '');
       totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
     } else if (val.contains(',')) {
-      totalController.text = val.replaceAll(RegExp(','), '.');
+      totalController.text = val.replaceAll(RegExp(','), '');
       totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
     } else {
       var value = double.parse(val);

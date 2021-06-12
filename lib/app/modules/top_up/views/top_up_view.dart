@@ -1,83 +1,202 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/data/model/auth/top_up/response_get_top_up_model.dart';
+import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 
 import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/top_up_controller.dart';
 
 class TopUpView extends GetView<TopUpController> {
+  final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Top Up'),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
-          child: XauriusContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Pilih metode pembayaran',
-                    style: textTitle,
-                  ),
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
+    return GestureDetector(
+      onTap: () => Get.focusScope.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Top Up'),
+        ),
+        body: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+                child: JumpingDotsProgressIndicator(
+              color: primaryColor,
+              fontSize: 40,
+            ));
+          }
+          return SafeArea(
+            child: LiquidPullToRefresh(
+              color: backgroundPanelColor,
+              backgroundColor: primaryColor,
+              key: refreshIndicatorKey,
+              onRefresh: controller.onRefresh,
+              showChildOpacityTransition: false,
+              child: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+                      if (index == 0) {
                         return Padding(
-                          padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
-                          child: GestureDetector(
-                            onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1), horizontal: percentWidth(context, 1)),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: brokenWhiteColor.withOpacity(0.3), width: 1), borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+                          child: XauriusContainer(
+                            child: Form(
+                              key: formKey,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Top Up IDR',
+                                    style: textTitle,
+                                  ),
+                                  SizedBox(height: 20),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                                    width: percentWidth(context, 100),
+                                    decoration: BoxDecoration(
+                                        color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
+                                    child: DropdownButtonHideUnderline(
+                                      child: StatefulBuilder(
+                                        builder: (BuildContext context, StateSetter dropDownState) {
+                                          return DropdownButton(
+                                            iconEnabledColor: primaryColor,
+                                            iconDisabledColor: brokenWhiteColor,
+                                            dropdownColor: backgroundPanelColor,
+                                            value: controller.merchantId,
+                                            items: controller.listMerchant.map((element) {
+                                              return new DropdownMenuItem(
+                                                child: Text(element.merchantName),
+                                                value: int.parse(element.merchantId),
+                                                onTap: () {
+                                                  controller.onChangeMerchant(int.parse(element.merchantId));
+                                                },
+                                              );
+                                            }).toList(),
+                                            onChanged: (value) {
+                                              dropDownState(() {
+                                                controller.onChangeMerchant(value);
+                                              });
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  XauTextField(
+                                    useObscure: false,
+                                    controller: controller.nominalTopUpControl,
+                                    inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
+                                    validator: (value) {
+                                      return validateNominalTopTup(value);
+                                    },
+                                    prefixIcon: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text('Rp'),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 30),
+                                  Obx(() {
+                                    if (controller.isLoadingForm.value) {
+                                      return JumpingDotsProgressIndicator(
+                                        color: primaryColor,
+                                        fontSize: 40,
+                                      );
+                                    }
+                                    return Container(
+                                      width: Get.width,
+                                      // ignore: deprecated_member_use
+                                      child: RaisedButton(
+                                        color: accentColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 12),
+                                          child: Text('Lanjut', style: buttonStyle),
+                                        ),
+                                        onPressed: () {
+                                          FocusScope.of(context).unfocus();
+                                          final isValid = formKey.currentState.validate();
+                                          if (!isValid) {
+                                            return;
+                                          }
+                                          formKey.currentState.save();
+                                          controller.postTopUp();
+                                        },
+                                      ),
+                                    );
+                                  }),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        final Depoidr depoList = controller.listTopTup[index - 1];
+
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+                          child: InkWell(
+                            onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL, arguments: depoList.invoiceId),
+                            child: XauriusContainer(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          'assets/images/item2.png',
-                                          fit: BoxFit.contain,
-                                          width: 70,
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
                                       Text(
-                                        'Bank BNI',
+                                        'Invoice #' + depoList.invoiceId.toString(),
                                         style: textTitle,
+                                      ),
+                                      Text(
+                                        depoList.depoidrStatus,
+                                        style: textTitle.copyWith(color: primaryColor),
+                                        textAlign: TextAlign.end,
                                       ),
                                     ],
                                   ),
-                                  Icon(
-                                    FontAwesomeIcons.chevronRight,
-                                    color: textWhiteColor,
-                                    size: 14,
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Total Top up:',
+                                      ),
+                                      Text(
+                                        'Rp ' + depoList.depoidrAmount,
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),
                             ),
                           ),
                         );
-                      },
-                    ),
+                      }
+                    }, childCount: 1 + controller.listTopTup.length),
                   ),
                 ],
-              )),
-        ),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

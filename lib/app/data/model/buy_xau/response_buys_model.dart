@@ -19,11 +19,14 @@ class ResponseBuys {
   String msg;
   Data data;
 
-  factory ResponseBuys.fromJson(Map<String, dynamic> json) => ResponseBuys(
-        success: json["success"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
-      );
+  factory ResponseBuys.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return ResponseBuys(
+      success: json["success"],
+      msg: json["msg"],
+      data: Data.fromJson(json["data"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "success": success,
@@ -41,10 +44,13 @@ class Data {
   List<Buy> buys;
   CurrentGoldPrice currentGoldPrice;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        buys: List<Buy>.from(json["buys"].map((x) => Buy.fromJson(x))),
-        currentGoldPrice: CurrentGoldPrice.fromJson(json["current_gold_price"]),
-      );
+  factory Data.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return Data(
+      buys: List<Buy>.from(json["buys"].map((x) => Buy.fromJson(x))),
+      currentGoldPrice: CurrentGoldPrice.fromJson(json["current_gold_price"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "buys": List<dynamic>.from(buys.map((x) => x.toJson())),
