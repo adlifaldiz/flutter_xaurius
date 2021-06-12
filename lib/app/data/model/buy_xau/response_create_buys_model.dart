@@ -2,32 +2,23 @@
 //
 //     final responseCreateBuy = responseCreateBuyFromJson(jsonString);
 
-import 'dart:convert';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 
-ResponseCreateBuy responseCreateBuyFromJson(String str) => ResponseCreateBuy.fromJson(json.decode(str));
-
-String responseCreateBuyToJson(ResponseCreateBuy data) => json.encode(data.toJson());
-
-class ResponseCreateBuy {
+class ResponseCreateBuy extends BaseResp {
   ResponseCreateBuy({
-    this.success,
-    this.msg,
     this.data,
   });
 
-  bool success;
-  String msg;
   Data data;
 
-  factory ResponseCreateBuy.fromJson(Map<String, dynamic> json) => ResponseCreateBuy(
-        success: json["success"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
-      );
+  factory ResponseCreateBuy.fromJson(Map<String, dynamic> json) => ResponseCreateBuy()
+    ..success = json["success"]
+    ..message = json["msg"]
+    ..data = Data.fromJson(json["data"]);
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "msg": msg,
+        "msg": message,
         "data": data.toJson(),
       };
 }

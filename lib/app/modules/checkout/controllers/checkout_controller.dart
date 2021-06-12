@@ -1,18 +1,20 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_post_checkout_model.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/buy_xau/controllers/buy_xau_controller.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
+import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class CheckoutController extends GetxController {
-  BuyXauController buyController = Get.put(BuyXauController());
+  final goldPriceController = Get.find<GoldPriceController>();
+
   final GlobalKey<FormState> checkOutKey = GlobalKey<FormState>();
-  ApiProvider provider = ApiProvider();
+  final auth = Get.find<AuthController>();
+  ApiRepository _repo = ApiRepository();
   TextEditingController walletController, voucherController;
   var responseCheckOut = ResponseCheckOut().obs;
   var responsePostCheckOut = ResponsePostCheckOut().obs;
@@ -27,15 +29,15 @@ class CheckoutController extends GetxController {
   var ethAddress = '0xaaca2da0026c41fd49bd0636fbd67cf704e34b1d';
   var bscAddress = '0xda6bb3cebbed2b1a68b4a3b7e5eb40cc280e3935';
 
-  var buyme = ''.obs;
+  var buyId = ''.obs;
   int merchantId = 349;
 
   @override
   void onInit() {
     walletController = TextEditingController();
     voucherController = TextEditingController();
+    buyId.value = Get.arguments;
     getCheckOut();
-    print('==========================> getCheckOut()');
     super.onInit();
   }
 
@@ -53,82 +55,40 @@ class CheckoutController extends GetxController {
 
   void getCheckOut() async {
     isLoading(true);
-    try {
-      var checkOut = await provider.getCheckOut(buyController.responseCreateBuy.value.data.buy.id.toString());
-      if (checkOut == null) {
-        responseCheckOut.value.success = false;
-        responseCheckOut.value.msg = 'Terjadi masalah';
-      } else {
-        responseCheckOut.value = checkOut;
-      }
-    } on TimeoutException {
-      isTimeout(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Waktu habis', () {
-        Get.back();
-        isTimeout(false);
-      });
-    } on SocketException {
-      isNoConnection(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnection(false);
-      });
-    } finally {
-      isLoading(false);
-      isTimeout(false);
-      isNoConnection(false);
-      if (responseCheckOut.value.success) {
-        listVaMerchant.value = responseCheckOut.value.data.vaMerchants;
-        update();
-      } else {
-        failSnackbar('Fail', responseCheckOut.value.msg);
-      }
+    final resp = await _repo.getCheckout(buyId.value.toString(), auth.token);
+    if (resp.success) {
+      responseCheckOut.value = resp;
+      listVaMerchant.value = resp.data.vaMerchants;
+      successSnackbar('Sukses', responseCheckOut.value.data.buy.buyUnitPrice);
+
       update();
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
     }
-    update();
+    isLoading(false);
   }
 
   void postCheckOut() async {
     isLoadingForm(true);
-    try {
-      var postCheckOut = await provider.postCheckOut(responseCheckOut.value.data.buy.id.toString(),
-          responseCheckOut.value.data.buy.orangId.toString(), walletController.value.text, merchantId.toString(), voucherController.value.text);
-      if (postCheckOut == null) {
-        responsePostCheckOut.value.success = false;
-        responsePostCheckOut.value.msg = 'Terjadi masalah';
-      } else {
-        responsePostCheckOut.value = postCheckOut;
-      }
-    } on TimeoutException {
-      isTimeoutForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Waktu habis', () {
-        Get.back();
-        isTimeoutForm(false);
-      });
-    } on SocketException {
-      isNoConnectionForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnectionForm(false);
-      });
-    } finally {
-      isLoadingForm(false);
-      isTimeoutForm(false);
-      isNoConnectionForm(false);
-      if (responsePostCheckOut.value.success) {
-        successSnackbar('Sukses', responsePostCheckOut.value.msg);
+    final resp = await _repo.postCheckout(buyId.value.toString(), walletController.text, merchantId, voucherController.text, auth.token);
 
-        update();
-      } else {
-        failSnackbar('Fail', responsePostCheckOut.value.msg);
-      }
+    if (resp.success) {
+      responsePostCheckOut.value = resp;
+      successSnackbar('Sukses', 'Berhasil memuat invoice');
+      Get.toNamed(Routes.INVOICE, arguments: {
+        'invoiceId': responsePostCheckOut.value.data.buy.invoiceId,
+        'fromBuy': true,
+      });
+      goldPriceController.getBuys();
       update();
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
     }
-    update();
+    isLoadingForm(false);
   }
 
   void checkCheckOut() {

@@ -1,7 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter_xaurius/app/data/model/auth/top_up/response_get_top_up_model.dart';
+import 'package:flutter_xaurius/app/data/model/auth/top_up/resposne_top_up_model.dart';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_create_buys_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_detail_invoice_model.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/response_post_checkout_model.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/response_detail_invoices_dart.dart';
+import 'package:flutter_xaurius/app/data/model/va_merchant/response_va_merchant_model.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
@@ -30,8 +38,7 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> registerPin(
-      String email, String otp, String pin, String pinConfirm) async {
+  Future<BaseResp> registerPin(String email, String otp, String pin, String pinConfirm) async {
     final response = await _http.call(
       url.registerPin,
       method: MethodRequest.POST,
@@ -59,7 +66,7 @@ class ApiRepository {
 
   Future<UserResp> getPersonalInfo(String token) async {
     final response = await _http.call(
-      url.kycPersonalInfo,
+      url.profile,
       token: token,
       method: MethodRequest.GET,
     );
@@ -104,16 +111,83 @@ class ApiRepository {
     return ResponseBuys.fromJson(response.body);
   }
 
-  Future<UserResp> updateBankProfile(String token, String bankName,
-      String holderName, String holderNumber) async {
-    final response = await _http.call(url.profileBank,
-        token: token,
-        method: MethodRequest.POST,
-        request: {
-          'orang[orang_bank_name]': bankName,
-          'orang[orang_bank_holder]': holderName,
-          'orang[orang_bank_number]': holderNumber,
-        });
+  Future<UserResp> updateBankProfile(String token, String bankName, String holderName, String holderNumber) async {
+    final response = await _http.call(url.profileBank, token: token, method: MethodRequest.POST, request: {
+      'orang[orang_bank_name]': bankName,
+      'orang[orang_bank_holder]': holderName,
+      'orang[orang_bank_number]': holderNumber,
+    });
     return UserResp.fromJson(response.body);
+  }
+
+  Future<ResponseCreateBuy> createBuys(String qty, String network, String jwt) async {
+    final response = await _http.call(url.createBuys, token: jwt, useFormData: true, request: {
+      'buy[buy_qty]': qty,
+      'buy[buy_network]': network,
+    });
+    return ResponseCreateBuy.fromJson(response.body);
+  }
+
+  Future<ResponseCheckOut> getCheckout(String buyId, String token) async {
+    final response = await _http.call(
+      url.buys + '/$buyId/' + url.checkOut,
+      token: token,
+      method: MethodRequest.GET,
+    );
+    return ResponseCheckOut.fromJson(response.body);
+  }
+
+  Future<ResponsePostCheckOut> postCheckout(String buyId, String walletAddress, int merchantId, String voucherCode, String token) async {
+    final response = await _http.call(url.buys + '/$buyId' + url.checkOut, token: token, useFormData: true, method: MethodRequest.POST, request: {
+      'buy_id': buyId,
+      'buy_address': walletAddress,
+      'merchant_id': merchantId,
+      'voucher_code': voucherCode,
+    });
+
+    return ResponsePostCheckOut.fromJson(response.body);
+  }
+
+  Future<ResponseDetailInvoice> getInvoice(String invoiceId, String token) async {
+    final response = await _http.call(url.buys + '/$invoiceId' + url.invoice, token: token, useFormData: true, method: MethodRequest.GET);
+    return ResponseDetailInvoice.fromJson(response.body);
+  }
+
+  Future<ResponseVaMerchant> getVaMerchant(String token) async {
+    final response = await _http.call(
+      url.getVaMerchant,
+      token: token,
+      method: MethodRequest.GET,
+    );
+    return ResponseVaMerchant.fromJson(response.body);
+  }
+
+  Future<ResponseGetTopUp> getTopUp(String jwt) async {
+    final response = await _http.call(url.getTopUp, token: jwt, method: MethodRequest.GET);
+    return ResponseGetTopUp.fromJson(response.body);
+  }
+
+  Future<ResponsePostTopUp> postTopUp(merchantId, amountIdr, String jwt) async {
+    final response = await _http.call(url.postTopUp, token: jwt, useFormData: true, request: {
+      'merchant_id': merchantId,
+      'depoidr_amount': amountIdr,
+    });
+    return ResponsePostTopUp.fromJson(response.body);
+  }
+
+  Future<ResponseDetailInvoiceTopUp> getDetailInvoices(invoiceId, String jwt) async {
+    final response = await _http.call(url.getDetailInvoices + invoiceId, token: jwt, method: MethodRequest.GET);
+    return ResponseDetailInvoiceTopUp.fromJson(response.body);
+  }
+
+  Future<BaseResp> postMadePayment(String invoiceId, String token) async {
+    final response = await _http.call(
+      url.madePayment,
+      token: token,
+      useFormData: true,
+      method: MethodRequest.POST,
+      request: {"invoice_id": invoiceId},
+    );
+    return BaseResp.fromJson(response.body);
   }
 }

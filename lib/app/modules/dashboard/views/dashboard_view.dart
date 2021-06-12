@@ -140,7 +140,7 @@ class DashboardView extends GetView<DashboardController> {
                             text: 'XAU: ',
                             style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
                             children: <TextSpan>[
-                              TextSpan(text: '00.00', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
+                              TextSpan(text: '0', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
                             ],
                           ),
                         ),
@@ -151,8 +151,9 @@ class DashboardView extends GetView<DashboardController> {
                             text: 'IDR: ',
                             style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
                             children: <TextSpan>[
-                              TextSpan(text: 'no', style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
-                              TextSpan(text: '.00', style: TextStyle(color: brokenWhiteColor)),
+                              TextSpan(
+                                  text: controller.auth.userBalance.isEmpty ? '0' : controller.auth.userBalance[0].balanceValue,
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: brokenWhiteColor)),
                             ],
                           ),
                         ),

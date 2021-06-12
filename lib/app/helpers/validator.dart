@@ -177,6 +177,20 @@ String validateWallet(String value) {
   }
 }
 
+//deposit
+
+String validateNominalTopTup(String value) {
+  if (value.isEmpty) {
+    return 'Nominal tidak boleh kosong';
+  } else if (int.parse(value) <= 0) {
+    return 'Nominal tidak bisa 0';
+  } else if (int.parse(value) <= 100000) {
+    return 'Top up harus lebih dari Rp 100,000';
+  } else {
+    return null;
+  }
+}
+
 // String validateEmail(String value) {
 //   if (value.isEmpty) {
 //     return 'Alamat email tidak boleh kosong';

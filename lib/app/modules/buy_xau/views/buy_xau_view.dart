@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
@@ -61,7 +62,7 @@ class BuyXauView extends GetView<BuyXauController> {
                         padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
                         decoration:
-                        BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
+                            BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: StatefulBuilder(
                             builder: (BuildContext context, StateSetter dropDownState) {
@@ -100,7 +101,7 @@ class BuyXauView extends GetView<BuyXauController> {
                       XauTextField(
                         useObscure: false,
                         labelText: 'Kuantitas (XAU)',
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9.,]"))],
+                        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'(^\d*\.?\,?\d*)'))],
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                         validator: (val) {
                           return validateToken(val);
@@ -114,6 +115,7 @@ class BuyXauView extends GetView<BuyXauController> {
                       XauTextField(
                         useObscure: false,
                         labelText: 'Total (IDR) *min 50.000.00',
+                        inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                         keyboardType: TextInputType.number,
                         controller: controller.totalController,
                         validator: (value) {
@@ -125,7 +127,7 @@ class BuyXauView extends GetView<BuyXauController> {
                       ),
                       SizedBox(height: 30),
                       Obx(() {
-                        if (controller.isLoadingForm.value) {
+                        if (controller.isLoading.value) {
                           return JumpingDotsProgressIndicator(
                             numberOfDots: 3,
                             fontSize: 40,
@@ -143,9 +145,9 @@ class BuyXauView extends GetView<BuyXauController> {
                             width: percentWidth(context, 100),
                             child: Center(
                                 child: Text(
-                                  'Lanjut',
-                                  style: buttonStyle,
-                                )),
+                              'Lanjut',
+                              style: buttonStyle,
+                            )),
                           ),
                         );
                       })

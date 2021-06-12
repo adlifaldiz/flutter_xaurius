@@ -26,7 +26,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
           title: Text('Data Personal'),
         ),
         body: Obx(() {
-          if (controller.auth.isLoading.value) {
+          if (controller.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 numberOfDots: 3,
@@ -39,17 +39,16 @@ class DataPersonalView extends GetView<DataPersonalController> {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
               child: Form(
-                key: controller.kyc1Key,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     SizedBox(height: 10),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.nama = value,
                       useObscure: false,
                       validator: validateName,
-                      controller: controller.namaControl,
+                      controller: controller.namaControl == null ? '' : controller.namaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
                       labelText: 'Nama lengkap (KTP)',
@@ -57,7 +56,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     SizedBox(height: 10),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.phone = value,
                       useObscure: false,
                       validator: validatePhone,
                       controller: controller.nomorControl == null ? '' : controller.nomorControl,
@@ -67,7 +65,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      onSaved: (value) => controller.birthDate = value,
                       ontap: !controller.auth.userData.orangKycEditAvailable
                           ? () {}
                           : () {
@@ -100,7 +97,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     SizedBox(height: 10),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressStreet = value,
                       useObscure: false,
                       validator: validateAddress,
                       controller: controller.alamatControl == null ? '' : controller.alamatControl,
@@ -111,7 +107,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     SizedBox(height: 10),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressCity = value,
                       useObscure: false,
                       validator: validateCity,
                       controller: controller.kotaControl == null ? '' : controller.kotaControl,
@@ -122,7 +117,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     SizedBox(height: 10),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
-                      onSaved: (value) => controller.addressPostal = value,
                       useObscure: false,
                       validator: validateKode,
                       controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
@@ -132,7 +126,6 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     ),
                     SizedBox(height: 10),
                     XauTextField(
-                      onSaved: (value) => controller.addressCountry = value,
                       ontap: !controller.auth.userData.orangKycEditAvailable
                           ? () {}
                           : () {
@@ -201,11 +194,10 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         onPressed: !controller.auth.userData.orangKycEditAvailable
                             ? () {}
                             : () {
-                                Get.focusScope.unfocus();
-                                controller.checkPersonalData();
+                                controller.kycPersonalData();
                               },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        color: !controller.auth.userData.orangKycEditAvailable ? disableColor : primaryColor,
+                        color: !!controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
                             'Simpan',

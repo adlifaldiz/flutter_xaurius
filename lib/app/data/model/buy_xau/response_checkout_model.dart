@@ -2,32 +2,23 @@
 //
 //     final responseCheckOut = responseCheckOutFromJson(jsonString);
 
-import 'dart:convert';
+import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 
-ResponseCheckOut responseCheckOutFromJson(String str) => ResponseCheckOut.fromJson(json.decode(str));
-
-String responseCheckOutToJson(ResponseCheckOut data) => json.encode(data.toJson());
-
-class ResponseCheckOut {
+class ResponseCheckOut extends BaseResp {
   ResponseCheckOut({
-    this.success,
-    this.msg,
     this.data,
   });
 
-  bool success;
-  String msg;
   Data data;
 
-  factory ResponseCheckOut.fromJson(Map<String, dynamic> json) => ResponseCheckOut(
-        success: json["success"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
-      );
+  factory ResponseCheckOut.fromJson(Map<String, dynamic> json) => ResponseCheckOut()
+    ..success = json["success"]
+    ..message = json["msg"]
+    ..data = Data.fromJson(json["data"]);
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "msg": msg,
+        "msg": message,
         "data": data.toJson(),
       };
 }

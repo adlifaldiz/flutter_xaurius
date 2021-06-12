@@ -25,8 +25,9 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
           if (controller.auth.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
-                color: primaryColor,
+                numberOfDots: 3,
                 fontSize: 40,
+                color: primaryColor,
               ),
             );
           }
@@ -50,7 +51,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           iconEnabledColor: primaryColor,
                           iconDisabledColor: brokenWhiteColor,
                           dropdownColor: backgroundPanelColor,
-                          value: controller.idTypeValue.value,
+                          value: controller.valueIdType.toString(),
                           items: controller.listIdType.map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -60,7 +61,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           onChanged: !controller.auth.userData.orangKycEditAvailable
                               ? null
                               : (value) {
-                                  controller.idTypeValue.value = value;
+                                  controller.valueIdType.value = value;
                                 },
                         ),
                       ),
@@ -102,7 +103,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           ),
                     SizedBox(height: 10),
                     XauTextField(
-                      readOnly: controller.auth.userData.orangKycEditAvailable,
+                      readOnly: !controller.auth.userData.orangKycEditAvailable,
                       useObscure: false,
                       validator: validateNPWP,
                       controller: controller.nomorNPWP == null ? '' : controller.nomorNPWP,
@@ -111,7 +112,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                       labelText: 'Nomor NPWP',
                     ),
                     SizedBox(height: 10),
-                    controller.selectedImageNetworkNpwp.value != ''
+                    controller.selectedImageNetworkKtp.value != ''
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(20), child: Image.network(hostImage + controller.selectedImageNetworkNpwp.value))
                         : Container(
@@ -139,16 +140,16 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                     Obx(() {
                       if (controller.isLoading.value) {
                         return JumpingDotsProgressIndicator(
-                          color: primaryColor,
+                          numberOfDots: 3,
                           fontSize: 40,
+                          color: primaryColor,
                         );
                       }
                       return RaisedButton(
-                        onPressed: !controller.auth.userData.orangKycEditAvailable
+                        onPressed: !controller.isLoading.value
                             ? null
                             : () {
-                                Get.focusScope.unfocus();
-                                controller.checkDocumentIdentity();
+                                controller.checkIdentity();
                               },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
@@ -159,7 +160,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           ),
                         ),
                       );
-                    }),
+                    })
                   ],
                 ),
               ),
