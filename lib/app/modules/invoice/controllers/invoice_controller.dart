@@ -15,12 +15,10 @@ class InvoiceController extends GetxController {
   var isLoading = false.obs;
   var isLoadingForm = false.obs;
   var formattedDate = ''.obs;
-  var isFromBuy = false.obs;
 
   @override
   void onInit() {
     invoiceNumber = Get.arguments['invoiceId'];
-    isFromBuy.value = Get.arguments['fromBuy'];
     getDetailInvoice();
     super.onInit();
   }

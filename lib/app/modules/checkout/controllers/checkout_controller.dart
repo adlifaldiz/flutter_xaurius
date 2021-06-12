@@ -15,10 +15,10 @@ class CheckoutController extends GetxController {
   final GlobalKey<FormState> checkOutKey = GlobalKey<FormState>();
   final auth = Get.find<AuthController>();
   ApiRepository _repo = ApiRepository();
-  TextEditingController walletController, voucherController;
+  TextEditingController walletController;
   var responseCheckOut = ResponseCheckOut().obs;
   var responsePostCheckOut = ResponsePostCheckOut().obs;
-  var listVaMerchant = List<VaMerchant>().obs;
+  var listVaMerchant = <VaMerchant>[].obs;
 
   var isLoading = false.obs;
   var isTimeout = false.obs;
@@ -30,13 +30,15 @@ class CheckoutController extends GetxController {
   var bscAddress = '0xda6bb3cebbed2b1a68b4a3b7e5eb40cc280e3935';
 
   var buyId = ''.obs;
-  int merchantId = 349;
+  var merchantId = 349.obs;
+  var voucherCode = ''.obs;
+  var useVoucher = false.obs;
 
   @override
   void onInit() {
     walletController = TextEditingController();
-    voucherController = TextEditingController();
     buyId.value = Get.arguments;
+    checkVoucher();
     getCheckOut();
     super.onInit();
   }
@@ -44,13 +46,20 @@ class CheckoutController extends GetxController {
   @override
   void onClose() {
     walletController.dispose();
-    voucherController.dispose();
     super.onClose();
   }
 
   void onChangeMerchant(valueChange) {
     merchantId = valueChange;
     update();
+  }
+
+  void checkVoucher() {
+    if (auth.userVouchers.isEmpty) {
+      voucherCode.value = '';
+    } else {
+      voucherCode.value = auth.userVouchers[0].voucherCode;
+    }
   }
 
   void getCheckOut() async {
@@ -70,16 +79,15 @@ class CheckoutController extends GetxController {
     isLoading(false);
   }
 
-  void postCheckOut() async {
+  void postCheckOut(String voucherValue) async {
     isLoadingForm(true);
-    final resp = await _repo.postCheckout(buyId.value.toString(), walletController.text, merchantId, voucherController.text, auth.token);
+    final resp = await _repo.postCheckout(buyId.value.toString(), walletController.text, merchantId.value, voucherValue, auth.token);
 
     if (resp.success) {
       responsePostCheckOut.value = resp;
       successSnackbar('Sukses', 'Berhasil memuat invoice');
       Get.toNamed(Routes.INVOICE, arguments: {
         'invoiceId': responsePostCheckOut.value.data.buy.invoiceId,
-        'fromBuy': true,
       });
       goldPriceController.getBuys();
       update();
@@ -93,10 +101,22 @@ class CheckoutController extends GetxController {
 
   void checkCheckOut() {
     final isValid = checkOutKey.currentState.validate();
+    String _voucherValue = '';
+
+    if (!useVoucher.value) {
+      _voucherValue = '';
+    } else {
+      _voucherValue = voucherCode.value.toString();
+    }
     if (!isValid) {
       return;
     }
     checkOutKey.currentState.save();
-    postCheckOut();
+    postCheckOut(_voucherValue);
+  }
+
+  void onVoucherChange(bool value) {
+    useVoucher.value = value;
+    update();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/auth/top_up/response_get_top_up_model.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/response_get_top_up_model.dart';
 import 'package:flutter_xaurius/app/data/model/va_merchant/response_va_merchant_model.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';

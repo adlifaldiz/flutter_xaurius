@@ -7,7 +7,6 @@ import 'package:get_storage/get_storage.dart';
 
 import 'app/modules/auth/bindings/auth_binding.dart';
 
-
 void main() async {
   await GetStorage.init();
   runApp(MyApp());
@@ -37,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         Get.lazyPut(() => GoldPriceController());
       },
       theme: ThemeData(
+        unselectedWidgetColor: primaryColor,
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,

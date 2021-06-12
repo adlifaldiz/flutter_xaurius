@@ -44,7 +44,6 @@ class HistoryView extends GetView<HistoryController> {
                   child: GestureDetector(
                     onTap: () => Get.toNamed(Routes.INVOICE, arguments: {
                       'invoiceId': controller.goldPriceController.listBuys[index].invoiceId,
-                      'fromBuy': false,
                     }),
                     child: XauriusContainer(
                         child: Column(

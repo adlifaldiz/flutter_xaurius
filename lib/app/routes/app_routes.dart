@@ -36,6 +36,7 @@ abstract class Routes {
   static const VERIFY_CODE = _Paths.VERIFY_CODE;
   static const RE_LOGIN = _Paths.RE_LOGIN;
   static const GOLD_PRICE = _Paths.GOLD_PRICE;
+  static const VOUCHER = _Paths.VOUCHER;
 }
 
 abstract class _Paths {
@@ -71,4 +72,5 @@ abstract class _Paths {
   static const VERIFY_CODE = '/verify-code';
   static const RE_LOGIN = '/re-login';
   static const GOLD_PRICE = '/gold-price';
+  static const VOUCHER = '/voucher';
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_xaurius/app/data/model/auth/top_up/response_get_top_up_model.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/response_get_top_up_model.dart';
 import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';

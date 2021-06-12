@@ -1,6 +1,7 @@
 import 'package:flutter_xaurius/app/data/model/auth/user_balance.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_data.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
+import 'package:flutter_xaurius/app/data/model/auth/user_voucher.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +10,7 @@ class AuthController extends GetxController {
 
   String token;
   UserData userData;
-  List<dynamic> userVouchers;
+  List<Voucher> userVouchers;
   List<Balance> userBalance;
 
   var isLoading = false.obs;

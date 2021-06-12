@@ -270,29 +270,19 @@ class CheckoutView extends GetView<CheckoutController> {
                                   decoration: BoxDecoration(
                                       color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
                                   child: DropdownButtonHideUnderline(
-                                    child: StatefulBuilder(
-                                      builder: (BuildContext context, StateSetter dropDownState) {
-                                        return DropdownButton(
-                                          iconEnabledColor: primaryColor,
-                                          iconDisabledColor: brokenWhiteColor,
-                                          dropdownColor: backgroundPanelColor,
-                                          value: controller.merchantId,
-                                          items: controller.listVaMerchant.map((element) {
-                                            return new DropdownMenuItem(
-                                              child: Text(element.merchantName),
-                                              value: int.parse(element.merchantId),
-                                              onTap: () {
-                                                controller.onChangeMerchant(int.parse(element.merchantId));
-                                              },
-                                            );
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            dropDownState(() {
-                                              // _value = value;
-                                              controller.onChangeMerchant(value);
-                                            });
-                                          },
+                                    child: DropdownButton(
+                                      iconEnabledColor: primaryColor,
+                                      iconDisabledColor: brokenWhiteColor,
+                                      dropdownColor: backgroundPanelColor,
+                                      value: controller.merchantId.value,
+                                      items: controller.listVaMerchant.map<DropdownMenuItem<int>>((element) {
+                                        return new DropdownMenuItem(
+                                          child: Text(element.merchantName),
+                                          value: int.parse(element.merchantId.toString()),
                                         );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        controller.merchantId.value = value;
                                       },
                                     ),
                                   ),
@@ -301,11 +291,57 @@ class CheckoutView extends GetView<CheckoutController> {
                             ),
                           ),
                           SizedBox(height: 20),
-                          XauTextField(
-                            useObscure: false,
-                            controller: controller.voucherController,
-                            labelText: 'Voucher *(optional)',
-                          ),
+                          controller.auth.userVouchers.isEmpty
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Checkbox(
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                          checkColor: textWhiteColor,
+                                          activeColor: primaryColor,
+                                          value: controller.useVoucher.value,
+                                          onChanged: (value) {
+                                            return controller.onVoucherChange(value);
+                                          },
+                                        ),
+                                        Text(
+                                          controller.useVoucher.value ? "Kamu menggunakan voucher" : "Kamu memiliki voucher\nGunakan sekarang?",
+                                          style: stylePrimary,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 20),
+                                    Visibility(
+                                      visible: controller.useVoucher.value,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                                        width: Get.width,
+                                        decoration: BoxDecoration(
+                                            color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton(
+                                            iconEnabledColor: primaryColor,
+                                            iconDisabledColor: brokenWhiteColor,
+                                            dropdownColor: backgroundPanelColor,
+                                            value: controller.voucherCode.value.toString(),
+                                            items: controller.auth.userVouchers.map<DropdownMenuItem<String>>((element) {
+                                              return new DropdownMenuItem(
+                                                child: Text(element.voucherCode),
+                                                value: element.voucherCode,
+                                              );
+                                            }).toList(),
+                                            onChanged: (value) {
+                                              controller.merchantId.value = value;
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                           SizedBox(height: 20),
                           Obx(() {
                             if (controller.isLoadingForm.value) {

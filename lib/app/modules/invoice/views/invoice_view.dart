@@ -14,9 +14,6 @@ class InvoiceView extends GetView<InvoiceController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: (BackButton(
-          onPressed: controller.isFromBuy.value ? () => Get.offAllNamed(Routes.MENU) : () => Get.back(),
-        )),
         title: Text(
           Get.arguments == null ? 'Invoice' : 'Invoice #${controller.invoiceNumber}',
         ),
