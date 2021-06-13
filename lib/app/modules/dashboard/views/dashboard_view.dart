@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
@@ -165,12 +166,9 @@ class DashboardView extends GetView<DashboardController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Transform.rotate(
-                      angle: 0.8,
-                      child: Icon(
-                        FontAwesomeIcons.wifi,
-                        color: accentColor,
-                      ),
+                    Icon(
+                      FontAwesomeIcons.chartLine,
+                      color: accentColor,
                     ),
                     SizedBox(width: 10),
                     Text(
@@ -313,12 +311,9 @@ class DashboardView extends GetView<DashboardController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Transform.rotate(
-                          angle: 0.8,
-                          child: Icon(
-                            FontAwesomeIcons.wifi,
-                            color: accentColor,
-                          ),
+                        Icon(
+                          FontAwesomeIcons.newspaper,
+                          color: accentColor,
                         ),
                         SizedBox(width: 10),
                         Text(
@@ -395,12 +390,9 @@ class DashboardView extends GetView<DashboardController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Transform.rotate(
-                          angle: 0.8,
-                          child: Icon(
-                            FontAwesomeIcons.wifi,
-                            color: accentColor,
-                          ),
+                        Icon(
+                          FontAwesomeIcons.networkWired,
+                          color: accentColor,
                         ),
                         SizedBox(width: 10),
                         Text(

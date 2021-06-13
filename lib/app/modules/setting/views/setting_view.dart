@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:flutter_xaurius/app/widget/menu_tile.dart';
+import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
@@ -16,15 +17,19 @@ class SettingView extends GetView<SettingController> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: backgroundPanelColor.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+              XauriusContainer(
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(20),
+                //   image: DecorationImage(
+                //     image: AssetImage('assets/images/mesh-right.png'),
+                //     alignment: Alignment.centerRight,
+                //     fit: BoxFit.contain,
+                //   ),
+                // ),
                 child: Column(
                   children: [
                     MenuTile(
@@ -61,11 +66,7 @@ class SettingView extends GetView<SettingController> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: backgroundPanelColor.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+              XauriusContainer(
                 child: Column(
                   children: [
                     MenuTile(
@@ -90,11 +91,7 @@ class SettingView extends GetView<SettingController> {
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: backgroundPanelColor.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+              XauriusContainer(
                 child: Column(
                   children: [
                     MenuTile(
@@ -121,7 +118,7 @@ class SettingView extends GetView<SettingController> {
       backgroundColor: backgroundPanelColor,
       cancel: RaisedButton(
         color: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () => Get.back(),
         child: Text(
           'Tidak',
@@ -130,7 +127,7 @@ class SettingView extends GetView<SettingController> {
       ),
       confirm: RaisedButton(
         color: primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: controller.logout,
         child: Text(
           'Ya',

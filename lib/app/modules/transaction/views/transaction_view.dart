@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:flutter_xaurius/app/widget/menu_produk.dart';
 import 'package:flutter_xaurius/app/widget/menu_transaction.dart';
+import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
@@ -26,101 +27,112 @@ class TransactionView extends GetView<TransactionController> {
             ),
           );
         }
-        return SafeArea(
-          child: Stack(
-            children: [
-              Positioned(
-                width: MediaQuery.of(context).size.width / 2,
-                top: 0,
-                right: 0,
-                child: Image.asset(
-                  'assets/images/mesh-right.png',
+        return Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
+              decoration: BoxDecoration(
+                  boxShadow: [BoxShadow(color: primaryColor.withOpacity(0.5), blurRadius: 10, offset: Offset(0, 5))],
+                  color: backgroundPanelColor,
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))),
+              foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/mesh-bottom.png'),
+                  alignment: Alignment.bottomRight,
+                  fit: BoxFit.contain,
                 ),
               ),
-              SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.wallet,
+                            color: primaryColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Saldo',
+                            style: textTitle,
+                          )
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.TOP_UP),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.plus,
+                                color: textBlackColor,
+                                size: 10,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                'Top Up',
+                                style: stylePrimaryDark,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Rp',
+                        style: textTitle.copyWith(color: primaryColor),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        controller.auth.userBalance.isEmpty ? '0' : controller.auth.userBalance[0].balanceValue,
+                        style: textTitle.copyWith(fontSize: 30),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  controller.auth.userVouchers.isEmpty
+                      ? Container()
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Kamu memiliki voucher',
+                              style: textTitle,
+                            ),
+                            SizedBox(width: 5),
+                            InkWell(
+                              onTap: () => Get.toNamed(Routes.VOUCHER),
+                              child: Text(
+                                'Lihat',
+                                style: textTitle.copyWith(color: primaryColor),
+                              ),
+                            )
+                          ],
+                        ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.wallet,
-                                color: primaryColor,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                'Saldo',
-                                style: textTitle,
-                              )
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () => Get.toNamed(Routes.TOP_UP),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                              decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    FontAwesomeIcons.plus,
-                                    color: textBlackColor,
-                                    size: 10,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    'Top Up',
-                                    style: stylePrimaryDark,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Rp',
-                            style: textTitle.copyWith(color: primaryColor),
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            controller.auth.userBalance.isEmpty ? '0' : controller.auth.userBalance[0].balanceValue,
-                            style: textTitle.copyWith(fontSize: 30),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      controller.auth.userVouchers.isEmpty
-                          ? Container()
-                          : Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Kamu memiliki voucher',
-                                  style: textTitle,
-                                ),
-                                SizedBox(width: 5),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Text(
-                                    'Claim',
-                                    style: textTitle.copyWith(color: primaryColor),
-                                  ),
-                                )
-                              ],
-                            ),
-                      Divider(
-                        thickness: 2,
-                        height: 50,
-                        color: brokenWhiteColor,
-                      ),
+                      // Divider(
+                      //   thickness: 2,
+                      //   height: 50,
+                      //   color: brokenWhiteColor,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -140,7 +152,7 @@ class TransactionView extends GetView<TransactionController> {
                       ),
                       SizedBox(height: 10),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 2)),
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 0)),
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
@@ -151,7 +163,6 @@ class TransactionView extends GetView<TransactionController> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           crossAxisSpacing: 5,
-                          mainAxisSpacing: 2,
                           children: [
                             MenuProduk(
                               onTap: () => Get.toNamed(Routes.BUY_XAU),
@@ -304,8 +315,8 @@ class TransactionView extends GetView<TransactionController> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }),
     );

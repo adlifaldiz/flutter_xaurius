@@ -18,8 +18,7 @@ class SplashView extends StatefulWidget {
   _SplashViewState createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
-    with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin {
   SplashController controller;
   AnimationController _animationController;
   Animation<double> _animation;
@@ -30,17 +29,17 @@ class _SplashViewState extends State<SplashView>
   void initState() {
     super.initState();
     controller = Get.find<SplashController>();
-    _animationController = new AnimationController(
-        vsync: this, duration: Duration(milliseconds: 100));
-    _animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: _animationController, curve: Curves.easeInCirc));
+    _animationController = new AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInCirc));
     _animationController.forward();
 
     Future.delayed(Duration(milliseconds: 5000)).then((value) {
-      if (controller.isUserLogged) {
+      if (controller.isUserLogged && controller.isUserBoarding) {
         Get.offAllNamed(Routes.RE_LOGIN);
-      } else {
+      } else if (controller.isUserLogged == false && controller.isUserBoarding) {
         Get.offAllNamed(Routes.LOGIN);
+      } else {
+        Get.offAllNamed(Routes.ON_BOARDING);
       }
     });
   }

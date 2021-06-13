@@ -1,9 +1,10 @@
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnBoardingController extends GetxController {
-  //TODO: Implement OnBoardingController
+  final storage = GetStorage();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +17,9 @@ class OnBoardingController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  void onProceed() {
+    storage.write('isBoarding', 'onBoarding');
+    Get.offAllNamed(Routes.LOGIN);
+  }
 }

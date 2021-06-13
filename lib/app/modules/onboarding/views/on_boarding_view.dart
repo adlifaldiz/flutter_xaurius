@@ -17,14 +17,12 @@ class OnBoardingView extends GetView<OnBoardingController> {
     PageModel(
       image: Image.asset('assets/images/onboarding_3.png'),
       title: Text('Bertransaksi Emas dengan Mudah di Seluruh Dunia'),
-      info: Text(
-          "Beli, Jual dan Transfer Emas Di Mana Saja, Kapan Saja dalam Hitungan Detik"),
+      info: Text("Beli, Jual dan Transfer Emas Di Mana Saja, Kapan Saja dalam Hitungan Detik"),
     ),
     PageModel(
       image: Image.asset('assets/images/onboarding_2.png'),
       title: Text('Aman dan nyaman'),
-      info: Text(
-          "Memastikan keamanan, keamanan & transparansi berkat teknologi blockchain"),
+      info: Text("Memastikan keamanan, keamanan & transparansi berkat teknologi blockchain"),
     ),
   ];
 
@@ -42,7 +40,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
       ),
       proceedButtonStyle: ProceedButtonStyle(
         proceedButtonRoute: (context) {
-          return Get.offAllNamed(Routes.LOGIN);
+          return controller.onProceed();
         },
         proceedpButtonText: Text('Lanjut'),
       ),

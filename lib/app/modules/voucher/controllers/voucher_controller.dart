@@ -1,9 +1,9 @@
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class VoucherController extends GetxController {
-  //TODO: Implement VoucherController
+  final auth = Get.find<AuthController>();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +16,4 @@ class VoucherController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

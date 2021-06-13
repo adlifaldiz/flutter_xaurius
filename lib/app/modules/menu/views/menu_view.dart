@@ -19,7 +19,7 @@ class MenuView extends GetView<MenuController> {
             _controller.onPageChange(index);
           },
           children: _controller.screens,
-          // physics: NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavyBar(
           curve: Curves.ease,
@@ -38,7 +38,7 @@ class MenuView extends GetView<MenuController> {
             BottomNavyBarItem(
                 icon: FaIcon(FontAwesomeIcons.history), title: Text('History'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
             BottomNavyBarItem(
-                icon: FaIcon(FontAwesomeIcons.cog), title: Text('Pengaturan'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
+                icon: FaIcon(FontAwesomeIcons.userAlt), title: Text('Akun'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
           ],
         ),
       );

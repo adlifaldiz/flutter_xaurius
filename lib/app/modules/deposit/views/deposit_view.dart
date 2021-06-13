@@ -12,13 +12,11 @@ class DepositView extends GetView<DepositController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Deposit Rupiah'),
+        title: Text('Deposit Crypto'),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: percentWidth(context, 5),
-              vertical: percentHeight(context, 2)),
+          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,8 +31,7 @@ class DepositView extends GetView<DepositController> {
                   itemCount: 10,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: percentHeight(context, 1)),
+                      padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
                       child: XauriusContainer(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
