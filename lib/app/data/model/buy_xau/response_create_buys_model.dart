@@ -11,10 +11,13 @@ class ResponseCreateBuy extends BaseResp {
 
   Data data;
 
-  factory ResponseCreateBuy.fromJson(Map<String, dynamic> json) => ResponseCreateBuy()
-    ..success = json["success"]
-    ..message = json["msg"]
-    ..data = Data.fromJson(json["data"]);
+  factory ResponseCreateBuy.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return ResponseCreateBuy()
+      ..success = json["success"]
+      ..message = json["msg"]
+      ..data = Data.fromJson(json["data"]);
+  }
 
   Map<String, dynamic> toJson() => {
         "success": success,
@@ -30,9 +33,13 @@ class Data {
 
   Buy buy;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        buy: Buy.fromJson(json["buy"]),
-      );
+  factory Data.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return Data(
+      buy: Buy.fromJson(json["buy"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "buy": buy.toJson(),
@@ -70,21 +77,25 @@ class Buy {
   String buyNetwork;
   BuyGasJson buyGasJson;
 
-  factory Buy.fromJson(Map<String, dynamic> json) => Buy(
-        id: json["id"],
-        buyAddress: json["buy_address"],
-        buyTxhash: json["buy_txhash"],
-        orangId: json["orang_id"],
-        buyQty: json["buy_qty"],
-        buyStatus: json["buy_status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        invoiceId: json["invoice_id"],
-        buyAmount: json["buy_amount"],
-        buyUnitPrice: json["buy_unit_price"],
-        buyNetwork: json["buy_network"],
-        buyGasJson: BuyGasJson.fromJson(json["buy_gas_json"]),
-      );
+  factory Buy.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return Buy(
+      id: json["id"],
+      buyAddress: json["buy_address"],
+      buyTxhash: json["buy_txhash"],
+      orangId: json["orang_id"],
+      buyQty: json["buy_qty"],
+      buyStatus: json["buy_status"],
+      createdAt: DateTime.parse(json["created_at"]),
+      updatedAt: DateTime.parse(json["updated_at"]),
+      invoiceId: json["invoice_id"],
+      buyAmount: json["buy_amount"],
+      buyUnitPrice: json["buy_unit_price"],
+      buyNetwork: json["buy_network"],
+      buyGasJson: BuyGasJson.fromJson(json["buy_gas_json"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -114,11 +125,15 @@ class BuyGasJson {
   double tokenTransferCostInIdr;
   bool maintenance;
 
-  factory BuyGasJson.fromJson(Map<String, dynamic> json) => BuyGasJson(
-        gasPriceInUnitCurrency: json["gas_price_in_unit_currency"],
-        tokenTransferCostInIdr: json["token_transfer_cost_in_idr"].toDouble(),
-        maintenance: json["maintenance"],
-      );
+  factory BuyGasJson.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return BuyGasJson(
+      gasPriceInUnitCurrency: json["gas_price_in_unit_currency"],
+      tokenTransferCostInIdr: json["token_transfer_cost_in_idr"].toDouble(),
+      maintenance: json["maintenance"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "gas_price_in_unit_currency": gasPriceInUnitCurrency,

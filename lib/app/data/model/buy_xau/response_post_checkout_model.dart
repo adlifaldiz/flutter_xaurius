@@ -73,21 +73,25 @@ class PostBuy {
   DateTime updatedAt;
   String buyUnitPrice;
 
-  factory PostBuy.fromJson(Map<String, dynamic> json) => PostBuy(
-        invoiceId: json["invoice_id"],
-        buyAmount: json["buy_amount"],
-        buyQty: json["buy_qty"],
-        buyGasJson: BuyGasJson.fromJson(json["buy_gas_json"]),
-        buyNetwork: json["buy_network"],
-        id: json["id"],
-        buyStatus: json["buy_status"],
-        buyAddress: json["buy_address"],
-        buyTxhash: json["buy_txhash"],
-        orangId: json["orang_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        buyUnitPrice: json["buy_unit_price"],
-      );
+  factory PostBuy.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return PostBuy(
+      invoiceId: json["invoice_id"],
+      buyAmount: json["buy_amount"],
+      buyQty: json["buy_qty"],
+      buyGasJson: BuyGasJson.fromJson(json["buy_gas_json"]),
+      buyNetwork: json["buy_network"],
+      id: json["id"],
+      buyStatus: json["buy_status"],
+      buyAddress: json["buy_address"],
+      buyTxhash: json["buy_txhash"],
+      orangId: json["orang_id"],
+      createdAt: DateTime.parse(json["created_at"]),
+      updatedAt: DateTime.parse(json["updated_at"]),
+      buyUnitPrice: json["buy_unit_price"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "invoice_id": invoiceId,
@@ -117,11 +121,15 @@ class BuyGasJson {
   double tokenTransferCostInIdr;
   bool maintenance;
 
-  factory BuyGasJson.fromJson(Map<String, dynamic> json) => BuyGasJson(
-        gasPriceInUnitCurrency: json["gas_price_in_unit_currency"],
-        tokenTransferCostInIdr: json["token_transfer_cost_in_idr"].toDouble(),
-        maintenance: json["maintenance"],
-      );
+  factory BuyGasJson.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return BuyGasJson(
+      gasPriceInUnitCurrency: json["gas_price_in_unit_currency"],
+      tokenTransferCostInIdr: json["token_transfer_cost_in_idr"].toDouble(),
+      maintenance: json["maintenance"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "gas_price_in_unit_currency": gasPriceInUnitCurrency,
@@ -169,25 +177,29 @@ class PostInvoice {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory PostInvoice.fromJson(Map<String, dynamic> json) => PostInvoice(
-        id: json["id"],
-        orangId: json["orang_id"],
-        invoiceTotal: json["invoice_total"],
-        invoiceKeterangan: json["invoice_keterangan"],
-        invoiceBayar: json["invoice_bayar"],
-        invoiceVa: InvoiceVa.fromJson(json["invoice_va"]),
-        invoiceTax: json["invoice_tax"],
-        invoiceAdmfee: json["invoice_admfee"],
-        invoiceSubtotal: json["invoice_subtotal"],
-        invoiceDiscount: json["invoice_discount"],
-        invoiceDatadetail: json["invoice_datadetail"],
-        invoiceGas: json["invoice_gas"],
-        voucherId: json["voucher_id"],
-        invoiceVoucherValue: json["invoice_voucher_value"],
-        invoiceForTable: json["invoice_for_table"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
+  factory PostInvoice.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return PostInvoice(
+      id: json["id"],
+      orangId: json["orang_id"],
+      invoiceTotal: json["invoice_total"],
+      invoiceKeterangan: json["invoice_keterangan"],
+      invoiceBayar: json["invoice_bayar"],
+      invoiceVa: InvoiceVa.fromJson(json["invoice_va"]),
+      invoiceTax: json["invoice_tax"],
+      invoiceAdmfee: json["invoice_admfee"],
+      invoiceSubtotal: json["invoice_subtotal"],
+      invoiceDiscount: json["invoice_discount"],
+      invoiceDatadetail: json["invoice_datadetail"],
+      invoiceGas: json["invoice_gas"],
+      voucherId: json["voucher_id"],
+      invoiceVoucherValue: json["invoice_voucher_value"],
+      invoiceForTable: json["invoice_for_table"],
+      createdAt: DateTime.parse(json["created_at"]),
+      updatedAt: DateTime.parse(json["updated_at"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -223,12 +235,16 @@ class InvoiceVa {
   double totalAmount;
   CustomerData customerData;
 
-  factory InvoiceVa.fromJson(Map<String, dynamic> json) => InvoiceVa(
-        vaNumber: json["vaNumber"],
-        vaExpiryDate: DateTime.parse(json["vaExpiryDate"]),
-        totalAmount: json["totalAmount"],
-        customerData: CustomerData.fromJson(json["customerData"]),
-      );
+  factory InvoiceVa.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return InvoiceVa(
+      vaNumber: json["vaNumber"],
+      vaExpiryDate: DateTime.parse(json["vaExpiryDate"]),
+      totalAmount: json["totalAmount"],
+      customerData: CustomerData.fromJson(json["customerData"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "vaNumber": vaNumber,
@@ -245,9 +261,13 @@ class CustomerData {
 
   String custName;
 
-  factory CustomerData.fromJson(Map<String, dynamic> json) => CustomerData(
-        custName: json["custName"],
-      );
+  factory CustomerData.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return CustomerData(
+      custName: json["custName"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "custName": custName,
