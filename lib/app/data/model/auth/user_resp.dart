@@ -34,9 +34,9 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         orang: UserData.fromJson(json["orang"]),
-        balances: List<Balance>.from(json["balances"].map((x) => Balance.fromJson(x))),
-        refbons: List<dynamic>.from(json["refbons"].map((x) => x)),
-        vouchers: List<Voucher>.from(json["vouchers"].map((x) => Voucher.fromJson(x))),
+        balances: json["balances"] != null ? List<Balance>.from(json["balances"].map((x) => Balance.fromJson(x))) : [],
+        refbons: json["refbons"] != null ?List<dynamic>.from(json["refbons"].map((x) => x)) : [],
+        vouchers: json["vouchers"] != null ?List<Voucher>.from(json["vouchers"].map((x) => Voucher.fromJson(x))) : [],
       );
 
   Map<String, dynamic> toJson() => {

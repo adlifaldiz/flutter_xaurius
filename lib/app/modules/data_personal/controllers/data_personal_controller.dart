@@ -71,6 +71,7 @@ class DataPersonalController extends GetxController {
     );
     if (resp.success) {
       successSnackbar('Sukses', 'Berhasil melengkapi Data Personal');
+      auth.getProfileData();
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
