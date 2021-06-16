@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
+import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class BuyXauController extends GetxController {
-  final goldPriceController = Get.find<GoldPriceController>();
   final GlobalKey<FormState> buyKey = GlobalKey<FormState>();
+  final dash = Get.find<DashboardController>();
   final auth = Get.find<AuthController>();
   TextEditingController qtyController;
   TextEditingController totalController;
@@ -28,7 +29,6 @@ class BuyXauController extends GetxController {
   void onInit() {
     qtyController = TextEditingController();
     totalController = TextEditingController();
-    goldPriceController.getBuys();
     super.onInit();
   }
 
@@ -61,8 +61,10 @@ class BuyXauController extends GetxController {
   void checkBuy() {
     if (value == 1) {
       valueIdType = 'ETH';
-    } else {
+    } else if (value == 2) {
       valueIdType = 'BSC';
+    } else {
+      valueIdType = 'Private';
     }
 
     final isValid = buyKey.currentState.validate();
@@ -91,7 +93,7 @@ class BuyXauController extends GetxController {
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else {
       var value = double.parse(val);
-      var subtotal = double.parse(goldPriceController.buyPrice) * value;
+      var subtotal = double.parse(dash.goldPrice.value.chartpriceBuy) * value;
       var total = subtotal.toInt();
       totalController.text = total.toString();
     }
@@ -112,7 +114,7 @@ class BuyXauController extends GetxController {
       totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
     } else {
       var value = double.parse(val);
-      var total = value / double.parse(goldPriceController.buyPrice);
+      var total = value / double.parse(dash.goldPrice.value.chartpriceBuy);
       qtyController.text = total.toString();
     }
   }

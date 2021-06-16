@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
+import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
 import 'package:flutter_xaurius/app/modules/setting/views/setting_view.dart';
@@ -8,7 +9,9 @@ import 'package:get/get.dart';
 
 class MenuController extends GetxController {
   final _auth = Get.find<AuthController>();
-  PageController pageController = PageController();
+
+  var currentIndex = 0.obs;
+  PageController pageController = PageController(initialPage: 0);
 
   List<Widget> screens = [
     DashboardView(),
@@ -16,8 +19,6 @@ class MenuController extends GetxController {
     HistoryView(),
     SettingView(),
   ];
-
-  var currentIndex = 0.obs;
 
   @override
   void onInit() {
@@ -33,12 +34,12 @@ class MenuController extends GetxController {
   @override
   void onClose() {}
 
-  void onPageChange(int index) {
+  void onPageChange(index) {
     currentIndex.value = index;
     update();
   }
 
-  void onItemSelected(int index) {
+  void onItemSelected(index) async {
     currentIndex.value = index;
     update();
   }

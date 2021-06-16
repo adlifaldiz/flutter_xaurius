@@ -1,42 +1,4 @@
-import 'package:flutter_xaurius/app/data/model/base_resp.dart';
-
-class ResponseDetailInvoiceTopUp extends BaseResp {
-  ResponseDetailInvoiceTopUp({
-    this.data,
-  });
-
-  Data data;
-
-  factory ResponseDetailInvoiceTopUp.fromJson(Map<String, dynamic> json) => ResponseDetailInvoiceTopUp()
-    ..success = json["success"]
-    ..message = json["msg"]
-    ..data = Data.fromJson(json["data"]);
-
-  Map<String, dynamic> toJson() => {
-        "success": success,
-        "msg": message,
-        "data": data.toJson(),
-      };
-}
-
-class Data {
-  Data({
-    this.invoice,
-  });
-
-  Invoice invoice;
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-    return Data(
-      invoice: Invoice.fromJson(json["invoice"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "invoice": invoice.toJson(),
-      };
-}
+import 'package:flutter_xaurius/app/data/model/va_invoice_data/va_invoice_data.dart';
 
 class Invoice {
   Invoice({
@@ -54,7 +16,6 @@ class Invoice {
     this.invoiceGas,
     this.voucherId,
     this.invoiceVoucherValue,
-    this.invoiceForTable,
     this.createdAt,
     this.updatedAt,
   });
@@ -70,10 +31,9 @@ class Invoice {
   String invoiceSubtotal;
   String invoiceDiscount;
   dynamic invoiceDatadetail;
-  dynamic invoiceGas;
+  String invoiceGas;
   int voucherId;
   String invoiceVoucherValue;
-  String invoiceForTable;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -95,7 +55,6 @@ class Invoice {
       invoiceGas: json["invoice_gas"],
       voucherId: json["voucher_id"],
       invoiceVoucherValue: json["invoice_voucher_value"],
-      invoiceForTable: json["invoice_for_table"],
       createdAt: DateTime.parse(json["created_at"]),
       updatedAt: DateTime.parse(json["updated_at"]),
     );
@@ -116,60 +75,7 @@ class Invoice {
         "invoice_gas": invoiceGas,
         "voucher_id": voucherId,
         "invoice_voucher_value": invoiceVoucherValue,
-        "invoice_for_table": invoiceForTable,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-      };
-}
-
-class InvoiceVa {
-  InvoiceVa({
-    this.vaNumber,
-    this.vaExpiryDate,
-    this.totalAmount,
-    this.customerData,
-  });
-
-  String vaNumber;
-  DateTime vaExpiryDate;
-  double totalAmount;
-  CustomerData customerData;
-
-  factory InvoiceVa.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    return InvoiceVa(
-      vaNumber: json["vaNumber"],
-      vaExpiryDate: DateTime.parse(json["vaExpiryDate"]),
-      totalAmount: json["totalAmount"],
-      customerData: CustomerData.fromJson(json["customerData"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "vaNumber": vaNumber,
-        "vaExpiryDate": vaExpiryDate.toIso8601String(),
-        "totalAmount": totalAmount,
-        "customerData": customerData.toJson(),
-      };
-}
-
-class CustomerData {
-  CustomerData({
-    this.custName,
-  });
-
-  String custName;
-
-  factory CustomerData.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    return CustomerData(
-      custName: json["custName"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "custName": custName,
       };
 }

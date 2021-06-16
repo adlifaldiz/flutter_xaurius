@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const backgroundColor = Color(0xFF242424);
-const backgroundPanelColor = Color(0xFF191919);
+const backgroundColor = Color(0xFF191919);
+const backgroundPanelColor = Color(0xFF101010);
 const primaryColor = Color(0xFFF6CF48);
 const accentColor = Color(0xFFF6CF48);
 const textWhiteColor = Color(0xFFf2f2f2);
@@ -9,6 +9,8 @@ const brokenWhiteColor = Color(0xFFcccccc);
 const textBlackColor = Color(0xFF141414);
 const redColor = Color(0xFFee5253);
 const greenColor = Color(0xFF10ac84);
+const greyColor = Color(0xFF485460);
+
 const disableColor = Color(0xFFbbbbbb);
 
 Color fillColor = Color(0xFF141414).withOpacity(0.8);

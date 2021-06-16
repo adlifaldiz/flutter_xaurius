@@ -3,32 +3,32 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/modules/menu/controllers/menu_controller.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class MenuView extends GetView<MenuController> {
-  MenuController _controller = Get.put(MenuController());
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
         body: PageView(
-          controller: _controller.pageController,
+          controller: controller.pageController,
           onPageChanged: (index) {
-            _controller.onPageChange(index);
+            controller.onPageChange(index);
           },
-          children: _controller.screens,
+          children: controller.screens,
           physics: NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavyBar(
           curve: Curves.ease,
           backgroundColor: backgroundPanelColor,
-          selectedIndex: _controller.currentIndex.value,
+          selectedIndex: controller.currentIndex.value,
           showElevation: true, // use this to remove appBar's elevation
           onItemSelected: (index) {
-            _controller.onItemSelected(index);
-            _controller.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
+            controller.onItemSelected(index);
+            controller.pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
           },
           items: [
             BottomNavyBarItem(

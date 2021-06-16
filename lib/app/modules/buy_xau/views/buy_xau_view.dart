@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
@@ -15,7 +16,6 @@ import '../controllers/buy_xau_controller.dart';
 class BuyXauView extends GetView<BuyXauController> {
   @override
   Widget build(BuildContext context) {
-    var priceBuy = double.parse(controller.goldPriceController.buyPrice);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -23,7 +23,7 @@ class BuyXauView extends GetView<BuyXauController> {
           title: Text('Beli XAU'),
         ),
         body: Obx(() {
-          if (controller.goldPriceController.isLoading.value) {
+          if (controller.dash.isLoading.value) {
             return Center(
               child: JumpingDotsProgressIndicator(
                 numberOfDots: 3,
@@ -51,7 +51,7 @@ class BuyXauView extends GetView<BuyXauController> {
                             ),
                             SizedBox(width: 10),
                             Text(
-                              priceBuy.toString() ?? '000.000',
+                              customCurrency(controller.dash.goldPrice.value.chartpriceBuy) ?? '000.000',
                               style: stylePrimary.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                             )
                           ],
@@ -86,6 +86,13 @@ class BuyXauView extends GetView<BuyXauController> {
                                       controller.onChangeBuy(2);
                                     },
                                   ),
+                                  DropdownMenuItem(
+                                    child: Text('Private'),
+                                    value: 3,
+                                    onTap: () {
+                                      controller.onChangeBuy(3);
+                                    },
+                                  ),
                                 ],
                                 onChanged: (value) {
                                   dropDownState(() {
@@ -118,6 +125,12 @@ class BuyXauView extends GetView<BuyXauController> {
                         inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                         keyboardType: TextInputType.number,
                         controller: controller.totalController,
+                        prefixIcon: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Rp'),
+                          ],
+                        ),
                         validator: (value) {
                           return validateSubTotal(value);
                         },

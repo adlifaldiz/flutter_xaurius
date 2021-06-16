@@ -18,3 +18,4 @@ const getVaMerchant = '/va_merchants';
 const getTopUp = '/depoidrs';
 const postTopUp = '/depoidrs/new';
 const getDetailInvoices = '/invoices/';
+const dashboard = '/dashboard';

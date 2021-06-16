@@ -10,6 +10,8 @@ import 'package:flutter_xaurius/app/modules/bank/bindings/bank_binding.dart';
 import 'package:flutter_xaurius/app/modules/bank/views/bank_view.dart';
 import 'package:flutter_xaurius/app/modules/buy_xau/bindings/buy_xau_binding.dart';
 import 'package:flutter_xaurius/app/modules/buy_xau/views/buy_xau_view.dart';
+import 'package:flutter_xaurius/app/modules/chart_view/bindings/chart_view_binding.dart';
+import 'package:flutter_xaurius/app/modules/chart_view/views/chart_view_view.dart';
 import 'package:flutter_xaurius/app/modules/checkout/bindings/checkout_binding.dart';
 import 'package:flutter_xaurius/app/modules/checkout/views/checkout_view.dart';
 import 'package:flutter_xaurius/app/modules/create_pin/bindings/create_pin_binding.dart';
@@ -241,6 +243,11 @@ class AppPages {
       name: _Paths.VOUCHER,
       page: () => VoucherView(),
       binding: VoucherBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHART_VIEW,
+      page: () => ChartViewView(),
+      binding: ChartViewBinding(),
     ),
   ];
 }

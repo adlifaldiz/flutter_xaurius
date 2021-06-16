@@ -24,13 +24,15 @@ class RegisterController extends GetxController {
     if (resp.success) {
       Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
     } else {
-      dialogConnection(
-        'Oops',
-        resp.message,
-        () {
-          Get.back();
-        },
-      );
+      Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
+
+      // dialogConnection(
+      //   'Oops',
+      //   resp.message,
+      //   () {
+      //     Get.back();
+      //   },
+      // );
     }
     isLoading(false);
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_xaurius/app/data/model/top_up/response_get_top_up_model.dart';
+import 'package:flutter_xaurius/app/data/model/depoidr_data/depoird_data.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/resp_list_topup/resp_list_top.dart';
 import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 
@@ -16,10 +19,11 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/top_up_controller.dart';
 
 class TopUpView extends GetView<TopUpController> {
-  final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTopUp = GlobalKey<LiquidPullToRefreshState>();
 
   @override
   Widget build(BuildContext context) {
+    controller.onInit();
     return GestureDetector(
       onTap: () => Get.focusScope.unfocus(),
       child: Scaffold(
@@ -27,18 +31,18 @@ class TopUpView extends GetView<TopUpController> {
           title: Text('Top Up'),
         ),
         body: Obx(() {
-          if (controller.isLoading.value) {
-            return Center(
-                child: JumpingDotsProgressIndicator(
-              color: primaryColor,
-              fontSize: 40,
-            ));
-          }
+          // if (controller.isLoading.value) {
+          //   return Center(
+          //       child: JumpingDotsProgressIndicator(
+          //     color: primaryColor,
+          //     fontSize: 40,
+          //   ));
+          // }
           return SafeArea(
             child: LiquidPullToRefresh(
               color: backgroundPanelColor,
               backgroundColor: primaryColor,
-              key: refreshIndicatorKey,
+              key: refreshTopUp,
               onRefresh: controller.onRefresh,
               showChildOpacityTransition: false,
               child: CustomScrollView(
@@ -50,105 +54,106 @@ class TopUpView extends GetView<TopUpController> {
                       if (index == 0) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
-                          child: XauriusContainer(
-                            child: Form(
-                              key: formKey,
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Top Up IDR',
-                                    style: textTitle,
-                                  ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
-                                    width: percentWidth(context, 100),
-                                    decoration: BoxDecoration(
-                                        color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
-                                    child: DropdownButtonHideUnderline(
-                                      child: StatefulBuilder(
-                                        builder: (BuildContext context, StateSetter dropDownState) {
-                                          return DropdownButton(
-                                            iconEnabledColor: primaryColor,
-                                            iconDisabledColor: brokenWhiteColor,
-                                            dropdownColor: backgroundPanelColor,
-                                            value: controller.merchantId,
-                                            items: controller.listMerchant.map((element) {
-                                              return new DropdownMenuItem(
-                                                child: Text(element.merchantName),
-                                                value: int.parse(element.merchantId),
-                                                onTap: () {
-                                                  controller.onChangeMerchant(int.parse(element.merchantId));
-                                                },
-                                              );
-                                            }).toList(),
-                                            onChanged: (value) {
-                                              dropDownState(() {
-                                                controller.onChangeMerchant(value);
-                                              });
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  XauTextField(
-                                    useObscure: false,
-                                    controller: controller.nominalTopUpControl,
-                                    inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
-                                    validator: (value) {
-                                      return validateNominalTopTup(value);
-                                    },
-                                    prefixIcon: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                          child: controller.isLoading.value
+                              ? ShimmerCard(
+                                  height: percentHeight(context, 20),
+                                )
+                              : XauriusContainer(
+                                  child: Form(
+                                    key: formKey,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text('Rp'),
+                                        Text(
+                                          'Top Up IDR',
+                                          style: textTitle,
+                                        ),
+                                        SizedBox(height: 20),
+                                        Obx(() {
+                                          return Container(
+                                            padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                                            width: percentWidth(context, 100),
+                                            decoration: BoxDecoration(
+                                                color: fillColor,
+                                                border: Border.all(color: brokenWhiteColor),
+                                                borderRadius: BorderRadius.circular(10)),
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton(
+                                                iconEnabledColor: primaryColor,
+                                                iconDisabledColor: brokenWhiteColor,
+                                                dropdownColor: backgroundPanelColor,
+                                                value: controller.merchantId.value.toString(),
+                                                items: controller.listMerchant.map<DropdownMenuItem<String>>((element) {
+                                                  return new DropdownMenuItem(
+                                                    child: Text(element.merchantName),
+                                                    value: element.merchantId.toString(),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (value) {
+                                                  controller.merchantId.value = value.toString();
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                        SizedBox(height: 10),
+                                        XauTextField(
+                                          useObscure: false,
+                                          controller: controller.nominalTopUpControl,
+                                          inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
+                                          validator: (value) {
+                                            return validateNominalTopTup(value);
+                                          },
+                                          prefixIcon: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text('Rp'),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 30),
+                                        Obx(() {
+                                          if (controller.isLoadingForm.value) {
+                                            return JumpingDotsProgressIndicator(
+                                              color: primaryColor,
+                                              fontSize: 40,
+                                            );
+                                          }
+                                          return Container(
+                                            width: Get.width,
+                                            // ignore: deprecated_member_use
+                                            child: RaisedButton(
+                                              color: accentColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                                child: Text('Lanjut', style: buttonStyle),
+                                              ),
+                                              onPressed: () {
+                                                FocusScope.of(context).unfocus();
+                                                final isValid = formKey.currentState.validate();
+                                                if (!isValid) {
+                                                  return;
+                                                }
+                                                formKey.currentState.save();
+                                                controller.postTopUp();
+                                              },
+                                            ),
+                                          );
+                                        }),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 30),
-                                  Obx(() {
-                                    if (controller.isLoadingForm.value) {
-                                      return JumpingDotsProgressIndicator(
-                                        color: primaryColor,
-                                        fontSize: 40,
-                                      );
-                                    }
-                                    return Container(
-                                      width: Get.width,
-                                      // ignore: deprecated_member_use
-                                      child: RaisedButton(
-                                        color: accentColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 12),
-                                          child: Text('Lanjut', style: buttonStyle),
-                                        ),
-                                        onPressed: () {
-                                          FocusScope.of(context).unfocus();
-                                          final isValid = formKey.currentState.validate();
-                                          if (!isValid) {
-                                            return;
-                                          }
-                                          formKey.currentState.save();
-                                          controller.postTopUp();
-                                        },
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ),
-                          ),
+                                ),
                         );
                       } else {
-                        final Depoidr depoList = controller.listTopTup[index - 1];
-
+                        final Depoidr depoList = controller.listTopTup.value[index - 1];
+                        if (controller.isLoadingList.value) {
+                          return ShimmerList();
+                        }
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
                           child: InkWell(
