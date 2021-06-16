@@ -32,6 +32,7 @@ class Data {
     this.vouchers,
   });
 
+
   factory Data.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return Data(
@@ -41,6 +42,7 @@ class Data {
       vouchers: List<Voucher>.from(json["vouchers"].map((x) => Voucher.fromJson(x))),
     );
   }
+
 
   Map<String, dynamic> toJson() => {
         "orang": orang.toJson(),
