@@ -238,32 +238,6 @@ class CheckoutView extends GetView<CheckoutController> {
                             autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Column(
                               children: [
-                                XauTextField(
-                                  ontap: () {},
-                                  useObscure: false,
-                                  controller: controller.walletController,
-                                  validator: validateWallet,
-                                  labelText: 'Wallet address',
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                    text: 'Kamu bisa menggunakan Metamask Wallet untuk membuat Wallet Address secara gratis, ',
-                                    style: stylePrimary.copyWith(fontSize: 12),
-                                    children: [
-                                      TextSpan(
-                                        text: 'disini',
-                                        style: stylePrimary.copyWith(
-                                          fontSize: 12,
-                                          color: primaryColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        recognizer: TapGestureRecognizer()..onTap = () => launch('https://metamask.io/download.html'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 20),
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
                                   width: percentWidth(context, 100),
@@ -274,11 +248,11 @@ class CheckoutView extends GetView<CheckoutController> {
                                       iconEnabledColor: primaryColor,
                                       iconDisabledColor: brokenWhiteColor,
                                       dropdownColor: backgroundPanelColor,
-                                      value: controller.merchantId.value,
-                                      items: controller.listVaMerchant.map<DropdownMenuItem<int>>((element) {
+                                      value: controller.merchantId.value.toString(),
+                                      items: controller.listVaMerchant.map<DropdownMenuItem<String>>((element) {
                                         return new DropdownMenuItem(
                                           child: Text(element.merchantName),
-                                          value: int.parse(element.merchantId.toString()),
+                                          value: element.merchantId.toString(),
                                         );
                                       }).toList(),
                                       onChanged: (value) {
@@ -287,6 +261,37 @@ class CheckoutView extends GetView<CheckoutController> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 20),
+                                controller.merchantId.value == '000'
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          XauTextField(
+                                            useObscure: false,
+                                            controller: controller.walletController,
+                                            validator: validateWallet,
+                                            labelText: 'Wallet address',
+                                          ),
+                                          RichText(
+                                            textAlign: TextAlign.center,
+                                            text: TextSpan(
+                                              text: 'Kamu bisa menggunakan Metamask Wallet untuk membuat Wallet Address secara gratis, ',
+                                              style: stylePrimary.copyWith(fontSize: 12),
+                                              children: [
+                                                TextSpan(
+                                                  text: 'disini',
+                                                  style: stylePrimary.copyWith(
+                                                    fontSize: 12,
+                                                    color: primaryColor,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  recognizer: TapGestureRecognizer()..onTap = () => launch('https://metamask.io/download.html'),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                               ],
                             ),
                           ),

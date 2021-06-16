@@ -78,20 +78,18 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                         'Informasi Pembayaran',
                         style: textTitle,
                       ),
-
                       Divider(thickness: 2, height: 30, color: primaryColor),
-
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Text(
-                      //       'Nama Bank',
-                      //       style: textTitle,
-                      //     ),
-                      //     Text(controller.responseDetailInvoice.value.data.buy.buyAddress),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Nama Bank',
+                            style: textTitle,
+                          ),
+                          Text(controller.responseDetailInvoices.value.data.invoice.invoiceVa.bankName),
+                        ],
+                      ),
+                      SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -253,7 +251,27 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                     ),
                   );
                 }),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
+                RaisedButton(
+                  onPressed: () async {
+                    // Get.toNamed(Routes.MENU);
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                  },
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  color: backgroundPanelColor,
+                  child: Container(
+                    width: percentWidth(context, 100),
+                    child: Center(
+                      child: Text(
+                        'Kembali ke dashboard',
+                        style: buttonStyle.copyWith(color: brokenWhiteColor),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
               ],
             ),
           ),

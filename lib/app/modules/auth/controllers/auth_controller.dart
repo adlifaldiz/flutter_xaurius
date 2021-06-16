@@ -1,7 +1,6 @@
-import 'package:flutter_xaurius/app/data/model/auth/user_balance.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_data.dart';
-import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_voucher.dart';
+import 'package:flutter_xaurius/app/data/model/balances/balance_data.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:get/get.dart';
 
@@ -11,12 +10,12 @@ class AuthController extends GetxController {
   String token;
   UserData userData;
   List<Voucher> userVouchers;
-  List<Balance> userBalance;
+  List<BalanceData> userBalance;
 
   var isLoading = false.obs;
   var isError = false.obs;
 
-  Future<void> getProfileData() async {
+  Future getProfileData() async {
     isLoading(true);
     final resp = await _repo.getPersonalInfo(token);
     if (resp.success) {
@@ -33,6 +32,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
+    getProfileData();
     super.onInit();
   }
 

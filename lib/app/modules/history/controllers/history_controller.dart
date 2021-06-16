@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/data/model/buy_data/buy_data.dart';
+import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class HistoryController extends GetxController {
-  final goldPriceController = Get.find<GoldPriceController>();
-  final GlobalKey<LiquidPullToRefreshState> refreshIndicatorKey = GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshHistory = GlobalKey<LiquidPullToRefreshState>();
+  final auth = Get.find<AuthController>();
 
+  final _repo = ApiRepository();
+  var listBuys = <Buy>[].obs;
+  var isLoading = false.obs;
   @override
-  void onInit() {
-    goldPriceController.getBuys();
+  void onInit() async {
+    auth.getProfileData();
+    getBuys();
     super.onInit();
   }
 
@@ -22,7 +30,21 @@ class HistoryController extends GetxController {
   void onClose() {}
 
   Future onRefresh() async {
-    await goldPriceController.getBuys();
+    getBuys();
     update();
+  }
+
+  void getBuys() async {
+    isLoading(true);
+    final resp = await _repo.getBuys(auth.token);
+    if (resp.success) {
+      listBuys(resp.data.buys);
+      update();
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
+    }
+    isLoading(false);
   }
 }

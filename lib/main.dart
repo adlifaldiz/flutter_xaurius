@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
+import 'package:flutter_xaurius/app/modules/dashboard/bindings/dashboard_binding.dart';
+import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
+import 'package:flutter_xaurius/app/modules/history/controllers/history_controller.dart';
+import 'package:flutter_xaurius/app/modules/top_up/controllers/top_up_controller.dart';
+import 'package:flutter_xaurius/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:get/get.dart';
@@ -26,6 +33,9 @@ class _MyAppState extends State<MyApp> {
   bool isUser = false;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -33,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       getPages: AppPages.routes,
       initialBinding: AuthBinding(),
       onInit: () {
-        Get.lazyPut(() => GoldPriceController());
+        Get.lazyPut(() => AuthController());
       },
       theme: ThemeData(
         unselectedWidgetColor: primaryColor,
@@ -41,6 +51,7 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: brokenWhiteColor,
+        brightness: Brightness.dark,
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: textWhiteColor,
             ),

@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 class SettingController extends GetxController {
   var appData = GetStorage();
 
-  void logout() async {
+  void logout() {
     appData.erase();
     Get.offAllNamed(Routes.LOGIN);
   }

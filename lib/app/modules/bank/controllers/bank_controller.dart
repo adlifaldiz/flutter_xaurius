@@ -7,7 +7,6 @@ import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dar
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
-
 class BankController extends GetxController {
   final auth = Get.find<AuthController>();
   final _repo = ApiRepository();
@@ -25,9 +24,14 @@ class BankController extends GetxController {
   }
 
   @override
-  void onClose() {
-    super.onClose();
+  void onReady() {
+    super.onReady();
   }
+
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 
   void checkBank() {
     namaBankControl.text = auth.userData.orangBankName;
@@ -46,5 +50,6 @@ class BankController extends GetxController {
         Get.back();
       });
     }
+    isLoading(false);
   }
 }

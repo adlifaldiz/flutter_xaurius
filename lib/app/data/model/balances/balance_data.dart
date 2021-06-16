@@ -1,5 +1,5 @@
-class Balance {
-  Balance({
+class BalanceData {
+  BalanceData({
     this.id,
     this.orangId,
     this.balanceSymbol,
@@ -15,14 +15,18 @@ class Balance {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory Balance.fromJson(Map<String, dynamic> json) => Balance(
-        id: json["id"],
-        orangId: json["orang_id"],
-        balanceSymbol: json["balance_symbol"],
-        balanceValue: json["balance_value"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
+  factory BalanceData.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+
+    return BalanceData(
+      id: json["id"],
+      orangId: json["orang_id"],
+      balanceSymbol: json["balance_symbol"],
+      balanceValue: json["balance_value"],
+      createdAt: DateTime.parse(json["created_at"]),
+      updatedAt: DateTime.parse(json["updated_at"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

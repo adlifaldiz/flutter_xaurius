@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/modules/menu/views/menu_view.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 
@@ -239,31 +240,33 @@ class InvoiceView extends GetView<InvoiceController> {
                       // SizedBox(height: 20),
                       Divider(thickness: 2, height: 30, color: primaryColor),
 
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Text(
-                      //       'Nama Bank',
-                      //       style: textTitle,
-                      //     ),
-                      //     Text(controller.responseDetailInvoice.value.data.buy.buyAddress),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Nomor Akun',
+                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000' ? 'Metode' : 'Nama Bank',
                             style: textTitle,
                           ),
-                          SelectableText(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber,
-                            textAlign: TextAlign.end,
-                          ),
+                          Text(controller.responseDetailInvoice.value.data.invoice.invoiceVa.bankName),
                         ],
                       ),
                       SizedBox(height: 20),
+                      controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
+                          ? Container()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Nomor Akun',
+                                  style: textTitle,
+                                ),
+                                SelectableText(
+                                  controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber,
+                                  textAlign: TextAlign.end,
+                                ),
+                              ],
+                            ),
+                      controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000' ? SizedBox() : SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -317,7 +320,8 @@ class InvoiceView extends GetView<InvoiceController> {
                     );
                   }
 
-                  if (controller.responseDetailInvoice.value.data.buy.buyStatus == 'expire') {
+                  if (controller.responseDetailInvoice.value.data.buy.buyStatus == 'expire' ||
+                      controller.responseDetailInvoice.value.data.buy.buyStatus == 'done') {
                     return Container();
                   }
                   return RaisedButton(
@@ -331,13 +335,39 @@ class InvoiceView extends GetView<InvoiceController> {
                       width: percentWidth(context, 100),
                       child: Center(
                         child: Text(
-                          'Saya sudah bayar',
+                          controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
+                              ? 'Konfirmasi Pembayaran'
+                              : 'Saya sudah bayar',
                           style: buttonStyle,
                         ),
                       ),
                     ),
                   );
                 }),
+                !controller.fromBuy.value
+                    ? Container()
+                    : RaisedButton(
+                        onPressed: () async {
+                          // Get.toNamed(Routes.MENU);
+                          Get.back();
+                          Get.back();
+                          Get.back();
+                          Get.back();
+                        },
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        color: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done' ? primaryColor : backgroundPanelColor,
+                        child: Container(
+                          width: percentWidth(context, 100),
+                          child: Center(
+                            child: Text(
+                              'Kembali ke dashboard',
+                              style: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done'
+                                  ? buttonStyle
+                                  : buttonStyle.copyWith(color: brokenWhiteColor),
+                            ),
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),

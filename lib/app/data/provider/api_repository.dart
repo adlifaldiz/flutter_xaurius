@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
-import 'package:flutter_xaurius/app/data/model/buy_xau/response_buys_model.dart';
-import 'package:flutter_xaurius/app/data/model/buy_xau/response_checkout_model.dart';
-import 'package:flutter_xaurius/app/data/model/buy_xau/response_create_buys_model.dart';
-import 'package:flutter_xaurius/app/data/model/buy_xau/response_detail_invoice_model.dart';
-import 'package:flutter_xaurius/app/data/model/buy_xau/response_post_checkout_model.dart';
-import 'package:flutter_xaurius/app/data/model/top_up/response_detail_invoices_dart.dart';
-import 'package:flutter_xaurius/app/data/model/top_up/response_get_top_up_model.dart';
-import 'package:flutter_xaurius/app/data/model/top_up/resposne_top_up_model.dart';
-import 'package:flutter_xaurius/app/data/model/va_merchant/response_va_merchant_model.dart';
+import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/resp_checkout/resp_checkout.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/resp_create/resp_create_buy.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/resp_detail_invoice/resp_det_invoice.dart';
+import 'package:flutter_xaurius/app/data/model/buy_xau/resp_post_checkout/resp_post_checkout.dart';
+import 'package:flutter_xaurius/app/data/model/dashboard/response_dashboard_model.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/resp_detail_topup/resp_detail_invoice_top.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/resp_list_topup/resp_list_top.dart';
+import 'package:flutter_xaurius/app/data/model/top_up/resp_post_topup/resp_post_top.dart';
+import 'package:flutter_xaurius/app/data/model/va_merchant/resp_va_merchant/resp_va_merchant.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
@@ -137,7 +138,7 @@ class ApiRepository {
     return ResponseCheckOut.fromJson(response.body);
   }
 
-  Future<ResponsePostCheckOut> postCheckout(String buyId, String walletAddress, int merchantId, String voucherCode, String token) async {
+  Future<ResponsePostCheckOut> postCheckout(String buyId, String walletAddress, String merchantId, String voucherCode, String token) async {
     final response = await _http.call(url.buys + '/$buyId' + url.checkOut, token: token, useFormData: true, method: MethodRequest.POST, request: {
       'buy_id': buyId,
       'buy_address': walletAddress,
@@ -189,5 +190,10 @@ class ApiRepository {
       request: {"invoice_id": invoiceId},
     );
     return BaseResp.fromJson(response.body);
+  }
+
+  Future<ResponseDashboard> getDashboard(String token) async {
+    final response = await _http.call(url.dashboard, token: token, method: MethodRequest.GET);
+    return ResponseDashboard.fromJson(response.body);
   }
 }

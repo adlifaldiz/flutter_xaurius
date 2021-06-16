@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/empty_state.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 
 import 'package:get/get.dart';
@@ -16,34 +17,28 @@ class HistoryView extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(body: SafeArea(
       child: Obx(() {
-        if (controller.goldPriceController.isLoading.value) {
-          return Center(
-            child: JumpingDotsProgressIndicator(
-              fontSize: 40,
-              color: primaryColor,
-            ),
-          );
-        }
-
-        if (controller.goldPriceController.listBuys == null || controller.goldPriceController.listBuys.isEmpty) {
+        if (controller.isLoading.value) {
+          return ShimmerList();
+        } else if (controller.listBuys.isEmpty) {
           return EmptyState();
         }
 
         return LiquidPullToRefresh(
           color: backgroundPanelColor,
           backgroundColor: primaryColor,
-          key: controller.refreshIndicatorKey,
+          key: controller.refreshHistory,
           onRefresh: controller.onRefresh,
           showChildOpacityTransition: false,
           child: ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
-              itemCount: controller.goldPriceController.listBuys.length,
+              itemCount: controller.listBuys.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
                   child: GestureDetector(
                     onTap: () => Get.toNamed(Routes.INVOICE, arguments: {
-                      'invoiceId': controller.goldPriceController.listBuys[index].invoiceId,
+                      'invoiceId': controller.listBuys[index].invoiceId,
+                      'fromBuy': false,
                     }),
                     child: XauriusContainer(
                         child: Column(
@@ -59,12 +54,12 @@ class HistoryView extends GetView<HistoryController> {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '#' + controller.goldPriceController.listBuys[index].invoiceId.toString(),
+                                  '#' + controller.listBuys[index].invoiceId.toString(),
                                 ),
                               ],
                             ),
                             Text(
-                              controller.goldPriceController.listBuys[index].buyStatus.toString(),
+                              controller.listBuys[index].buyStatus.toString(),
                               style: textTitle.copyWith(color: primaryColor),
                             ),
                           ],
@@ -78,7 +73,7 @@ class HistoryView extends GetView<HistoryController> {
                               style: stylePrimary,
                             ),
                             Text(
-                              controller.goldPriceController.listBuys[index].buyQty + ' XAU',
+                              controller.listBuys[index].buyQty + ' XAU',
                             ),
                           ],
                         ),
@@ -91,7 +86,7 @@ class HistoryView extends GetView<HistoryController> {
                               style: stylePrimary,
                             ),
                             Text(
-                              controller.goldPriceController.listBuys[index].buyAmount + ' XAU',
+                              controller.listBuys[index].buyAmount + ' XAU',
                             ),
                           ],
                         ),
