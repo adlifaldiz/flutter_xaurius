@@ -262,7 +262,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                controller.merchantId.value == '000'
+                                controller.responseCheckOut.value.data.buy.buyNetwork == 'Private'
                                     ? Container()
                                     : Column(
                                         children: [
@@ -270,7 +270,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                             useObscure: false,
                                             controller: controller.walletController,
                                             validator: validateWallet,
-                                            labelText: 'Wallet address',
+                                            labelText: 'Wallet Address',
                                           ),
                                           RichText(
                                             textAlign: TextAlign.center,

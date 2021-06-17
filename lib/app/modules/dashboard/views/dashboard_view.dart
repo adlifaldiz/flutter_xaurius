@@ -124,104 +124,6 @@ class DashboardView extends GetView<DashboardController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
-                            Icons.account_balance_wallet_rounded,
-                            color: accentColor,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            'Saldo',
-                            style: textTitle,
-                          )
-                        ],
-                      ),
-                SizedBox(height: 10),
-                controller.isLoading.value
-                    ? ShimmerCard()
-                    : CarouselSlider(
-                        options: CarouselOptions(
-                          aspectRatio: 16 / 5,
-                          initialPage: controller.indexBalances.value,
-                          // autoPlay: true,
-                          // autoPlayInterval: Duration(seconds: 3),
-                          // autoPlayAnimationDuration: Duration(milliseconds: 800),
-                          // autoPlayCurve: Curves.fastOutSlowIn,
-                          // pauseAutoPlayOnTouch: true,
-                          viewportFraction: 1.0,
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: false,
-                          onPageChanged: (index, reason) {
-                            return controller.onBalancesChange(index, reason);
-                          },
-                        ),
-                        items: controller.balance.isEmpty
-                            ? [
-                                XauriusContainer(
-                                  child: Center(
-                                    child: Text('Kamu belum memiliki saldo'),
-                                  ),
-                                ),
-                              ]
-                            : controller.balance.map((balances) {
-                                return Builder(builder: (BuildContext context) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
-                                    width: Get.width,
-                                    decoration: BoxDecoration(
-                                      color: backgroundPanelColor,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    foregroundDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        image: DecorationImage(
-                                            alignment: Alignment.bottomRight,
-                                            image: AssetImage(
-                                              'assets/images/mesh-bottom.png',
-                                            ))),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          balances.balanceSymbol,
-                                          style: textTitle.copyWith(color: primaryColor),
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          balances.balanceSymbol == 'IDR'
-                                              ? customCurrency(balances.balanceValue, symbol: 'Rp ')
-                                              : balances.balanceValue,
-                                          style: textTitle.copyWith(fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                              }).toList(),
-                      ),
-                controller.isLoading.value
-                    ? ShimmerText()
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: controller.map<Widget>(controller.balance, (index, url) {
-                          return AnimatedContainer(
-                            width: controller.indexBalances.value == index ? 20.0 : 6,
-                            height: 6.0,
-                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: controller.indexBalances.value == index ? Colors.yellow : Colors.grey,
-                            ),
-                            duration: Duration(milliseconds: 300),
-                          );
-                        }),
-                      ),
-                SizedBox(height: 30),
-                controller.isLoading.value
-                    ? ShimmerText()
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
                             FontAwesomeIcons.chartLine,
                             color: accentColor,
                           ),
@@ -327,7 +229,106 @@ class DashboardView extends GetView<DashboardController> {
                           ),
                         ),
                       ),
-                SizedBox(height: 40),
+                SizedBox(height: 30),
+                controller.isLoading.value
+                    ? ShimmerText()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet_rounded,
+                            color: accentColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Saldo',
+                            style: textTitle,
+                          )
+                        ],
+                      ),
+                SizedBox(height: 10),
+                controller.isLoading.value
+                    ? ShimmerCard()
+                    : CarouselSlider(
+                        options: CarouselOptions(
+                          aspectRatio: 16 / 5,
+                          initialPage: controller.indexBalances.value,
+                          // autoPlay: true,
+                          // autoPlayInterval: Duration(seconds: 3),
+                          // autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          // autoPlayCurve: Curves.fastOutSlowIn,
+                          // pauseAutoPlayOnTouch: true,
+                          viewportFraction: 1.0,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (index, reason) {
+                            return controller.onBalancesChange(index, reason);
+                          },
+                        ),
+                        items: controller.balance.isEmpty
+                            ? [
+                                XauriusContainer(
+                                  child: Center(
+                                    child: Text('Kamu belum memiliki saldo'),
+                                  ),
+                                ),
+                              ]
+                            : controller.balance.map((balances) {
+                                return Builder(builder: (BuildContext context) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                                    width: Get.width,
+                                    decoration: BoxDecoration(
+                                      color: backgroundPanelColor,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    foregroundDecoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            alignment: Alignment.bottomRight,
+                                            image: AssetImage(
+                                              'assets/images/mesh-bottom.png',
+                                            ))),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          balances.balanceSymbol,
+                                          style: textTitle.copyWith(color: primaryColor),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          balances.balanceSymbol == 'IDR'
+                                              ? customCurrency(balances.balanceValue, symbol: 'Rp ')
+                                              : balances.balanceValue,
+                                          style: textTitle.copyWith(fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                              }).toList(),
+                      ),
+                controller.isLoading.value
+                    ? ShimmerText()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: controller.map<Widget>(controller.balance, (index, url) {
+                          return AnimatedContainer(
+                            width: controller.indexBalances.value == index ? 20.0 : 6,
+                            height: 6.0,
+                            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: controller.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                            ),
+                            duration: Duration(milliseconds: 300),
+                          );
+                        }),
+                      ),
+                SizedBox(height: 30),
+
                 controller.isLoading.value
                     ? ShimmerText()
                     : Row(

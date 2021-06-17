@@ -95,6 +95,18 @@ class SettingView extends GetView<SettingController> {
                 child: Column(
                   children: [
                     MenuTile(
+                      icon: FontAwesomeIcons.cog,
+                      title: 'Sistem',
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              XauriusContainer(
+                child: Column(
+                  children: [
+                    MenuTile(
                       icon: FontAwesomeIcons.signOutAlt,
                       title: 'Keluar',
                       onTap: () {

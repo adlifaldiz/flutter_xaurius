@@ -23,15 +23,6 @@ class BuyXauView extends GetView<BuyXauController> {
           title: Text('Beli XAU'),
         ),
         body: Obx(() {
-          if (controller.dash.isLoading.value) {
-            return Center(
-              child: JumpingDotsProgressIndicator(
-                numberOfDots: 3,
-                fontSize: 40,
-                color: primaryColor,
-              ),
-            );
-          }
           return SafeArea(
             child: SingleChildScrollView(
               child: Padding(
