@@ -46,7 +46,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        'Selamat Datang:)',
+                        'login_welcome'.tr,
                         style: Theme.of(context).textTheme.headline4.copyWith(
                               color: textWhiteColor,
                               fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                       SizedBox(height: 30),
                       Text(
-                        'Untuk memulai aplikasi\nSilahkan login dengan email dan pin kamu',
+                        'login_exp'.tr,
                         style: Theme.of(context).textTheme.subhead.copyWith(
                               color: brokenWhiteColor,
                               fontWeight: FontWeight.normal,
@@ -67,7 +67,7 @@ class LoginView extends GetView<LoginController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Alamat Email', style: styleLabel),
+                            Text('login_email'.tr, style: styleLabel),
                             SizedBox(height: 5),
                             TextFormField(
                               onSaved: (value) => controller.email = value,
@@ -91,7 +91,7 @@ class LoginView extends GetView<LoginController> {
                                   borderSide: BorderSide(color: brokenWhiteColor),
                                 ),
                                 errorStyle: styleError,
-                                hintText: 'Alamat email',
+                                hintText: 'login_email'.tr,
                                 hintStyle: stylePrimary,
                                 prefixIcon: Icon(
                                   Icons.account_circle_rounded,
@@ -141,7 +141,7 @@ class LoginView extends GetView<LoginController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Belum punya akun?',
+                                      'login_no_account'.tr,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context).textTheme.subhead.copyWith(
                                             color: textWhiteColor,
@@ -151,7 +151,7 @@ class LoginView extends GetView<LoginController> {
                                     GestureDetector(
                                       onTap: () => Get.toNamed(Routes.REGISTER),
                                       child: Text(
-                                        'Daftar disini',
+                                        'login_regis_btn'.tr,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
                                               color: accentColor,
@@ -181,7 +181,7 @@ class LoginView extends GetView<LoginController> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 12),
-                                    child: Text('Login', style: buttonStyle),
+                                    child: Text('login_btn'.tr, style: buttonStyle),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();

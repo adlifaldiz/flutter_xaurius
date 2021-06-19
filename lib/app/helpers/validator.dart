@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
+import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:get/get.dart';
 
 String validateEmail(String value) {
@@ -156,12 +157,12 @@ String validateToken(String value) {
   }
 }
 
-String validateSubTotal(String value) {
-  if (value.isEmpty) {
+String validateSubTotal(NumericTextController value) {
+  if (value.text.isEmpty) {
     return 'Total harga tidak boleh kosong';
-  } else if (double.parse(value) <= 0) {
+  } else if (value.numberValue <= 0) {
     return 'Total harga tidak bisa 0';
-  } else if (double.parse(value) < 50000) {
+  } else if (value.numberValue < 50000) {
     return 'Minimum pembelian IDR 50000';
   } else {
     return null;
@@ -179,12 +180,12 @@ String validateWallet(String value) {
 
 //deposit
 
-String validateNominalTopTup(String value) {
-  if (value.isEmpty) {
+String validateNominalTopTup(NumericTextController value) {
+  if (value.text.isEmpty) {
     return 'Nominal tidak boleh kosong';
-  } else if (int.parse(value) <= 0) {
+  } else if (value.numberValue <= 0) {
     return 'Nominal tidak bisa 0';
-  } else if (int.parse(value) <= 100000) {
+  } else if (value.numberValue <= 100000) {
     return 'Top up harus lebih dari Rp 100,000';
   } else {
     return null;

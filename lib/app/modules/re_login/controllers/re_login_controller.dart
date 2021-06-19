@@ -1,3 +1,4 @@
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
@@ -44,5 +45,10 @@ class ReLoginController extends GetxController {
     if (value.length == 6) {
       login();
     }
+  }
+
+  void changeAccount() {
+    // storage.erase();
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

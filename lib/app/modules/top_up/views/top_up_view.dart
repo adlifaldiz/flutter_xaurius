@@ -101,9 +101,9 @@ class TopUpView extends GetView<TopUpController> {
                                         XauTextField(
                                           useObscure: false,
                                           controller: controller.nominalTopUpControl,
-                                          inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
+                                          // inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                                           validator: (value) {
-                                            return validateNominalTopTup(value);
+                                            return validateNominalTopTup(controller.nominalTopUpControl);
                                           },
                                           prefixIcon: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +130,7 @@ class TopUpView extends GetView<TopUpController> {
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.symmetric(vertical: 12),
-                                                child: Text('Lanjut', style: buttonStyle),
+                                                child: Text('next_btn'.tr, style: buttonStyle),
                                               ),
                                               onPressed: () {
                                                 FocusScope.of(context).unfocus();

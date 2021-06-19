@@ -11,18 +11,18 @@ class OnBoardingView extends GetView<OnBoardingController> {
   final onBoardingPagesList = [
     PageModel(
       image: Image.asset('assets/images/onboarding_1.png'),
-      title: Text('Selamat datang di XAURIUS'),
-      info: Text("Cryptocurrency pertama di Indonesia yang didukung Emas"),
+      title: Text('on_boarding_title_1'.tr, style: textTitle.copyWith(fontSize: 25)),
+      info: Text("on_boarding_sub_1".tr, style: TextStyle(color: brokenWhiteColor)),
     ),
     PageModel(
       image: Image.asset('assets/images/onboarding_3.png'),
-      title: Text('Bertransaksi Emas dengan Mudah di Seluruh Dunia'),
-      info: Text("Beli, Jual dan Transfer Emas Di Mana Saja, Kapan Saja dalam Hitungan Detik"),
+      title: Text('on_boarding_title_2'.tr, style: textTitle.copyWith(fontSize: 25)),
+      info: Text("on_boarding_sub_2".tr, style: TextStyle(color: brokenWhiteColor)),
     ),
     PageModel(
       image: Image.asset('assets/images/onboarding_2.png'),
-      title: Text('Aman dan nyaman'),
-      info: Text("Memastikan keamanan, keamanan & transparansi berkat teknologi blockchain"),
+      title: Text('on_boarding_title_3'.tr, style: textTitle.copyWith(fontSize: 25)),
+      info: Text("on_boarding_sub_3".tr, style: TextStyle(color: brokenWhiteColor)),
     ),
   ];
 
@@ -30,19 +30,21 @@ class OnBoardingView extends GetView<OnBoardingController> {
   Widget build(BuildContext context) {
     return Onboarding(
       skipButtonStyle: SkipButtonStyle(
-        skipButtonColor: primaryColor,
+        skipButtonColor: brokenWhiteColor,
         skipButtonText: Text(
-          'Skip',
-          style: TextStyle(
-            color: textBlackColor,
-          ),
+          'on_boarding_skip_btn'.tr,
+          style: buttonStyle,
         ),
       ),
       proceedButtonStyle: ProceedButtonStyle(
+        proceedButtonColor: primaryColor,
         proceedButtonRoute: (context) {
           return controller.onProceed();
         },
-        proceedpButtonText: Text('Lanjut'),
+        proceedpButtonText: Text(
+          'on_boarding_next_btn'.tr,
+          style: buttonStyle,
+        ),
       ),
       pages: onBoardingPagesList,
       indicator: Indicator(

@@ -36,7 +36,7 @@ class DashboardView extends GetView<DashboardController> {
                 color: brokenWhiteColor,
                 size: 20,
               ),
-              onPressed: () {}),
+              onPressed: () => Get.toNamed(Routes.NOTIFICATION)),
           // IconButton(
           //     icon: FaIcon(
           //       FontAwesomeIcons.bullhorn,
@@ -66,13 +66,13 @@ class DashboardView extends GetView<DashboardController> {
                       XauriusContainer(
                         child: Column(
                           children: [
-                            Text('Kamu Belum melakukan KYC'),
+                            Text('notif_kyc'.tr),
                             FlatButton(
                               color: primaryColor,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                               onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
                               child: Text(
-                                'KYC Sekarang',
+                                'kyc_btn'.tr,
                                 style: stylePrimaryDark,
                               ),
                             ),
@@ -90,8 +90,7 @@ class DashboardView extends GetView<DashboardController> {
                       XauriusContainer(
                         child: Column(
                           children: [
-                            Text('Akun kamu sedang di review'),
-                            Text('Mohon tunggu approval'),
+                            Text('notif_kyc_review'.tr),
                           ],
                         ),
                       ),
@@ -129,7 +128,7 @@ class DashboardView extends GetView<DashboardController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Harga XAU/IDR',
+                            'dash_title_price'.tr,
                             style: textTitle,
                           )
                         ],
@@ -241,7 +240,7 @@ class DashboardView extends GetView<DashboardController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Saldo',
+                            'trans_balance'.tr,
                             style: textTitle,
                           )
                         ],
@@ -343,17 +342,17 @@ class DashboardView extends GetView<DashboardController> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Promosi',
+                                'dash_promo'.tr,
                                 style: textTitle,
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () => Get.toNamed(Routes.SOCIAL_MEDIA),
-                            child: Text(
-                              'Lihat semua',
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () => Get.toNamed(Routes.SOCIAL_MEDIA),
+                          //   child: Text(
+                          //     'see_all'.tr,
+                          //   ),
+                          // ),
                         ],
                       ),
                 SizedBox(height: 10),
@@ -492,7 +491,7 @@ class DashboardView extends GetView<DashboardController> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Sosial media',
+                                'dash_title_social'.tr,
                                 style: textTitle,
                               ),
                             ],
@@ -500,7 +499,7 @@ class DashboardView extends GetView<DashboardController> {
                           GestureDetector(
                             onTap: () => Get.toNamed(Routes.SOCIAL_MEDIA),
                             child: Text(
-                              'Lihat semua',
+                              'see_all'.tr,
                             ),
                           ),
                         ],

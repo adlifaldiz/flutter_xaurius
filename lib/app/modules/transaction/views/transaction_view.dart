@@ -52,7 +52,7 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'Saldo',
+                                'trans_balance'.tr,
                                 style: textTitle,
                               ),
                             ],
@@ -74,7 +74,7 @@ class TransactionView extends GetView<TransactionController> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    'Top Up',
+                                    'trans_top_up'.tr,
                                     style: stylePrimary.copyWith(color: textBlackColor),
                                   )
                                 ],
@@ -177,7 +177,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Harga XAU/IDR',
+                            'dash_title_price'.tr,
                             style: textTitle,
                           )
                         ],
@@ -363,7 +363,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Transaksi XAU',
+                            'trans_title_xau'.tr,
                             style: textTitle,
                           ),
                         ],
@@ -386,7 +386,7 @@ class TransactionView extends GetView<TransactionController> {
                           children: [
                             MenuProduk(
                               onTap: () => Get.toNamed(Routes.BUY_XAU),
-                              labelTxt: 'Beli',
+                              labelTxt: 'trans_buy_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.arrowCircleDown,
                                 color: textWhiteColor,
@@ -394,7 +394,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                             MenuProduk(
                               onTap: () => Get.to(ComingSoonScreen()),
-                              labelTxt: 'Jual',
+                              labelTxt: 'trans_sell_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.arrowCircleUp,
                                 color: textWhiteColor,
@@ -402,7 +402,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                             MenuProduk(
                               onTap: () => Get.to(ComingSoonScreen()),
-                              labelTxt: 'Redeem',
+                              labelTxt: 'trans_redeem_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.gift,
                                 color: textWhiteColor,
@@ -410,7 +410,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                             MenuProduk(
                               onTap: () => Get.to(ComingSoonScreen()),
-                              labelTxt: 'Kirim',
+                              labelTxt: 'trans_send_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.telegramPlane,
                                 color: textWhiteColor,
@@ -418,7 +418,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                             MenuProduk(
                               onTap: () => Get.to(ComingSoonScreen()),
-                              labelTxt: 'Terima',
+                              labelTxt: 'trans_receive_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.getPocket,
                                 color: textWhiteColor,
@@ -439,7 +439,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Transaksi Crypto',
+                            'trans_title_crypto'.tr,
                             style: textTitle,
                           ),
                         ],
@@ -456,7 +456,7 @@ class TransactionView extends GetView<TransactionController> {
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () => Get.toNamed(Routes.DEPOSIT),
+                            onTap: () => Get.to(ComingSoonScreen()),
                             labelTxt: 'Deposit',
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleDown,
@@ -465,7 +465,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () {},
+                            onTap: () => Get.to(ComingSoonScreen()),
                             labelTxt: 'Withdraw',
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleUp,
@@ -474,8 +474,8 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () {},
-                            labelTxt: 'Kirim',
+                            onTap: () => Get.to(ComingSoonScreen()),
+                            labelTxt: 'trans_send'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.exchangeAlt,
                               color: textWhiteColor,
@@ -496,7 +496,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            'Transaksi umum',
+                            'trans_title_general'.tr,
                             style: textTitle,
                           ),
                         ],
@@ -513,8 +513,8 @@ class TransactionView extends GetView<TransactionController> {
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () {},
-                            labelTxt: 'Top Up Pulsa',
+                            onTap: () => Get.to(ComingSoonScreen()),
+                            labelTxt: 'trans_credit_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.mobileAlt,
                               color: textWhiteColor,
@@ -522,8 +522,8 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () {},
-                            labelTxt: 'Token Listrik',
+                            onTap: () => Get.to(ComingSoonScreen()),
+                            labelTxt: 'trans_electricity_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.bolt,
                               color: textWhiteColor,
@@ -531,8 +531,8 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () {},
-                            labelTxt: 'Paket Data',
+                            onTap: () => Get.to(ComingSoonScreen()),
+                            labelTxt: 'trans_package_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.globeAsia,
                               color: textWhiteColor,

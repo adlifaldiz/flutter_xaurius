@@ -5,13 +5,14 @@ import 'package:flutter_xaurius/app/data/model/va_merchant/resp_va_merchant/resp
 import 'package:flutter_xaurius/app/data/model/va_merchant/va_merchant_data/va_merchant_data.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class TopUpController extends GetxController {
   ApiRepository _repo = ApiRepository();
-  TextEditingController nominalTopUpControl;
+  NumericTextController nominalTopUpControl;
 
   final auth = Get.find<AuthController>();
   var isLoading = false.obs;
@@ -24,7 +25,7 @@ class TopUpController extends GetxController {
   @override
   void onInit() {
     getTopUp();
-    nominalTopUpControl = TextEditingController();
+    nominalTopUpControl = NumericTextController();
     getVaMerchant();
     super.onInit();
   }
@@ -67,7 +68,7 @@ class TopUpController extends GetxController {
 
   void postTopUp() async {
     isLoadingForm(true);
-    final resp = await _repo.postTopUp(merchantId.value.toString(), nominalTopUpControl.text, auth.token);
+    final resp = await _repo.postTopUp(merchantId.value.toString(), nominalTopUpControl.numberValue, auth.token);
     if (resp.success) {
       getTopUp();
       successSnackbar('Sukses', 'Berhasil membuat invoice');

@@ -34,17 +34,17 @@ class SettingView extends GetView<SettingController> {
                   children: [
                     MenuTile(
                       icon: FontAwesomeIcons.userAlt,
-                      title: 'Profil saya',
+                      title: 'setting_profile'.tr,
                       onTap: () => Get.toNamed(Routes.PROFILE),
                     ),
                     MenuTile(
                       icon: FontAwesomeIcons.userLock,
-                      title: 'Set pin',
+                      title: 'setting_pin'.tr,
                       onTap: () {},
                     ),
                     MenuTile(
                       icon: FontAwesomeIcons.building,
-                      title: 'Akun bank',
+                      title: 'bank_account'.tr,
                       onTap: () => Get.toNamed(Routes.BANK),
                     ),
                     // MenuTile(
@@ -54,7 +54,7 @@ class SettingView extends GetView<SettingController> {
                     // ),
                     MenuTile(
                       icon: FontAwesomeIcons.gift,
-                      title: 'Kode Refferal',
+                      title: 'setting_refferal'.tr,
                       onTap: () => Get.to(ComingSoonScreen()),
                     ),
                     MenuTile(
@@ -72,19 +72,19 @@ class SettingView extends GetView<SettingController> {
                     MenuTile(
                       icon: FontAwesomeIcons.infoCircle,
                       color: brokenWhiteColor,
-                      title: 'FAQ',
+                      title: 'setting_faq'.tr,
                       onTap: () => Get.toNamed(Routes.FAQ),
                     ),
                     MenuTile(
                       icon: FontAwesomeIcons.infoCircle,
                       color: brokenWhiteColor,
-                      title: 'Terms and condition',
+                      title: 'setting_terms'.tr,
                       onTap: () => Get.toNamed(Routes.TNC),
                     ),
                     MenuTile(
                       icon: FontAwesomeIcons.infoCircle,
                       color: brokenWhiteColor,
-                      title: 'Privacy policy',
+                      title: 'setting_privacy'.tr,
                       onTap: () => Get.toNamed(Routes.PRIVACY_POLICY),
                     ),
                   ],
@@ -96,8 +96,8 @@ class SettingView extends GetView<SettingController> {
                   children: [
                     MenuTile(
                       icon: FontAwesomeIcons.cog,
-                      title: 'Sistem',
-                      onTap: () {},
+                      title: 'setting_system'.tr,
+                      onTap: () => Get.toNamed(Routes.SYSTEM),
                     ),
                   ],
                 ),
@@ -108,7 +108,7 @@ class SettingView extends GetView<SettingController> {
                   children: [
                     MenuTile(
                       icon: FontAwesomeIcons.signOutAlt,
-                      title: 'Keluar',
+                      title: 'setting_logout'.tr,
                       onTap: () {
                         _showLogout(context);
                       },

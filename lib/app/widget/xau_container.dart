@@ -10,7 +10,7 @@ class XauriusContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 2), vertical: percentHeight(context, 0.5)),
+      padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 2), vertical: percentHeight(context, 1)),
       foregroundDecoration: decoration,
       width: percentWidth(context, 100),
       decoration: BoxDecoration(

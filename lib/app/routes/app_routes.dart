@@ -38,6 +38,9 @@ abstract class Routes {
   static const GOLD_PRICE = _Paths.GOLD_PRICE;
   static const VOUCHER = _Paths.VOUCHER;
   static const CHART_VIEW = _Paths.CHART_VIEW;
+  static const SYSTEM = _Paths.SYSTEM;
+  static const ONBOARD_LANGUAGE = _Paths.ONBOARD_LANGUAGE;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
 }
 
 abstract class _Paths {
@@ -75,4 +78,7 @@ abstract class _Paths {
   static const GOLD_PRICE = '/gold-price';
   static const VOUCHER = '/voucher';
   static const CHART_VIEW = '/chart-view';
+  static const SYSTEM = '/system';
+  static const ONBOARD_LANGUAGE = '/onboard-language';
+  static const NOTIFICATION = '/notification';
 }

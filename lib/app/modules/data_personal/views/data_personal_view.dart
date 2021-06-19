@@ -6,6 +6,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,17 +24,11 @@ class DataPersonalView extends GetView<DataPersonalController> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Data Personal'),
+          title: Text('personal_data'.tr),
         ),
         body: Obx(() {
           if (controller.isLoading.value) {
-            return Center(
-              child: JumpingDotsProgressIndicator(
-                numberOfDots: 3,
-                fontSize: 40,
-                color: primaryColor,
-              ),
-            );
+            return ShimmerList();
           }
           return SafeArea(
             child: SingleChildScrollView(
@@ -51,7 +46,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       controller: controller.namaControl == null ? '' : controller.namaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
-                      labelText: 'Nama lengkap (KTP)',
+                      labelText: 'full_name'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -61,7 +56,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       controller: controller.nomorControl == null ? '' : controller.nomorControl,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      labelText: 'Nomor telepon',
+                      labelText: 'phone_number'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -82,7 +77,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                                 controller.tanggalControl.text = controller.formatter.format(date);
                               }, currentTime: DateTime.now(), locale: LocaleType.id);
                             },
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      readOnly: true,
                       useObscure: false,
                       validator: validateDate,
                       controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
@@ -92,7 +87,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       ),
                       keyboardType: TextInputType.datetime,
                       maxLines: 1,
-                      labelText: 'Tanggal lahir',
+                      labelText: 'birth_date'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -102,7 +97,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       controller: controller.alamatControl == null ? '' : controller.alamatControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
-                      labelText: 'Alamat rumah',
+                      labelText: 'home_address'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -112,7 +107,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       controller: controller.kotaControl == null ? '' : controller.kotaControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
-                      labelText: 'Kota',
+                      labelText: 'city'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -122,7 +117,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      labelText: 'Kode pos',
+                      labelText: 'postal_code'.tr,
                     ),
                     SizedBox(height: 10),
                     XauTextField(
@@ -158,13 +153,13 @@ class DataPersonalView extends GetView<DataPersonalController> {
                                     );
                                   });
                             },
-                      readOnly: !controller.auth.userData.orangKycEditAvailable,
+                      readOnly: true,
                       useObscure: false,
                       validator: validateCountry,
                       controller: controller.negaraControl == null ? '' : controller.negaraControl,
                       keyboardType: TextInputType.text,
                       maxLines: 1,
-                      labelText: 'Negara',
+                      labelText: 'country'.tr,
                       suffixIcon: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -200,7 +195,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         color: !!controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
-                            'Simpan',
+                            'save_btn'.tr,
                             style: buttonStyle,
                           ),
                         ),

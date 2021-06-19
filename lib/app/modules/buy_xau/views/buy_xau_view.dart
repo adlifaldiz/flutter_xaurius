@@ -20,7 +20,7 @@ class BuyXauView extends GetView<BuyXauController> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Beli XAU'),
+          title: Text('trans_buy_xau'.tr + ' XAU'),
         ),
         body: Obx(() {
           return SafeArea(
@@ -98,7 +98,7 @@ class BuyXauView extends GetView<BuyXauController> {
                       SizedBox(height: 10),
                       XauTextField(
                         useObscure: false,
-                        labelText: 'Kuantitas (XAU)',
+                        labelText: 'quantity_xau'.tr,
                         inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'(^\d*\.?\,?\d*)'))],
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                         validator: (val) {
@@ -112,8 +112,8 @@ class BuyXauView extends GetView<BuyXauController> {
                       SizedBox(height: 10),
                       XauTextField(
                         useObscure: false,
-                        labelText: 'Total (IDR) *min 50.000.00',
-                        inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
+                        labelText: 'total_xau'.tr,
+                        // inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                         keyboardType: TextInputType.number,
                         controller: controller.totalController,
                         prefixIcon: Column(
@@ -123,7 +123,7 @@ class BuyXauView extends GetView<BuyXauController> {
                           ],
                         ),
                         validator: (value) {
-                          return validateSubTotal(value);
+                          return validateSubTotal(controller.totalController);
                         },
                         onChanged: (val) {
                           return controller.onTotalChange(val);
@@ -149,7 +149,7 @@ class BuyXauView extends GetView<BuyXauController> {
                             width: percentWidth(context, 100),
                             child: Center(
                                 child: Text(
-                              'Lanjut',
+                              'next_btn'.tr,
                               style: buttonStyle,
                             )),
                           ),

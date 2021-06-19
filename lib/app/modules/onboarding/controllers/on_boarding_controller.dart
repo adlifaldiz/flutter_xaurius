@@ -19,7 +19,7 @@ class OnBoardingController extends GetxController {
   void onClose() {}
 
   void onProceed() {
-    storage.write('isBoarding', 'onBoarding');
-    Get.offAllNamed(Routes.LOGIN);
+    // storage.write('isBoarding', 'onBoarding');
+    Get.offAllNamed(Routes.ONBOARD_LANGUAGE);
   }
 }
