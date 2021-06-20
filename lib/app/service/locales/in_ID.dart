@@ -130,6 +130,10 @@ const Map<String, String> inID = {
   'change_btn': 'Ganti gambar',
   'click_here_btn': ' Klik disini',
   'here_btn': 'disini',
+  'yes_btn': 'Ya',
+  'no_btn': 'Tidak',
   'made_payment_btn': 'Saya sudah bayar',
   'back_dashboard': 'Kembali ke dashboard',
+  'you_sure': 'Kamu yakin',
+  'close_app': 'Ingin keluar dari aplikasi?',
 };

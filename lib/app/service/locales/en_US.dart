@@ -132,6 +132,10 @@ const Map<String, String> enUS = {
   'change_btn': 'Change gambar',
   'click_here_btn': ' Click here',
   'here_btn': ' here',
+  'yes_btn': 'Yes',
+  'no_btn': 'No',
   'made_payment_btn': 'I have made payment',
   'back_dashboard': 'Back to dashboard',
+  'you_sure': 'Are you sure',
+  'close_app': 'Want to close this application?',
 };

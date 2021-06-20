@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
@@ -73,6 +74,7 @@ class ReLoginView extends GetView<ReLoginController> {
                             // SizedBox(height: 5),
                             PinInputTextFormField(
                               keyboardType: TextInputType.number,
+                              inputFormatters: [LengthLimitingTextInputFormatter(6)],
                               onSaved: (value) => controller.pin = value,
                               onChanged: (value) {
                                 return controller.onPinChange(value);

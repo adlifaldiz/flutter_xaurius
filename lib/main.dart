@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
     ]);
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Xaurius',
       debugShowCheckedModeBanner: false,
       translations: LocalizationService(),
       locale: LocalizationService().getCurrentLocale(),
@@ -50,17 +50,19 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: brokenWhiteColor,
+        highlightColor: accentColor,
+        accentColor: backgroundPanelColor,
         brightness: Brightness.dark,
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: textWhiteColor,
             ),
         appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
-          iconTheme: IconThemeData(color: textWhiteColor),
-          actionsIconTheme: IconThemeData(color: textWhiteColor),
-        ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
+            iconTheme: IconThemeData(color: textWhiteColor),
+            actionsIconTheme: IconThemeData(color: textWhiteColor),
+            centerTitle: true),
       ),
     );
   }

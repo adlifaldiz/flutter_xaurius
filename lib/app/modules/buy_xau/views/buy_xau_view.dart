@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'dart:math' as math;
+import 'package:progress_indicators/progress_indicators.dart';
+
 import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
-import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
-
-import 'package:get/get.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/buy_xau_controller.dart';
 
@@ -99,8 +99,17 @@ class BuyXauView extends GetView<BuyXauController> {
                       XauTextField(
                         useObscure: false,
                         labelText: 'quantity_xau'.tr,
-                        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'(^\d*\.?\,?\d*)'))],
+                        inputFormatters: [
+                          // FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\,?\d*)')),
+                          FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\,?\.?\d*')),
+                        ],
                         keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        suffixIcon: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('XAU'),
+                          ],
+                        ),
                         validator: (val) {
                           return validateToken(val);
                         },
@@ -113,7 +122,6 @@ class BuyXauView extends GetView<BuyXauController> {
                       XauTextField(
                         useObscure: false,
                         labelText: 'total_xau'.tr,
-                        // inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                         keyboardType: TextInputType.number,
                         controller: controller.totalController,
                         prefixIcon: Column(
@@ -164,5 +172,43 @@ class BuyXauView extends GetView<BuyXauController> {
         }),
       ),
     );
+  }
+}
+
+class DecimalTextInputFormatter extends TextInputFormatter {
+  DecimalTextInputFormatter({this.decimalRange}) : assert(decimalRange == null || decimalRange > 0);
+
+  final int decimalRange;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue, // unused.
+    TextEditingValue newValue,
+  ) {
+    TextSelection newSelection = newValue.selection;
+    String truncated = newValue.text;
+
+    if (decimalRange != null) {
+      String value = newValue.text;
+
+      if (value.contains(".") && value.substring(value.indexOf(".") + 1).length > decimalRange) {
+        truncated = oldValue.text;
+        newSelection = oldValue.selection;
+      } else if (value == ".") {
+        truncated = "0.";
+
+        newSelection = newValue.selection.copyWith(
+          baseOffset: math.min(truncated.length, truncated.length + 1),
+          extentOffset: math.min(truncated.length, truncated.length + 1),
+        );
+      }
+
+      return TextEditingValue(
+        text: truncated,
+        selection: newSelection,
+        composing: TextRange.empty,
+      );
+    }
+    return newValue;
   }
 }

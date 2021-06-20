@@ -43,7 +43,9 @@ class ReLoginController extends GetxController {
   void onPinChange(String value) {
     pin = value;
     if (value.length == 6) {
-      login();
+      Future.delayed(Duration(milliseconds: 500), () {
+        login();
+      });
     }
   }
 

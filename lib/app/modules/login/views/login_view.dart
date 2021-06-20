@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
@@ -108,6 +109,8 @@ class LoginView extends GetView<LoginController> {
                               obscureText: true,
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.done,
+                              maxLength: 6,
+                              inputFormatters: [LengthLimitingTextInputFormatter(6)],
                               style: stylePrimary,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 15.0),

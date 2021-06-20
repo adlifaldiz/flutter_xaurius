@@ -87,18 +87,13 @@ class BuyXauController extends GetxController {
 
   onQtyChange(String val) {
     if (val.isEmpty) {
-      qtyController.text = '';
+      qtyController.text = '0';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val[0] == '.') {
       qtyController.text = '0.';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
-    }
-    //  else if (val.contains('..') || val.contains(',,')) {
-    //   qtyController.text = val.replaceAll(RegExp('..'), '.');
-    //   qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
-    // }
-    else if (val.contains(',')) {
-      qtyController.text = val.replaceAll(RegExp(','), '.');
+    } else if (val.contains(',')) {
+      qtyController.text = val.replaceAll(',', '.');
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else {
       var value = double.parse(val);

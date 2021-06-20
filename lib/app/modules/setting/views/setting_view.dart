@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
@@ -110,7 +111,7 @@ class SettingView extends GetView<SettingController> {
                       icon: FontAwesomeIcons.signOutAlt,
                       title: 'setting_logout'.tr,
                       onTap: () {
-                        _showLogout(context);
+                        showLogout(controller);
                       },
                     ),
                   ],
@@ -120,32 +121,6 @@ class SettingView extends GetView<SettingController> {
           ),
         ),
       )),
-    );
-  }
-
-  void _showLogout(BuildContext context) {
-    Get.defaultDialog(
-      title: 'Kamu yakin',
-      middleText: 'Ingin keluar dari aplikasi?',
-      backgroundColor: backgroundPanelColor,
-      cancel: RaisedButton(
-        color: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        onPressed: () => Get.back(),
-        child: Text(
-          'Tidak',
-          style: stylePrimary,
-        ),
-      ),
-      confirm: RaisedButton(
-        color: primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        onPressed: controller.logout,
-        child: Text(
-          'Ya',
-          style: buttonStyle,
-        ),
-      ),
     );
   }
 }
