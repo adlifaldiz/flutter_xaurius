@@ -1,15 +1,12 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
-import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 
 String validateEmail(String value) {
   if (value.isEmpty) {
-    return 'Alamat email tidak boleh kosong';
+    return 'login_email'.tr + 'empty_field'.tr;
   } else if (!GetUtils.isEmail(value)) {
-    return 'Format email salah';
+    return 'wrong_format'.tr + 'login_email'.tr;
   } else {
     return null;
   }
@@ -17,9 +14,9 @@ String validateEmail(String value) {
 
 String validatePin(String value) {
   if (value.isEmpty) {
-    return 'Pin tidak boleh kosong';
+    return 'Pin' + 'empty_field'.tr;
   } else if (value.length != 6) {
-    return 'Pin harus 6 digit';
+    return 'Pin' + 'must_6'.tr;
   } else {
     return null;
   }
@@ -27,11 +24,11 @@ String validatePin(String value) {
 
 String validateVerifPin(String value, String pin) {
   if (value.isEmpty) {
-    return 'Confirmation Pin Cannot be empty';
+    return 'confirm_pin_app_bar'.tr + 'empty_field'.tr;
   } else if (value.length < 6) {
-    return 'Confirmation Pin must be 6 digits';
+    return 'confirm_pin_app_bar'.tr + 'must_6'.tr;
   } else if (value != pin) {
-    return 'Confirmation Pin not match';
+    return 'confirm_pin_app_bar'.tr + 'not_match'.tr;
   } else {
     return null;
   }
@@ -39,9 +36,9 @@ String validateVerifPin(String value, String pin) {
 
 String validateCode(String value) {
   if (value.isEmpty) {
-    return 'Kode verifikasi tidak boleh kosong';
+    return 'verif_app_bar'.tr + 'empty_field'.tr;
   } else if (value.length != 6) {
-    return 'Kode verifikasi harus 6 digit';
+    return 'verif_app_bar'.tr + 'must_6'.tr;
   } else {
     return null;
   }

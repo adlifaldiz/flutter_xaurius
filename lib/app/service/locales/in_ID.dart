@@ -136,4 +136,8 @@ const Map<String, String> inID = {
   'back_dashboard': 'Kembali ke dashboard',
   'you_sure': 'Kamu yakin',
   'close_app': 'Ingin keluar dari aplikasi?',
+  'empty_field': ' tidak boleh kosong',
+  'wrong_format': 'Format salah untuk ',
+  'must_6': ' harus 6 digit',
+  'not_match': ' tidak sama',
 };

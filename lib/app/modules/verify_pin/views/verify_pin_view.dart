@@ -17,7 +17,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Konfirmasi Pin',
+          'confirm_pin_app_bar'.tr,
           style: textAppbarStyleWhite,
         ),
         leading: BackButton(
@@ -51,8 +51,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Sekarang masukkan lagi pin yang sudah kamu buat',
-                        style: stylePrimary),
+                    Text('confirm_pin_ex'.tr, style: stylePrimary),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
@@ -71,13 +70,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(
-                            color: textWhiteColor,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -99,7 +93,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('Selesai', style: buttonStyle),
+                            child: Text('save_btn'.tr, style: buttonStyle),
                           ),
                           onPressed: () {
                             final isValid = formKey.currentState.validate();

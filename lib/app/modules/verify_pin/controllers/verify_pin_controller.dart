@@ -16,7 +16,7 @@ class VerifyPinController extends GetxController {
     pin = Get.arguments['pin'];
     email = Get.arguments['email'];
     code = Get.arguments['code'];
-    successSnackbar('Sukses', 'Silahkan melanjutkan');
+    // successSnackbar('Sukses', 'Silahkan melanjutkan');
     super.onInit();
   }
 
@@ -29,8 +29,12 @@ class VerifyPinController extends GetxController {
     isLoading(true);
     var resp = await _repo.registerPin(email, code, pin, pinConfirmation);
     if (resp.success) {
-      Get.offAllNamed(Routes.LOGIN).then((value) => successSnackbar(
-          'Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi'));
+      // Get.offAllNamed(Routes.LOGIN).then((value) => successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi'));
+      Get.back();
+      Get.back();
+      Get.back();
+      Get.back();
+      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

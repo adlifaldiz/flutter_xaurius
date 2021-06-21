@@ -137,94 +137,92 @@ class DashboardView extends GetView<DashboardController> {
                       ? ShimmerCard()
                       : Container(
                           width: Get.width,
+                          padding: EdgeInsets.all(20.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             color: backgroundPanelColor.withOpacity(0.5),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              InkWell(
-                                                borderRadius: BorderRadius.circular(20),
-                                                onTap: () {
-                                                  controller.onChangeBuy(true);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                  decoration: BoxDecoration(
-                                                    color: controller.isBuy.value ? greyColor : Colors.transparent,
-                                                    borderRadius: BorderRadius.circular(20),
-                                                  ),
-                                                  child: Text(
-                                                    'Buy',
-                                                    style: TextStyle(
-                                                      color: greenColor,
-                                                    ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            InkWell(
+                                              borderRadius: BorderRadius.circular(20),
+                                              onTap: () {
+                                                controller.onChangeBuy(true);
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: controller.isBuy.value ? greyColor : Colors.transparent,
+                                                  borderRadius: BorderRadius.circular(20),
+                                                ),
+                                                child: Text(
+                                                  'Buy',
+                                                  style: TextStyle(
+                                                    color: greenColor,
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(width: 10),
-                                              InkWell(
-                                                borderRadius: BorderRadius.circular(20),
-                                                onTap: () {
-                                                  controller.onChangeBuy(false);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                  decoration: BoxDecoration(
-                                                    color: controller.isBuy.value ? Colors.transparent : greyColor,
-                                                    borderRadius: BorderRadius.circular(20),
-                                                  ),
-                                                  child: Text(
-                                                    'Sell',
-                                                    style: TextStyle(
-                                                      color: redColor,
-                                                    ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            InkWell(
+                                              borderRadius: BorderRadius.circular(20),
+                                              onTap: () {
+                                                controller.onChangeBuy(false);
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color: controller.isBuy.value ? Colors.transparent : greyColor,
+                                                  borderRadius: BorderRadius.circular(20),
+                                                ),
+                                                child: Text(
+                                                  'Sell',
+                                                  style: TextStyle(
+                                                    color: redColor,
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            controller.isLoading.value
-                                                ? '-'
-                                                : controller.isBuy.value
-                                                    ? "IDR: ${controller.goldPrice.value.chartpriceBuy}" ?? '-'
-                                                    : "IDR: ${controller.goldPrice.value.chartpriceSell}" ?? '-',
-                                            style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () => Get.toNamed(Routes.CHART_VIEW),
-                                      child: Container(
-                                        padding: EdgeInsets.all(5),
-                                        decoration:
-                                            BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
-                                        child: Icon(
-                                          FontAwesomeIcons.chartLine,
-                                          size: 14,
+                                            ),
+                                          ],
                                         ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          controller.isLoading.value
+                                              ? '-'
+                                              : controller.isBuy.value
+                                                  ? "IDR: ${controller.goldPrice.value.chartpriceBuy}" ?? '-'
+                                                  : "IDR: ${controller.goldPrice.value.chartpriceSell}" ?? '-',
+                                          style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () => Get.toNamed(Routes.CHART_VIEW),
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration:
+                                          BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
+                                      child: Icon(
+                                        FontAwesomeIcons.chartLine,
+                                        size: 14,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                   SizedBox(height: 30),

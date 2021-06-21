@@ -17,7 +17,7 @@ class CreatePinView extends GetView<CreatePinController> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Buat Pin',
+          'create_pin_app_bar'.tr,
           style: textAppbarStyleWhite,
         ),
         leading: BackButton(
@@ -51,9 +51,7 @@ class CreatePinView extends GetView<CreatePinController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                        'Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat',
-                        style: stylePrimary),
+                    Text('create_pin_ex'.tr, style: stylePrimary),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
@@ -71,13 +69,8 @@ class CreatePinView extends GetView<CreatePinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(
-                            color: textWhiteColor,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -100,7 +93,7 @@ class CreatePinView extends GetView<CreatePinController> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Text('Lanjutkan', style: buttonStyle),
+                              child: Text('next_btn'.tr, style: buttonStyle),
                             ),
                             onPressed: () {
                               final isValid = formKey.currentState.validate();

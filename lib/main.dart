@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: brokenWhiteColor,
-        highlightColor: accentColor,
+        // highlightColor: accentColor,
         accentColor: backgroundPanelColor,
         brightness: Brightness.dark,
         textTheme: Theme.of(context).textTheme.apply(
