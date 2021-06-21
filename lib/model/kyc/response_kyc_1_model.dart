@@ -62,6 +62,9 @@ class Orang {
     this.orangAddrCity,
     this.orangAddrPostal,
     this.orangAddrCountry,
+    this.orangBankHolder,
+    this.orangBankNumber,
+    this.orangBankName,
     this.orangIdType,
     this.orangIdNum,
     this.orangIdFile,
@@ -83,6 +86,9 @@ class Orang {
   dynamic orangAddrCity;
   dynamic orangAddrPostal;
   dynamic orangAddrCountry;
+  dynamic orangBankHolder;
+  dynamic orangBankNumber;
+  dynamic orangBankName;
   dynamic orangIdType;
   dynamic orangIdNum;
   OrangFile orangIdFile;
@@ -104,6 +110,9 @@ class Orang {
         orangAddrCity: json["orang_addr_city"],
         orangAddrPostal: json["orang_addr_postal"],
         orangAddrCountry: json["orang_addr_country"],
+        orangBankHolder: json["orang_bank_holder"],
+        orangBankNumber: json["orang_bank_number"],
+        orangBankName: json["orang_bank_name"],
         orangIdType: json["orang_id_type"],
         orangIdNum: json["orang_id_num"],
         orangIdFile: OrangFile.fromJson(json["orang_id_file"]),
@@ -126,6 +135,9 @@ class Orang {
         "orang_addr_city": orangAddrCity,
         "orang_addr_postal": orangAddrPostal,
         "orang_addr_country": orangAddrCountry,
+        "orang_bank_holder": orangBankHolder,
+        "orang_bank_number": orangBankNumber,
+        "orang_bank_name": orangBankName,
         "orang_id_type": orangIdType,
         "orang_id_num": orangIdNum,
         "orang_id_file": orangIdFile.toJson(),

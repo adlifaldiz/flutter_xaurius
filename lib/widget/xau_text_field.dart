@@ -90,48 +90,11 @@ class _XauTextFieldState extends State<XauTextField> {
       suffixIcon = widget.suffixIcon;
     }
 
-    // return TextFormField(
-    //   focusNode: myFocusNode,
-    //   enabled: widget.enabled,
-    //   autofillHints: widget.autofillHints,
-    //   textInputAction: widget.textInputAction,
-    //   controller: widget.controller,
-    //   maxLines: widget.useObscure ? 1 : widget.maxLines,
-    //   onChanged: widget.onChanged,
-    //   obscureText: _obscureText,
-    //   keyboardType: widget.keyboardType,
-    //   onSaved: widget.onSaved,
-    //   inputFormatters: widget.inputFormatters,
-    //   onTap: () {},
-    //   style: TextStyle(fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 16.0),
-    //   decoration: InputDecoration(
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(10.0),
-    //     ),
-    //     focusedBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(10.0),
-    //       borderSide: BorderSide(color: primaryColor, width: 2),
-    //     ),
-    //     enabledBorder: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(10.0),
-    //       borderSide: BorderSide(color: brokenWhiteColor.withOpacity(0.5)),
-    //     ),
-    //     filled: true,
-    //     labelStyle: TextStyle(color: myFocusNode.hasFocus ? brokenWhiteColor : brokenWhiteColor),
-    //     fillColor: backgroundPanelColor,
-    //     icon: widget.icon,
-    //     prefixIcon: widget.prefixIcon,
-    //     labelText: widget.labelText,
-    //     disabledBorder: widget.border,
-    //     errorText: widget.errorText,
-    //     hintText: widget.hintText,
-    //     suffixIcon: suffixIcon,
-    //   ),
-    // );
     return TextFormField(
       onTap: widget.ontap,
       controller: widget.controller,
       validator: widget.validator,
+      keyboardType: widget.keyboardType,
       textInputAction: TextInputAction.next,
       style: stylePrimary,
       onChanged: widget.onChanged,
