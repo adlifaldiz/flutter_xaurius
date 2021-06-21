@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
-import 'package:flutter_xaurius/app/modules/dashboard/bindings/dashboard_binding.dart';
-import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
-import 'package:flutter_xaurius/app/modules/history/controllers/history_controller.dart';
-import 'package:flutter_xaurius/app/modules/top_up/controllers/top_up_controller.dart';
-import 'package:flutter_xaurius/app/modules/transaction/controllers/transaction_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/service/localization_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'app/modules/auth/bindings/auth_binding.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   runApp(MyApp());
 }
@@ -37,8 +33,11 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
     ]);
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Xaurius',
       debugShowCheckedModeBanner: false,
+      translations: LocalizationService(),
+      locale: LocalizationService().getCurrentLocale(),
+      fallbackLocale: Locale('en', 'US'),
       initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
       initialBinding: AuthBinding(),
@@ -51,17 +50,19 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: brokenWhiteColor,
+        // highlightColor: accentColor,
+        accentColor: backgroundPanelColor,
         brightness: Brightness.dark,
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: textWhiteColor,
             ),
         appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
-          iconTheme: IconThemeData(color: textWhiteColor),
-          actionsIconTheme: IconThemeData(color: textWhiteColor),
-        ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
+            iconTheme: IconThemeData(color: textWhiteColor),
+            actionsIconTheme: IconThemeData(color: textWhiteColor),
+            centerTitle: true),
       ),
     );
   }

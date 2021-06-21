@@ -46,7 +46,7 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        'Selamat datang',
+                        'welcome'.tr,
                         style: Theme.of(context).textTheme.headline4.copyWith(
                               color: textWhiteColor,
                               fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class RegisterView extends GetView<RegisterController> {
                       ),
                       SizedBox(height: 30),
                       Text(
-                        'Untuk mendaftarkan diri.\nSilahkan mendaftar dengan\nmengisi alamat email kamu',
+                        'regis_exp'.tr,
                         style: Theme.of(context).textTheme.subhead.copyWith(
                               color: brokenWhiteColor,
                               fontWeight: FontWeight.normal,
@@ -67,13 +67,13 @@ class RegisterView extends GetView<RegisterController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Alamat Email', style: styleLabel),
+                            Text('regis_email'.tr, style: styleLabel),
                             SizedBox(height: 5),
                             XauTextField(
                               useObscure: false,
                               onChanged: (val) => controller.email = val,
                               validator: validateEmail,
-                              hintText: 'Alamat email',
+                              hintText: 'regis_email'.tr,
                               prefixIcon: Icon(
                                 Icons.account_circle_rounded,
                                 color: primaryColor,
@@ -88,12 +88,9 @@ class RegisterView extends GetView<RegisterController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Sudah punya akun?',
+                                      'regis_has_account'.tr,
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subhead
-                                          .copyWith(
+                                      style: Theme.of(context).textTheme.subhead.copyWith(
                                             color: textWhiteColor,
                                             fontWeight: FontWeight.normal,
                                           ),
@@ -101,12 +98,9 @@ class RegisterView extends GetView<RegisterController> {
                                     GestureDetector(
                                       onTap: () => Get.back(),
                                       child: Text(
-                                        'Login disini',
+                                        'regis_regis_btn'.tr,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subhead
-                                            .copyWith(
+                                        style: Theme.of(context).textTheme.subhead.copyWith(
                                               color: accentColor,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -133,15 +127,12 @@ class RegisterView extends GetView<RegisterController> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                    child: Text('Daftar Sekarang',
-                                        style: buttonStyle),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    child: Text('regis_btn'.tr, style: buttonStyle),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    final isValidEmail =
-                                        _formKey.currentState.validate();
+                                    final isValidEmail = _formKey.currentState.validate();
                                     if (!isValidEmail) {
                                       return;
                                     }

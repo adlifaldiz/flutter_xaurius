@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 const String numberValidationRule = r'^[0-9]*$';
+const String decimalValidationRule = r'(^\d*\.?\,?\d*)';
 const String emailValidationRule =
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 const String alphabetValidationRule = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";

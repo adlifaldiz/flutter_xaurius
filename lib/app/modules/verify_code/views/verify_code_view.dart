@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-
 class VerifyCodeView extends GetView<VerifyCodeController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -17,7 +16,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Verifikasi Kode',
+          'verif_app_bar'.tr,
           style: textAppbarStyleWhite,
         ),
         leading: BackButton(
@@ -28,8 +27,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
         child: Stack(
           children: [
             Container(
-              width: double.infinity,
-              height: double.infinity,
+              width: Get.width,
+              height: Get.height,
               child: Stack(
                 children: [
                   Positioned(
@@ -51,7 +50,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                 child: Column(
                   children: [
                     Text(
-                      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${controller.email}',
+                      // 'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email: ${controller.email}',
+                      'verif_ex'.tr + controller.email,
                       style: TextStyle(color: textWhiteColor),
                     ),
                     SizedBox(height: 20),
@@ -67,9 +67,9 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                       ),
                       decoration: UnderlineDecoration(
 
-                        // bgColorBuilder: PinListenColorBuilder(Colors.white, Colors.white),
-                        // strokeColorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
-                        // strokeWidth: 2,
+                          // bgColorBuilder: PinListenColorBuilder(Colors.white, Colors.white),
+                          // strokeColorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                          // strokeWidth: 2,
 
                           errorTextStyle: TextStyle(
                             color: redColor,
@@ -98,7 +98,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('Lanjutkan', style: buttonStyle),
+                            child: Text('next_btn'.tr, style: buttonStyle),
                           ),
                           onPressed: () {
                             FocusScope.of(context).unfocus();

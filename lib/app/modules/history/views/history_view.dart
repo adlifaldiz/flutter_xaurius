@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
+import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/empty_state.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
-
-import 'package:get/get.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/history_controller.dart';
 
@@ -69,7 +69,7 @@ class HistoryView extends GetView<HistoryController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Kuantitas ',
+                              'quantity_xau'.tr,
                               style: stylePrimary,
                             ),
                             Text(
@@ -86,7 +86,7 @@ class HistoryView extends GetView<HistoryController> {
                               style: stylePrimary,
                             ),
                             Text(
-                              controller.listBuys[index].buyAmount + ' XAU',
+                              customCurrency(controller.listBuys[index].buyAmount) + ' IDR',
                             ),
                           ],
                         ),

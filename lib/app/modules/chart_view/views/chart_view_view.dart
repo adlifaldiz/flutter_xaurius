@@ -11,11 +11,19 @@ import '../controllers/chart_view_controller.dart';
 class ChartViewView extends GetView<ChartViewController> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 1), () {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-      ]);
-    });
+    if (GetPlatform.isAndroid) {
+      Future.delayed(Duration(seconds: 1), () {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+        ]);
+      });
+    } else {
+      Future.delayed(Duration(seconds: 1), () {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeRight,
+        ]);
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -57,8 +65,8 @@ class ChartViewView extends GetView<ChartViewController> {
             ),
             primaryYAxis: NumericAxis(
               rangePadding: ChartRangePadding.round,
-              minimum: double.parse(controller.dashboard.charts.value.first.chigh) - 25000,
-              maximum: double.parse(controller.dashboard.charts.value.last.chigh) + 25000,
+              minimum: double.parse(controller.dashboard.charts.first.chigh) - 50000,
+              maximum: double.parse(controller.dashboard.charts.last.chigh) + 50000,
               numberFormat: NumberFormat.currency(
                 locale: "in_In",
                 symbol: "\Rp ",

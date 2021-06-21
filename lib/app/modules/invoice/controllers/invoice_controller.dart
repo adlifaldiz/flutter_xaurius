@@ -14,7 +14,7 @@ class InvoiceController extends GetxController {
   ApiRepository _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   final dash = Get.find<DashboardController>();
-  final buys = Get.find<HistoryController>();
+  HistoryController buys = Get.put(HistoryController());
   var responseDetailInvoice = ResponseDetailInvoice().obs;
   var invoiceNumber;
   var isLoading = false.obs;

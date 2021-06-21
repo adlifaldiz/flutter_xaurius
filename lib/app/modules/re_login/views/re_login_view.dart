@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
@@ -48,7 +49,7 @@ class ReLoginView extends GetView<ReLoginController> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        'Selamat Datang:)',
+                        'relog_welcome'.tr,
                         style: Theme.of(context).textTheme.headline4.copyWith(
                               color: textWhiteColor,
                               fontWeight: FontWeight.bold,
@@ -56,7 +57,7 @@ class ReLoginView extends GetView<ReLoginController> {
                       ),
                       SizedBox(height: 30),
                       Text(
-                        'Untuk memulai aplikasi\nSilahkan masukan kembali pin kamu',
+                        'relog_exp'.tr,
                         style: Theme.of(context).textTheme.subhead.copyWith(
                               color: brokenWhiteColor,
                               fontWeight: FontWeight.normal,
@@ -73,6 +74,7 @@ class ReLoginView extends GetView<ReLoginController> {
                             // SizedBox(height: 5),
                             PinInputTextFormField(
                               keyboardType: TextInputType.number,
+                              inputFormatters: [LengthLimitingTextInputFormatter(6)],
                               onSaved: (value) => controller.pin = value,
                               onChanged: (value) {
                                 return controller.onPinChange(value);
@@ -149,7 +151,7 @@ class ReLoginView extends GetView<ReLoginController> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 12),
-                                    child: Text('Login', style: buttonStyle),
+                                    child: Text('login_btn'.tr, style: buttonStyle),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
@@ -174,7 +176,7 @@ class ReLoginView extends GetView<ReLoginController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Bukan akun kamu?',
+                                'relog_not_account'.tr,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.subhead.copyWith(
                                       color: textWhiteColor,
@@ -182,9 +184,11 @@ class ReLoginView extends GetView<ReLoginController> {
                                     ),
                               ),
                               GestureDetector(
-                                onTap: () => Get.offAllNamed(Routes.LOGIN),
+                                onTap: () {
+                                  return controller.changeAccount();
+                                },
                                 child: Text(
-                                  'Pindah Akun',
+                                  'relog_change'.tr,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.subhead.copyWith(
                                         color: accentColor,

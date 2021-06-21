@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class NumericTextController extends TextEditingController {
-  NumericTextController(
-      {double initialValue = 0.0,
-        this.decimalSeparator = ',',
-        this.thousandSeparator = '.',
-        this.rightSymbol = '',
-        this.leftSymbol = '',
-        this.precision = 0,
-      }) {
+  NumericTextController({
+    double initialValue = 0.0,
+    this.decimalSeparator = ',',
+    this.thousandSeparator = '.',
+    this.rightSymbol = '',
+    this.leftSymbol = '',
+    this.precision = 0,
+  }) {
     _validateConfig();
 
     this.addListener(() {
@@ -31,10 +31,9 @@ class NumericTextController extends TextEditingController {
   void updateValue(double value) {
     double valueToUse = value;
 
-    if (value.toStringAsFixed(0).length > 12) {
+    if (value.toStringAsFixed(0).length > 15) {
       valueToUse = _lastValue;
-    }
-    else {
+    } else {
       _lastValue = value;
     }
 
@@ -52,13 +51,12 @@ class NumericTextController extends TextEditingController {
       this.text = masked;
 
       var cursorPosition = super.text.length - this.rightSymbol.length;
-      this.selection = new TextSelection.fromPosition(
-          new TextPosition(offset: cursorPosition));
+      this.selection = new TextSelection.fromPosition(new TextPosition(offset: cursorPosition));
     }
   }
 
   double get numberValue {
-    if(this.text == null || this.text.length == 0){
+    if (this.text == null || this.text.length == 0) {
       return 0;
     }
 
@@ -88,33 +86,26 @@ class NumericTextController extends TextEditingController {
   }
 
   String _applyMask(double value) {
-    List<String> textRepresentation = value.toStringAsFixed(precision)
-        .replaceAll('.', '')
-        .split('')
-        .reversed
-        .toList(growable: true);
+    List<String> textRepresentation = value.toStringAsFixed(precision).replaceAll('.', '').split('').reversed.toList(growable: true);
 
     textRepresentation.insert(precision, decimalSeparator);
 
     for (var i = precision + 4; true; i = i + 4) {
       if (textRepresentation.length > i) {
         textRepresentation.insert(i, thousandSeparator);
-      }
-      else {
+      } else {
         break;
       }
     }
 
-    if(precision == 0)textRepresentation.removeWhere((element) => element == decimalSeparator);
+    if (precision == 0) textRepresentation.removeWhere((element) => element == decimalSeparator);
 
     return textRepresentation.reversed.join('');
   }
 }
 
-
 class MaskedTextController extends TextEditingController {
-  MaskedTextController({String text, this.mask, Map<String, RegExp> translator})
-      : super(text: text) {
+  MaskedTextController({String text, this.mask, Map<String, RegExp> translator}) : super(text: text) {
     this.translator = translator ?? MaskedTextController.getDefaultTranslator();
 
     this.addListener(() {
@@ -142,10 +133,9 @@ class MaskedTextController extends TextEditingController {
   String _lastUpdatedText = '';
 
   void updateText(String text) {
-    if(text != null){
+    if (text != null) {
       this.text = this._applyMask(this.mask, text);
-    }
-    else {
+    } else {
       this.text = '';
     }
 
@@ -163,8 +153,7 @@ class MaskedTextController extends TextEditingController {
 
   void moveCursorToEnd() {
     var text = this._lastUpdatedText;
-    this.selection = new TextSelection.fromPosition(
-        new TextPosition(offset: (text ?? '').length));
+    this.selection = new TextSelection.fromPosition(new TextPosition(offset: (text ?? '').length));
   }
 
   @override
@@ -176,12 +165,7 @@ class MaskedTextController extends TextEditingController {
   }
 
   static Map<String, RegExp> getDefaultTranslator() {
-    return {
-      'A': new RegExp(r'[A-Za-z]'),
-      '0': new RegExp(r'[0-9]'),
-      '@': new RegExp(r'[A-Za-z0-9]'),
-      '*': new RegExp(r'.*')
-    };
+    return {'A': new RegExp(r'[A-Za-z]'), '0': new RegExp(r'[0-9]'), '@': new RegExp(r'[A-Za-z0-9]'), '*': new RegExp(r'.*')};
   }
 
   String _applyMask(String mask, String value) {

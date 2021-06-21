@@ -32,13 +32,49 @@ class MenuView extends GetView<MenuController> {
           },
           items: [
             BottomNavyBarItem(
-                icon: FaIcon(FontAwesomeIcons.dashcube), title: Text('Dashboard'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
+                icon: FaIcon(
+                  FontAwesomeIcons.dashcube,
+                  size: 16,
+                ),
+                title: Text(
+                  'bot_menu_dash'.tr,
+                  style: TextStyle(fontSize: 14),
+                ),
+                activeColor: primaryColor,
+                inactiveColor: brokenWhiteColor),
             BottomNavyBarItem(
-                icon: FaIcon(FontAwesomeIcons.exchangeAlt), title: Text('Transaksi'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
+                icon: FaIcon(
+                  FontAwesomeIcons.exchangeAlt,
+                  size: 16,
+                ),
+                title: Text(
+                  'bot_menu_transaction'.tr,
+                  style: TextStyle(fontSize: 14),
+                ),
+                activeColor: primaryColor,
+                inactiveColor: brokenWhiteColor),
             BottomNavyBarItem(
-                icon: FaIcon(FontAwesomeIcons.history), title: Text('History'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
+                icon: FaIcon(
+                  FontAwesomeIcons.history,
+                  size: 16,
+                ),
+                title: Text(
+                  'bot_menu_history'.tr,
+                  style: TextStyle(fontSize: 14),
+                ),
+                activeColor: primaryColor,
+                inactiveColor: brokenWhiteColor),
             BottomNavyBarItem(
-                icon: FaIcon(FontAwesomeIcons.userAlt), title: Text('Akun'), activeColor: primaryColor, inactiveColor: brokenWhiteColor),
+                icon: FaIcon(
+                  FontAwesomeIcons.userAlt,
+                  size: 16,
+                ),
+                title: Text(
+                  'bot_menu_setting'.tr,
+                  style: TextStyle(fontSize: 14),
+                ),
+                activeColor: primaryColor,
+                inactiveColor: brokenWhiteColor),
           ],
         ),
       );

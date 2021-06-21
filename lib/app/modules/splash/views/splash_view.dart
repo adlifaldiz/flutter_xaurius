@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
-import 'package:flutter_xaurius/app/helpers/theme.dart';
-import 'package:flutter_xaurius/app/modules/menu/views/menu_view.dart';
-import 'package:flutter_xaurius/app/modules/onboarding/views/on_boarding_view.dart';
-import 'package:flutter_xaurius/app/routes/app_pages.dart';
-
 import 'package:get/get.dart';
 import 'package:splash_screen_view/ColorizeAnimatedText.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
+
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
+import 'package:flutter_xaurius/app/widget/my_shimmer.dart';
 
 import '../controllers/splash_controller.dart';
 
@@ -69,9 +67,13 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                'assets/images/xaurius_logo_yellow.png',
-                height: 100,
+              MyShimmer.fromColors(
+                baseColor: primaryColor,
+                highlightColor: textWhiteColor,
+                child: Image.asset(
+                  'assets/images/xaurius_logo_yellow.png',
+                  height: 100,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10, top: 20),
@@ -107,17 +109,25 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
 
   Widget getTextWidget() {
     if (_text != null) {
-      return ColorizeAnimatedText(
-        text: _text,
-        speed: Duration(milliseconds: 1000),
-        textStyle: _textStyle,
-        colors: [
-          primaryColor,
-          primaryColor,
-          brokenWhiteColor,
-          primaryColor,
-        ],
+      return MyShimmer.fromColors(
+        baseColor: primaryColor,
+        highlightColor: textWhiteColor,
+        child: Text(
+          _text,
+          style: _textStyle,
+        ),
       );
+      // return ColorizeAnimatedText(
+      //   text: _text,
+      //   speed: Duration(milliseconds: 3000),
+      //   textStyle: _textStyle,
+      //   colors: [
+      //     primaryColor,
+      //     primaryColor,
+      //     brokenWhiteColor,
+      //     primaryColor,
+      //   ],
+      // );
     } else {
       return SizedBox(
         width: 1,

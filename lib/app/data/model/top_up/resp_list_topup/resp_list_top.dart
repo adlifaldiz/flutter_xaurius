@@ -1,9 +1,3 @@
-// To parse this JSON data, do
-//
-//     final responseGetTopUp = responseGetTopUpFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/model/depoidr_data/depoird_data.dart';
 

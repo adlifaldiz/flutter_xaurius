@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
@@ -51,11 +52,11 @@ class CheckoutView extends GetView<CheckoutController> {
                           RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: 'Apa itu Contract Address? ',
+                              text: 'what_is_ca'.tr,
                               style: stylePrimary.copyWith(fontSize: 12),
                               children: [
                                 TextSpan(
-                                  text: 'Klik disini',
+                                  text: 'click_here_btn'.tr,
                                   style: stylePrimary.copyWith(
                                     fontSize: 12,
                                     color: primaryColor,
@@ -73,7 +74,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              successSnackbar('Copied to Clipboard', controller.ethAddress);
+                              successSnackbar('Copied', controller.ethAddress);
                               Clipboard.setData(new ClipboardData(text: controller.ethAddress));
                             },
                             child: Text(
@@ -89,7 +90,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              successSnackbar('Copied to Clipboard', controller.bscAddress);
+                              successSnackbar('Copied', controller.bscAddress);
                               Clipboard.setData(new ClipboardData(text: controller.bscAddress));
                             },
                             child: Text(
@@ -116,10 +117,10 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Buy Unit Price',
+                                'unit_price_buy'.tr,
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.buy.buyUnitPrice),
+                              Text(customCurrency(controller.responseCheckOut.value.data.buy.buyUnitPrice) + ' IDR'),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -127,7 +128,7 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Network',
+                                'network'.tr,
                                 style: textTitle,
                               ),
                               Text(controller.responseCheckOut.value.data.buy.buyNetwork),
@@ -143,7 +144,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       child: Column(
                         children: [
                           Text(
-                            'Total Perhitungan',
+                            'total_calculation'.tr,
                             style: textTitle,
                           ),
                           SizedBox(height: 20),
@@ -152,7 +153,7 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Kuantitas',
+                                'quantity_xau'.tr,
                                 style: textTitle,
                               ),
                               Text(controller.responseCheckOut.value.data.buy.buyQty + ' XAU'),
@@ -163,10 +164,10 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Sub total',
+                                'sub_total'.tr,
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.buy.buyAmount + ' IDR'),
+                              Text(customCurrency(controller.responseCheckOut.value.data.buy.buyAmount, symbol: '') + ' IDR'),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -174,10 +175,10 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Discount',
+                                'discount'.tr,
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.invoiceCalculation.discount + ' IDR'),
+                              Text(customCurrency(controller.responseCheckOut.value.data.invoiceCalculation.discount) + ' IDR'),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -185,12 +186,12 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Biaya admin',
+                                'admin_fee'.tr,
                                 style: textTitle,
                               ),
                               Expanded(
                                   child: Text(
-                                controller.responseCheckOut.value.data.invoiceCalculation.admfee + ' IDR',
+                                customCurrency(controller.responseCheckOut.value.data.invoiceCalculation.admfee) + ' IDR',
                                 textAlign: TextAlign.end,
                               )),
                             ],
@@ -200,10 +201,10 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Biaya GAS',
+                                'gas_fee'.tr,
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.invoiceCalculation.gas.toStringAsFixed(2) + ' IDR'),
+                              Text(customCurrency(controller.responseCheckOut.value.data.invoiceCalculation.gas) + ' IDR'),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -215,7 +216,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                 'Total',
                                 style: textTitle,
                               ),
-                              Text(controller.responseCheckOut.value.data.invoiceCalculation.total.toString() + ' IDR'),
+                              Text(customCurrency(controller.responseCheckOut.value.data.invoiceCalculation.total) + ' IDR'),
                             ],
                           ),
                         ],
@@ -228,7 +229,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       child: Column(
                         children: [
                           Text(
-                            'Pembayaran',
+                            'payment'.tr,
                             style: textTitle,
                           ),
                           Divider(thickness: 2, height: 30, color: primaryColor),
@@ -262,7 +263,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                controller.merchantId.value == '000'
+                                controller.responseCheckOut.value.data.buy.buyNetwork == 'Private'
                                     ? Container()
                                     : Column(
                                         children: [
@@ -270,16 +271,16 @@ class CheckoutView extends GetView<CheckoutController> {
                                             useObscure: false,
                                             controller: controller.walletController,
                                             validator: validateWallet,
-                                            labelText: 'Wallet address',
+                                            labelText: 'wallet_address'.tr,
                                           ),
                                           RichText(
                                             textAlign: TextAlign.center,
                                             text: TextSpan(
-                                              text: 'Kamu bisa menggunakan Metamask Wallet untuk membuat Wallet Address secara gratis, ',
+                                              text: 'wallet_address_ex'.tr,
                                               style: stylePrimary.copyWith(fontSize: 12),
                                               children: [
                                                 TextSpan(
-                                                  text: 'disini',
+                                                  text: 'here_btn'.tr,
                                                   style: stylePrimary.copyWith(
                                                     fontSize: 12,
                                                     color: primaryColor,
@@ -313,7 +314,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                           },
                                         ),
                                         Text(
-                                          controller.useVoucher.value ? "Kamu menggunakan voucher" : "Kamu memiliki voucher\nGunakan sekarang?",
+                                          !controller.useVoucher.value ? "payment_voucher_q".tr : "payment_voucher_active".tr,
                                           style: stylePrimary,
                                         ),
                                       ],
@@ -327,20 +328,22 @@ class CheckoutView extends GetView<CheckoutController> {
                                         decoration: BoxDecoration(
                                             color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
                                         child: DropdownButtonHideUnderline(
-                                          child: DropdownButton(
-                                            iconEnabledColor: primaryColor,
-                                            iconDisabledColor: brokenWhiteColor,
-                                            dropdownColor: backgroundPanelColor,
-                                            value: controller.voucherCode.value.toString(),
-                                            items: controller.auth.userVouchers.map<DropdownMenuItem<String>>((element) {
-                                              return new DropdownMenuItem(
-                                                child: Text(element.voucherCode),
-                                                value: element.voucherCode,
-                                              );
-                                            }).toList(),
-                                            onChanged: (value) {
-                                              controller.merchantId.value = value;
-                                            },
+                                          child: Obx(
+                                            () => DropdownButton(
+                                              iconEnabledColor: primaryColor,
+                                              iconDisabledColor: brokenWhiteColor,
+                                              dropdownColor: backgroundPanelColor,
+                                              value: controller.voucherCode.value.toString(),
+                                              items: controller.auth.userVouchers.map<DropdownMenuItem<String>>((element) {
+                                                return DropdownMenuItem(
+                                                  child: Text(element.voucherCode + ' (${formatCurrency(element.voucherValue)})'),
+                                                  value: element.voucherCode,
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                return controller.voucherCode.value = value;
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -365,7 +368,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                 width: percentWidth(context, 100),
                                 child: Center(
                                   child: Text(
-                                    'Lanjut',
+                                    'next_btn'.tr,
                                     style: buttonStyle,
                                   ),
                                 ),

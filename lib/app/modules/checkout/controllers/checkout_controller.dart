@@ -41,6 +41,7 @@ class CheckoutController extends GetxController {
     buyId.value = Get.arguments;
     checkVoucher();
     getCheckOut();
+
     super.onInit();
   }
 
@@ -70,6 +71,9 @@ class CheckoutController extends GetxController {
       responseCheckOut.value = resp;
       listVaMerchant.value = resp.data.vaMerchants;
       merchantId.value = listVaMerchant[0].merchantId;
+      if (responseCheckOut.value.data.buy.buyNetwork == 'Private') {
+        walletController.text = privateAddress;
+      }
       update();
     } else {
       dialogConnection('Oops', resp.message, () {
@@ -102,10 +106,6 @@ class CheckoutController extends GetxController {
   void checkCheckOut() {
     final isValid = checkOutKey.currentState.validate();
     String _voucherValue = '';
-
-    if (merchantId.value == '000') {
-      walletController.text = privateAddress;
-    }
 
     if (!useVoucher.value) {
       _voucherValue = '';

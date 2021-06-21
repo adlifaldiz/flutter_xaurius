@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/modules/menu/views/menu_view.dart';
@@ -47,7 +48,7 @@ class InvoiceView extends GetView<InvoiceController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Billed to',
+                            'invoice_billed'.tr,
                             style: textTitle,
                           ),
                           Text(
@@ -66,7 +67,7 @@ class InvoiceView extends GetView<InvoiceController> {
                           style: textTitle,
                         ),
                         Text(
-                          'Rp.' + controller.responseDetailInvoice.value.data.invoice.invoiceTotal + '0',
+                          formatCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal),
                           style: textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -86,12 +87,15 @@ class InvoiceView extends GetView<InvoiceController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Buy Unit Price',
-                            style: textTitle,
+                          Expanded(
+                            child: Text(
+                              'unit_price_buy'.tr,
+                              style: textTitle,
+                            ),
                           ),
+                          SizedBox(width: 20),
                           Text(
-                            controller.responseDetailInvoice.value.data.buy.buyUnitPrice + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.buy.buyUnitPrice) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -100,10 +104,13 @@ class InvoiceView extends GetView<InvoiceController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Network',
-                            style: textTitle,
+                          Expanded(
+                            child: Text(
+                              'network'.tr,
+                              style: textTitle,
+                            ),
                           ),
+                          SizedBox(width: 20),
                           Text(
                             controller.responseDetailInvoice.value.data.buy.buyNetwork,
                             textAlign: TextAlign.end,
@@ -111,14 +118,16 @@ class InvoiceView extends GetView<InvoiceController> {
                         ],
                       ),
                       SizedBox(height: 20),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Kuantitas',
-                            style: textTitle,
+                          Expanded(
+                            child: Text(
+                              'quantity_xau'.tr,
+                              style: textTitle,
+                            ),
                           ),
+                          SizedBox(width: 20),
                           Text(
                             controller.responseDetailInvoice.value.data.buy.buyQty + ' XAU',
                             textAlign: TextAlign.end,
@@ -131,11 +140,11 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Sub total',
+                            'sub_total'.tr,
                             style: textTitle,
                           ),
                           Text(
-                            controller.responseDetailInvoice.value.data.buy.buyAmount + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.buy.buyAmount) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -148,7 +157,7 @@ class InvoiceView extends GetView<InvoiceController> {
                   child: Column(
                     children: [
                       Text(
-                        'Descrption',
+                        'invoice_desc'.tr,
                         style: textTitle,
                       ),
                       // SizedBox(height: 20),
@@ -158,12 +167,12 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Discount',
+                            'discount'.tr,
                             style: textTitle,
                           ),
                           Expanded(
                               child: Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceDiscount + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceDiscount) + ' IDR',
                             textAlign: TextAlign.end,
                           )),
                         ],
@@ -173,12 +182,12 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Biaya admin',
+                            'admin_fee'.tr,
                             style: textTitle,
                           ),
                           Expanded(
                               child: Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceAdmfee + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceAdmfee) + ' IDR',
                             textAlign: TextAlign.end,
                           )),
                         ],
@@ -188,11 +197,11 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Biaya GAS',
+                            'gas_fee'.tr,
                             style: textTitle,
                           ),
                           Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceGas + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceGas) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -202,11 +211,11 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Voucher',
+                            'invoice_voucher'.tr,
                             style: textTitle,
                           ),
                           Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceVoucherValue + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceVoucherValue) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -221,7 +230,7 @@ class InvoiceView extends GetView<InvoiceController> {
                             style: textTitle,
                           ),
                           Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceTotal.toString() + ' IDR',
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -234,7 +243,7 @@ class InvoiceView extends GetView<InvoiceController> {
                   child: Column(
                     children: [
                       Text(
-                        'Informasi Pembayaran',
+                        'payment'.tr,
                         style: textTitle,
                       ),
                       // SizedBox(height: 20),
@@ -244,7 +253,7 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000' ? 'Metode' : 'Nama Bank',
+                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000' ? 'invoice_method'.tr : 'bank_name'.tr,
                             style: textTitle,
                           ),
                           Text(controller.responseDetailInvoice.value.data.invoice.invoiceVa.bankName),
@@ -257,7 +266,7 @@ class InvoiceView extends GetView<InvoiceController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Nomor Akun',
+                                  'bank_num_name'.tr,
                                   style: textTitle,
                                 ),
                                 SelectableText(
@@ -271,12 +280,14 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Nama Akun',
+                            'bank_acc_name'.tr,
                             style: textTitle,
                           ),
-                          Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.customerData.custName,
-                            textAlign: TextAlign.end,
+                          Expanded(
+                            child: Text(
+                              controller.responseDetailInvoice.value.data.invoice.invoiceVa.customerData.custName,
+                              textAlign: TextAlign.end,
+                            ),
                           ),
                         ],
                       ),
@@ -289,7 +300,7 @@ class InvoiceView extends GetView<InvoiceController> {
                             style: textTitle,
                           ),
                           Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceTotal,
+                            customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal) + ' IDR',
                             textAlign: TextAlign.end,
                           ),
                         ],
@@ -299,7 +310,7 @@ class InvoiceView extends GetView<InvoiceController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Bayar sebelum',
+                            'pay_before'.tr,
                             style: textTitle,
                           ),
                           Text(
@@ -336,8 +347,8 @@ class InvoiceView extends GetView<InvoiceController> {
                       child: Center(
                         child: Text(
                           controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
-                              ? 'Konfirmasi Pembayaran'
-                              : 'Saya sudah bayar',
+                              ? 'invoice_confirm'.tr
+                              : 'made_payment_btn'.tr,
                           style: buttonStyle,
                         ),
                       ),
@@ -352,7 +363,6 @@ class InvoiceView extends GetView<InvoiceController> {
                           Get.back();
                           Get.back();
                           Get.back();
-                          Get.back();
                         },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         color: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done' ? primaryColor : backgroundPanelColor,
@@ -360,7 +370,7 @@ class InvoiceView extends GetView<InvoiceController> {
                           width: percentWidth(context, 100),
                           child: Center(
                             child: Text(
-                              'Kembali ke dashboard',
+                              'back_dashboard'.tr,
                               style: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done'
                                   ? buttonStyle
                                   : buttonStyle.copyWith(color: brokenWhiteColor),

@@ -16,7 +16,7 @@ class BankView extends GetView<BankController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bank'),
+        title: Text('bank_account'.tr),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -32,7 +32,7 @@ class BankView extends GetView<BankController> {
                   controller: controller.namaBankControl == null ? '' : controller.namaBankControl,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
-                  labelText: 'Nama Bank',
+                  labelText: 'bank_name'.tr,
                 ),
                 SizedBox(height: 10),
                 XauTextField(
@@ -41,7 +41,7 @@ class BankView extends GetView<BankController> {
                   controller: controller.namaAkunControl == null ? '' : controller.namaAkunControl,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
-                  labelText: 'Nama Akun Bank',
+                  labelText: 'bank_acc_name'.tr,
                 ),
                 SizedBox(height: 10),
                 XauTextField(
@@ -50,7 +50,7 @@ class BankView extends GetView<BankController> {
                   controller: controller.nomorAkunControl,
                   keyboardType: TextInputType.number,
                   maxLines: 1,
-                  labelText: 'Nomor Akun Bank',
+                  labelText: 'bank_num_name'.tr,
                 ),
                 SizedBox(height: 30),
                 Obx(() {
@@ -76,7 +76,7 @@ class BankView extends GetView<BankController> {
                     color: primaryColor,
                     child: Center(
                       child: Text(
-                        'Simpan',
+                        'save_btn'.tr,
                         style: buttonStyle,
                       ),
                     ),

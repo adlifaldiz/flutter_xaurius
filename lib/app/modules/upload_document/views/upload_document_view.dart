@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/data/provider/api_url.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 
 import 'package:get/get.dart';
@@ -19,18 +20,16 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Dokumen Identitas'),
+          title: Text('identity_document'.tr),
         ),
         body: Obx(() {
-          if (controller.auth.isLoading.value) {
-            return Center(
-              child: JumpingDotsProgressIndicator(
-                numberOfDots: 3,
-                fontSize: 40,
-                color: primaryColor,
-              ),
-            );
-          }
+          // if (controller.auth.isLoading.value) {
+          //   return ShimmerList(
+          //     height: percentHeight(context, 5),
+          //     circular: 10,
+          //     itemCount: 8,
+          //   );
+          // }
           return SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
@@ -74,7 +73,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                       controller: controller.nomorKTP == null ? '' : controller.nomorKTP,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      labelText: 'Nomor identitas',
+                      labelText: 'id_num'.tr,
                     ),
                     SizedBox(height: 10),
                     controller.selectedImageNetworkKtp.value != ''
@@ -86,7 +85,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                 controller.selectedImagePathKtp.value != ''
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
-                                    : Text('Kamu belum melampirkan foto identitas'),
+                                    : Text('id_pict_notif'.tr),
                                 FlatButton(
                                   color: primaryColor,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -109,7 +108,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                       controller: controller.nomorNPWP == null ? '' : controller.nomorNPWP,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      labelText: 'Nomor NPWP',
+                      labelText: 'npwp_notif'.tr,
                     ),
                     SizedBox(height: 10),
                     controller.selectedImageNetworkKtp.value != ''
@@ -121,7 +120,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                 controller.selectedImagePathNpwp.value != ''
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathNpwp.value)))
-                                    : Text('Kamu belum melampirkan foto NPWP'),
+                                    : Text('npwp_pict_notif'.tr),
                                 FlatButton(
                                   color: primaryColor,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -155,7 +154,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
                         child: Center(
                           child: Text(
-                            'Simpan',
+                            'save_btn'.tr,
                             style: buttonStyle,
                           ),
                         ),

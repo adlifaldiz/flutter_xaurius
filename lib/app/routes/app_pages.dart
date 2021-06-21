@@ -36,8 +36,12 @@ import 'package:flutter_xaurius/app/modules/login/bindings/login_binding.dart';
 import 'package:flutter_xaurius/app/modules/login/views/login_view.dart';
 import 'package:flutter_xaurius/app/modules/menu/bindings/menu_binding.dart';
 import 'package:flutter_xaurius/app/modules/menu/views/menu_view.dart';
+import 'package:flutter_xaurius/app/modules/notification/bindings/notification_binding.dart';
+import 'package:flutter_xaurius/app/modules/notification/views/notification_view.dart';
 import 'package:flutter_xaurius/app/modules/onBoarding/bindings/on_boarding_binding.dart';
 import 'package:flutter_xaurius/app/modules/onBoarding/views/on_boarding_view.dart';
+import 'package:flutter_xaurius/app/modules/onboard_language/bindings/onboard_language_binding.dart';
+import 'package:flutter_xaurius/app/modules/onboard_language/views/onboard_language_view.dart';
 import 'package:flutter_xaurius/app/modules/privacy_policy/bindings/privacy_policy_binding.dart';
 import 'package:flutter_xaurius/app/modules/privacy_policy/views/privacy_policy_view.dart';
 import 'package:flutter_xaurius/app/modules/profile/bindings/profile_binding.dart';
@@ -52,6 +56,8 @@ import 'package:flutter_xaurius/app/modules/setting/bindings/setting_binding.dar
 import 'package:flutter_xaurius/app/modules/setting/views/setting_view.dart';
 import 'package:flutter_xaurius/app/modules/splash/bindings/splash_binding.dart';
 import 'package:flutter_xaurius/app/modules/splash/views/splash_view.dart';
+import 'package:flutter_xaurius/app/modules/system/bindings/system_binding.dart';
+import 'package:flutter_xaurius/app/modules/system/views/system_view.dart';
 import 'package:flutter_xaurius/app/modules/tnc/bindings/tnc_binding.dart';
 import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
 import 'package:flutter_xaurius/app/modules/top_up/bindings/top_up_binding.dart';
@@ -248,6 +254,21 @@ class AppPages {
       name: _Paths.CHART_VIEW,
       page: () => ChartViewView(),
       binding: ChartViewBinding(),
+    ),
+    GetPage(
+      name: _Paths.SYSTEM,
+      page: () => SystemView(),
+      binding: SystemBinding(),
+    ),
+    GetPage(
+      name: _Paths.ONBOARD_LANGUAGE,
+      page: () => OnboardLanguageView(),
+      binding: OnboardLanguageBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION,
+      page: () => NotificationView(),
+      binding: NotificationBinding(),
     ),
   ];
 }

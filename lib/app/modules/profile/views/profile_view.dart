@@ -28,7 +28,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 child: MenuTile(
                   icon: FontAwesomeIcons.userAlt,
-                  title: 'Profil saya',
+                  title: 'setting_profile'.tr,
                   onTap: () => Get.toNamed(Routes.DATA_PERSONAL),
                 ),
               ),
@@ -40,7 +40,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 child: MenuTile(
                   icon: FontAwesomeIcons.fileAlt,
-                  title: 'Dokumen Identitas',
+                  title: 'identity_document'.tr,
                   onTap: () => Get.toNamed(Routes.UPLOAD_DOCUMENT),
                 ),
               ),

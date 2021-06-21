@@ -21,7 +21,7 @@ class EmptyState extends StatelessWidget {
                     width: percentWidth(context, 30),
                   ),
                   Text(
-                    'Belum ada data',
+                    'no_data'.tr,
                     textAlign: TextAlign.center,
                     style: stylePrimary.copyWith(fontSize: 30, color: primaryColor, fontWeight: FontWeight.w600),
                   ),

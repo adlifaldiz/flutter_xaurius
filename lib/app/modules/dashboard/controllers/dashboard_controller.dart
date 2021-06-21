@@ -69,15 +69,15 @@ class DashboardController extends GetxController {
   String greeting() {
     var hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Selamat Pagi';
+      return 'dash_greeting_morning'.tr;
     }
     if (hour < 15) {
-      return 'Selamat Siang';
+      return 'dash_greeting_day'.tr;
     }
     if (hour < 19) {
-      return 'Selamat Sore';
+      return 'dash_greeting_afternoon'.tr;
     }
-    return 'Selamat Malam';
+    return 'dash_greeting_night'.tr;
   }
 
   void onBalancesChange(int index, CarouselPageChangedReason reason) {

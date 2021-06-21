@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
-import 'package:intl/intl.dart';
 
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
-import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
-import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 
 class UploadDocumentController extends GetxController {
   final _repo = ApiRepository();
@@ -57,6 +57,11 @@ class UploadDocumentController extends GetxController {
   }
 
   void setText() {
+    if (auth.userData.orangIdType == null || auth.userData.orangIdType.isEmpty) {
+      valueIdType.value = listIdType.first;
+    } else {
+      valueIdType.value = auth.userData.orangIdType;
+    }
     nomorKTP.text = auth.userData.orangIdNum;
     nomorNPWP.text = auth.userData.orangNpwpNum;
     selectedImageNetworkKtp.value = auth.userData.orangIdFile.url;

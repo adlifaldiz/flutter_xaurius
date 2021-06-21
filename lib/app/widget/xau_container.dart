@@ -10,11 +10,11 @@ class XauriusContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+      padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 2), vertical: percentHeight(context, 1)),
       foregroundDecoration: decoration,
       width: percentWidth(context, 100),
       decoration: BoxDecoration(
-        color: backgroundPanelColor,
+        color: backgroundPanelColor.withOpacity(0.7),
         borderRadius: BorderRadius.circular(20),
       ),
       child: child,
