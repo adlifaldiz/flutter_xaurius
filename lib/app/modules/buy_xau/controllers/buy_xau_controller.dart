@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
+import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
@@ -14,7 +15,7 @@ class BuyXauController extends GetxController {
   final dash = Get.find<DashboardController>();
   final auth = Get.find<AuthController>();
   TextEditingController qtyController;
-  // TextEditingController totalController;
+
   NumericTextController totalController;
   ApiRepository _repo = ApiRepository();
 
@@ -25,12 +26,10 @@ class BuyXauController extends GetxController {
   var total = 0.0.obs;
 
   int value = 1;
-  String valueIdType = 'BSC';
+  String valueIdType = 'Private';
 
   @override
   void onInit() {
-    // qtyController = TextEditingController();
-    // totalController = TextEditingController();
     setNewController();
     super.onInit();
   }
@@ -48,16 +47,15 @@ class BuyXauController extends GetxController {
     update();
   }
 
-  onChangeBuy(valueInt) {
-    value = valueInt;
-  }
+  // onChangeBuy(valueInt) {
+  //   value = valueInt;
+  // }
 
-  Future postBuys(network) async {
+  Future postBuys() async {
     isLoading(true);
-    final resp = await _repo.createBuys(qtyController.text, network, auth.token);
+    final resp = await _repo.createBuys(qtyController.text, valueIdType, auth.token);
     if (resp.success) {
       Get.toNamed(Routes.CHECKOUT, arguments: resp.data.buy.id.toString());
-      // successSnackbar('Sukses', resp.data.buy.id.toString());
       update();
     } else {
       dialogConnection('Oops', resp.message, () {
@@ -68,28 +66,23 @@ class BuyXauController extends GetxController {
   }
 
   void checkBuy() {
-    if (value == 1) {
-      valueIdType = 'ETH';
-    } else if (value == 2) {
-      valueIdType = 'BSC';
-    } else {
-      valueIdType = 'Private';
-    }
-
     final isValid = buyKey.currentState.validate();
     if (isValid) {
       buyKey.currentState.save();
-      postBuys(valueIdType);
+      postBuys();
     } else {
       return;
     }
   }
 
-  onQtyChange(String val) {
+  onQtyChange(val) {
     if (val.isEmpty) {
-      qtyController.text = '0';
+      qtyController.text = '';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val[0] == '.') {
+      qtyController.text = '0.';
+      qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+    } else if (val[0] == '0' && val[1].toString().isNum) {
       qtyController.text = '0.';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val.contains(',')) {

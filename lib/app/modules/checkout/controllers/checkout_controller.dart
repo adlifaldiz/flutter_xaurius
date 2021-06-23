@@ -31,7 +31,7 @@ class CheckoutController extends GetxController {
   var privateAddress = '0xea332c1c112226f75e2515ee45fb89e8f68005c6';
 
   var buyId = ''.obs;
-  var merchantId = '0'.obs;
+  var merchantId = '000'.obs;
   var voucherCode = ''.obs;
   var useVoucher = false.obs;
 
@@ -51,10 +51,10 @@ class CheckoutController extends GetxController {
     super.onClose();
   }
 
-  void onChangeMerchant(valueChange) {
-    merchantId.value = valueChange;
-    update();
-  }
+  // void onChangeMerchant(valueChange) {
+  //   merchantId.value = valueChange;
+  //   update();
+  // }
 
   void checkVoucher() {
     if (auth.userVouchers.isEmpty) {
@@ -104,7 +104,7 @@ class CheckoutController extends GetxController {
   }
 
   void checkCheckOut() {
-    final isValid = checkOutKey.currentState.validate();
+    // final isValid = checkOutKey.currentState.validate();
     String _voucherValue = '';
 
     if (!useVoucher.value) {
@@ -112,10 +112,10 @@ class CheckoutController extends GetxController {
     } else {
       _voucherValue = voucherCode.value.toString();
     }
-    if (!isValid) {
-      return;
-    }
-    checkOutKey.currentState.save();
+    // if (!isValid) {
+    //   return;
+    // }
+    // checkOutKey.currentState.save();
     postCheckOut(_voucherValue);
   }
 

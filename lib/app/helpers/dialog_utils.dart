@@ -31,7 +31,15 @@ dialogConnection(String title, String subTitle, VoidCallback onTap) {
     buttonColor: primaryColor,
     barrierDismissible: false,
     onWillPop: onTap,
-    onConfirm: onTap,
+    confirm: RaisedButton(
+      color: primaryColor,
+      onPressed: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        'ok',
+        style: buttonStyle,
+      ),
+    ),
   );
 }
 

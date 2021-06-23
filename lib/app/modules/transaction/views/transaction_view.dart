@@ -1,5 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 import 'package:flutter_xaurius/app/data/model/dashboard/chart_data.dart';
 import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
@@ -10,14 +17,8 @@ import 'package:flutter_xaurius/app/widget/menu_produk.dart';
 import 'package:flutter_xaurius/app/widget/menu_transaction.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
-import 'package:intl/intl.dart';
-
-import 'package:get/get.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:progress_indicators/progress_indicators.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import "package:collection/collection.dart";
 
 import '../controllers/transaction_controller.dart';
 
@@ -58,7 +59,13 @@ class TransactionView extends GetView<TransactionController> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () => Get.toNamed(Routes.TOP_UP),
+                            onTap: controller.auth.userData.orangKycStatus == controller.approve
+                                ? () => Get.toNamed(Routes.TOP_UP)
+                                : () {
+                                    dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+                                      Get.back();
+                                    });
+                                  },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
@@ -74,7 +81,7 @@ class TransactionView extends GetView<TransactionController> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    'trans_top_up'.tr,
+                                    'trans_top_up'.tr + ' IDR',
                                     style: stylePrimary.copyWith(color: textBlackColor),
                                   )
                                 ],
@@ -106,7 +113,7 @@ class TransactionView extends GetView<TransactionController> {
                             ? [
                                 XauriusContainer(
                                   child: Center(
-                                    child: Text('Kamu belum memiliki saldo'),
+                                    child: Text('no_balance'.tr),
                                   ),
                                 ),
                               ]
@@ -385,7 +392,13 @@ class TransactionView extends GetView<TransactionController> {
                           crossAxisSpacing: 5,
                           children: [
                             MenuProduk(
-                              onTap: () => Get.toNamed(Routes.BUY_XAU),
+                              onTap: controller.auth.userData.orangKycStatus == controller.approve
+                                  ? () => Get.toNamed(Routes.BUY_XAU)
+                                  : () {
+                                      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+                                        Get.back();
+                                      });
+                                    },
                               labelTxt: 'trans_buy_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.arrowCircleDown,

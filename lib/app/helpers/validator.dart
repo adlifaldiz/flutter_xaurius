@@ -47,7 +47,7 @@ String validateCode(String value) {
 //kyc
 String validateName(String value) {
   if (value.isEmpty) {
-    return 'Nama tidak boleh kosong';
+    return 'full_name'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -55,7 +55,7 @@ String validateName(String value) {
 
 String validatePhone(String value) {
   if (value.isEmpty) {
-    return 'Nomor Telepon tidak boleh kosong';
+    return 'phone_number'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -63,7 +63,7 @@ String validatePhone(String value) {
 
 String validateDate(String value) {
   if (value.isEmpty) {
-    return 'Tanggal lahir tidak boleh kosong';
+    return 'birth_date'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -71,7 +71,7 @@ String validateDate(String value) {
 
 String validateAddress(String value) {
   if (value.isEmpty) {
-    return 'Alamat tidak boleh kosong';
+    return 'home_address'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -79,7 +79,7 @@ String validateAddress(String value) {
 
 String validateCity(String value) {
   if (value.isEmpty) {
-    return 'Kota tidak boleh kosong';
+    return 'city'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -87,7 +87,7 @@ String validateCity(String value) {
 
 String validateKode(String value) {
   if (value.isEmpty) {
-    return 'Kode pos tidak boleh kosong';
+    return 'postal_code'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -95,7 +95,7 @@ String validateKode(String value) {
 
 String validateCountry(String value) {
   if (value.isEmpty) {
-    return 'Negara tidak boleh kosong';
+    return 'country'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -103,7 +103,7 @@ String validateCountry(String value) {
 
 String validateKTP(String value) {
   if (value.isEmpty) {
-    return 'Nomor KTP tidak boleh kosong';
+    return 'id_num'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -111,7 +111,7 @@ String validateKTP(String value) {
 
 String validateNPWP(String value) {
   if (value.isEmpty) {
-    return 'Nomor NPWP tidak boleh kosong';
+    return 'npwp_notif'.tr + 'empty_field'.tr;
   } else {
     return null;
   }

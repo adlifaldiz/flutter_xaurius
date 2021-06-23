@@ -5,6 +5,10 @@ import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:get/get.dart';
 
 class EmptyState extends StatelessWidget {
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  const EmptyState({Key key, this.buttonText, this.onPressed}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +29,16 @@ class EmptyState extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: stylePrimary.copyWith(fontSize: 30, color: primaryColor, fontWeight: FontWeight.w600),
                   ),
-                  // FlatButton(
-                  //   onPressed: () => Get.back(),
-                  //   color: primaryColor,
-                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  //   child: Text(
-                  //     'Kembali',
-                  //     style: buttonStyle,
-                  //   ),
-                  // )
+                  SizedBox(height: 20),
+                  FlatButton(
+                    onPressed: onPressed ?? () {},
+                    color: primaryColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    child: Text(
+                      buttonText ?? 'Refresh',
+                      style: buttonStyle.copyWith(fontSize: 20),
+                    ),
+                  )
                 ],
               ),
             ),

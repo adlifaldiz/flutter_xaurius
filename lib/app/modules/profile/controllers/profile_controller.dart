@@ -1,9 +1,10 @@
+import 'package:flutter_xaurius/app/data/model/auth/user_data.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  final auth = Get.find<AuthController>();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +17,4 @@ class ProfileController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

@@ -7,10 +7,13 @@ class UserResp extends BaseResp {
   Data data;
   UserResp({this.data}) : super();
 
-  factory UserResp.fromJson(Map<String, dynamic> json) => UserResp()
-    ..success = json["success"]
-    ..message = json["msg"]
-    ..data = Data.fromJson(json["data"]);
+  factory UserResp.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return UserResp()
+      ..success = json["success"]
+      ..message = json["msg"]
+      ..data = Data.fromJson(json["data"]);
+  }
 
   Map<String, dynamic> toJson() => {
         "success": success,
@@ -32,17 +35,15 @@ class Data {
     this.vouchers,
   });
 
-
   factory Data.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return Data(
       orang: UserData.fromJson(json["orang"]),
-      balances: List<BalanceData>.from(json["balances"].map((x) => BalanceData.fromJson(x))),
-      refbons: List<dynamic>.from(json["refbons"].map((x) => x)),
-      vouchers: List<Voucher>.from(json["vouchers"].map((x) => Voucher.fromJson(x))),
+      balances: List<BalanceData>.from(json["balances"] == null ? <BalanceData>[] : json["balances"].map((x) => BalanceData.fromJson(x))),
+      refbons: List<dynamic>.from(json["refbons"] == null ? <dynamic>[] : json["refbons"].map((x) => x)),
+      vouchers: List<Voucher>.from(json["vouchers"] == null ? <Voucher>[] : json["vouchers"].map((x) => Voucher.fromJson(x))),
     );
   }
-
 
   Map<String, dynamic> toJson() => {
         "orang": orang.toJson(),

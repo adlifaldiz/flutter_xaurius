@@ -20,9 +20,10 @@ class HistoryView extends GetView<HistoryController> {
         if (controller.isLoading.value) {
           return ShimmerList();
         } else if (controller.listBuys.isEmpty) {
-          return EmptyState();
+          return EmptyState(
+            onPressed: () => controller.getBuys(),
+          );
         }
-
         return LiquidPullToRefresh(
           color: backgroundPanelColor,
           backgroundColor: primaryColor,

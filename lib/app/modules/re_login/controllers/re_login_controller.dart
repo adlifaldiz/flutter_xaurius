@@ -31,6 +31,7 @@ class ReLoginController extends GetxController {
     if (resp.success) {
       auth.token = resp.token;
       storage.write('username', email);
+      await auth.getProfileData();
       Get.offAllNamed(Routes.MENU);
     } else {
       dialogConnection('Oops', resp.message, () {
@@ -43,6 +44,7 @@ class ReLoginController extends GetxController {
   void onPinChange(String value) {
     pin = value;
     if (value.length == 6) {
+      Get.focusScope.unfocus();
       Future.delayed(Duration(milliseconds: 500), () {
         login();
       });
@@ -50,7 +52,6 @@ class ReLoginController extends GetxController {
   }
 
   void changeAccount() {
-    // storage.erase();
     Get.offAllNamed(Routes.LOGIN);
   }
 }

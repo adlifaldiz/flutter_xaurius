@@ -79,7 +79,7 @@ class ApiProvider extends GetConnect {
       } else {
         printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
         Response error = Response(statusCode: 400, body: {
-          "msg": "Tidak ada internet",
+          "msg": "Terjadi kesalahan, silahkan coba lagi",
           "success": false,
         });
         return error;

@@ -26,10 +26,11 @@ class LoginController extends GetxController {
   void login() async {
     isLoading(true);
     var resp = await _repo.login(email, pin);
-    if(resp.success) {
+    if (resp.success) {
       auth.token = resp.token;
       storage.write('username', email);
-      Get.offAllNamed(Routes.MENU);
+      await auth.getProfileData();
+      await Get.offAllNamed(Routes.MENU);
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

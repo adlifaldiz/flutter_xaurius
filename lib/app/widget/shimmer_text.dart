@@ -22,7 +22,7 @@ class _ShimmerTextState extends State<ShimmerText> {
       highlightColor: textWhiteColor.withOpacity(0.1),
       child: Container(
         width: Get.width ?? widget.width,
-        height: percentHeight(context, 2) ?? widget.height,
+        height: widget.height ?? percentHeight(context, 2),
         decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(5)),
       ),
     );

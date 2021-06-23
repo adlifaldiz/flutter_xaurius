@@ -1,7 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'dart:math' as math;
 import 'package:progress_indicators/progress_indicators.dart';
 
 import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
@@ -17,7 +18,7 @@ class BuyXauView extends GetView<BuyXauController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => Get.focusScope.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('trans_buy_xau'.tr + ' XAU'),
@@ -49,52 +50,52 @@ class BuyXauView extends GetView<BuyXauController> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
-                        width: percentWidth(context, 100),
-                        decoration:
-                            BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
-                        child: DropdownButtonHideUnderline(
-                          child: StatefulBuilder(
-                            builder: (BuildContext context, StateSetter dropDownState) {
-                              return DropdownButton(
-                                iconEnabledColor: primaryColor,
-                                iconDisabledColor: brokenWhiteColor,
-                                dropdownColor: backgroundPanelColor,
-                                value: controller.value.floor(),
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text('ETH (Ethereum)'),
-                                    value: 1,
-                                    onTap: () {
-                                      controller.onChangeBuy(1);
-                                    },
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('BSC (Binance Smart Chain)'),
-                                    value: 2,
-                                    onTap: () {
-                                      controller.onChangeBuy(2);
-                                    },
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('Private'),
-                                    value: 3,
-                                    onTap: () {
-                                      controller.onChangeBuy(3);
-                                    },
-                                  ),
-                                ],
-                                onChanged: (value) {
-                                  dropDownState(() {
-                                    controller.value = value;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                      //   width: percentWidth(context, 100),
+                      //   decoration:
+                      //       BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
+                      //   child: DropdownButtonHideUnderline(
+                      //     child: StatefulBuilder(
+                      //       builder: (BuildContext context, StateSetter dropDownState) {
+                      //         return DropdownButton(
+                      //           iconEnabledColor: primaryColor,
+                      //           iconDisabledColor: brokenWhiteColor,
+                      //           dropdownColor: backgroundPanelColor,
+                      //           value: controller.value.floor(),
+                      //           items: [
+                      //             DropdownMenuItem(
+                      //               child: Text('ETH (Ethereum)'),
+                      //               value: 1,
+                      //               onTap: () {
+                      //                 controller.onChangeBuy(1);
+                      //               },
+                      //             ),
+                      //             DropdownMenuItem(
+                      //               child: Text('BSC (Binance Smart Chain)'),
+                      //               value: 2,
+                      //               onTap: () {
+                      //                 controller.onChangeBuy(2);
+                      //               },
+                      //             ),
+                      //             DropdownMenuItem(
+                      //               child: Text('Private'),
+                      //               value: 3,
+                      //               onTap: () {
+                      //                 controller.onChangeBuy(3);
+                      //               },
+                      //             ),
+                      //           ],
+                      //           onChanged: (value) {
+                      //             dropDownState(() {
+                      //               controller.value = value;
+                      //             });
+                      //           },
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 10),
                       XauTextField(
                         useObscure: false,
@@ -148,7 +149,7 @@ class BuyXauView extends GetView<BuyXauController> {
                         }
                         return RaisedButton(
                           onPressed: () {
-                            FocusScope.of(context).unfocus();
+                            Get.focusScope.unfocus();
                             controller.checkBuy();
                           },
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

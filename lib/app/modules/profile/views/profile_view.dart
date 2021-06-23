@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
@@ -41,7 +42,12 @@ class ProfileView extends GetView<ProfileController> {
                 child: MenuTile(
                   icon: FontAwesomeIcons.fileAlt,
                   title: 'identity_document'.tr,
-                  onTap: () => Get.toNamed(Routes.UPLOAD_DOCUMENT),
+                  onTap: controller.auth.userData.orangName == null
+                      ? () {
+                          Get.toNamed(Routes.DATA_PERSONAL);
+                          successSnackbar('Info', 'up_pd_first'.tr);
+                        }
+                      : () => Get.toNamed(Routes.UPLOAD_DOCUMENT),
                 ),
               ),
             ],

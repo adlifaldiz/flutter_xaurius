@@ -41,6 +41,7 @@ abstract class Routes {
   static const SYSTEM = _Paths.SYSTEM;
   static const ONBOARD_LANGUAGE = _Paths.ONBOARD_LANGUAGE;
   static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const TESTING = _Paths.TESTING;
 }
 
 abstract class _Paths {
@@ -81,4 +82,5 @@ abstract class _Paths {
   static const SYSTEM = '/system';
   static const ONBOARD_LANGUAGE = '/onboard-language';
   static const NOTIFICATION = '/notification';
+  static const TESTING = '/testing';
 }

@@ -59,45 +59,53 @@ class DashboardView extends GetView<DashboardController> {
                 shrinkWrap: true,
                 padding: EdgeInsets.all(20),
                 children: [
-                  if (controller?.auth?.userData?.orangKycEditAvailable ?? false)
-                    Column(
-                      children: [
-                        XauriusContainer(
-                          child: Column(
-                            children: [
-                              Text('notif_kyc'.tr),
-                              FlatButton(
-                                color: primaryColor,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
-                                child: Text(
-                                  'kyc_btn'.tr,
-                                  style: stylePrimaryDark,
-                                ),
+                  controller.auth.userData.orangKycEditAvailable
+                      ? Column(
+                          children: [
+                            XauriusContainer(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'notif_kyc'.tr,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  FlatButton(
+                                    color: primaryColor,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    onPressed: () => Get.toNamed(Routes.DATA_PERSONAL),
+                                    child: Text(
+                                      'kyc_btn'.tr,
+                                      style: stylePrimaryDark,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  if (controller?.auth?.userData?.orangKycAskForReview ?? false)
-                    Column(
-                      children: [
-                        XauriusContainer(
-                          child: Column(
-                            children: [
-                              Text('notif_kyc_review'.tr),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  controller.auth.userData.orangKycAskForReview && !controller.auth.userData.orangKycEditAvailable
+                      ? Column(
+                          children: [
+                            XauriusContainer(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'notif_kyc_review'.tr,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        )
+                      : Container(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -265,7 +273,7 @@ class DashboardView extends GetView<DashboardController> {
                               ? [
                                   XauriusContainer(
                                     child: Center(
-                                      child: Text('Kamu belum memiliki saldo'),
+                                      child: Text('no_balance'.tr),
                                     ),
                                   ),
                                 ]

@@ -37,6 +37,7 @@ class DashboardController extends GetxController {
   void onInit() {
     auth.getProfileData();
     getDashboardContent();
+
     super.onInit();
   }
 
@@ -45,8 +46,9 @@ class DashboardController extends GetxController {
     final resp = await _repo.getDashboard(auth.token);
     if (resp.success) {
       charts(resp.data.charts);
-      balance(resp.data.myBalances);
+      balance(resp.data.myBalances).sort((a, b) => (a.balanceSymbol).compareTo(b.balanceSymbol));
       goldPrice(resp.data.currentGoldPrice);
+      // balance.sort(a,b)
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

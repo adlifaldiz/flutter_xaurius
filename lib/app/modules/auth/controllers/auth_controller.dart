@@ -22,7 +22,6 @@ class AuthController extends GetxController {
       userData = resp.data.orang;
       userBalance = resp.data.balances;
       userVouchers = resp.data.vouchers;
-
       isLoading(false);
     } else {
       isLoading(false);
@@ -32,7 +31,6 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    getProfileData();
     super.onInit();
   }
 

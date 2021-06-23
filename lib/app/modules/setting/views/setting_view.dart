@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:flutter_xaurius/app/widget/menu_tile.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
+import 'package:flutter_xaurius/app/widget/xau_container_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
@@ -22,7 +23,7 @@ class SettingView extends GetView<SettingController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              XauriusContainer(
+              XauriusContainerList(
                 // decoration: BoxDecoration(
                 //   borderRadius: BorderRadius.circular(20),
                 //   image: DecorationImage(
@@ -67,7 +68,7 @@ class SettingView extends GetView<SettingController> {
                 ),
               ),
               SizedBox(height: 20),
-              XauriusContainer(
+              XauriusContainerList(
                 child: Column(
                   children: [
                     MenuTile(
@@ -92,7 +93,7 @@ class SettingView extends GetView<SettingController> {
                 ),
               ),
               SizedBox(height: 20),
-              XauriusContainer(
+              XauriusContainerList(
                 child: Column(
                   children: [
                     MenuTile(
@@ -104,7 +105,7 @@ class SettingView extends GetView<SettingController> {
                 ),
               ),
               SizedBox(height: 20),
-              XauriusContainer(
+              XauriusContainerList(
                 child: Column(
                   children: [
                     MenuTile(

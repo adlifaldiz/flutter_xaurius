@@ -1,16 +1,15 @@
 import 'dart:async';
 
+import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_pickers.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
-import 'package:intl/intl.dart';
-
-import 'package:country_currency_pickers/country.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 
 class DataPersonalController extends GetxController {
   final provider = ApiRepository();
@@ -55,6 +54,7 @@ class DataPersonalController extends GetxController {
     kotaControl.text = auth.userData.orangAddrCity;
     kodePosControl.text = auth.userData.orangAddrPostal;
     negaraControl.text = auth.userData.orangAddrCountry;
+    update();
   }
 
   Future kycPersonalData() async {
@@ -70,8 +70,9 @@ class DataPersonalController extends GetxController {
       auth.token,
     );
     if (resp.success) {
-      successSnackbar('Sukses', 'Berhasil melengkapi Data Personal');
       auth.getProfileData();
+      Get.toNamed(Routes.UPLOAD_DOCUMENT);
+      successSnackbar('succes_alert'.tr, 'suc_pd'.tr);
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

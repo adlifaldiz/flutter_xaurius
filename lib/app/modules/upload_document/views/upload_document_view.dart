@@ -1,15 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:progress_indicators/progress_indicators.dart';
+
 import 'package:flutter_xaurius/app/data/provider/api_url.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
-import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
-
-import 'package:get/get.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/upload_document_controller.dart';
 
@@ -23,13 +22,6 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
           title: Text('identity_document'.tr),
         ),
         body: Obx(() {
-          // if (controller.auth.isLoading.value) {
-          //   return ShimmerList(
-          //     height: percentHeight(context, 5),
-          //     circular: 10,
-          //     itemCount: 8,
-          //   );
-          // }
           return SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
@@ -76,7 +68,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                       labelText: 'id_num'.tr,
                     ),
                     SizedBox(height: 10),
-                    controller.selectedImageNetworkKtp.value != ''
+                    controller.selectedImageNetworkKtp.value != '' && !controller.auth.userData.orangKycEditAvailable
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(20), child: Image.network(hostImage + controller.selectedImageNetworkKtp.value))
                         : Container(
@@ -86,32 +78,52 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
                                     : Text('id_pict_notif'.tr),
-                                FlatButton(
-                                  color: primaryColor,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  onPressed: () {
-                                    controller.takeImageKTP();
-                                  },
-                                  child: Text(
-                                    controller.selectedImagePathKtp.value != '' ? 'Ganti gambar' : 'Pilih gambar',
-                                    style: stylePrimaryDark,
-                                  ),
-                                ),
                               ],
                             ),
                           ),
+                    !controller.auth.userData.orangKycEditAvailable
+                        ? Container()
+                        : FlatButton(
+                            color: primaryColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            onPressed: () {
+                              controller.takeImageKTP();
+                            },
+                            child: Text(
+                              controller.selectedImagePathKtp.value != '' ? 'change_btn'.tr : 'choose_btn'.tr,
+                              style: stylePrimaryDark,
+                            ),
+                          ),
                     SizedBox(height: 10),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     Checkbox(
+                    //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                    //       checkColor: textWhiteColor,
+                    //       activeColor: primaryColor,
+                    //       value: controller.useNpwp.value,
+                    //       onChanged: (value) {
+                    //         return controller.onNpwpChange(value);
+                    //       },
+                    //     ),
+                    //     Text(
+                    //       !controller.useNpwp.value ? "Use NPWP?" : "Using NPWP",
+                    //       style: stylePrimary,
+                    //     ),
+                    //   ],
+                    // ),
                     XauTextField(
                       readOnly: !controller.auth.userData.orangKycEditAvailable,
                       useObscure: false,
-                      validator: validateNPWP,
+                      validator: controller.selectedImagePathNpwp.isNotEmpty || controller.selectedImageNetworkNpwp.isNotEmpty ? validateNPWP : null,
                       controller: controller.nomorNPWP == null ? '' : controller.nomorNPWP,
                       keyboardType: TextInputType.number,
                       maxLines: 1,
-                      labelText: 'npwp_notif'.tr,
+                      labelText: 'npwp_notif'.tr + ' (optional)',
                     ),
                     SizedBox(height: 10),
-                    controller.selectedImageNetworkKtp.value != ''
+                    controller.selectedImageNetworkNpwp.value != '' && !controller.auth.userData.orangKycEditAvailable
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(20), child: Image.network(hostImage + controller.selectedImageNetworkNpwp.value))
                         : Container(
@@ -121,18 +133,20 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathNpwp.value)))
                                     : Text('npwp_pict_notif'.tr),
-                                FlatButton(
-                                  color: primaryColor,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  onPressed: () {
-                                    controller.takeImageNPWP();
-                                  },
-                                  child: Text(
-                                    controller.selectedImagePathNpwp.value != '' ? 'Ganti gambar' : 'Pilih gambar',
-                                    style: stylePrimaryDark,
-                                  ),
-                                ),
                               ],
+                            ),
+                          ),
+                    !controller.auth.userData.orangKycEditAvailable
+                        ? Container()
+                        : FlatButton(
+                            color: primaryColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            onPressed: () {
+                              controller.takeImageNPWP();
+                            },
+                            child: Text(
+                              controller.selectedImagePathNpwp.value == '' ? 'change_btn'.tr : 'choose_btn'.tr,
+                              style: stylePrimaryDark,
                             ),
                           ),
                     SizedBox(height: 30),
@@ -145,7 +159,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         );
                       }
                       return RaisedButton(
-                        onPressed: !controller.isLoading.value
+                        onPressed: !controller.auth.userData.orangKycEditAvailable
                             ? null
                             : () {
                                 controller.checkIdentity();
