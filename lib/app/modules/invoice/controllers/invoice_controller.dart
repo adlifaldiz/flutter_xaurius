@@ -5,7 +5,6 @@ import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_detail_invoice/resp_det_invoice.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:flutter_xaurius/app/modules/gold_price/controllers/gold_price_controller.dart';
 import 'package:flutter_xaurius/app/modules/history/controllers/history_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,10 +22,10 @@ class InvoiceController extends GetxController {
   var formattedDate = ''.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     invoiceNumber = Get.arguments['invoiceId'];
     fromBuy.value = Get.arguments['fromBuy'];
-    getDetailInvoice();
+    await getDetailInvoice();
     super.onInit();
   }
 
@@ -42,6 +41,7 @@ class InvoiceController extends GetxController {
       responseDetailInvoice.value = resp;
       formattedDate.value = DateFormat('yyyy-MM-dd kk:mm:ss').format(resp.data.invoice.invoiceVa.vaExpiryDate);
     } else {
+      Get.back();
       dialogConnection('Oops', resp.message, () {
         Get.back();
       });

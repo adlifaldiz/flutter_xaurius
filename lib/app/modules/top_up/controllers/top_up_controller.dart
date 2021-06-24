@@ -23,10 +23,10 @@ class TopUpController extends GetxController {
   var merchantId = '0'.obs;
 
   @override
-  void onInit() {
-    getTopUp();
+  void onInit() async {
     nominalTopUpControl = NumericTextController();
     getVaMerchant();
+    getTopUp();
     super.onInit();
   }
 

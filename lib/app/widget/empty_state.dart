@@ -7,8 +7,10 @@ import 'package:get/get.dart';
 class EmptyState extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
+  @required
+  final bool refreshAble;
 
-  const EmptyState({Key key, this.buttonText, this.onPressed}) : super(key: key);
+  const EmptyState({Key key, this.buttonText, this.onPressed, @required this.refreshAble}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +32,17 @@ class EmptyState extends StatelessWidget {
                     style: stylePrimary.copyWith(fontSize: 30, color: primaryColor, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 20),
-                  FlatButton(
-                    onPressed: onPressed ?? () {},
-                    color: primaryColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      buttonText ?? 'Refresh',
-                      style: buttonStyle.copyWith(fontSize: 20),
-                    ),
-                  )
+                  !refreshAble
+                      ? Container()
+                      : FlatButton(
+                          onPressed: onPressed ?? () {},
+                          color: primaryColor,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          child: Text(
+                            buttonText ?? 'Refresh',
+                            style: buttonStyle.copyWith(fontSize: 20),
+                          ),
+                        )
                 ],
               ),
             ),

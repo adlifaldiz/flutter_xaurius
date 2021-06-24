@@ -42,6 +42,11 @@ abstract class Routes {
   static const ONBOARD_LANGUAGE = _Paths.ONBOARD_LANGUAGE;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const TESTING = _Paths.TESTING;
+  static const BUY_HISTORY = _Paths.HISTORY + _Paths.BUY_HISTORY;
+  static const SELL_HISTORY = _Paths.HISTORY + _Paths.SELL_HISTORY;
+  static const TOPUP_HISTORY = _Paths.HISTORY + _Paths.TOPUP_HISTORY;
+  static const DEPOSIT_HISTORY = _Paths.HISTORY + _Paths.DEPOSIT_HISTORY;
+  static const WITHDRAW_HISTORY = _Paths.HISTORY + _Paths.WITHDRAW_HISTORY;
 }
 
 abstract class _Paths {
@@ -83,4 +88,9 @@ abstract class _Paths {
   static const ONBOARD_LANGUAGE = '/onboard-language';
   static const NOTIFICATION = '/notification';
   static const TESTING = '/testing';
+  static const BUY_HISTORY = '/buy-history';
+  static const SELL_HISTORY = '/sell-history';
+  static const TOPUP_HISTORY = '/topup-history';
+  static const DEPOSIT_HISTORY = '/deposit-history';
+  static const WITHDRAW_HISTORY = '/withdraw-history';
 }

@@ -120,7 +120,7 @@ String validateNPWP(String value) {
 //bank
 String validateNameBank(String value) {
   if (value.isEmpty) {
-    return 'Nama Bank tidak boleh kosong';
+    return 'bank_name'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -128,7 +128,7 @@ String validateNameBank(String value) {
 
 String validateNameAccBank(String value) {
   if (value.isEmpty) {
-    return 'Nama Akun Bank tidak boleh kosong';
+    return 'bank_acc_name'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -136,7 +136,7 @@ String validateNameAccBank(String value) {
 
 String validateNumAccBank(String value) {
   if (value.isEmpty) {
-    return 'Nomor Akun Bank tidak boleh kosong';
+    return 'bank_num_name'.tr + 'empty_field'.tr;
   } else {
     return null;
   }
@@ -145,9 +145,9 @@ String validateNumAccBank(String value) {
 //buy create
 String validateToken(String value) {
   if (value.isEmpty || value[0] == '.') {
-    return 'Kuantitas tidak boleh kosong';
+    return 'quantity_xau'.tr + 'empty_field'.tr;
   } else if (double.parse(value) <= 0) {
-    return 'Kuantitas tidak bisa 0';
+    return 'quantity_xau'.tr + 'cant_0'.tr;
   } else {
     // token = double.parse(value);
     return null;
@@ -156,11 +156,11 @@ String validateToken(String value) {
 
 String validateSubTotal(NumericTextController value) {
   if (value.text.isEmpty) {
-    return 'Total harga tidak boleh kosong';
+    return 'total_xau'.tr + 'empty_field'.tr;
   } else if (value.numberValue <= 0) {
-    return 'Total harga tidak bisa 0';
+    return 'total_xau'.tr + 'cant_0'.tr;
   } else if (value.numberValue < 50000) {
-    return 'Minimum pembelian IDR 50000';
+    return 'min_buy'.tr + ' IDR 50000';
   } else {
     return null;
   }
@@ -179,11 +179,11 @@ String validateWallet(String value) {
 
 String validateNominalTopTup(NumericTextController value) {
   if (value.text.isEmpty) {
-    return 'Nominal tidak boleh kosong';
+    return 'Nominal' + 'empty_field'.tr;
   } else if (value.numberValue <= 0) {
-    return 'Nominal tidak bisa 0';
+    return 'Nominal' + 'cant_0'.tr;
   } else if (value.numberValue <= 100000) {
-    return 'Top up harus lebih dari Rp 100,000';
+    return 'min_buy'.tr + ' IDR 101000';
   } else {
     return null;
   }

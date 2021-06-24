@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -20,21 +21,39 @@ class InvoiceView extends GetView<InvoiceController> {
           Get.arguments == null ? 'Invoice' : 'Invoice #${controller.invoiceNumber}',
         ),
       ),
-      body: Obx(() {
-        return SafeArea(
+      body: Obx(
+        () => SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                controller.isLoading.value
-                    ? ShimmerText(
-                        height: percentHeight(context, 5),
-                      )
-                    : Text(
-                        'Invoice #' + controller.responseDetailInvoice.value.data.invoice.id.toString(),
-                        style: textTitle.copyWith(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    controller.isLoading.value
+                        ? Expanded(
+                            child: ShimmerText(
+                              height: percentHeight(context, 5),
+                            ),
+                          )
+                        : Text(
+                            'Invoice #' + controller.responseDetailInvoice.value.data.invoice.id.toString(),
+                            style: textTitle.copyWith(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                    SizedBox(width: percentWidth(context, 5)),
+                    controller.isLoading.value
+                        ? Expanded(
+                            child: ShimmerText(
+                              height: percentHeight(context, 5),
+                            ),
+                          )
+                        : Text(
+                            controller.responseDetailInvoice.value.data.buy.buyStatus,
+                            style: textTitle.copyWith(color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                  ],
+                ),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,7 +75,7 @@ class InvoiceView extends GetView<InvoiceController> {
                               ],
                             ),
                           ),
-                    SizedBox(width: 20),
+                    SizedBox(width: percentWidth(context, 5)),
                     controller.isLoading.value
                         ? Expanded(child: ShimmerText())
                         : Column(
@@ -97,7 +116,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                     style: textTitle,
                                   ),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: percentWidth(context, 5)),
                                 Text(
                                   customCurrency(controller.responseDetailInvoice.value.data.buy.buyUnitPrice) + ' IDR',
                                   textAlign: TextAlign.end,
@@ -114,7 +133,7 @@ class InvoiceView extends GetView<InvoiceController> {
                             //         style: textTitle,
                             //       ),
                             //     ),
-                            //     SizedBox(width: 20),
+                            //     SizedBox(width: percentWidth(context, 5)),
                             //     Text(
                             //       controller.responseDetailInvoice.value.data.buy.buyNetwork,
                             //       textAlign: TextAlign.end,
@@ -131,7 +150,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                     style: textTitle,
                                   ),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: percentWidth(context, 5)),
                                 Text(
                                   controller.responseDetailInvoice.value.data.buy.buyQty + ' XAU',
                                   textAlign: TextAlign.end,
@@ -372,7 +391,7 @@ class InvoiceView extends GetView<InvoiceController> {
                           )
                         : RaisedButton(
                             onPressed: () async {
-                              // Get.toNamed(Routes.MENU);
+                              Get.toNamed(Routes.HISTORY);
                               Get.back();
                               Get.back();
                               Get.back();
@@ -394,8 +413,8 @@ class InvoiceView extends GetView<InvoiceController> {
               ],
             ),
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

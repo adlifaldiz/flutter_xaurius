@@ -2,7 +2,8 @@ import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dar
 import 'package:get/get.dart';
 
 class VoucherController extends GetxController {
-  final auth = Get.find<AuthController>();
+  final auth = Get.put(AuthController());
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -16,4 +17,6 @@ class VoucherController extends GetxController {
 
   @override
   void onClose() {}
+
+  void getVoucher() async {}
 }
