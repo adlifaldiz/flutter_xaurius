@@ -1,37 +1,36 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/controller/gold_price_controller.dart';
-import 'package:flutter_xaurius/app/modules/checkout_xau/views/checkout_xau_view.dart';
-import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/model/buys/response_create_buys_model.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
+import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
+import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
+import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class BuyXauController extends GetxController {
-  GoldPriceController goldPriceController = Get.put(GoldPriceController());
   final GlobalKey<FormState> buyKey = GlobalKey<FormState>();
-
+  final dash = Get.find<DashboardController>();
+  final auth = Get.find<AuthController>();
   TextEditingController qtyController;
-  TextEditingController totalController;
-  ApiProvider provider = ApiProvider();
 
-  var responseCreateBuy = ResponseCreateBuy().obs;
+  NumericTextController totalController;
+  ApiRepository _repo = ApiRepository();
 
-  var isLoadingForm = false.obs;
-  var isTimeoutForm = false.obs;
-  var isNoConnectionForm = false.obs;
+  var isLoading = false.obs;
+  var isTimeout = false.obs;
+  var isNoConnection = false.obs;
   var qty = ''.obs;
+  var total = 0.0.obs;
 
   int value = 1;
-  String valueIdType = 'BSC';
+  String valueIdType = 'Private';
 
   @override
   void onInit() {
-    qtyController = TextEditingController();
-    totalController = TextEditingController();
+    setNewController();
     super.onInit();
   }
 
@@ -42,101 +41,80 @@ class BuyXauController extends GetxController {
     super.onClose();
   }
 
-  onChangeBuy(valueInt) {
-    value = valueInt;
-  }
-
-  Future createBuy(network) async {
-    isLoadingForm(true);
-    try {
-      var crateBuy = await provider.createBuy(qtyController.text, network);
-      if (crateBuy == null) {
-        responseCreateBuy.value.success = false;
-        responseCreateBuy.value.msg = 'Terjadi masalah';
-      } else {
-        responseCreateBuy.value = crateBuy;
-      }
-    } on TimeoutException {
-      isTimeoutForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Waktu habis', () {
-        Get.back();
-        isTimeoutForm(false);
-      });
-    } on SocketException {
-      isNoConnectionForm(true);
-      isLoadingForm(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnectionForm(false);
-      });
-    } finally {
-      isLoadingForm(false);
-      isTimeoutForm(false);
-      isNoConnectionForm(false);
-      if (responseCreateBuy.value.success) {
-        Get.to(() => CheckoutXauView(buyId: responseCreateBuy.value.data.buy.id.toString()));
-        successSnackbar('Sukses', responseCreateBuy.value.data.buy.id.toString());
-      } else {
-        failSnackbar('Fail', responseCreateBuy.value.msg);
-      }
-    }
+  void setNewController({int precision = 0, double initialValue = 0}) {
+    totalController = NumericTextController(thousandSeparator: '.', decimalSeparator: ',', precision: precision, initialValue: initialValue);
+    qtyController = TextEditingController();
     update();
   }
 
-  void checkBuy() {
-    if (value == 1) {
-      valueIdType = 'ETH';
-    } else {
-      valueIdType = 'BSC';
-    }
+  // onChangeBuy(valueInt) {
+  //   value = valueInt;
+  // }
 
+  Future postBuys() async {
+    isLoading(true);
+    final resp = await _repo.createBuys(qtyController.text, valueIdType, auth.token);
+    if (resp.success) {
+      Get.toNamed(Routes.CHECKOUT, arguments: resp.data.buy.id.toString());
+      update();
+    } else {
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
+    }
+    isLoading(false);
+  }
+
+  void checkBuy() {
     final isValid = buyKey.currentState.validate();
     if (isValid) {
       buyKey.currentState.save();
-      createBuy(valueIdType);
+      postBuys();
     } else {
       return;
     }
   }
 
-  onQtyChange(String val) {
+  onQtyChange(val) {
     if (val.isEmpty) {
       qtyController.text = '';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val[0] == '.') {
       qtyController.text = '0.';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
-    } else if (val.contains('..') || val.contains(',,')) {
-      qtyController.text = val.replaceAll(RegExp('..'), '.');
+    } else if (val[0] == '0' && val[1].toString().isNum) {
+      qtyController.text = '0.';
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else if (val.contains(',')) {
-      qtyController.text = val.replaceAll(RegExp(','), '.');
+      qtyController.text = val.replaceAll(',', '.');
       qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
     } else {
       var value = double.parse(val);
-      var subtotal = double.parse(goldPriceController.buysResponse.value.data.currentGoldPrice.buy) * value;
+      var subtotal = double.parse(dash.goldPrice.value.chartpriceBuy) * value;
       var total = subtotal.toInt();
       totalController.text = total.toString();
     }
   }
 
-  onTotalChange(String val) {
-    if (val.isEmpty) {
+  onTotalChange(val) {
+    val = totalController.numberValue;
+
+    if (val.toString().isEmpty) {
       totalController.text = '';
       totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
-    } else if (val.contains('0', 0)) {
-      totalController.text = '';
-      totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
-    } else if (val.contains('..')) {
-      totalController.text = val.replaceAll(RegExp('..'), '.');
-      totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
-    } else if (val.contains(',')) {
-      totalController.text = val.replaceAll(RegExp(','), '.');
-      totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
-    } else {
-      var value = double.parse(val);
-      var total = value / double.parse(goldPriceController.buysResponse.value.data.currentGoldPrice.buy);
+    }
+    // else if (val[0] == '.') {
+    //   totalController.text = '5';
+    //   totalController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+    // } else if (val.contains('..')) {
+    //   totalController.text = val.replaceAll(RegExp('..'), '');
+    //   totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
+    // } else if (val.contains(',')) {
+    //   totalController.text = val.replaceAll(RegExp(','), '');
+    //   totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
+    // }
+    else {
+      var total = val / double.parse(dash.goldPrice.value.chartpriceBuy);
       qtyController.text = total.toString();
     }
   }

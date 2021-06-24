@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-
-import 'package:flutter_xaurius/helper/theme.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/service/localization_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'app/modules/auth/bindings/auth_binding.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   runApp(MyApp());
 }
@@ -26,31 +29,41 @@ class _MyAppState extends State<MyApp> {
   bool isUser = false;
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Xaurius',
       debugShowCheckedModeBanner: false,
+      translations: LocalizationService(),
+      locale: LocalizationService().getCurrentLocale(),
+      fallbackLocale: Locale('en', 'US'),
+      initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
-      initialRoute: AppPages.INITIAL,
-      defaultTransition: Transition.cupertino,
+      initialBinding: AuthBinding(),
+      onInit: () {
+        Get.lazyPut(() => AuthController());
+      },
       theme: ThemeData(
+        unselectedWidgetColor: primaryColor,
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         disabledColor: brokenWhiteColor,
+        // highlightColor: accentColor,
+        accentColor: backgroundPanelColor,
+        brightness: Brightness.dark,
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: textWhiteColor,
             ),
         appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
-          iconTheme: IconThemeData(color: textWhiteColor),
-          actionsIconTheme: IconThemeData(color: textWhiteColor),
-        ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            textTheme: Theme.of(context).textTheme.apply(bodyColor: textWhiteColor, fontSizeDelta: 0),
+            iconTheme: IconThemeData(color: textWhiteColor),
+            actionsIconTheme: IconThemeData(color: textWhiteColor),
+            centerTitle: true),
       ),
-      // home: SplashScreen(
-      //   isUser: isUser,
-      // ),
     );
   }
 

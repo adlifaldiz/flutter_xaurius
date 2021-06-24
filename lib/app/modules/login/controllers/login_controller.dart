@@ -1,89 +1,41 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
+import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-import 'package:flutter_xaurius/helper/dialog_utils.dart';
-import 'package:flutter_xaurius/model/auth/login_model.dart';
-import 'package:flutter_xaurius/resources/api_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
-  final appdata = GetStorage();
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  ApiProvider provider = ApiProvider();
-  TextEditingController emailController, pinController;
-  var loginResponse = LoginModel().obs;
-
+  final auth = Get.find<AuthController>();
+  final storage = GetStorage();
+  ApiRepository _repo = ApiRepository();
   var isLoading = false.obs;
-  var isTimeout = false.obs;
-  var isNoConnection = false.obs;
-
   var email = '';
   var pin = '';
 
   @override
   void onInit() {
-    emailController = TextEditingController();
-
-    pinController = TextEditingController();
     super.onInit();
   }
 
   @override
   void onClose() {
-    emailController.dispose();
-    pinController.dispose();
     super.onClose();
   }
 
-  void postLogin(email, pin) async {
+  void login() async {
     isLoading(true);
-    try {
-      var logins = await provider.login(email, pin);
-      if (logins == null) {
-        loginResponse.value.success = false;
-        loginResponse.value.message = 'Terjadi masalah';
-      } else {
-        loginResponse.value = logins;
-      }
-    } on TimeoutException {
-      isTimeout(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Waktu habis', () {
+    var resp = await _repo.login(email, pin);
+    if (resp.success) {
+      auth.token = resp.token;
+      storage.write('username', email);
+      await auth.getProfileData();
+      await Get.offAllNamed(Routes.MENU);
+    } else {
+      dialogConnection('Oops', resp.message, () {
         Get.back();
-        isTimeout(false);
       });
-    } on SocketException {
-      isNoConnection(true);
-      isLoading(false);
-      dialogConnection('Oops', 'Tidak ada koneksi internet', () {
-        Get.back();
-        isNoConnection(false);
-      });
-    } finally {
-      isLoading(false);
-
-      if (loginResponse.value.success) {
-        appdata.write('token', loginResponse.value.token);
-        appdata.write('isUser', true);
-        Get.offAllNamed(Routes.MENUS);
-
-        successSnackbar('Sukses', 'Berhasil login');
-      } else {
-        failSnackbar('Fail', loginResponse.value.message);
-      }
     }
-  }
-
-  void checkLogin() {
-    final isValid = formKey.currentState.validate();
-    if (!isValid) {
-      return;
-    }
-    formKey.currentState.save();
-    postLogin(emailController.value.text, pinController.value.text);
+    isLoading(false);
   }
 }

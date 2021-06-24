@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/helper/theme.dart';
-import 'package:flutter_xaurius/helper/validator.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/modules/create_pin/controllers/create_pin_controller.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import '../controllers/create_pin_controller.dart';
-
 class CreatePinView extends GetView<CreatePinController> {
-  CreatePinController _controller = Get.put(CreatePinController());
-  final String email, code;
-  CreatePinView({Key key, this.email, this.code}) : super(key: key);
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,7 @@ class CreatePinView extends GetView<CreatePinController> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Buat Pin',
+          'create_pin_app_bar'.tr,
           style: textAppbarStyleWhite,
         ),
         leading: BackButton(
@@ -49,25 +46,18 @@ class CreatePinView extends GetView<CreatePinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: _controller.formKey,
+                key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat', style: stylePrimary),
+                    Text('create_pin_ex'.tr, style: stylePrimary),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        _controller.pin = value;
-                      },
-                      onSaved: (value) {
-                        _controller.pin = value;
-                      },
-                      controller: _controller.pinController,
-                      validator: (value) {
-                        return validatePin(value);
-                      },
+                      onChanged: (value) => controller.pin = value,
+                      onSaved: (value) => controller.pin = value,
+                      validator: validatePin,
                       pinLength: 6,
                       cursor: Cursor(
                         enabled: true,
@@ -84,32 +74,39 @@ class CreatePinView extends GetView<CreatePinController> {
                       ),
                     ),
                     Spacer(),
-                    Obx(() {
-                      if (_controller.isLoading.value) {
-                        return JumpingDotsProgressIndicator(
-                          numberOfDots: 3,
-                          fontSize: 40,
-                          color: primaryColor,
-                        );
-                      }
+                    Obx(
+                      () {
+                        if (controller.isLoading.value) {
+                          return JumpingDotsProgressIndicator(
+                            numberOfDots: 3,
+                            fontSize: 40,
+                            color: primaryColor,
+                          );
+                        }
 
-                      return Container(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          color: accentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        return Container(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            color: accentColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Text('next_btn'.tr, style: buttonStyle),
+                            ),
+                            onPressed: () {
+                              final isValid = formKey.currentState.validate();
+                              if (!isValid) {
+                                return;
+                              }
+                              formKey.currentState.save();
+                              controller.createPin();
+                            },
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('Lanjutkan', style: buttonStyle),
-                          ),
-                          onPressed: () {
-                            _controller.checkPin(email, code);
-                          },
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
