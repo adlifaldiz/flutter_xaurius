@@ -122,7 +122,7 @@ class BuyXauView extends GetView<BuyXauController> {
                       SizedBox(height: 10),
                       XauTextField(
                         useObscure: false,
-                        labelText: 'total_xau'.tr,
+                        labelText: 'total_xau'.tr + ' (*min 50.000)',
                         keyboardType: TextInputType.number,
                         controller: controller.totalController,
                         prefixIcon: Column(

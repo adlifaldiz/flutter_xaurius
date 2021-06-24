@@ -23,7 +23,7 @@ class TopUpView extends GetView<TopUpController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.onInit();
+    // controller.onInit();
     return GestureDetector(
       onTap: () => Get.focusScope.unfocus(),
       child: Scaffold(
@@ -31,13 +31,6 @@ class TopUpView extends GetView<TopUpController> {
           title: Text('Top Up'),
         ),
         body: Obx(() {
-          // if (controller.isLoading.value) {
-          //   return Center(
-          //       child: JumpingDotsProgressIndicator(
-          //     color: primaryColor,
-          //     fontSize: 40,
-          //   ));
-          // }
           return SafeArea(
             child: LiquidPullToRefresh(
               color: backgroundPanelColor,
@@ -54,10 +47,8 @@ class TopUpView extends GetView<TopUpController> {
                       if (index == 0) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
-                          child: controller.isLoading.value
-                              ? ShimmerCard(
-                                  height: percentHeight(context, 20),
-                                )
+                          child: controller.isLoading.value || controller.isLoadingList.value
+                              ? ShimmerCard(height: percentHeight(context, 25))
                               : XauriusContainer(
                                   child: Form(
                                     key: formKey,
@@ -151,49 +142,49 @@ class TopUpView extends GetView<TopUpController> {
                         );
                       } else {
                         final Depoidr depoList = controller.listTopTup.value[index - 1];
-                        if (controller.isLoadingList.value) {
-                          return ShimmerList();
-                        }
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL, arguments: depoList.invoiceId),
-                            child: XauriusContainer(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Invoice #' + depoList.invoiceId.toString(),
-                                        style: textTitle,
-                                      ),
-                                      Text(
-                                        depoList.depoidrStatus,
-                                        style: textTitle.copyWith(color: primaryColor),
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    ],
+
+                        return controller.isLoading.value || controller.isLoadingList.value
+                            ? ShimmerList(itemCount: 6)
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+                                child: InkWell(
+                                  onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL, arguments: depoList.invoiceId),
+                                  child: XauriusContainer(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Invoice #' + depoList.invoiceId.toString(),
+                                              style: textTitle,
+                                            ),
+                                            Text(
+                                              depoList.depoidrStatus,
+                                              style: textTitle.copyWith(color: primaryColor),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Total Top up:',
+                                            ),
+                                            Text(
+                                              'Rp ' + depoList.depoidrAmount,
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Total Top up:',
-                                      ),
-                                      Text(
-                                        'Rp ' + depoList.depoidrAmount,
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                                ),
+                              );
                       }
                     }, childCount: 1 + controller.listTopTup.length),
                   ),

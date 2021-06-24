@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/model/buy_data/buy_data.dart';
+import 'package:flutter_xaurius/app/data/model/chips_model.dart';
 import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
+import 'package:flutter_xaurius/app/modules/faq/views/faq_view.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/bindings/buy_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/controllers/buy_history_controller.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/views/buy_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/deposit_history/views/deposit_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/sell_history/views/sell_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/topup_history/views/topup_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/withdraw_history/views/withdraw_history_view.dart';
+import 'package:flutter_xaurius/app/modules/privacy_policy/views/privacy_policy_view.dart';
+import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
+import 'package:flutter_xaurius/app/widget/keep_alive_page.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
@@ -14,8 +27,27 @@ class HistoryController extends GetxController {
   final _repo = ApiRepository();
   var listBuys = <Buy>[].obs;
   var isLoading = false.obs;
+  var chipValue = 0.obs;
+  PageController pageController;
+
+  List<Widget> pages = [
+    KeepAlivePage(child: BuyHistoryView()),
+    KeepAlivePage(child: SellHistoryView()),
+    KeepAlivePage(child: TopupHistoryView()),
+    KeepAlivePage(child: DepositHistoryView()),
+    KeepAlivePage(child: WithdrawHistoryView()),
+  ];
+
+  List<ChipsModel> chips = <ChipsModel>[
+    ChipsModel(0, 'Buy'),
+    ChipsModel(1, 'Sell'),
+    ChipsModel(2, 'TopUp'),
+    ChipsModel(3, 'Deposit'),
+    ChipsModel(4, 'Withdraw'),
+  ];
   @override
   void onInit() async {
+    pageController = PageController(keepPage: true);
     auth.getProfileData();
     getBuys();
     super.onInit();
@@ -46,5 +78,28 @@ class HistoryController extends GetxController {
       });
     }
     isLoading(false);
+  }
+
+  void onChipSelected(bool selected, id) {
+    chipValue.value = id;
+    switch (id) {
+      case 0:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        break;
+      case 1:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        break;
+      case 2:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        break;
+      case 3:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        break;
+      case 4:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+        break;
+      default:
+        pageController.animateToPage(id, duration: Duration(milliseconds: 300), curve: Curves.ease);
+    }
   }
 }

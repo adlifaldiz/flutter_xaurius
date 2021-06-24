@@ -4,6 +4,7 @@ import 'package:flutter_xaurius/app/modules/dashboard/views/dashboard_view.dart'
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
 import 'package:flutter_xaurius/app/modules/setting/views/setting_view.dart';
 import 'package:flutter_xaurius/app/modules/transaction/views/transaction_view.dart';
+import 'package:flutter_xaurius/app/widget/keep_alive_page.dart';
 import 'package:get/get.dart';
 
 class MenuController extends GetxController {
@@ -13,16 +14,16 @@ class MenuController extends GetxController {
   PageController pageController;
 
   List<Widget> screens = [
-    DashboardView(),
-    TransactionView(),
-    HistoryView(),
-    SettingView(),
+    KeepAlivePage(child: DashboardView()),
+    KeepAlivePage(child: TransactionView()),
+    KeepAlivePage(child: HistoryView()),
+    KeepAlivePage(child: SettingView()),
   ];
 
   @override
   void onInit() {
     _auth.getProfileData();
-    pageController = PageController(initialPage: 0);
+    pageController = PageController();
     super.onInit();
   }
 

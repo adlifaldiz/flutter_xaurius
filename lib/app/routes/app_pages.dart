@@ -27,7 +27,17 @@ import 'package:flutter_xaurius/app/modules/faq/views/faq_view.dart';
 import 'package:flutter_xaurius/app/modules/gold_price/bindings/gold_price_binding.dart';
 import 'package:flutter_xaurius/app/modules/gold_price/views/gold_price_view.dart';
 import 'package:flutter_xaurius/app/modules/history/bindings/history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/bindings/buy_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/views/buy_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/deposit_history/bindings/deposit_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/deposit_history/views/deposit_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/sell_history/bindings/sell_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/sell_history/views/sell_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/topup_history/bindings/topup_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/topup_history/views/topup_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/withdraw_history/bindings/withdraw_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/withdraw_history/views/withdraw_history_view.dart';
 import 'package:flutter_xaurius/app/modules/home/bindings/home_binding.dart';
 import 'package:flutter_xaurius/app/modules/home/views/home_view.dart';
 import 'package:flutter_xaurius/app/modules/invoice/bindings/invoice_binding.dart';
@@ -147,6 +157,33 @@ class AppPages {
       name: _Paths.HISTORY,
       page: () => HistoryView(),
       binding: HistoryBinding(),
+      children: [
+        GetPage(
+          name: _Paths.BUY_HISTORY,
+          page: () => BuyHistoryView(),
+          binding: BuyHistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.SELL_HISTORY,
+          page: () => SellHistoryView(),
+          binding: SellHistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.TOPUP_HISTORY,
+          page: () => TopupHistoryView(),
+          binding: TopupHistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.DEPOSIT_HISTORY,
+          page: () => DepositHistoryView(),
+          binding: DepositHistoryBinding(),
+        ),
+        GetPage(
+          name: _Paths.WITHDRAW_HISTORY,
+          page: () => WithdrawHistoryView(),
+          binding: WithdrawHistoryBinding(),
+        ),
+      ],
     ),
     GetPage(name: _Paths.MENU, page: () => MenuView(), bindings: [
       MenuBinding(),

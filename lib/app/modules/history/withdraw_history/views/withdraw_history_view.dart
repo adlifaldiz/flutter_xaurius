@@ -3,16 +3,12 @@ import 'package:flutter_xaurius/app/widget/empty_state.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/notification_controller.dart';
+import '../controllers/withdraw_history_controller.dart';
 
-class NotificationView extends GetView<NotificationController> {
+class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('notif_title'.tr),
-        centerTitle: true,
-      ),
       body: EmptyState(
         refreshAble: true,
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
@@ -18,19 +19,15 @@ class VoucherView extends GetView<VoucherController> {
         centerTitle: true,
       ),
       body: Obx(() {
-        // if (controller.auth.isLoading.value) {
-        //   return Center(
-        //     child: JumpingDotsProgressIndicator(
-        //       color: primaryColor,
-        //       fontSize: 40,
-        //     ),
-        //   );
-        // }
-
-        if (controller.auth.userVouchers.isEmpty) {
-          return EmptyState();
+        if (controller.isLoading.value) {
+          return ShimmerList();
         }
-
+        if (controller.auth.userVouchers.isEmpty) {
+          return EmptyState(refreshAble: false);
+        }
+        // if (controller.auth.isLoading.value) {
+        //   return ShimmerList();
+        // }
         return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
             itemCount: controller.auth.userVouchers.length,

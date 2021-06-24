@@ -3,18 +3,14 @@ import 'package:flutter_xaurius/app/widget/empty_state.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/notification_controller.dart';
+import '../controllers/deposit_history_controller.dart';
 
-class NotificationView extends GetView<NotificationController> {
+class DepositHistoryView extends GetView<DepositHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('notif_title'.tr),
-        centerTitle: true,
-      ),
       body: EmptyState(
-        refreshAble: true,
+        refreshAble: false,
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/debug_utils.dart';
@@ -73,28 +74,35 @@ class ApiProvider extends GetConnect {
             headers: headers,
           );
       }
+
       if (response?.body is Map) {
         printWrapped('Success $selectedMethod $url: \nResponse : ${response.body}');
         return response;
       } else {
         printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
-        Response error = Response(statusCode: 400, body: {
-          "msg": "Terjadi kesalahan, silahkan coba lagi",
+        Response error = Response(body: {
+          "msg": "fail_wrong".tr,
           "success": false,
         });
         return error;
       }
     } on UnauthorizedException {
-      // TODO do logout when auth is not valid here
+      // do logout when auth is not valid here
       Get.toNamed(Routes.LOGIN);
       Response response = Response(body: {
-        "msg": "Sesi login berakhir",
+        "msg": "fail_session".tr,
         "success": false,
       });
       return response;
     } on TimeoutException {
       Response response = Response(body: {
-        "msg": "Waktu habis",
+        "msg": "fail_timeout".tr,
+        "success": false,
+      });
+      return response;
+    } on SocketException {
+      Response response = Response(body: {
+        "msg": "fail_conn".tr,
         "success": false,
       });
       return response;
@@ -103,7 +111,7 @@ class ApiProvider extends GetConnect {
       if (e.response?.data is Map && (e.response?.data['result'] == null || e.response?.data['error'] == null)) {
         (e.response.data as Map).addAll(
           <String, dynamic>{
-            "msg": "Terjadi kesalahan, coba lagi nanti",
+            "msg": "fail_wrong".tr,
             "success": false,
           },
         );
@@ -112,7 +120,7 @@ class ApiProvider extends GetConnect {
         return e.response;
       } else {
         Response response = Response(body: {
-          "msg": "Terjadi kesalahan, coba lagi nanti",
+          "msg": "fail_wrong".tr,
           "success": false,
         });
         return response;
