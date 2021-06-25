@@ -1,9 +1,13 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
 import 'package:flutter_xaurius/app/modules/verify_code/controllers/verify_code_controller.dart';
+import 'package:flutter_xaurius/app/widget/xau_tooltip.dart';
 
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -80,6 +84,40 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                           colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
                     ),
                     Spacer(),
+                    Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          XauToolTip(
+                            show: controller.showToolTip.value,
+                            text: 'regis_agree_err'.tr,
+                            child: Checkbox(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
+                              checkColor: textWhiteColor,
+                              activeColor: primaryColor,
+                              value: controller.isAgree.value,
+                              onChanged: (value) {
+                                return controller.onAgreeChange(value);
+                              },
+                            ),
+                          ),
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: 'regis_agree'.tr,
+                              style: stylePrimary,
+                              children: [
+                                TextSpan(
+                                  text: 'setting_terms'.tr,
+                                  style: stylePrimary.copyWith(color: primaryColor, fontWeight: FontWeight.bold),
+                                  recognizer: TapGestureRecognizer()..onTap = () => _showTnc(context),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Obx(() {
                       if (controller.isLoading.value) {
                         return JumpingDotsProgressIndicator(
@@ -119,6 +157,14 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
           ],
         ),
       ),
+    );
+  }
+
+  _showTnc(BuildContext context) {
+    showMaterialModalBottomSheet(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+      context: context,
+      builder: (context) => TncView(),
     );
   }
 }

@@ -123,7 +123,7 @@ class TransactionView extends GetView<TransactionController> {
                                     padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                                     width: Get.width,
                                     decoration: BoxDecoration(
-                                      color: backgroundPanelColor,
+                                      color: backgroundPanelColor.withOpacity(0.5),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     foregroundDecoration: BoxDecoration(
