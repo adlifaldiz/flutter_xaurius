@@ -155,4 +155,5 @@ const Map<String, String> enUS = {
   'fail_session': 'Login session ended',
   'fail_timeout': 'Time out',
   'fail_conn': 'No internet connection',
+  'fail_down': 'Server is under maintenance',
 };

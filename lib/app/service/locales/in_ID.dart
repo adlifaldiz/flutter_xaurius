@@ -153,4 +153,5 @@ const Map<String, String> inID = {
   'fail_session': 'Sesi login berakhir',
   'fail_timeout': 'Waktu habis',
   'fail_conn': 'Tidak ada koneksi internet',
+  'fail_down': 'Server sedang maintenance',
 };
