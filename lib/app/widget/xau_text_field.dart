@@ -97,6 +97,7 @@ class _XauTextFieldState extends State<XauTextField> {
 
     return TextFormField(
       onTap: widget.ontap,
+      onSaved: widget.onSaved,
       controller: widget.controller,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
