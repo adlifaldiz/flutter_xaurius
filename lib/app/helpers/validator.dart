@@ -149,7 +149,6 @@ String validateToken(String value) {
   } else if (double.parse(value) <= 0) {
     return 'quantity_xau'.tr + 'cant_0'.tr;
   } else {
-    // token = double.parse(value);
     return null;
   }
 }

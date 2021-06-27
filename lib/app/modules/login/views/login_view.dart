@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -50,7 +52,7 @@ class LoginView extends GetView<LoginController> {
                           'assets/images/logo_ss.png',
                           width: 150,
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: percentHeight(context, 3)),
                         Text(
                           'login_welcome'.tr,
                           style: Theme.of(context).textTheme.headline4.copyWith(
@@ -74,71 +76,34 @@ class LoginView extends GetView<LoginController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('login_email'.tr, style: styleLabel),
-                              SizedBox(height: 5),
-                              TextFormField(
+                              SizedBox(height: percentHeight(context, 1)),
+                              XauTextField(
                                 onSaved: (value) => controller.email = value,
                                 validator: validateEmail,
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
-                                style: stylePrimary,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                                  fillColor: fillColor,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color: primaryColor, width: 2),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color: brokenWhiteColor),
-                                  ),
-                                  errorStyle: styleError,
-                                  hintText: 'login_email'.tr,
-                                  hintStyle: stylePrimary,
-                                  prefixIcon: Icon(
-                                    Icons.account_circle_rounded,
-                                    color: primaryColor,
-                                  ),
+                                useObscure: false,
+                                hintText: 'login_email'.tr,
+                                prefixIcon: Icon(
+                                  Icons.account_circle_rounded,
+                                  color: primaryColor,
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: percentHeight(context, 3)),
                               Text('Pin', style: styleLabel),
-                              SizedBox(height: 5),
-                              TextFormField(
+                              SizedBox(height: percentHeight(context, 1)),
+                              XauTextField(
                                 onSaved: (value) => controller.pin = value,
                                 validator: validatePin,
-                                obscureText: true,
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.done,
                                 maxLength: 6,
                                 inputFormatters: [LengthLimitingTextInputFormatter(6)],
-                                style: stylePrimary,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                                  fillColor: fillColor,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color: primaryColor, width: 2),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color: brokenWhiteColor),
-                                  ),
-                                  errorStyle: styleError,
-                                  hintStyle: stylePrimary,
-                                  hintText: 'Pin',
-                                  prefixIcon: Icon(
-                                    Icons.lock_outline_rounded,
-                                    color: primaryColor,
-                                  ),
+                                useObscure: true,
+                                hintText: 'Pin',
+                                prefixIcon: Icon(
+                                  Icons.lock_outline_rounded,
+                                  color: primaryColor,
                                 ),
                               ),
                               Padding(

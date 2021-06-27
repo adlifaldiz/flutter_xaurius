@@ -49,7 +49,6 @@ class HistoryController extends GetxController {
   void onInit() async {
     pageController = PageController(keepPage: true);
     auth.getProfileData();
-    getBuys();
     super.onInit();
   }
 
@@ -62,22 +61,7 @@ class HistoryController extends GetxController {
   void onClose() {}
 
   Future onRefresh() async {
-    getBuys();
     update();
-  }
-
-  void getBuys() async {
-    isLoading(true);
-    final resp = await _repo.getBuys(auth.token);
-    if (resp.success) {
-      listBuys(resp.data.buys);
-      update();
-    } else {
-      dialogConnection('Oops', resp.message, () {
-        Get.back();
-      });
-    }
-    isLoading(false);
   }
 
   void onChipSelected(bool selected, id) {
