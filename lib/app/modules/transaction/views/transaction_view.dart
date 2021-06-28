@@ -51,7 +51,7 @@ class TransactionView extends GetView<TransactionController> {
                                 Icons.account_balance_wallet_rounded,
                                 color: accentColor,
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: percentWidth(context, 2)),
                               Text(
                                 'trans_balance'.tr,
                                 style: textTitle,
@@ -90,7 +90,7 @@ class TransactionView extends GetView<TransactionController> {
                           )
                         ],
                       ),
-                SizedBox(height: 10),
+                SizedBox(height: percentHeight(context, 2)),
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : CarouselSlider(
@@ -123,7 +123,7 @@ class TransactionView extends GetView<TransactionController> {
                                     padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                                     width: Get.width,
                                     decoration: BoxDecoration(
-                                      color: backgroundPanelColor,
+                                      color: backgroundPanelColor.withOpacity(0.5),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     foregroundDecoration: BoxDecoration(
@@ -154,25 +154,27 @@ class TransactionView extends GetView<TransactionController> {
                                 });
                               }).toList(),
                       ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: controller.dash.map<Widget>(controller.dash.balance, (index, url) {
-                      return AnimatedContainer(
-                        width: controller.dash.indexBalances.value == index ? 20.0 : 7,
-                        height: 7.0,
-                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: percentWidth(context, 0.5)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: controller.dash.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                controller.dash.isLoading.value
+                    ? ShimmerText()
+                    : Padding(
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: controller.dash.map<Widget>(controller.dash.balance, (index, url) {
+                            return AnimatedContainer(
+                              width: controller.dash.indexBalances.value == index ? 20.0 : 7,
+                              height: 7.0,
+                              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: percentWidth(context, 0.5)),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: controller.dash.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                              ),
+                              duration: Duration(milliseconds: 300),
+                            );
+                          }),
                         ),
-                        duration: Duration(milliseconds: 300),
-                      );
-                    }),
-                  ),
-                ),
-                SizedBox(height: 30),
+                      ),
+                SizedBox(height: percentHeight(context, 5)),
                 controller.dash.isLoading.value
                     ? ShimmerText()
                     : Row(
@@ -182,180 +184,185 @@ class TransactionView extends GetView<TransactionController> {
                             FontAwesomeIcons.chartLine,
                             color: accentColor,
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: percentWidth(context, 2)),
                           Text(
                             'dash_title_price'.tr,
                             style: textTitle,
                           )
                         ],
                       ),
-                SizedBox(height: 10),
-                Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: backgroundPanelColor.withOpacity(0.5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(height: percentHeight(context, 2)),
+                controller.dash.isLoading.value
+                    ? ShimmerCard(
+                        height: percentHeight(context, 50),
+                      )
+                    : Container(
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: backgroundPanelColor.withOpacity(0.5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  controller.dash.isLoading.value
-                                      ? ShimmerText()
-                                      : Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            InkWell(
-                                              borderRadius: BorderRadius.circular(20),
-                                              onTap: () {
-                                                controller.dash.onChangeBuy(true);
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                decoration: BoxDecoration(
-                                                  color: controller.dash.isBuy.value ? greyColor : Colors.transparent,
-                                                  borderRadius: BorderRadius.circular(20),
-                                                ),
-                                                child: Text(
-                                                  'Buy',
-                                                  style: TextStyle(
-                                                    color: greenColor,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        controller.dash.isLoading.value
+                                            ? ShimmerText()
+                                            : Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  InkWell(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    onTap: () {
+                                                      controller.dash.onChangeBuy(true);
+                                                    },
+                                                    child: Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                      decoration: BoxDecoration(
+                                                        color: controller.dash.isBuy.value ? greyColor : Colors.transparent,
+                                                        borderRadius: BorderRadius.circular(20),
+                                                      ),
+                                                      child: Text(
+                                                        'Buy',
+                                                        style: TextStyle(
+                                                          color: greenColor,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10),
-                                            InkWell(
-                                              borderRadius: BorderRadius.circular(20),
-                                              onTap: () {
-                                                controller.dash.onChangeBuy(false);
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                decoration: BoxDecoration(
-                                                  color: controller.dash.isBuy.value ? Colors.transparent : greyColor,
-                                                  borderRadius: BorderRadius.circular(20),
-                                                ),
-                                                child: Text(
-                                                  'Sell',
-                                                  style: TextStyle(
-                                                    color: redColor,
+                                                  SizedBox(width: percentWidth(context, 2)),
+                                                  InkWell(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    onTap: () {
+                                                      controller.dash.onChangeBuy(false);
+                                                    },
+                                                    child: Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                      decoration: BoxDecoration(
+                                                        color: controller.dash.isBuy.value ? Colors.transparent : greyColor,
+                                                        borderRadius: BorderRadius.circular(20),
+                                                      ),
+                                                      child: Text(
+                                                        'Sell',
+                                                        style: TextStyle(
+                                                          color: redColor,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                  SizedBox(height: 10),
-                                  controller.dash.isLoading.value
-                                      ? ShimmerText()
-                                      : Text(
-                                          controller.dash.isBuy.value
-                                              ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ?? '-'
-                                              : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ?? '-',
-                                          style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                        SizedBox(height: percentHeight(context, 2)),
+                                        controller.dash.isLoading.value
+                                            ? ShimmerText()
+                                            : Text(
+                                                controller.dash.isBuy.value
+                                                    ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ?? '-'
+                                                    : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ?? '-',
+                                                style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () => Get.toNamed(Routes.CHART_VIEW),
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration:
+                                          BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
+                                      child: Icon(
+                                        FontAwesomeIcons.expandAlt,
+                                        size: 18,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                            InkWell(
-                              onTap: () => Get.toNamed(Routes.CHART_VIEW),
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
-                                child: Icon(
-                                  FontAwesomeIcons.expandAlt,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
-                          ],
+                              Obx(() {
+                                if (controller.dash.isLoading.value) {
+                                  return Center(child: ShimmerCard());
+                                }
+                                return SfCartesianChart(
+                                  // borderColor: Colors.transparent,
+                                  zoomPanBehavior: ZoomPanBehavior(
+                                    enableMouseWheelZooming: true,
+                                    enablePinching: true,
+                                    // enableDoubleTapZooming: true,
+                                    enablePanning: true,
+                                  ),
+                                  onZooming: (ZoomPanArgs args) {},
+                                  onZoomStart: (ZoomPanArgs args) {},
+                                  onZoomEnd: (ZoomPanArgs args) {},
+                                  onZoomReset: (ZoomPanArgs args) {},
+                                  primaryXAxis: DateTimeAxis(
+                                    // minimum: controller.dashboard.charts.first.cdate,
+                                    // maximum: controller.dashboard.charts.last.cdate,
+                                    visibleMinimum: controller.dash.charts.value[controller.dash.charts.length - 5].cdate,
+                                    rangePadding: ChartRangePadding.round,
+                                  ),
+                                  primaryYAxis: NumericAxis(
+                                    minimum: double.parse(controller.dash.charts.value.first.chigh) - 25000,
+                                    maximum: double.parse(controller.dash.charts.value.last.chigh) + 25000,
+                                    numberFormat: NumberFormat.compactCurrency(
+                                      locale: "in_In",
+                                      symbol: "",
+                                    ),
+                                    // title: AxisTitle(
+                                    //   text: 'Stock price in \$',
+                                    // ),
+                                  ),
+                                  axes: [
+                                    NumericAxis(
+                                      name: "secondyaxis",
+                                      opposedPosition: true,
+                                    ),
+                                  ],
+                                  trackballBehavior: TrackballBehavior(
+                                    enable: true,
+                                    tooltipSettings: InteractiveTooltip(
+                                      enable: true,
+                                    ),
+                                  ),
+                                  legend: Legend(
+                                    isVisible: false,
+                                  ),
+                                  title: ChartTitle(text: "XAU/IDR", textStyle: TextStyle(color: textWhiteColor)),
+                                  // indicators: <TechnicalIndicators<Chart, dynamic>>[
+                                  //   BollingerBandIndicator<Chart, dynamic>(
+                                  //     seriesName: "XAU",
+                                  //     period: 3,
+                                  //     isVisible: false,
+                                  //   ),
+                                  //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: false),
+                                  // ],
+                                  series: <ChartSeries>[
+                                    HiloOpenCloseSeries<ChartData, dynamic>(
+                                        dataSource: controller.dash.charts.value,
+                                        xValueMapper: (ChartData gold, _) => gold.cdatestr,
+                                        highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                                        lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
+                                        openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
+                                        closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                        volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                        name: "XAU",
+                                        bearColor: primaryColor,
+                                        bullColor: textWhiteColor)
+                                  ],
+                                );
+                              }),
+                            ],
+                          ),
                         ),
-                        Obx(() {
-                          if (controller.dash.isLoading.value) {
-                            return Center(child: ShimmerCard());
-                          }
-                          return SfCartesianChart(
-                            // borderColor: Colors.transparent,
-                            zoomPanBehavior: ZoomPanBehavior(
-                              enableMouseWheelZooming: true,
-                              enablePinching: true,
-                              // enableDoubleTapZooming: true,
-                              enablePanning: true,
-                            ),
-                            onZooming: (ZoomPanArgs args) {},
-                            onZoomStart: (ZoomPanArgs args) {},
-                            onZoomEnd: (ZoomPanArgs args) {},
-                            onZoomReset: (ZoomPanArgs args) {},
-                            primaryXAxis: DateTimeAxis(
-                              // minimum: controller.dashboard.charts.first.cdate,
-                              // maximum: controller.dashboard.charts.last.cdate,
-                              visibleMinimum: controller.dash.charts.value[controller.dash.charts.length - 5].cdate,
-                              rangePadding: ChartRangePadding.round,
-                            ),
-                            primaryYAxis: NumericAxis(
-                              minimum: double.parse(controller.dash.charts.value.first.chigh) - 25000,
-                              maximum: double.parse(controller.dash.charts.value.last.chigh) + 25000,
-                              numberFormat: NumberFormat.compactCurrency(
-                                locale: "in_In",
-                                symbol: "",
-                              ),
-                              // title: AxisTitle(
-                              //   text: 'Stock price in \$',
-                              // ),
-                            ),
-                            axes: [
-                              NumericAxis(
-                                name: "secondyaxis",
-                                opposedPosition: true,
-                              ),
-                            ],
-                            trackballBehavior: TrackballBehavior(
-                              enable: true,
-                              tooltipSettings: InteractiveTooltip(
-                                enable: true,
-                              ),
-                            ),
-                            legend: Legend(
-                              isVisible: false,
-                            ),
-                            title: ChartTitle(text: "XAU/IDR", textStyle: TextStyle(color: textWhiteColor)),
-                            // indicators: <TechnicalIndicators<Chart, dynamic>>[
-                            //   BollingerBandIndicator<Chart, dynamic>(
-                            //     seriesName: "XAU",
-                            //     period: 3,
-                            //     isVisible: false,
-                            //   ),
-                            //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: false),
-                            // ],
-                            series: <ChartSeries>[
-                              HiloOpenCloseSeries<ChartData, dynamic>(
-                                  dataSource: controller.dash.charts.value,
-                                  xValueMapper: (ChartData gold, _) => gold.cdatestr,
-                                  highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                                  lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                                  openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                                  closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                  volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                  name: "XAU",
-                                  bearColor: primaryColor,
-                                  bullColor: textWhiteColor)
-                            ],
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30),
+                      ),
+                SizedBox(height: percentHeight(context, 5)),
                 controller.dash.isLoading.value
                     ? ShimmerText()
                     : Row(
@@ -368,14 +375,14 @@ class TransactionView extends GetView<TransactionController> {
                               color: accentColor,
                             ),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: percentWidth(context, 2)),
                           Text(
                             'trans_title_xau'.tr,
                             style: textTitle,
                           ),
                         ],
                       ),
-                SizedBox(height: 10),
+                SizedBox(height: percentHeight(context, 2)),
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : Container(
@@ -440,7 +447,7 @@ class TransactionView extends GetView<TransactionController> {
                           ],
                         ),
                       ),
-                SizedBox(height: 30),
+                SizedBox(height: percentHeight(context, 5)),
                 controller.dash.isLoading.value
                     ? ShimmerText()
                     : Row(
@@ -450,14 +457,14 @@ class TransactionView extends GetView<TransactionController> {
                             FontAwesomeIcons.globeEurope,
                             color: accentColor,
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: percentWidth(context, 2)),
                           Text(
                             'trans_title_crypto'.tr,
                             style: textTitle,
                           ),
                         ],
                       ),
-                SizedBox(height: 10),
+                SizedBox(height: percentHeight(context, 2)),
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
@@ -497,7 +504,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                         ],
                       ),
-                SizedBox(height: 30),
+                SizedBox(height: percentHeight(context, 5)),
                 controller.dash.isLoading.value
                     ? ShimmerText()
                     : Row(
@@ -507,14 +514,14 @@ class TransactionView extends GetView<TransactionController> {
                             FontAwesomeIcons.mobileAlt,
                             color: accentColor,
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: percentWidth(context, 2)),
                           Text(
                             'trans_title_general'.tr,
                             style: textTitle,
                           ),
                         ],
                       ),
-                SizedBox(height: 10),
+                SizedBox(height: percentHeight(context, 2)),
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(

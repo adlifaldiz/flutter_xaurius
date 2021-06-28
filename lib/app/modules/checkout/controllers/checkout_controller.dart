@@ -47,7 +47,6 @@ class CheckoutController extends GetxController {
 
   @override
   void onClose() {
-    walletController.dispose();
     super.onClose();
   }
 

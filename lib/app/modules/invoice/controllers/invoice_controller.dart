@@ -5,7 +5,7 @@ import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_detail_invoice/resp_det_invoice.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:flutter_xaurius/app/modules/history/controllers/history_controller.dart';
+import 'package:flutter_xaurius/app/modules/history/buy_history/controllers/buy_history_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -13,7 +13,7 @@ class InvoiceController extends GetxController {
   ApiRepository _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   final dash = Get.find<DashboardController>();
-  HistoryController buys = Get.put(HistoryController());
+  BuyHistoryController buys = Get.find<BuyHistoryController>();
   var responseDetailInvoice = ResponseDetailInvoice().obs;
   var invoiceNumber;
   var isLoading = false.obs;

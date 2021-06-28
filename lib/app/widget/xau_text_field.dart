@@ -10,8 +10,10 @@ class XauTextField extends StatefulWidget {
   final String errorText;
   final TextInputType keyboardType;
   final int maxLines;
+  final int maxLength;
   final TextEditingController controller;
   final Function(String) onChanged;
+  @required
   final bool useObscure;
   final Stream<String> streamValidation;
   final Function(String) validator;
@@ -25,6 +27,7 @@ class XauTextField extends StatefulWidget {
   final Color fillColor;
   final OutlineInputBorder border;
   final bool readOnly;
+  final bool useToggle;
   final VoidCallback ontap;
 
   const XauTextField(
@@ -37,7 +40,7 @@ class XauTextField extends StatefulWidget {
       this.maxLines,
       this.controller,
       this.onChanged,
-      this.useObscure,
+      @required this.useObscure,
       this.streamValidation,
       this.validator,
       this.onSaved,
@@ -50,7 +53,9 @@ class XauTextField extends StatefulWidget {
       this.fillColor,
       this.border,
       this.readOnly,
-      this.ontap})
+      this.ontap,
+      this.maxLength,
+      this.useToggle})
       : super(key: key);
   @override
   _XauTextFieldState createState() => _XauTextFieldState();
@@ -92,17 +97,20 @@ class _XauTextFieldState extends State<XauTextField> {
 
     return TextFormField(
       onTap: widget.ontap,
+      onSaved: widget.onSaved,
       controller: widget.controller,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
       textInputAction: TextInputAction.next,
       style: stylePrimary,
+      textAlignVertical: TextAlignVertical.bottom,
       onChanged: widget.onChanged,
       obscureText: _obscureText,
       inputFormatters: widget.inputFormatters,
       readOnly: widget.readOnly ?? false,
+      maxLength: widget.maxLength,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           fillColor: fillColor,
           filled: true,
           border: OutlineInputBorder(

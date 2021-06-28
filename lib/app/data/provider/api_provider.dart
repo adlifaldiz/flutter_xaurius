@@ -75,9 +75,37 @@ class ApiProvider extends GetConnect {
           );
       }
 
-      if (response?.body is Map) {
+      if (response?.body is Map && response.statusCode == 200) {
         printWrapped('Success $selectedMethod $url: \nResponse : ${response.body}');
         return response;
+      } else if (response.statusCode == null) {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(body: {
+          "msg": "fail_conn".tr,
+          "success": false,
+        });
+        return error;
+      } else if (response.statusCode == 408) {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(body: {
+          "msg": "fail_timeout".tr,
+          "success": false,
+        });
+        return error;
+      } else if (response.statusCode == 502) {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(body: {
+          "msg": "fail_down".tr,
+          "success": false,
+        });
+        return error;
+      } else if (response.statusCode == 401) {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(body: {
+          "msg": "fail_session".tr,
+          "success": false,
+        });
+        return error;
       } else {
         printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
         Response error = Response(body: {

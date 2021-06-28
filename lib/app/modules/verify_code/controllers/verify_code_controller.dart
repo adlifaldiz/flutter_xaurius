@@ -7,6 +7,8 @@ class VerifyCodeController extends GetxController {
   ApiRepository _repo = ApiRepository();
   var isLoading = false.obs;
   var code = '';
+  var isAgree = false.obs;
+  var showToolTip = false.obs;
   String email = '';
 
   @override
@@ -28,13 +30,26 @@ class VerifyCodeController extends GetxController {
   }
 
   void verifyCode() async {
-    isLoading(true);
-    var resp = await _repo.verifyRegistrationCode(email, code);
-    if (resp.success) {
-      Get.toNamed(Routes.CREATE_PIN, arguments: {'email': email, 'code': code});
+    if (!isAgree.value) {
+      showToolTip(true);
+      Future.delayed(Duration(seconds: 5)).then((value) {
+        showToolTip(false);
+      });
     } else {
-      failSnackbar('Fail', resp.message);
+      isLoading(true);
+      var resp = await _repo.verifyRegistrationCode(email, code);
+      if (resp.success) {
+        Get.toNamed(Routes.CREATE_PIN, arguments: {'email': email, 'code': code});
+      } else {
+        failSnackbar('Fail', resp.message);
+      }
+      isLoading(false);
     }
-    isLoading(false);
+  }
+
+  void onAgreeChange(bool value) {
+    isAgree.value = value;
+    showToolTip(false);
+    update();
   }
 }
