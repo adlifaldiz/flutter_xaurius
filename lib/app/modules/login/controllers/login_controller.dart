@@ -38,4 +38,6 @@ class LoginController extends GetxController {
     }
     isLoading(false);
   }
+
+  void router() => Get.toNamed(Routes.REGISTER);
 }

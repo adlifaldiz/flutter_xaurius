@@ -107,26 +107,34 @@ class LoginView extends GetView<LoginController> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         'login_no_account'.tr,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.subhead.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subhead
+                                            .copyWith(
                                               color: textWhiteColor,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Get.toNamed(Routes.REGISTER),
+                                        onTap: () => controller.router(),
                                         child: Text(
                                           'login_regis_btn'.tr,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.subhead.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subhead
+                                              .copyWith(
                                                 color: accentColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -153,12 +161,15 @@ class LoginView extends GetView<LoginController> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      child: Text('login_btn'.tr, style: buttonStyle),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                      child: Text('login_btn'.tr,
+                                          style: buttonStyle),
                                     ),
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
-                                      final isValid = formKey.currentState.validate();
+                                      final isValid =
+                                          formKey.currentState.validate();
                                       if (!isValid) {
                                         return;
                                       }
@@ -177,9 +188,10 @@ class LoginView extends GetView<LoginController> {
                           child: Text(
                             '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                  color: accentColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.subtitle1.copyWith(
+                                      color: accentColor,
+                                    ),
                           ),
                         ),
                       ],
