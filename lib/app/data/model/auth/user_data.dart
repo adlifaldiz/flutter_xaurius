@@ -1,3 +1,5 @@
+import 'package:flutter_xaurius/app/data/provider/api_url.dart';
+
 class UserData {
   UserData({
     this.id,
@@ -105,9 +107,12 @@ class UserFile {
 
   String url;
 
-  factory UserFile.fromJson(Map<String, dynamic> json) => UserFile(
-        url: json["url"],
-      );
+  factory UserFile.fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return UserFile(
+      url: json["url"] == null ? json["url"] : hostImage + json["url"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "url": url,

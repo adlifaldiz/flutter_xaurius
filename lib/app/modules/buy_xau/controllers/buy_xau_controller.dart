@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
-import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
 import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';

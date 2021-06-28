@@ -103,13 +103,14 @@ class _XauTextFieldState extends State<XauTextField> {
       keyboardType: widget.keyboardType,
       textInputAction: TextInputAction.next,
       style: stylePrimary,
+      textAlignVertical: TextAlignVertical.bottom,
       onChanged: widget.onChanged,
       obscureText: _obscureText,
       inputFormatters: widget.inputFormatters,
       readOnly: widget.readOnly ?? false,
       maxLength: widget.maxLength,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           fillColor: fillColor,
           filled: true,
           border: OutlineInputBorder(

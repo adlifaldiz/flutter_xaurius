@@ -15,8 +15,10 @@ class DataPersonalController extends GetxController {
   final provider = ApiRepository();
   final auth = Get.find<AuthController>();
   DateFormat formatter = DateFormat('yyyy-MM-dd');
-  Country selectedCupertinoCurrency;
+  Country selectedCountry, selectedPhoneCode;
   var isLoading = false.obs;
+  var codePhone = ''.obs;
+  var phoneNumber = ''.obs;
 
   RxBool get isKycStatus => (auth.userData.orangKycStatus == 'verified').obs;
   RxBool get isKycReview => auth.userData.orangKycAskForReview.obs;
@@ -31,7 +33,8 @@ class DataPersonalController extends GetxController {
 
   @override
   void onInit() {
-    selectedCupertinoCurrency = CountryPickerUtils.getCountryByIsoCode('ID');
+    selectedCountry = CountryPickerUtils.getCountryByIsoCode('ID');
+    selectedCountry = CountryPickerUtils.getCountryByIsoCode('ID');
     setText();
     super.onInit();
   }
@@ -44,6 +47,7 @@ class DataPersonalController extends GetxController {
   void setText() {
     namaControl.text = auth.userData.orangName;
     nomorControl.text = auth.userData.orangPhone;
+
     if (auth.userData.orangBirthday == null || auth.userData.orangBirthday.isEmpty) {
       tanggalControl.text = auth.userData.orangBirthday;
     } else {
@@ -53,7 +57,8 @@ class DataPersonalController extends GetxController {
     alamatControl.text = auth.userData.orangAddrStreet;
     kotaControl.text = auth.userData.orangAddrCity;
     kodePosControl.text = auth.userData.orangAddrPostal;
-    negaraControl.text = auth.userData.orangAddrCountry;
+    auth.userData.orangAddrCountry != null ? negaraControl.text = auth.userData.orangAddrCountry : negaraControl.text = selectedCountry.isoCode;
+    codePhone.value = selectedCountry.phoneCode;
     update();
   }
 
@@ -61,7 +66,7 @@ class DataPersonalController extends GetxController {
     isLoading(true);
     final resp = await provider.kycPersonalData(
       namaControl.text,
-      nomorControl.text,
+      codePhone.value + nomorControl.text,
       tanggalControl.text,
       alamatControl.text,
       kotaControl.text,
@@ -79,5 +84,12 @@ class DataPersonalController extends GetxController {
       });
     }
     isLoading(false);
+  }
+
+  onPhoneNumberChange(String value) {
+    if (value[0] == '0') {
+      nomorControl.text = value.replaceAll('0', '');
+      nomorControl.selection = TextSelection.fromPosition(TextPosition(offset: nomorControl.text.length));
+    }
   }
 }

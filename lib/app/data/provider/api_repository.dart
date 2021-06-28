@@ -96,9 +96,9 @@ class ApiRepository {
     final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
       'orang[orang_id_type]': idType,
       'orang[orang_id_num]': idNum,
-      'orang[orang_id_file]': MultipartFile(idFile.path, filename: idFile.path.split('/').last),
+      'orang[orang_id_file]': idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last) ?? null,
       'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile.path, filename: npwpFile.path.split('/').last) ?? null,
+      'orang[orang_npwp_file]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last) ?? null,
     });
     return UserResp.fromJson(response.body);
   }
