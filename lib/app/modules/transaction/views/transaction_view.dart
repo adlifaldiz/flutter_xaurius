@@ -23,7 +23,8 @@ import "package:collection/collection.dart";
 import '../controllers/transaction_controller.dart';
 
 class TransactionView extends GetView<TransactionController> {
-  final GlobalKey<LiquidPullToRefreshState> refreshTransaction = GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTransaction =
+      GlobalKey<LiquidPullToRefreshState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class TransactionView extends GetView<TransactionController> {
             onRefresh: controller.onRefresh,
             showChildOpacityTransition: false,
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: percentWidth(context, 5),
+                  vertical: percentHeight(context, 5)),
               children: [
                 controller.dash.isLoading.value
                     ? ShimmerText()
@@ -59,15 +62,10 @@ class TransactionView extends GetView<TransactionController> {
                             ],
                           ),
                           GestureDetector(
-                            onTap: controller.auth.userData.orangKycStatus == controller.approve
-                                ? () => Get.toNamed(Routes.TOP_UP)
-                                : () {
-                                    dialogConnection('Oops', 'notif_kyc_review'.tr, () {
-                                      Get.back();
-                                    });
-                                  },
+                            onTap: () => controller.router(1),
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -82,7 +80,8 @@ class TransactionView extends GetView<TransactionController> {
                                   SizedBox(width: 5),
                                   Text(
                                     'trans_top_up'.tr + ' IDR',
-                                    style: stylePrimary.copyWith(color: textBlackColor),
+                                    style: stylePrimary.copyWith(
+                                        color: textBlackColor),
                                   )
                                 ],
                               ),
@@ -106,7 +105,8 @@ class TransactionView extends GetView<TransactionController> {
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false,
                           onPageChanged: (index, reason) {
-                            return controller.dash.onBalancesChange(index, reason);
+                            return controller.dash
+                                .onBalancesChange(index, reason);
                           },
                         ),
                         items: controller.dash.balance.isEmpty
@@ -120,7 +120,9 @@ class TransactionView extends GetView<TransactionController> {
                             : controller.dash.balance.map((balances) {
                                 return Builder(builder: (BuildContext context) {
                                   return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: percentWidth(context, 5),
+                                        vertical: percentHeight(context, 3)),
                                     width: Get.width,
                                     decoration: BoxDecoration(
                                       color: backgroundPanelColor,
@@ -134,19 +136,25 @@ class TransactionView extends GetView<TransactionController> {
                                               'assets/images/mesh-bottom.png',
                                             ))),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           balances.balanceSymbol,
-                                          style: textTitle.copyWith(color: primaryColor),
+                                          style: textTitle.copyWith(
+                                              color: primaryColor),
                                         ),
                                         SizedBox(height: 5),
                                         Text(
                                           balances.balanceSymbol == 'IDR'
-                                              ? customCurrency(balances.balanceValue, symbol: 'Rp ')
+                                              ? customCurrency(
+                                                  balances.balanceValue,
+                                                  symbol: 'Rp ')
                                               : balances.balanceValue,
-                                          style: textTitle.copyWith(fontSize: 20),
+                                          style:
+                                              textTitle.copyWith(fontSize: 20),
                                         ),
                                       ],
                                     ),
@@ -155,17 +163,25 @@ class TransactionView extends GetView<TransactionController> {
                               }).toList(),
                       ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: percentWidth(context, 5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: controller.dash.map<Widget>(controller.dash.balance, (index, url) {
+                    children: controller.dash
+                        .map<Widget>(controller.dash.balance, (index, url) {
                       return AnimatedContainer(
-                        width: controller.dash.indexBalances.value == index ? 20.0 : 7,
+                        width: controller.dash.indexBalances.value == index
+                            ? 20.0
+                            : 7,
                         height: 7.0,
-                        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: percentWidth(context, 0.5)),
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: percentWidth(context, 0.5)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: controller.dash.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                          color: controller.dash.indexBalances.value == index
+                              ? Colors.yellow
+                              : Colors.grey,
                         ),
                         duration: Duration(milliseconds: 300),
                       );
@@ -210,18 +226,27 @@ class TransactionView extends GetView<TransactionController> {
                                   controller.dash.isLoading.value
                                       ? ShimmerText()
                                       : Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             InkWell(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               onTap: () {
-                                                controller.dash.onChangeBuy(true);
+                                                controller.dash
+                                                    .onChangeBuy(true);
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
                                                 decoration: BoxDecoration(
-                                                  color: controller.dash.isBuy.value ? greyColor : Colors.transparent,
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: controller
+                                                          .dash.isBuy.value
+                                                      ? greyColor
+                                                      : Colors.transparent,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 child: Text(
                                                   'Buy',
@@ -233,15 +258,23 @@ class TransactionView extends GetView<TransactionController> {
                                             ),
                                             SizedBox(width: 10),
                                             InkWell(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               onTap: () {
-                                                controller.dash.onChangeBuy(false);
+                                                controller.dash
+                                                    .onChangeBuy(false);
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
                                                 decoration: BoxDecoration(
-                                                  color: controller.dash.isBuy.value ? Colors.transparent : greyColor,
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: controller
+                                                          .dash.isBuy.value
+                                                      ? Colors.transparent
+                                                      : greyColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 child: Text(
                                                   'Sell',
@@ -258,19 +291,26 @@ class TransactionView extends GetView<TransactionController> {
                                       ? ShimmerText()
                                       : Text(
                                           controller.dash.isBuy.value
-                                              ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ?? '-'
-                                              : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ?? '-',
-                                          style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                                              ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ??
+                                                  '-'
+                                              : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ??
+                                                  '-',
+                                          style: stylePrimary.copyWith(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                 ],
                               ),
                             ),
                             InkWell(
-                              onTap: () => Get.toNamed(Routes.CHART_VIEW),
+                              onTap: () => controller.router(2),
                               child: Container(
                                 padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        color: primaryColor, width: 2)),
                                 child: Icon(
                                   FontAwesomeIcons.expandAlt,
                                   size: 18,
@@ -298,12 +338,20 @@ class TransactionView extends GetView<TransactionController> {
                             primaryXAxis: DateTimeAxis(
                               // minimum: controller.dashboard.charts.first.cdate,
                               // maximum: controller.dashboard.charts.last.cdate,
-                              visibleMinimum: controller.dash.charts.value[controller.dash.charts.length - 5].cdate,
+                              visibleMinimum: controller
+                                  .dash
+                                  .charts
+                                  .value[controller.dash.charts.length - 5]
+                                  .cdate,
                               rangePadding: ChartRangePadding.round,
                             ),
                             primaryYAxis: NumericAxis(
-                              minimum: double.parse(controller.dash.charts.value.first.chigh) - 25000,
-                              maximum: double.parse(controller.dash.charts.value.last.chigh) + 25000,
+                              minimum: double.parse(controller
+                                      .dash.charts.value.first.chigh) -
+                                  25000,
+                              maximum: double.parse(
+                                      controller.dash.charts.value.last.chigh) +
+                                  25000,
                               numberFormat: NumberFormat.compactCurrency(
                                 locale: "in_In",
                                 symbol: "",
@@ -327,7 +375,9 @@ class TransactionView extends GetView<TransactionController> {
                             legend: Legend(
                               isVisible: false,
                             ),
-                            title: ChartTitle(text: "XAU/IDR", textStyle: TextStyle(color: textWhiteColor)),
+                            title: ChartTitle(
+                                text: "XAU/IDR",
+                                textStyle: TextStyle(color: textWhiteColor)),
                             // indicators: <TechnicalIndicators<Chart, dynamic>>[
                             //   BollingerBandIndicator<Chart, dynamic>(
                             //     seriesName: "XAU",
@@ -339,12 +389,18 @@ class TransactionView extends GetView<TransactionController> {
                             series: <ChartSeries>[
                               HiloOpenCloseSeries<ChartData, dynamic>(
                                   dataSource: controller.dash.charts.value,
-                                  xValueMapper: (ChartData gold, _) => gold.cdatestr,
-                                  highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                                  lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                                  openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                                  closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                  volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                  xValueMapper: (ChartData gold, _) =>
+                                      gold.cdatestr,
+                                  highValueMapper: (ChartData gold, _) =>
+                                      num.parse(gold.chigh),
+                                  lowValueMapper: (ChartData gold, _) =>
+                                      num.parse(gold.clow),
+                                  openValueMapper: (ChartData gold, _) =>
+                                      num.parse(gold.copen),
+                                  closeValueMapper: (ChartData gold, _) =>
+                                      num.parse(gold.cclose),
+                                  volumeValueMapper: (ChartData gold, _) =>
+                                      num.parse(gold.cclose),
                                   name: "XAU",
                                   bearColor: primaryColor,
                                   bullColor: textWhiteColor)
@@ -385,20 +441,16 @@ class TransactionView extends GetView<TransactionController> {
                           color: backgroundPanelColor.withOpacity(0.5),
                         ),
                         child: GridView.count(
-                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 2)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: percentWidth(context, 1),
+                              vertical: percentHeight(context, 2)),
                           crossAxisCount: 5,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           crossAxisSpacing: 5,
                           children: [
                             MenuProduk(
-                              onTap: controller.auth.userData.orangKycStatus == controller.approve
-                                  ? () => Get.toNamed(Routes.BUY_XAU)
-                                  : () {
-                                      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
-                                        Get.back();
-                                      });
-                                    },
+                              onTap: () => controller.router(3),
                               labelTxt: 'trans_buy_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.arrowCircleDown,
@@ -406,7 +458,7 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                             ),
                             MenuProduk(
-                              onTap: () => Get.to(ComingSoonScreen()),
+                              onTap: () => controller.router(4),
                               labelTxt: 'trans_sell_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.arrowCircleUp,
@@ -414,7 +466,7 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                             ),
                             MenuProduk(
-                              onTap: () => Get.to(ComingSoonScreen()),
+                              onTap: () => controller.router(5),
                               labelTxt: 'trans_redeem_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.gift,
@@ -422,7 +474,7 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                             ),
                             MenuProduk(
-                              onTap: () => Get.to(ComingSoonScreen()),
+                              onTap: () => controller.router(6),
                               labelTxt: 'trans_send_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.telegramPlane,
@@ -430,7 +482,7 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                             ),
                             MenuProduk(
-                              onTap: () => Get.to(ComingSoonScreen()),
+                              onTap: () => controller.router(7),
                               labelTxt: 'trans_receive_xau'.tr,
                               menuIcon: FaIcon(
                                 FontAwesomeIcons.getPocket,
@@ -461,7 +513,8 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: percentWidth(context, 1)),
                         crossAxisCount: 3,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -469,7 +522,7 @@ class TransactionView extends GetView<TransactionController> {
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(8),
                             labelTxt: 'Deposit',
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleDown,
@@ -478,7 +531,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(9),
                             labelTxt: 'Withdraw',
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleUp,
@@ -487,7 +540,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(10),
                             labelTxt: 'trans_send'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.exchangeAlt,
@@ -518,7 +571,8 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: percentWidth(context, 1)),
                         crossAxisCount: 3,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -526,7 +580,7 @@ class TransactionView extends GetView<TransactionController> {
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(11),
                             labelTxt: 'trans_credit_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.mobileAlt,
@@ -535,7 +589,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(12),
                             labelTxt: 'trans_electricity_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.bolt,
@@ -544,7 +598,7 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => Get.to(ComingSoonScreen()),
+                            onTap: () => controller.router(13),
                             labelTxt: 'trans_package_general'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.globeAsia,
