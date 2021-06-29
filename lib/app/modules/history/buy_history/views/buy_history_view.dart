@@ -9,6 +9,7 @@ import 'package:flutter_xaurius/app/widget/xau_container.dart';
 
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 import '../controllers/buy_history_controller.dart';
 
@@ -23,19 +24,24 @@ class BuyHistoryView extends GetView<BuyHistoryController> {
       showChildOpacityTransition: false,
       child: Obx(
         () {
-          if (controller.isLoading.value) {
+          if (controller.isLoading.value && controller.totalRecords.value == 0) {
             return ShimmerList();
-          } else if (controller.listBuys.isEmpty) {
+          }
+          if (controller.listBuys.isEmpty) {
             return EmptyState(
               refreshAble: true,
-              onPressed: () => controller.getBuys(),
+              onPressed: () => controller.onRefresh(),
             );
           }
 
           return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+            controller: controller.scrollController,
             itemCount: controller.listBuys.length,
             itemBuilder: (context, index) {
+              if (index == controller.listBuys.length - 1 && controller.isLoading.value) {
+                return Center(child: JumpingDotsProgressIndicator(fontSize: 40, color: primaryColor));
+              }
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
                 child: GestureDetector(

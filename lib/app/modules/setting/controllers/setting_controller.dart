@@ -1,3 +1,4 @@
+import 'package:flutter_xaurius/app/modules/menu/controllers/menu_controller.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:get/get.dart';
@@ -5,9 +6,11 @@ import 'package:get_storage/get_storage.dart';
 
 class SettingController extends GetxController {
   var appData = GetStorage();
+  var menu = Get.find<MenuController>();
 
   void logout() {
-    appData.erase();
+    appData.remove('username');
+    menu.currentIndex(0);
     Get.offAllNamed(Routes.LOGIN);
   }
 

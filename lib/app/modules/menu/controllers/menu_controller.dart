@@ -23,7 +23,7 @@ class MenuController extends GetxController {
   @override
   void onInit() {
     _auth.getProfileData();
-    pageController = PageController();
+    pageController = PageController(initialPage: currentIndex.value);
     super.onInit();
   }
 

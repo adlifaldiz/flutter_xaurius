@@ -32,7 +32,13 @@ class ReLoginController extends GetxController {
       auth.token = resp.token;
       storage.write('username', email);
       await auth.getProfileData();
-      Get.offAllNamed(Routes.MENU);
+      if (auth.userData == null) {
+        dialogConnection('Oops', 'fail_wring'.tr, () {
+          Get.back();
+        });
+      } else {
+        Get.offAllNamed(Routes.MENU);
+      }
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
