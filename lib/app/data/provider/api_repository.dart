@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_checkout/resp_checkout.dart';
@@ -103,12 +102,8 @@ class ApiRepository {
     return UserResp.fromJson(response.body);
   }
 
-  Future<ResponseBuys> getBuys(String token) async {
-    final response = await _http.call(
-      url.buys,
-      token: token,
-      method: MethodRequest.GET,
-    );
+  Future<ResponseBuys> getBuys(page, String token) async {
+    final response = await _http.call(url.buys + '?page=${page.toString()}', token: token, method: MethodRequest.GET);
     return ResponseBuys.fromJson(response.body);
   }
 
@@ -163,8 +158,8 @@ class ApiRepository {
     return ResponseVaMerchant.fromJson(response.body);
   }
 
-  Future<ResponseGetTopUp> getTopUp(String jwt) async {
-    final response = await _http.call(url.getTopUp, token: jwt, method: MethodRequest.GET);
+  Future<ResponseGetTopUp> getTopUp(page, String jwt) async {
+    final response = await _http.call(url.getTopUp + '?page=${page.toString()}', token: jwt, method: MethodRequest.GET);
     return ResponseGetTopUp.fromJson(response.body);
   }
 

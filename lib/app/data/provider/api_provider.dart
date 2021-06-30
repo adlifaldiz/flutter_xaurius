@@ -99,6 +99,13 @@ class ApiProvider extends GetConnect {
           "success": false,
         });
         return error;
+      } else if (response.statusCode == 504) {
+        printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
+        Response error = Response(body: {
+          "msg": "fail_down".tr,
+          "success": false,
+        });
+        return error;
       } else if (response.statusCode == 401) {
         printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
         Response error = Response(body: {

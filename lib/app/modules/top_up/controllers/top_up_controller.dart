@@ -13,11 +13,12 @@ import 'package:get/get.dart';
 class TopUpController extends GetxController {
   ApiRepository _repo = ApiRepository();
   NumericTextController nominalTopUpControl;
-
   final auth = Get.find<AuthController>();
+  var page = 1.obs;
   var isLoading = false.obs;
   var isLoadingForm = false.obs;
   var isLoadingList = false.obs;
+
   var listMerchant = <VaMerchant>[].obs;
   var listTopTup = <Depoidr>[].obs;
   var merchantId = '0'.obs;
@@ -26,7 +27,7 @@ class TopUpController extends GetxController {
   void onInit() async {
     nominalTopUpControl = NumericTextController();
     getVaMerchant();
-    getTopUp();
+    getTopUp(page);
     super.onInit();
   }
 
@@ -41,7 +42,7 @@ class TopUpController extends GetxController {
   }
 
   Future onRefresh() async {
-    getTopUp();
+    getTopUp(page);
     update();
   }
 
@@ -70,7 +71,7 @@ class TopUpController extends GetxController {
     isLoadingForm(true);
     final resp = await _repo.postTopUp(merchantId.value.toString(), nominalTopUpControl.numberValue, auth.token);
     if (resp.success) {
-      getTopUp();
+      getTopUp(1);
       successSnackbar('Sukses', 'Berhasil membuat invoice');
       Get.toNamed(Routes.TOP_UP_DETAIL, arguments: resp.data.invoice.id);
     } else {
@@ -81,9 +82,9 @@ class TopUpController extends GetxController {
     isLoadingForm(false);
   }
 
-  void getTopUp() async {
+  void getTopUp(var page) async {
     isLoadingList(true);
-    final resp = await _repo.getTopUp(auth.token);
+    final resp = await _repo.getTopUp(page, auth.token);
     if (resp.success) {
       listTopTup(resp.data.depoidrs);
     } else {

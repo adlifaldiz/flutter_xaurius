@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/data/model/buy_data/buy_data.dart';
 import 'package:flutter_xaurius/app/data/model/chips_model.dart';
-import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
-import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
-import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
-import 'package:flutter_xaurius/app/modules/faq/views/faq_view.dart';
-import 'package:flutter_xaurius/app/modules/history/buy_history/bindings/buy_history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/buy_history/controllers/buy_history_controller.dart';
 import 'package:flutter_xaurius/app/modules/history/buy_history/views/buy_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/deposit_history/views/deposit_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/sell_history/views/sell_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/topup_history/views/topup_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/withdraw_history/views/withdraw_history_view.dart';
-import 'package:flutter_xaurius/app/modules/privacy_policy/views/privacy_policy_view.dart';
-import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
-import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/keep_alive_page.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -23,9 +14,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 class HistoryController extends GetxController {
   final GlobalKey<LiquidPullToRefreshState> refreshHistory = GlobalKey<LiquidPullToRefreshState>();
   final auth = Get.find<AuthController>();
-
-  final _repo = ApiRepository();
-  var listBuys = <Buy>[].obs;
+  final buyHistory = Get.find<BuyHistoryController>();
   var isLoading = false.obs;
   var chipValue = 0.obs;
   PageController pageController;

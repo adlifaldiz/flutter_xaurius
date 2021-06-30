@@ -34,7 +34,7 @@ class DataPersonalController extends GetxController {
   @override
   void onInit() {
     selectedCountry = CountryPickerUtils.getCountryByIsoCode('ID');
-    selectedCountry = CountryPickerUtils.getCountryByIsoCode('ID');
+    selectedPhoneCode = CountryPickerUtils.getCountryByIsoCode('ID');
     setText();
     super.onInit();
   }
@@ -66,7 +66,7 @@ class DataPersonalController extends GetxController {
     isLoading(true);
     final resp = await provider.kycPersonalData(
       namaControl.text,
-      codePhone.value + nomorControl.text,
+      nomorControl.text,
       tanggalControl.text,
       alamatControl.text,
       kotaControl.text,

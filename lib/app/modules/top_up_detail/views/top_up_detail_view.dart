@@ -281,6 +281,9 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                       fontSize: 40,
                     );
                   }
+                  if (controller.responseDetailInvoices.value.data.invoice.invoiceBayar) {
+                    return Container();
+                  }
                   return RaisedButton(
                     onPressed: () {
                       Get.focusScope.unfocus();

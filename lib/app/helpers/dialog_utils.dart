@@ -42,29 +42,3 @@ dialogConnection(String title, String subTitle, VoidCallback onTap) {
     ),
   );
 }
-
-showLogout(SettingController settingController) {
-  Get.defaultDialog(
-    title: 'you_sure'.tr,
-    middleText: 'close_app'.tr,
-    backgroundColor: backgroundPanelColor,
-    cancel: RaisedButton(
-      color: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: () => Get.back(),
-      child: Text(
-        'no_btn'.tr,
-        style: stylePrimary,
-      ),
-    ),
-    confirm: RaisedButton(
-      color: primaryColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      onPressed: settingController.logout,
-      child: Text(
-        'yes_btn'.tr,
-        style: buttonStyle,
-      ),
-    ),
-  );
-}

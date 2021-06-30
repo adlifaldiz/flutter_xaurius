@@ -59,7 +59,8 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                         maxLines: 1,
                         labelText: 'phone_number'.tr,
-                        prefixIcon: !controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone.isNotEmpty
+                        prefixIcon: (!controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null) ||
+                                (controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null)
                             ? null
                             : GestureDetector(
                                 onTap: () => showCountryCode(context),

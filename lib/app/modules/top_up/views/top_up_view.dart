@@ -23,7 +23,6 @@ class TopUpView extends GetView<TopUpController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.onInit();
     return GestureDetector(
       onTap: () => Get.focusScope.unfocus(),
       child: Scaffold(

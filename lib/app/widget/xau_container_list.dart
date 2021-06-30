@@ -5,12 +5,13 @@ import 'package:flutter_xaurius/app/helpers/theme.dart';
 class XauriusContainerList extends StatelessWidget {
   final Widget child;
   final BoxDecoration decoration;
+  final EdgeInsets padding;
 
-  const XauriusContainerList({@required this.child, this.decoration});
+  const XauriusContainerList({@required this.child, this.decoration, this.padding});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 0.5)),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 0.5)),
       foregroundDecoration: decoration,
       width: percentWidth(context, 100),
       decoration: BoxDecoration(

@@ -8,15 +8,21 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class BuyHistoryController extends GetxController {
   final GlobalKey<LiquidPullToRefreshState> refreshHistory = GlobalKey<LiquidPullToRefreshState>();
+  ScrollController scrollController = ScrollController();
   final auth = Get.find<AuthController>();
 
   final _repo = ApiRepository();
-  var listBuys = <Buy>[].obs;
+  var listBuys = <Buy>[];
+  var page = 1.obs;
 
   var isLoading = false.obs;
+  var isLoadMore = true.obs;
+
   @override
-  void onInit() {
-    getBuys();
+  void onInit() async {
+    isLoadMore(true);
+    onPaginate();
+    getBuys(page);
     super.onInit();
   }
 
@@ -26,14 +32,23 @@ class BuyHistoryController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 
-  void getBuys() async {
+  void getBuys(var page) async {
     isLoading(true);
-    final resp = await _repo.getBuys(auth.token);
+    isLoadMore(true);
+    final resp = await _repo.getBuys(page, auth.token);
     if (resp.success) {
-      listBuys(resp.data.buys);
-      update();
+      if (resp.data.buys.length > 0) {
+        listBuys.addAll(resp.data.buys);
+        isLoading(false);
+      } else {
+        print('no more data');
+        isLoadMore(false);
+      }
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
@@ -42,8 +57,25 @@ class BuyHistoryController extends GetxController {
     isLoading(false);
   }
 
+  // For Pagination
+  void onPaginate() {
+    scrollController
+      ..addListener(() {
+        if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+          page.value++;
+          if (isLoadMore.value) {
+            getBuys(page.value);
+          }
+        }
+      });
+  }
+
   Future onRefresh() async {
-    getBuys();
+    isLoadMore(true);
+    onPaginate();
+    listBuys.clear();
+    page(1);
+    getBuys(page);
     update();
   }
 }

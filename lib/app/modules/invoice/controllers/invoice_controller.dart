@@ -13,7 +13,7 @@ class InvoiceController extends GetxController {
   ApiRepository _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   final dash = Get.find<DashboardController>();
-  BuyHistoryController buys = Get.find<BuyHistoryController>();
+  final buys = Get.find<BuyHistoryController>();
   var responseDetailInvoice = ResponseDetailInvoice().obs;
   var invoiceNumber;
   var isLoading = false.obs;
@@ -55,7 +55,7 @@ class InvoiceController extends GetxController {
     if (resp.success) {
       successSnackbar('Status', resp.message);
       getDetailInvoice();
-      buys.getBuys();
+      buys.getBuys(1);
       auth.onInit();
       dash.onInit();
     } else {
