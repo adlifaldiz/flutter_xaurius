@@ -38,8 +38,6 @@ import 'package:flutter_xaurius/app/modules/history/topup_history/views/topup_hi
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/withdraw_history/bindings/withdraw_history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/withdraw_history/views/withdraw_history_view.dart';
-import 'package:flutter_xaurius/app/modules/home/bindings/home_binding.dart';
-import 'package:flutter_xaurius/app/modules/home/views/home_view.dart';
 import 'package:flutter_xaurius/app/modules/invoice/bindings/invoice_binding.dart';
 import 'package:flutter_xaurius/app/modules/invoice/views/invoice_view.dart';
 import 'package:flutter_xaurius/app/modules/login/bindings/login_binding.dart';
@@ -90,14 +88,9 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
-    GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
-    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),

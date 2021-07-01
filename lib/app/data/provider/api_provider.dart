@@ -102,7 +102,7 @@ class ApiProvider extends GetConnect {
       } else if (response.statusCode == 504) {
         printDebug('Success NOT MAP $selectedMethod $url: \nResponse : ${response.body}');
         Response error = Response(body: {
-          "msg": "fail_down".tr,
+          "msg": "Internal " + "fail_timeout".tr,
           "success": false,
         });
         return error;
