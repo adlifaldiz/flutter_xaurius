@@ -63,7 +63,7 @@ class TransactionController extends GetxController {
         break;
       case 8:
         //deposit
-        Get.to(ComingSoonScreen());
+        Get.toNamed(Routes.DEPOSIT);
         break;
       case 9:
         //withdraw

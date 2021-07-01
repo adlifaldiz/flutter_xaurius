@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -12,19 +11,16 @@ import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
-import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:flutter_xaurius/app/widget/menu_produk.dart';
 import 'package:flutter_xaurius/app/widget/menu_transaction.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
-import "package:collection/collection.dart";
 
 import '../controllers/transaction_controller.dart';
 
 class TransactionView extends GetView<TransactionController> {
-  final GlobalKey<LiquidPullToRefreshState> refreshTransaction =
-      GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTransaction = GlobalKey<LiquidPullToRefreshState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +35,7 @@ class TransactionView extends GetView<TransactionController> {
             onRefresh: controller.onRefresh,
             showChildOpacityTransition: false,
             child: ListView(
-              padding: EdgeInsets.symmetric(
-                  horizontal: percentWidth(context, 5),
-                  vertical: percentHeight(context, 5)),
+              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
               children: [
                 controller.dash.isLoading.value
                     ? ShimmerText()
@@ -64,8 +58,7 @@ class TransactionView extends GetView<TransactionController> {
                           GestureDetector(
                             onTap: () => controller.router(1),
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 2),
+                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -80,8 +73,7 @@ class TransactionView extends GetView<TransactionController> {
                                   SizedBox(width: 5),
                                   Text(
                                     'trans_top_up'.tr + ' IDR',
-                                    style: stylePrimary.copyWith(
-                                        color: textBlackColor),
+                                    style: stylePrimary.copyWith(color: textBlackColor),
                                   )
                                 ],
                               ),
@@ -105,8 +97,7 @@ class TransactionView extends GetView<TransactionController> {
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false,
                           onPageChanged: (index, reason) {
-                            return controller.dash
-                                .onBalancesChange(index, reason);
+                            return controller.dash.onBalancesChange(index, reason);
                           },
                         ),
                         items: controller.dash.balance.isEmpty
@@ -120,9 +111,7 @@ class TransactionView extends GetView<TransactionController> {
                             : controller.dash.balance.map((balances) {
                                 return Builder(builder: (BuildContext context) {
                                   return Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: percentWidth(context, 5),
-                                        vertical: percentHeight(context, 3)),
+                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                                     width: Get.width,
                                     decoration: BoxDecoration(
                                       color: backgroundPanelColor.withOpacity(0.5),
@@ -136,25 +125,19 @@ class TransactionView extends GetView<TransactionController> {
                                               'assets/images/mesh-bottom.png',
                                             ))),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           balances.balanceSymbol,
-                                          style: textTitle.copyWith(
-                                              color: primaryColor),
+                                          style: textTitle.copyWith(color: primaryColor),
                                         ),
                                         SizedBox(height: 5),
                                         Text(
                                           balances.balanceSymbol == 'IDR'
-                                              ? customCurrency(
-                                                  balances.balanceValue,
-                                                  symbol: 'Rp ')
+                                              ? customCurrency(balances.balanceValue, symbol: 'Rp ')
                                               : balances.balanceValue,
-                                          style:
-                                              textTitle.copyWith(fontSize: 20),
+                                          style: textTitle.copyWith(fontSize: 20),
                                         ),
                                       ],
                                     ),
@@ -400,9 +383,7 @@ class TransactionView extends GetView<TransactionController> {
                           color: backgroundPanelColor.withOpacity(0.5),
                         ),
                         child: GridView.count(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: percentWidth(context, 1),
-                              vertical: percentHeight(context, 2)),
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 2)),
                           crossAxisCount: 5,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -472,8 +453,7 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: percentWidth(context, 1)),
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
                         crossAxisCount: 3,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -530,8 +510,7 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: percentWidth(context, 1)),
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
                         crossAxisCount: 3,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),

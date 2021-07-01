@@ -16,10 +16,11 @@ class BuyHistoryController extends GetxController {
   var page = 1.obs;
 
   var isLoading = false.obs;
-  var totalRecords = 0.obs;
+  var isLoadMore = true.obs;
 
   @override
   void onInit() async {
+    isLoadMore(true);
     onPaginate();
     getBuys(page);
     super.onInit();
@@ -38,12 +39,16 @@ class BuyHistoryController extends GetxController {
 
   void getBuys(var page) async {
     isLoading(true);
+    isLoadMore(true);
     final resp = await _repo.getBuys(page, auth.token);
-    if (resp.success && resp.data.buys.isNotEmpty) {
-      totalRecords(resp.data.buys.length);
-      listBuys.addAll(resp.data.buys);
-    } else if (resp.success && resp.data.buys.isEmpty) {
-      isLoading(false);
+    if (resp.success) {
+      if (resp.data.buys.length > 0) {
+        listBuys.addAll(resp.data.buys);
+        isLoading(false);
+      } else {
+        print('no more data');
+        isLoadMore(false);
+      }
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
@@ -54,18 +59,21 @@ class BuyHistoryController extends GetxController {
 
   // For Pagination
   void onPaginate() {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        print("reached end");
-        page.value++;
-        getBuys(page.value);
-      }
-    });
+    scrollController
+      ..addListener(() {
+        if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+          page.value++;
+          if (isLoadMore.value) {
+            getBuys(page.value);
+          }
+        }
+      });
   }
 
   Future onRefresh() async {
+    isLoadMore(true);
+    onPaginate();
     listBuys.clear();
-    totalRecords(0);
     page(1);
     getBuys(page);
     update();

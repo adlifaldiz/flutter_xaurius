@@ -21,6 +21,27 @@ failSnackbar(String title, String message) {
   );
 }
 
+dialogPermission(String title, String subTitle, VoidCallback onTap) {
+  Get.defaultDialog(
+    backgroundColor: backgroundPanelColor,
+    title: title ?? 'Grant Permission',
+    middleText: subTitle ?? 'Grant Camera permision for Scan QR Code',
+    textConfirm: 'Open Settings',
+    confirmTextColor: textBlackColor,
+    buttonColor: primaryColor,
+    barrierDismissible: true,
+    confirm: RaisedButton(
+      color: primaryColor,
+      onPressed: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Text(
+        'Open Settings',
+        style: buttonStyle,
+      ),
+    ),
+  );
+}
+
 dialogConnection(String title, String subTitle, VoidCallback onTap) {
   Get.defaultDialog(
     backgroundColor: backgroundPanelColor,
