@@ -12,6 +12,7 @@ import '../controllers/re_login_controller.dart';
 
 class ReLoginView extends GetView<ReLoginController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var mode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class ReLoginView extends GetView<ReLoginController> {
                       SizedBox(height: 50),
                       Form(
                         key: formKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: mode,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -74,7 +75,9 @@ class ReLoginView extends GetView<ReLoginController> {
                             // SizedBox(height: 5),
                             PinInputTextFormField(
                               keyboardType: TextInputType.number,
-                              inputFormatters: [LengthLimitingTextInputFormatter(6)],
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(6)
+                              ],
                               onSaved: (value) => controller.pin = value,
                               onChanged: (value) {
                                 return controller.onPinChange(value);
@@ -93,8 +96,13 @@ class ReLoginView extends GetView<ReLoginController> {
                                   height: 0,
                                 ),
                                 obscureStyle: ObscureStyle(isTextObscure: true),
-                                textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
-                                colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                                textStyle: TextStyle(
+                                    color: textWhiteColor,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0),
+                                colorBuilder: PinListenColorBuilder(
+                                    primaryColor, textWhiteColor),
                               ),
                             ),
                             // TextFormField(
@@ -150,13 +158,17 @@ class ReLoginView extends GetView<ReLoginController> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
-                                    child: Text('login_btn'.tr, style: buttonStyle),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    child: Text('login_btn'.tr,
+                                        style: buttonStyle),
                                   ),
                                   onPressed: () {
                                     FocusScope.of(context).unfocus();
-                                    final isValid = formKey.currentState.validate();
+                                    final isValid =
+                                        formKey.currentState.validate();
                                     if (!isValid) {
+                                      mode = AutovalidateMode.onUserInteraction;
                                       return;
                                     }
                                     formKey.currentState.save();
@@ -178,7 +190,10 @@ class ReLoginView extends GetView<ReLoginController> {
                               Text(
                                 'relog_not_account'.tr,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.subhead.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subhead
+                                    .copyWith(
                                       color: textWhiteColor,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -190,7 +205,10 @@ class ReLoginView extends GetView<ReLoginController> {
                                 child: Text(
                                   'relog_change'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.subhead.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subhead
+                                      .copyWith(
                                         color: accentColor,
                                         fontWeight: FontWeight.bold,
                                       ),

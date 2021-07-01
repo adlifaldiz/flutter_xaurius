@@ -13,6 +13,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 
 class VerifyCodeView extends GetView<VerifyCodeController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var mode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: mode,
                 key: formKey,
                 child: Column(
                   children: [
@@ -80,8 +81,13 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                             height: 0,
                           ),
                           // obscureStyle: ObscureStyle(isTextObscure: true, obscureText: '*'),
-                          textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
-                          colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
+                          textStyle: TextStyle(
+                              color: textWhiteColor,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20.0),
+                          colorBuilder: PinListenColorBuilder(
+                              primaryColor, textWhiteColor)),
                     ),
                     Spacer(),
                     Obx(
@@ -92,7 +98,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                             show: controller.showToolTip.value,
                             text: 'regis_agree_err'.tr,
                             child: Checkbox(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(1)),
                               checkColor: textWhiteColor,
                               activeColor: primaryColor,
                               value: controller.isAgree.value,
@@ -109,8 +116,11 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                               children: [
                                 TextSpan(
                                   text: 'setting_terms'.tr,
-                                  style: stylePrimary.copyWith(color: primaryColor, fontWeight: FontWeight.bold),
-                                  recognizer: TapGestureRecognizer()..onTap = () => _showTnc(context),
+                                  style: stylePrimary.copyWith(
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => _showTnc(context),
                                 ),
                               ],
                             ),
@@ -142,6 +152,7 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                             FocusScope.of(context).unfocus();
                             final isValid = formKey.currentState.validate();
                             if (!isValid) {
+                              mode = AutovalidateMode.onUserInteraction;
                               return;
                             }
                             formKey.currentState.save();
@@ -162,7 +173,9 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
 
   _showTnc(BuildContext context) {
     showMaterialModalBottomSheet(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       context: context,
       builder: (context) => TncView(),
     );
