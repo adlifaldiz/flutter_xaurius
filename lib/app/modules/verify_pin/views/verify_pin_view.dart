@@ -9,6 +9,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 
 class VerifyPinView extends GetView<VerifyPinController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var mode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
               padding: const EdgeInsets.all(20.0),
               child: Form(
                 key: formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: mode,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -70,8 +71,13 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
-                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(
+                            color: textWhiteColor,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20.0),
+                        colorBuilder:
+                            PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -98,6 +104,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           onPressed: () {
                             final isValid = formKey.currentState.validate();
                             if (!isValid) {
+                              mode = AutovalidateMode.onUserInteraction;
                               return;
                             }
                             formKey.currentState.save();

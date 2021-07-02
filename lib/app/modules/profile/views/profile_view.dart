@@ -19,7 +19,9 @@ class ProfileView extends GetView<ProfileController> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+          padding: EdgeInsets.symmetric(
+              horizontal: percentWidth(context, 5),
+              vertical: percentHeight(context, 2)),
           child: Column(
             children: [
               Container(
@@ -30,7 +32,7 @@ class ProfileView extends GetView<ProfileController> {
                 child: MenuTile(
                   icon: FontAwesomeIcons.userAlt,
                   title: 'setting_profile'.tr,
-                  onTap: () => Get.toNamed(Routes.DATA_PERSONAL),
+                  onTap: () => controller.Router(1),
                 ),
               ),
               SizedBox(height: 10),
@@ -44,10 +46,10 @@ class ProfileView extends GetView<ProfileController> {
                   title: 'identity_document'.tr,
                   onTap: controller.auth.userData.orangName == null
                       ? () {
-                          Get.toNamed(Routes.DATA_PERSONAL);
+                          controller.Router(2);
                           successSnackbar('Info', 'up_pd_first'.tr);
                         }
-                      : () => Get.toNamed(Routes.UPLOAD_DOCUMENT),
+                      : () => controller.Router(3),
                 ),
               ),
             ],
