@@ -67,7 +67,8 @@ class TransactionController extends GetxController {
         break;
       case 9:
         //withdraw
-        Get.to(ComingSoonScreen());
+        Get.toNamed(Routes.WITHDRAW);
+
         break;
       case 10:
         //trans send
