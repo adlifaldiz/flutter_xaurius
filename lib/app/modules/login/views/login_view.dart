@@ -12,6 +12,7 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var mode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class LoginView extends GetView<LoginController> {
                         SizedBox(height: 50),
                         Form(
                           key: formKey,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          autovalidateMode: mode,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -98,7 +99,9 @@ class LoginView extends GetView<LoginController> {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.done,
                                 maxLength: 6,
-                                inputFormatters: [LengthLimitingTextInputFormatter(6)],
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(6)
+                                ],
                                 useObscure: true,
                                 hintText: 'Pin',
                                 prefixIcon: Icon(
@@ -171,6 +174,8 @@ class LoginView extends GetView<LoginController> {
                                       final isValid =
                                           formKey.currentState.validate();
                                       if (!isValid) {
+                                        mode =
+                                            AutovalidateMode.onUserInteraction;
                                         return;
                                       }
                                       formKey.currentState.save();
