@@ -46,6 +46,7 @@ abstract class Routes {
   static const TOPUP_HISTORY = _Paths.HISTORY + _Paths.TOPUP_HISTORY;
   static const DEPOSIT_HISTORY = _Paths.HISTORY + _Paths.DEPOSIT_HISTORY;
   static const WITHDRAW_HISTORY = _Paths.HISTORY + _Paths.WITHDRAW_HISTORY;
+  static const WITHDRAW = _Paths.WITHDRAW;
 }
 
 abstract class _Paths {
@@ -91,4 +92,5 @@ abstract class _Paths {
   static const TOPUP_HISTORY = '/topup-history';
   static const DEPOSIT_HISTORY = '/deposit-history';
   static const WITHDRAW_HISTORY = '/withdraw-history';
+  static const WITHDRAW = '/withdraw';
 }

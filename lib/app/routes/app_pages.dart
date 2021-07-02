@@ -82,6 +82,8 @@ import 'package:flutter_xaurius/app/modules/verify_pin/bindings/verify_pin_bindi
 import 'package:flutter_xaurius/app/modules/verify_pin/views/verify_pin_view.dart';
 import 'package:flutter_xaurius/app/modules/voucher/bindings/voucher_binding.dart';
 import 'package:flutter_xaurius/app/modules/voucher/views/voucher_view.dart';
+import 'package:flutter_xaurius/app/modules/withdraw/bindings/withdraw_binding.dart';
+import 'package:flutter_xaurius/app/modules/withdraw/views/withdraw_view.dart';
 
 part 'app_routes.dart';
 
@@ -299,6 +301,11 @@ class AppPages {
       name: _Paths.NOTIFICATION,
       page: () => NotificationView(),
       binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.WITHDRAW,
+      page: () => WithdrawView(),
+      binding: WithdrawBinding(),
     ),
   ];
 }
