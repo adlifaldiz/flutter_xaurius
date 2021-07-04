@@ -4,10 +4,13 @@ import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_cont
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TransactionController extends GetxController {
   final auth = Get.find<AuthController>();
   final dash = Get.find<DashboardController>();
+  DateFormat formatter = DateFormat('yyyy-MM-dd');
+
   final approve = 'approve';
 
   @override

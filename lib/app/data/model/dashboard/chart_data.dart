@@ -1,4 +1,8 @@
+import 'package:intl/intl.dart';
+
 class ChartData {
+  DateFormat formatter = DateFormat('yyyy-MM-dd');
+
   ChartData({
     this.id,
     this.copen,
@@ -8,7 +12,7 @@ class ChartData {
     this.createdAt,
     this.updatedAt,
     this.cdate,
-    this.cdatestr,
+    // this.cdatestr,
   });
 
   int id;
@@ -19,7 +23,7 @@ class ChartData {
   DateTime createdAt;
   DateTime updatedAt;
   DateTime cdate;
-  DateTime cdatestr;
+  // DateTime cdatestr;
 
   factory ChartData.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
@@ -33,7 +37,7 @@ class ChartData {
       createdAt: DateTime.parse(json["created_at"]),
       updatedAt: DateTime.parse(json["updated_at"]),
       cdate: json["cdate"] == null ? null : DateTime.parse(json["cdate"]),
-      cdatestr: json["cdatestr"] == null ? null : DateTime.parse(json["cdatestr"]),
+      // cdatestr: json["cdatestr"] == null ? null : DateTime.parse(json["cdatestr"]),
     );
   }
 
@@ -46,8 +50,8 @@ class ChartData {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "cdate": cdate == null ? null : cdate.toIso8601String(),
-        "cdatestr": cdatestr == null
-            ? null
-            : "${cdatestr.year.toString().padLeft(4, '0')}-${cdatestr.month.toString().padLeft(2, '0')}-${cdatestr.day.toString().padLeft(2, '0')}",
+        // "cdatestr": cdatestr == null
+        //     ? null
+        //     : "${cdatestr.year.toString().padLeft(4, '0')}-${cdatestr.month.toString().padLeft(2, '0')}-${cdatestr.day.toString().padLeft(2, '0')}",
       };
 }

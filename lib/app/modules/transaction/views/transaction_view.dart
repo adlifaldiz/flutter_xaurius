@@ -296,12 +296,14 @@ class TransactionView extends GetView<TransactionController> {
                                   primaryXAxis: DateTimeAxis(
                                     // minimum: controller.dashboard.charts.first.cdate,
                                     // maximum: controller.dashboard.charts.last.cdate,
-                                    visibleMinimum: controller.dash.charts.value[controller.dash.charts.length - 5].cdate,
-                                    rangePadding: ChartRangePadding.round,
+                                    // visibleMinimum: controller.dash.charts.value[controller.dash.charts.length ].cdate,
+                                    rangePadding: ChartRangePadding.additional,
                                   ),
                                   primaryYAxis: NumericAxis(
-                                    minimum: double.parse(controller.dash.charts.value.first.chigh) - 25000,
-                                    maximum: double.parse(controller.dash.charts.value.last.chigh) + 25000,
+                                    minimum: double.parse(controller.dash.charts[2].chigh) - 10000,
+                                    maximum: double.parse(controller.dash.charts.last.chigh) + 10000,
+                                    rangePadding: ChartRangePadding.additional,
+
                                     numberFormat: NumberFormat.compactCurrency(
                                       locale: "in_In",
                                       symbol: "",
@@ -336,16 +338,17 @@ class TransactionView extends GetView<TransactionController> {
                                   // ],
                                   series: <ChartSeries>[
                                     HiloOpenCloseSeries<ChartData, dynamic>(
-                                        dataSource: controller.dash.charts.value,
-                                        xValueMapper: (ChartData gold, _) => gold.cdatestr,
-                                        highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                                        lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                                        openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                                        closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                        volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                        name: "XAU",
-                                        bearColor: primaryColor,
-                                        bullColor: textWhiteColor)
+                                      dataSource: controller.dash.charts,
+                                      xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
+                                      highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                                      lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
+                                      openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
+                                      closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                      volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                      bearColor: primaryColor,
+                                      bullColor: textWhiteColor,
+                                      enableTooltip: true,
+                                    )
                                   ],
                                 );
                               }),

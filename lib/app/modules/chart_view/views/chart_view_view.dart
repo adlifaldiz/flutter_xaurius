@@ -47,6 +47,7 @@ class ChartViewView extends GetView<ChartViewController> {
         },
         child: SafeArea(
           child: SfCartesianChart(
+            // borderColor: Colors.transparent,
             zoomPanBehavior: ZoomPanBehavior(
               enableMouseWheelZooming: true,
               enablePinching: true,
@@ -58,18 +59,19 @@ class ChartViewView extends GetView<ChartViewController> {
             onZoomEnd: (ZoomPanArgs args) {},
             onZoomReset: (ZoomPanArgs args) {},
             primaryXAxis: DateTimeAxis(
-              // minimum: controller.dashboard.charts.first.cdate,
-              // maximum: controller.dashboard.charts.last.cdate,
-              visibleMinimum: controller.dashboard.charts.value[controller.dashboard.charts.length - 30].cdate,
-              rangePadding: ChartRangePadding.round,
+              // minimum: controller.dashboardboard.charts.first.cdate,
+              // maximum: controller.dashboardboard.charts.last.cdate,
+              // visibleMinimum: controller.dashboard.charts.value[controller.dashboard.charts.length ].cdate,
+              rangePadding: ChartRangePadding.additional,
             ),
             primaryYAxis: NumericAxis(
-              rangePadding: ChartRangePadding.round,
-              minimum: double.parse(controller.dashboard.charts.first.chigh) - 50000,
-              maximum: double.parse(controller.dashboard.charts.last.chigh) + 50000,
-              numberFormat: NumberFormat.currency(
+              minimum: double.parse(controller.dashboard.charts[2].chigh) - 10000,
+              maximum: double.parse(controller.dashboard.charts.last.chigh) + 10000,
+              rangePadding: ChartRangePadding.additional,
+
+              numberFormat: NumberFormat.compactCurrency(
                 locale: "in_In",
-                symbol: "\Rp ",
+                symbol: "",
               ),
               // title: AxisTitle(
               //   text: 'Stock price in \$',
@@ -82,12 +84,8 @@ class ChartViewView extends GetView<ChartViewController> {
               ),
             ],
             trackballBehavior: TrackballBehavior(
-              hideDelay: 0,
               enable: true,
               tooltipSettings: InteractiveTooltip(
-                color: backgroundPanelColor,
-                borderColor: Colors.transparent,
-                textStyle: stylePrimary.copyWith(fontSize: 12),
                 enable: true,
               ),
             ),
@@ -99,24 +97,22 @@ class ChartViewView extends GetView<ChartViewController> {
             //   BollingerBandIndicator<Chart, dynamic>(
             //     seriesName: "XAU",
             //     period: 3,
-            //     isVisible: true,
+            //     isVisible: false,
             //   ),
-            //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: true),
+            //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: false),
             // ],
             series: <ChartSeries>[
               HiloOpenCloseSeries<ChartData, dynamic>(
-                dataSource: controller.dashboard.charts.value,
-                xValueMapper: (ChartData gold, _) => gold.cdate,
-                highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                name: "XAU",
-                bearColor: primaryColor,
-                bullColor: textWhiteColor,
-                enableTooltip: true,
-              )
+                  dataSource: controller.dashboard.charts,
+                  xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
+                  highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                  lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
+                  openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
+                  closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                  volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                  name: "XAU",
+                  bearColor: primaryColor,
+                  bullColor: textWhiteColor)
             ],
           ),
         ),

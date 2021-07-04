@@ -108,7 +108,7 @@ class ApiRepository {
   }
 
   Future<UserResp> updateBankProfile(String token, String bankName, String holderName, String holderNumber) async {
-    final response = await _http.call(url.profileBank, token: token, method: MethodRequest.POST, request: {
+    final response = await _http.call(url.profileBank, token: token, useFormData: true, method: MethodRequest.POST, request: {
       'orang[orang_bank_name]': bankName,
       'orang[orang_bank_holder]': holderName,
       'orang[orang_bank_number]': holderNumber,
