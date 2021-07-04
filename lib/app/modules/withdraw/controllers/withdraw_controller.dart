@@ -15,6 +15,9 @@ class WithdrawController extends GetxController {
   var dash = Get.find<DashboardController>();
   var balance = <BalanceData>[].obs;
   var address = ''.obs;
+  var valueNetwork = 'ETH'.obs;
+
+  List<String> listNetwork = ['ETH', 'BSC'];
 
   TextEditingController addressController, xauController;
   NumericTextController idrController;
@@ -33,7 +36,6 @@ class WithdrawController extends GetxController {
 
   @override
   void onClose() {
-    qrController.dispose();
     super.onClose();
   }
 

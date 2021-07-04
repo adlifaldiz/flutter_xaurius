@@ -69,6 +69,33 @@ class WithdrawView extends GetView<WithdrawController> {
                     style: textTitle,
                   ),
                   SizedBox(height: percentHeight(context, 5)),
+                  Text('Network Adress'),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                    width: percentWidth(context, 100),
+                    decoration: BoxDecoration(
+                        color: backgroundPanelColor.withOpacity(0.3),
+                        border: Border.all(color: brokenWhiteColor),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        iconEnabledColor: primaryColor,
+                        iconDisabledColor: brokenWhiteColor,
+                        dropdownColor: backgroundPanelColor,
+                        value: controller.valueNetwork.toString(),
+                        items: controller.listNetwork.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          controller.valueNetwork.value = value;
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: percentHeight(context, 2)),
                   Text('Receipents Adress'),
                   XauTextField(
                     useObscure: false,

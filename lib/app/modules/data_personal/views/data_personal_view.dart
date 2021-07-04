@@ -33,9 +33,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
             ),
             body: SafeArea(
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(
-                    horizontal: percentWidth(context, 5),
-                    vertical: percentHeight(context, 2)),
+                padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                 child: Form(
                   key: formKey,
                   autovalidateMode: mode,
@@ -43,41 +41,27 @@ class DataPersonalView extends GetView<DataPersonalController> {
                     children: [
                       SizedBox(height: 10),
                       XauTextField(
-                        readOnly:
-                            !controller.auth.userData.orangKycEditAvailable,
+                        readOnly: !controller.auth.userData.orangKycEditAvailable,
                         useObscure: false,
                         validator: validateName,
-                        controller: controller.namaControl == null
-                            ? ''
-                            : controller.namaControl,
+                        controller: controller.namaControl == null ? '' : controller.namaControl,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
                         labelText: 'full_name'.tr,
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        readOnly:
-                            !controller.auth.userData.orangKycEditAvailable,
-                        onChanged: (value) =>
-                            controller.onPhoneNumberChange(value),
+                        readOnly: !controller.auth.userData.orangKycEditAvailable,
+                        onChanged: (value) => controller.onPhoneNumberChange(value),
                         useObscure: false,
                         validator: validatePhone,
-                        controller: controller.nomorControl == null
-                            ? ''
-                            : controller.nomorControl,
+                        controller: controller.nomorControl == null ? '' : controller.nomorControl,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
+                        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                         maxLines: 1,
                         labelText: 'phone_number'.tr,
-                        prefixIcon: (!controller
-                                        .auth.userData.orangKycEditAvailable &&
-                                    controller.auth.userData.orangPhone !=
-                                        null) ||
-                                (controller
-                                        .auth.userData.orangKycEditAvailable &&
-                                    controller.auth.userData.orangPhone != null)
+                        prefixIcon: (!controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null) ||
+                                (controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null)
                             ? null
                             : GestureDetector(
                                 onTap: () => showCountryCode(context),
@@ -91,15 +75,11 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        ontap: !controller.auth.userData.orangKycEditAvailable
-                            ? () {}
-                            : () => showBirthDatePicker(context),
+                        ontap: !controller.auth.userData.orangKycEditAvailable ? () {} : () => showBirthDatePicker(context),
                         readOnly: true,
                         useObscure: false,
                         validator: validateDate,
-                        controller: controller.tanggalControl == null
-                            ? ''
-                            : controller.tanggalControl,
+                        controller: controller.tanggalControl == null ? '' : controller.tanggalControl,
                         suffixIcon: Icon(
                           FontAwesomeIcons.calendarAlt,
                           color: primaryColor,
@@ -110,54 +90,41 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        readOnly:
-                            !controller.auth.userData.orangKycEditAvailable,
+                        readOnly: !controller.auth.userData.orangKycEditAvailable,
                         useObscure: false,
                         validator: validateAddress,
-                        controller: controller.alamatControl == null
-                            ? ''
-                            : controller.alamatControl,
+                        controller: controller.alamatControl == null ? '' : controller.alamatControl,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
                         labelText: 'home_address'.tr,
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        readOnly:
-                            !controller.auth.userData.orangKycEditAvailable,
+                        readOnly: !controller.auth.userData.orangKycEditAvailable,
                         useObscure: false,
                         validator: validateCity,
-                        controller: controller.kotaControl == null
-                            ? ''
-                            : controller.kotaControl,
+                        controller: controller.kotaControl == null ? '' : controller.kotaControl,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
                         labelText: 'city'.tr,
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        readOnly:
-                            !controller.auth.userData.orangKycEditAvailable,
+                        readOnly: !controller.auth.userData.orangKycEditAvailable,
                         useObscure: false,
                         validator: validateKode,
-                        controller: controller.kodePosControl == null
-                            ? ''
-                            : controller.kodePosControl,
+                        controller: controller.kodePosControl == null ? '' : controller.kodePosControl,
                         keyboardType: TextInputType.number,
                         maxLines: 1,
                         labelText: 'postal_code'.tr,
                       ),
                       SizedBox(height: 10),
                       XauTextField(
-                        ontap: !controller.auth.userData.orangKycEditAvailable
-                            ? () {}
-                            : () => showCountryPicker(context),
+                        ontap: !controller.auth.userData.orangKycEditAvailable ? () {} : () => showCountryPicker(context),
                         readOnly: true,
                         useObscure: false,
                         validator: validateCountry,
-                        controller: controller.negaraControl == null
-                            ? ''
-                            : controller.negaraControl,
+                        controller: controller.negaraControl == null ? '' : controller.negaraControl,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
                         labelText: 'country'.tr,
@@ -187,13 +154,11 @@ class DataPersonalView extends GetView<DataPersonalController> {
                           );
                         }
                         return RaisedButton(
-                          onPressed: !controller
-                                  .auth.userData.orangKycEditAvailable
+                          onPressed: !controller.auth.userData.orangKycEditAvailable
                               ? () {}
                               : () {
                                   Get.focusScope.unfocus();
-                                  final isValid =
-                                      formKey.currentState.validate();
+                                  final isValid = formKey.currentState.validate();
                                   if (!isValid) {
                                     mode = AutovalidateMode.onUserInteraction;
                                     return;
@@ -202,12 +167,8 @@ class DataPersonalView extends GetView<DataPersonalController> {
 
                                   controller.kycPersonalData();
                                 },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color:
-                              !!controller.auth.userData.orangKycEditAvailable
-                                  ? primaryColor
-                                  : disableColor,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          color: !!controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
                           child: Center(
                             child: Text(
                               'save_btn'.tr,
@@ -250,8 +211,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
             },
             onValuePicked: (Country country) {
               controller.codePhone.value = country.phoneCode;
-              controller.selectedPhoneCode =
-                  CountryPickerUtils.getCountryByIsoCode(country.isoCode);
+              controller.selectedPhoneCode = CountryPickerUtils.getCountryByIsoCode(country.isoCode);
             },
           );
         });
@@ -280,8 +240,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
             },
             onValuePicked: (Country country) {
               controller.negaraControl.text = country.isoCode;
-              controller.selectedCountry =
-                  CountryPickerUtils.getCountryByIsoCode(country.isoCode);
+              controller.selectedCountry = CountryPickerUtils.getCountryByIsoCode(country.isoCode);
             },
           );
         });
