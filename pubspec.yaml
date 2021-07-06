@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.0.2
   qr_code_scanner: ^0.5.1
   permission_handler: ^8.1.2
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:
