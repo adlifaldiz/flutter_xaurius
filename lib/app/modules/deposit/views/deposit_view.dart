@@ -67,8 +67,8 @@ class DepositView extends GetView<DepositController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(percentWidth(context, 3)),
-                        decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(percentWidth(context, 2.5)),
+                        decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(5)),
                         child: QrImage(
                           padding: EdgeInsets.all(0),
                           data: controller.addressController.text,
