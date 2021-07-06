@@ -1,9 +1,9 @@
-const String hostImage = 'https://sim-b.xaurius.com';
+// const String hostImage = 'https://sim-b.xaurius.com';
 // const String hostImage = 'https://pro.xaurius.com';
-//const String hostImage = 'https://dev.dev.xaurius.com';
-const String hostAPI = 'https://sim-b.xaurius.com/api/v1';
+const String hostImage = 'https://dev.dev.xaurius.com/';
+// const String hostAPI = 'https://sim-b.xaurius.com/api/v1';
 // const String hostAPI = 'https://pro.xaurius.com/api/v1';
-//const String hostAPI = 'https://dev.dev.xaurius.com/api/v1';
+const String hostAPI = 'https://dev.dev.xaurius.com/api/v1';
 
 const register = '/auth/register';
 const registerVerification = '/auth/register_verification';

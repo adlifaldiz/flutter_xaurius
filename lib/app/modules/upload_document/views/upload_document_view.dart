@@ -82,7 +82,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                 Text('id_pict_notif'.tr),
                               ],
                             )
-                          : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile.url
+                          : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile
                               ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
                               : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathKtp.value)),
                       !controller.auth.userData.orangKycEditAvailable
@@ -120,7 +120,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                 Text('npwp_pict_notif'.tr),
                               ],
                             )
-                          : controller.selectedImagePathNpwp.value != controller.auth.userData.orangNpwpFile.url
+                          : controller.selectedImagePathNpwp.value != controller.auth.userData.orangNpwpFile
                               ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathNpwp.value)))
                               : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathNpwp.value)),
                       !controller.auth.userData.orangKycEditAvailable

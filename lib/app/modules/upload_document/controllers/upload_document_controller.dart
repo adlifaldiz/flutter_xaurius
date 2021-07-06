@@ -81,8 +81,8 @@ class UploadDocumentController extends GetxController {
     }
     nomorKTP.text = auth.userData.orangIdNum;
     nomorNPWP.text = auth.userData.orangNpwpNum;
-    selectedImagePathKtp(auth.userData.orangIdFile.url);
-    selectedImagePathNpwp(auth.userData.orangNpwpFile.url);
+    selectedImagePathKtp(auth.userData.orangIdFile.toString());
+    selectedImagePathNpwp(auth.userData.orangNpwpFile);
     update();
   }
 
@@ -108,12 +108,12 @@ class UploadDocumentController extends GetxController {
     var ktpFile = ''.obs;
     var npwpFile = ''.obs;
 
-    if (selectedImagePathKtp.value == auth.userData.orangIdFile.url && auth.userData.orangIdFile.url != null) {
+    if (selectedImagePathKtp.value == auth.userData.orangIdFile && auth.userData.orangIdFile != null) {
       ktpFile('');
     } else {
       ktpFile.value = File(selectedImagePathKtp.value).path;
     }
-    if (selectedImagePathNpwp.value == auth.userData.orangNpwpFile.url && auth.userData.orangNpwpFile.url != null) {
+    if (selectedImagePathNpwp.value == auth.userData.orangNpwpFile && auth.userData.orangNpwpFile != null) {
       npwpFile('');
     } else {
       npwpFile.value = File(selectedImagePathNpwp.value).path;

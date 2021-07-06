@@ -36,11 +36,11 @@ class SplashController extends GetxController {
   void onSplashLoad() {
     Future.delayed(Duration(milliseconds: 5000)).then((value) {
       if (isUserLogged && isUserBoarding) {
-        Get.offAllNamed(Routes.DEPOSIT);
+        Get.offAllNamed(Routes.RE_LOGIN);
       } else if (isUserLogged == false && isUserBoarding) {
-        Get.offAllNamed(Routes.DEPOSIT);
+        Get.offAllNamed(Routes.LOGIN);
       } else {
-        Get.offAllNamed(Routes.DEPOSIT);
+        Get.offAllNamed(Routes.ON_BOARDING);
       }
     });
   }
