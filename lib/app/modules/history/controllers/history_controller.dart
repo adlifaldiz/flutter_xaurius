@@ -31,8 +31,8 @@ class HistoryController extends GetxController {
     ChipsModel(0, 'Buy'),
     ChipsModel(1, 'Sell'),
     ChipsModel(2, 'TopUp'),
-    ChipsModel(3, 'Deposit'),
-    ChipsModel(4, 'Withdraw'),
+    ChipsModel(3, 'Recieve Crypto'),
+    ChipsModel(4, 'Send Crypto'),
   ];
   @override
   void onInit() async {

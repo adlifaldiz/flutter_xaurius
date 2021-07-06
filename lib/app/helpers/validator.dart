@@ -188,6 +188,46 @@ String validateNominalTopTup(NumericTextController value) {
   }
 }
 
+String validateWdAddress(String value) {
+  if (value.isEmpty) {
+    return 'reciepent_address'.tr + 'empty_field'.tr;
+  } else {
+    return null;
+  }
+}
+
+String validateWdToken(String value, double qty) {
+  if (value.isEmpty) {
+    return 'empty_field'.tr;
+  } else if (double.parse(value) <= 0) {
+    return 'cant_0'.tr;
+  } else if (double.parse(value) > qty) {
+    return 'insufficient_balance'.tr;
+  } else {
+    return null;
+  }
+}
+
+String validateWdIdr(String value, double qty) {
+  if (value.isEmpty) {
+    return '';
+  } else if (double.parse(value) <= 0) {
+    return '';
+  } else if (double.parse(value) > qty) {
+    return '';
+  } else {
+    return null;
+  }
+}
+
+String validateWdOtp(String value) {
+  if (value.isEmpty) {
+    return 'OTP' + 'empty_field'.tr;
+  } else {
+    return null;
+  }
+}
+
 // String validateEmail(String value) {
 //   if (value.isEmpty) {
 //     return 'Alamat email tidak boleh kosong';

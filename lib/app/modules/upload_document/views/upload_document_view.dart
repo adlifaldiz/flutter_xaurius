@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,20 +72,24 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         labelText: 'id_num'.tr,
                       ),
                       SizedBox(height: percentHeight(context, 2)),
-                      controller.selectedImagePathKtp.value.isEmpty
-                          ? Column(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.photo,
-                                  size: percentWidth(context, 50),
-                                  color: brokenWhiteColor,
-                                ),
-                                Text('id_pict_notif'.tr),
-                              ],
-                            )
-                          : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile
-                              ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
-                              : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathKtp.value)),
+                      // controller.selectedImagePathKtp.value.isEmpty
+                      //     ? Column(
+                      //         children: [
+                      //           Icon(
+                      //             CupertinoIcons.photo,
+                      //             size: percentWidth(context, 50),
+                      //             color: brokenWhiteColor,
+                      //           ),
+                      //           Text('id_pict_notif'.tr),
+                      //         ],
+                      //       )
+                      //     : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile
+                      //         ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
+                      //         : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathKtp.value)),
+                      CachedNetworkImage(
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        imageUrl: 'https://picsum.photos/250?image=9',
+                      ),
                       !controller.auth.userData.orangKycEditAvailable
                           ? Container()
                           : FlatButton(

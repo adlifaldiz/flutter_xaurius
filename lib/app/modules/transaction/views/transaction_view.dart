@@ -456,25 +456,16 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
-                        crossAxisCount: 3,
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
+                        crossAxisCount: 2,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () => controller.router(8),
-                            labelTxt: 'Deposit',
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleDown,
-                              color: textWhiteColor,
-                              size: 40,
-                            ),
-                          ),
-                          MenuTransaction(
                             onTap: () => controller.router(9),
-                            labelTxt: 'Withdraw',
+                            labelTxt: 'trans_send_xau'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleUp,
                               color: textWhiteColor,
@@ -482,14 +473,24 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => controller.router(10),
-                            labelTxt: 'trans_send'.tr,
+                            onTap: () => controller.router(8),
+                            labelTxt: 'trans_receive_xau'.tr,
                             menuIcon: FaIcon(
-                              FontAwesomeIcons.exchangeAlt,
+                              FontAwesomeIcons.arrowCircleDown,
                               color: textWhiteColor,
                               size: 40,
                             ),
                           ),
+
+                          // MenuTransaction(
+                          //   onTap: () => controller.router(10),
+                          //   labelTxt: 'trans_send'.tr,
+                          //   menuIcon: FaIcon(
+                          //     FontAwesomeIcons.exchangeAlt,
+                          //     color: textWhiteColor,
+                          //     size: 40,
+                          //   ),
+                          // ),
                         ],
                       ),
                 SizedBox(height: percentHeight(context, 5)),

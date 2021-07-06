@@ -23,3 +23,6 @@ const getTopUp = '/depoidrs';
 const postTopUp = '/depoidrs/new';
 const getDetailInvoices = '/invoices/';
 const dashboard = '/dashboard';
+const getOtp = '/general/send_otp';
+const wdXau = '/wdxaus/create';
+const getWdXau = '/wdxaus';
