@@ -59,7 +59,7 @@ const Map<String, String> enUS = {
   'trans_redeem_xau': 'Redeem',
   'trans_send_xau': 'Send',
   'trans_receive_xau': 'Receive',
-  'trans_title_crypto': 'Crypto Transactions',
+  'trans_title_idr': 'Rupiah Transactions',
   'trans_deposit': 'Deposit',
   'trans_withdraw': 'Withdraw',
   'trans_send': 'Send',

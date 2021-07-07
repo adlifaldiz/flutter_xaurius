@@ -26,3 +26,4 @@ const dashboard = '/dashboard';
 const getOtp = '/general/send_otp';
 const wdXau = '/wdxaus/create';
 const getWdXau = '/wdxaus';
+const getDepoXau = '/depoxaus';

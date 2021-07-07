@@ -5,7 +5,7 @@ import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_cont
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class DepositController extends GetxController {
+class ReceiveXauController extends GetxController {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   QRViewController qrController;

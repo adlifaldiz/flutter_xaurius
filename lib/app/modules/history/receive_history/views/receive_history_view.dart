@@ -8,9 +8,9 @@ import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
-import '../controllers/withdraw_history_controller.dart';
+import '../controllers/receive_history_controller.dart';
 
-class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
+class ReceiveHistoryView extends GetView<ReceiveHistoryController> {
   @override
   Widget build(BuildContext context) {
     return LiquidPullToRefresh(
@@ -20,13 +20,13 @@ class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
       onRefresh: controller.onRefresh,
       showChildOpacityTransition: false,
       child: Obx(() {
-        if (controller.isLoading.value && controller.wdData.length == 0) {
+        if (controller.isLoading.value && controller.depoData.length == 0) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
             child: AbsorbPointer(absorbing: true, child: ShimmerList()),
           );
         }
-        if (controller.wdData.isEmpty) {
+        if (controller.depoData.isEmpty) {
           return EmptyState(
             refreshAble: true,
             onPressed: () => controller.onRefresh(),
@@ -35,7 +35,8 @@ class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
         return ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
           controller: controller.scrollController,
-          itemCount: controller.wdData.length,
+          physics: AlwaysScrollableScrollPhysics(),
+          itemCount: controller.depoData.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
@@ -53,17 +54,34 @@ class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              '#' + controller.wdData[index].id.toString(),
+                              '#' + controller.depoData[index].id.toString(),
                             ),
                           ],
                         ),
-                        Text(
-                          controller.wdData[index].wdStatus.toString(),
-                          style: textTitle.copyWith(color: primaryColor),
-                        ),
+                        // Text(
+                        //   controller.depoData[index].wdStatus.toString(),
+                        //   style: textTitle.copyWith(color: primaryColor),
+                        // ),
                       ],
                     ),
                     SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'network'.tr,
+                          style: stylePrimary,
+                        ),
+                        SizedBox(width: percentWidth(context, 5)),
+                        Expanded(
+                          child: Text(
+                            controller.depoData[index].depositNetwork,
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: percentHeight(context, 1)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -74,30 +92,13 @@ class WithdrawHistoryView extends GetView<WithdrawHistoryController> {
                         SizedBox(width: percentWidth(context, 5)),
                         Expanded(
                           child: Text(
-                            controller.wdData[index].wdValue + ' XAU',
+                            controller.depoData[index].depositValue + ' XAU',
                             textAlign: TextAlign.end,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Withdraw Fee ',
-                          style: stylePrimary,
-                        ),
-                        SizedBox(width: percentWidth(context, 5)),
-                        Expanded(
-                          child: Text(
-                            controller.wdData[index].wdFee,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
+                    SizedBox(height: percentHeight(context, 1)),
                   ],
                 ),
               ),

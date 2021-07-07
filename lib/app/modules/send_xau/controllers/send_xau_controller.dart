@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/model/balances/balance_data.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_cont
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class WithdrawController extends GetxController {
+class SendXauController extends GetxController {
   final GlobalKey<FormState> wdKey = GlobalKey<FormState>();
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController qrController;

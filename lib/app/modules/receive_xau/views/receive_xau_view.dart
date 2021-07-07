@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
@@ -6,12 +7,11 @@ import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../controllers/deposit_controller.dart';
+import '../controllers/receive_xau_controller.dart';
 
-class DepositView extends GetView<DepositController> {
+class ReceiveXauView extends GetView<ReceiveXauController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

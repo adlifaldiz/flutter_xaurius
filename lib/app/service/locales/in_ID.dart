@@ -59,7 +59,7 @@ const Map<String, String> inID = {
   'trans_redeem_xau': 'Redeem',
   'trans_send_xau': 'Kirim',
   'trans_receive_xau': 'Terima',
-  'trans_title_crypto': 'Transaksi Crypto',
+  'trans_title_idr': 'Transaksi Rupiah',
   'trans_deposit': 'Deposit',
   'trans_withdraw': 'Withdraw',
   'trans_send': 'Kirim',

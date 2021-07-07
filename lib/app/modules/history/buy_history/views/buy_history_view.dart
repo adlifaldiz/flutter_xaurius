@@ -27,7 +27,7 @@ class BuyHistoryView extends GetView<BuyHistoryController> {
           if (controller.isLoading.value && controller.listBuys.length == 0) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
-              child: ShimmerList(),
+              child: AbsorbPointer(absorbing: true, child: ShimmerList()),
             );
           }
           if (controller.listBuys.isEmpty) {
@@ -43,6 +43,7 @@ class BuyHistoryView extends GetView<BuyHistoryController> {
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
                   controller: controller.scrollController,
+                  physics: AlwaysScrollableScrollPhysics(),
                   itemCount: controller.listBuys.length,
                   itemBuilder: (context, index) {
                     return Padding(

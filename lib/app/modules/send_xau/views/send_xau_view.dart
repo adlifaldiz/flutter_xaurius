@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/regex_rule.dart';
@@ -13,9 +12,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../controllers/withdraw_controller.dart';
+import '../controllers/send_xau_controller.dart';
 
-class WithdrawView extends GetView<WithdrawController> {
+class SendXauView extends GetView<SendXauController> {
   @override
   Widget build(BuildContext context) {
     return Obx(

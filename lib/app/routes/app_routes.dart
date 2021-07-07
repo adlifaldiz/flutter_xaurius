@@ -47,6 +47,10 @@ abstract class Routes {
   static const DEPOSIT_HISTORY = _Paths.HISTORY + _Paths.DEPOSIT_HISTORY;
   static const WITHDRAW_HISTORY = _Paths.HISTORY + _Paths.WITHDRAW_HISTORY;
   static const WITHDRAW = _Paths.WITHDRAW;
+  static const SEND_XAU = _Paths.SEND_XAU;
+  static const RECEIVE_XAU = _Paths.RECEIVE_XAU;
+  static const SEND_HISTORY = _Paths.HISTORY + _Paths.SEND_HISTORY;
+  static const RECEIVE_HISTORY = _Paths.HISTORY + _Paths.RECEIVE_HISTORY;
 }
 
 abstract class _Paths {
@@ -93,4 +97,8 @@ abstract class _Paths {
   static const DEPOSIT_HISTORY = '/deposit-history';
   static const WITHDRAW_HISTORY = '/withdraw-history';
   static const WITHDRAW = '/withdraw';
+  static const SEND_XAU = '/send-xau';
+  static const RECEIVE_XAU = '/receive-xau';
+  static const SEND_HISTORY = '/send-history';
+  static const RECEIVE_HISTORY = '/receive-history';
 }

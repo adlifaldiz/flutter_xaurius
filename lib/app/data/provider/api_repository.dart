@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
+import 'package:flutter_xaurius/app/data/model/deposit/resp_deposit/resp_withdraw.dart';
 import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_checkout/resp_checkout.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_create/resp_create_buy.dart';
@@ -211,5 +212,10 @@ class ApiRepository {
   Future<ResponseWithdraw> getWdXau(String jwt) async {
     final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET);
     return ResponseWithdraw.fromJson(response.body);
+  }
+
+  Future<ResponseDeposit> getDepoXau(String jwt) async {
+    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET);
+    return ResponseDeposit.fromJson(response.body);
   }
 }
