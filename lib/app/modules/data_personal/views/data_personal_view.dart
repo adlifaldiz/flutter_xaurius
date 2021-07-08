@@ -52,7 +52,7 @@ class DataPersonalView extends GetView<DataPersonalController> {
                       SizedBox(height: 10),
                       XauTextField(
                         readOnly: !controller.auth.userData.orangKycEditAvailable,
-                        onChanged: (value) => controller.onPhoneNumberChange(value),
+                        // onChanged: (value) => controller.onPhoneNumberChange(value),
                         useObscure: false,
                         validator: validatePhone,
                         controller: controller.nomorControl == null ? '' : controller.nomorControl,
@@ -60,18 +60,18 @@ class DataPersonalView extends GetView<DataPersonalController> {
                         inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                         maxLines: 1,
                         labelText: 'phone_number'.tr,
-                        prefixIcon: (!controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null) ||
-                                (controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null)
-                            ? null
-                            : GestureDetector(
-                                onTap: () => showCountryCode(context),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('+' + controller.codePhone.value),
-                                  ],
-                                ),
-                              ),
+                        // prefixIcon: (!controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null) ||
+                        //         (controller.auth.userData.orangKycEditAvailable && controller.auth.userData.orangPhone != null)
+                        //     ? null
+                        //     : GestureDetector(
+                        //         onTap: () => showCountryCode(context),
+                        //         child: Column(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Text('+' + controller.codePhone.value),
+                        //           ],
+                        //         ),
+                        //       ),
                       ),
                       SizedBox(height: 10),
                       XauTextField(

@@ -24,13 +24,14 @@ class UserData {
     this.orangNpwpFile,
     this.orangRefcode,
     this.orangRefupline,
+    this.orangEthAddress,
   });
 
   int id;
   String orangEmail;
   String orangName;
   String orangKycStatus;
-  bool orangKycEditAvailable = false;
+  bool orangKycEditAvailable;
   bool orangKycAskForReview;
   String orangPhone;
   String orangBirthday;
@@ -43,11 +44,12 @@ class UserData {
   String orangBankName;
   String orangIdType;
   String orangIdNum;
-  UserFile orangIdFile;
+  dynamic orangIdFile;
   String orangNpwpNum;
-  UserFile orangNpwpFile;
-  String orangRefcode;
+  dynamic orangNpwpFile;
+  dynamic orangRefcode;
   int orangRefupline;
+  String orangEthAddress;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         id: json["id"],
@@ -67,11 +69,12 @@ class UserData {
         orangBankName: json["orang_bank_name"],
         orangIdType: json["orang_id_type"],
         orangIdNum: json["orang_id_num"],
-        orangIdFile: UserFile.fromJson(json["orang_id_file"]),
+        orangIdFile: json["orang_id_file_atc_url"] == null ? null : hostImage + json["orang_id_file_atc_url"],
         orangNpwpNum: json["orang_npwp_num"],
-        orangNpwpFile: UserFile.fromJson(json["orang_npwp_file"]),
+        orangNpwpFile: json["orang_npwp_file_atc_url"] == null ? null : hostImage + json["orang_npwp_file_atc_url"],
         orangRefcode: json["orang_refcode"],
         orangRefupline: json["orang_refupline"],
+        orangEthAddress: json["orang_eth_address"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -92,29 +95,11 @@ class UserData {
         "orang_bank_name": orangBankName,
         "orang_id_type": orangIdType,
         "orang_id_num": orangIdNum,
-        "orang_id_file": orangIdFile.toJson(),
+        "orang_id_file": orangIdFile,
         "orang_npwp_num": orangNpwpNum,
-        "orang_npwp_file": orangNpwpFile.toJson(),
+        "orang_npwp_file": orangNpwpFile,
         "orang_refcode": orangRefcode,
         "orang_refupline": orangRefupline,
-      };
-}
-
-class UserFile {
-  UserFile({
-    this.url,
-  });
-
-  String url;
-
-  factory UserFile.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-    return UserFile(
-      url: json["url"] == null ? json["url"] : hostImage + json["url"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "url": url,
+        "orang_eth_address": orangEthAddress,
       };
 }

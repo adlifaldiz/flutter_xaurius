@@ -66,11 +66,11 @@ class TransactionController extends GetxController {
         break;
       case 8:
         //deposit
-        Get.toNamed(Routes.DEPOSIT);
+        Get.toNamed(Routes.RECEIVE_XAU);
         break;
       case 9:
         //withdraw
-        Get.toNamed(Routes.WITHDRAW);
+        Get.toNamed(Routes.SEND_XAU);
 
         break;
       case 10:

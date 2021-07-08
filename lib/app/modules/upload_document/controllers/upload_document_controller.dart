@@ -17,25 +17,21 @@ import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dar
 
 class UploadDocumentController extends GetxController {
   Directory _appDocsDir;
-
   final _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   final GlobalKey<FormState> kyc2Key = GlobalKey<FormState>();
-
   DateFormat formatter = DateFormat('yyyy-MM-dd');
   Country selectedCupertinoCurrency;
-
   List<String> listIdType = ['KTP', 'Passport'];
-
   var randImg = new Random();
   var isLoading = false.obs;
   var useNpwp = false.obs;
-
+  var mode = AutovalidateMode.disabled;
   var valueIdType = 'KTP'.obs;
-
   var selectedImagePathKtp = ''.obs;
-
+  var sizeID = '0.0'.obs;
   var selectedImagePathNpwp = ''.obs;
+  var sizeNpwp = '0.0'.obs;
 
   File ktpPath;
   File npwpPath;
@@ -81,12 +77,13 @@ class UploadDocumentController extends GetxController {
     }
     nomorKTP.text = auth.userData.orangIdNum;
     nomorNPWP.text = auth.userData.orangNpwpNum;
-    selectedImagePathKtp(auth.userData.orangIdFile.url);
-    selectedImagePathNpwp(auth.userData.orangNpwpFile.url);
+    selectedImagePathKtp(auth.userData.orangIdFile);
+    selectedImagePathNpwp(auth.userData.orangNpwpFile);
     update();
   }
 
   Future kycDocument(idFile, nFile) async {
+    print(idFile);
     isLoading(true);
     final resp = await _repo.kycDocument(valueIdType.value.toString(), nomorKTP.text, idFile, nomorNPWP.text, nFile, auth.token);
     if (resp.success) {
@@ -108,23 +105,27 @@ class UploadDocumentController extends GetxController {
     var ktpFile = ''.obs;
     var npwpFile = ''.obs;
 
-    if (selectedImagePathKtp.value == auth.userData.orangIdFile.url && auth.userData.orangIdFile.url != null) {
+    if (selectedImagePathKtp.value == auth.userData.orangIdFile && auth.userData.orangIdFile != null) {
       ktpFile('');
     } else {
       ktpFile.value = File(selectedImagePathKtp.value).path;
     }
-    if (selectedImagePathNpwp.value == auth.userData.orangNpwpFile.url && auth.userData.orangNpwpFile.url != null) {
+    if (selectedImagePathNpwp.value == auth.userData.orangNpwpFile && auth.userData.orangNpwpFile != null) {
       npwpFile('');
     } else {
       npwpFile.value = File(selectedImagePathNpwp.value).path;
     }
 
     if (selectedImagePathKtp.value.isEmpty) {
-      failSnackbar('ID', 'id_pict'.tr);
+      successSnackbar('ID', 'id_pict'.tr);
+    } else if (double.parse(sizeID.value) > 1) {
+      successSnackbar('ID', 'Max size 1 Mb');
     } else if (nomorNPWP.text.isNotEmpty && selectedImagePathNpwp.isEmpty) {
-      failSnackbar('NPWP', 'npwp_pict'.tr);
+      successSnackbar('NPWP', 'npwp_pict'.tr);
     } else if (selectedImagePathNpwp.isNotEmpty && nomorNPWP.text.isEmpty) {
       return;
+    } else if (double.parse(sizeNpwp.value) > 1) {
+      successSnackbar('NPWP', 'Max size 1 Mb');
     } else {
       if (isValid) {
         kyc2Key.currentState.save();
@@ -137,34 +138,37 @@ class UploadDocumentController extends GetxController {
 
   void takeImageKTP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 1);
       if (pickedFile != null) {
         selectedImagePathKtp.value = pickedFile.path;
+        sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
 
-        print('image selected.:' + pickedFile.path.toString());
+        print('image selected:' + pickedFile.path.toString());
       } else {
-        failSnackbar('Fail', 'Kamu belum memilih foto');
+        successSnackbar('ID', 'id_pict'.tr);
         print('No image selected.');
       }
       update();
     } catch (e) {
-      failSnackbar('Fail', 'Terjadi Kesalahan $e');
+      successSnackbar('Fail', 'fail_wrong'.tr);
     }
   }
 
   void takeImageNPWP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 1);
       if (pickedFile != null) {
         selectedImagePathNpwp.value = pickedFile.path;
-        print('image selected.:' + pickedFile.path.toString());
+        sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+
+        print('image selected:' + pickedFile.path.toString());
       } else {
-        failSnackbar('Fail', 'Kamu belum memilih foto');
+        successSnackbar('NPWP', 'npwp_pict'.tr);
         print('No image selected.');
       }
       update();
     } catch (e) {
-      failSnackbar('Fail', 'Terjadi Kesalahan $e');
+      successSnackbar('Fail', 'fail_wrong'.tr);
     }
   }
 }

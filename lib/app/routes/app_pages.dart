@@ -20,8 +20,6 @@ import 'package:flutter_xaurius/app/modules/dashboard/bindings/dashboard_binding
 import 'package:flutter_xaurius/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:flutter_xaurius/app/modules/data_personal/bindings/data_personal_binding.dart';
 import 'package:flutter_xaurius/app/modules/data_personal/views/data_personal_view.dart';
-import 'package:flutter_xaurius/app/modules/deposit/bindings/deposit_binding.dart';
-import 'package:flutter_xaurius/app/modules/deposit/views/deposit_view.dart';
 import 'package:flutter_xaurius/app/modules/faq/bindings/faq_binding.dart';
 import 'package:flutter_xaurius/app/modules/faq/views/faq_view.dart';
 import 'package:flutter_xaurius/app/modules/gold_price/bindings/gold_price_binding.dart';
@@ -29,15 +27,15 @@ import 'package:flutter_xaurius/app/modules/gold_price/views/gold_price_view.dar
 import 'package:flutter_xaurius/app/modules/history/bindings/history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/buy_history/bindings/buy_history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/buy_history/views/buy_history_view.dart';
-import 'package:flutter_xaurius/app/modules/history/deposit_history/bindings/deposit_history_binding.dart';
-import 'package:flutter_xaurius/app/modules/history/deposit_history/views/deposit_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/receive_history/bindings/receive_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/receive_history/views/receive_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/sell_history/bindings/sell_history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/sell_history/views/sell_history_view.dart';
+import 'package:flutter_xaurius/app/modules/history/send_history/bindings/send_history_binding.dart';
+import 'package:flutter_xaurius/app/modules/history/send_history/views/send_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/topup_history/bindings/topup_history_binding.dart';
 import 'package:flutter_xaurius/app/modules/history/topup_history/views/topup_history_view.dart';
 import 'package:flutter_xaurius/app/modules/history/views/history_view.dart';
-import 'package:flutter_xaurius/app/modules/history/withdraw_history/bindings/withdraw_history_binding.dart';
-import 'package:flutter_xaurius/app/modules/history/withdraw_history/views/withdraw_history_view.dart';
 import 'package:flutter_xaurius/app/modules/invoice/bindings/invoice_binding.dart';
 import 'package:flutter_xaurius/app/modules/invoice/views/invoice_view.dart';
 import 'package:flutter_xaurius/app/modules/login/bindings/login_binding.dart';
@@ -56,10 +54,14 @@ import 'package:flutter_xaurius/app/modules/profile/bindings/profile_binding.dar
 import 'package:flutter_xaurius/app/modules/profile/views/profile_view.dart';
 import 'package:flutter_xaurius/app/modules/re_login/bindings/re_login_binding.dart';
 import 'package:flutter_xaurius/app/modules/re_login/views/re_login_view.dart';
+import 'package:flutter_xaurius/app/modules/receive_xau/bindings/receive_xau_binding.dart';
+import 'package:flutter_xaurius/app/modules/receive_xau/views/receive_xau_view.dart';
 import 'package:flutter_xaurius/app/modules/register/bindings/register_binding.dart';
 import 'package:flutter_xaurius/app/modules/register/views/register_view.dart';
 import 'package:flutter_xaurius/app/modules/sell_xau/bindings/sell_xau_binding.dart';
 import 'package:flutter_xaurius/app/modules/sell_xau/views/sell_xau_view.dart';
+import 'package:flutter_xaurius/app/modules/send_xau/bindings/send_xau_binding.dart';
+import 'package:flutter_xaurius/app/modules/send_xau/views/send_xau_view.dart';
 import 'package:flutter_xaurius/app/modules/setting/bindings/setting_binding.dart';
 import 'package:flutter_xaurius/app/modules/setting/views/setting_view.dart';
 import 'package:flutter_xaurius/app/modules/splash/bindings/splash_binding.dart';
@@ -82,8 +84,6 @@ import 'package:flutter_xaurius/app/modules/verify_pin/bindings/verify_pin_bindi
 import 'package:flutter_xaurius/app/modules/verify_pin/views/verify_pin_view.dart';
 import 'package:flutter_xaurius/app/modules/voucher/bindings/voucher_binding.dart';
 import 'package:flutter_xaurius/app/modules/voucher/views/voucher_view.dart';
-import 'package:flutter_xaurius/app/modules/withdraw/bindings/withdraw_binding.dart';
-import 'package:flutter_xaurius/app/modules/withdraw/views/withdraw_view.dart';
 
 part 'app_routes.dart';
 
@@ -112,11 +112,6 @@ class AppPages {
       name: _Paths.ARTICLE,
       page: () => ArticleView(),
       binding: ArticleBinding(),
-    ),
-    GetPage(
-      name: _Paths.DEPOSIT,
-      page: () => DepositView(),
-      binding: DepositBinding(),
     ),
     GetPage(
       name: _Paths.FAQ,
@@ -169,14 +164,14 @@ class AppPages {
           binding: TopupHistoryBinding(),
         ),
         GetPage(
-          name: _Paths.DEPOSIT_HISTORY,
-          page: () => DepositHistoryView(),
-          binding: DepositHistoryBinding(),
+          name: _Paths.SEND_HISTORY,
+          page: () => SendHistoryView(),
+          binding: SendHistoryBinding(),
         ),
         GetPage(
-          name: _Paths.WITHDRAW_HISTORY,
-          page: () => WithdrawHistoryView(),
-          binding: WithdrawHistoryBinding(),
+          name: _Paths.RECEIVE_HISTORY,
+          page: () => ReceiveHistoryView(),
+          binding: ReceiveHistoryBinding(),
         ),
       ],
     ),
@@ -303,9 +298,14 @@ class AppPages {
       binding: NotificationBinding(),
     ),
     GetPage(
-      name: _Paths.WITHDRAW,
-      page: () => WithdrawView(),
-      binding: WithdrawBinding(),
+      name: _Paths.SEND_XAU,
+      page: () => SendXauView(),
+      binding: SendXauBinding(),
+    ),
+    GetPage(
+      name: _Paths.RECEIVE_XAU,
+      page: () => ReceiveXauView(),
+      binding: ReceiveXauBinding(),
     ),
   ];
 }

@@ -28,7 +28,7 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
         child: Obx(
           () {
             if (controller.isLoading.value && controller.listTopTup.length == 0) {
-              return ShimmerList();
+              return AbsorbPointer(absorbing: true, child: ShimmerList());
             }
             if (controller.listTopTup.isEmpty) {
               return EmptyState(
@@ -43,6 +43,7 @@ class TopupHistoryView extends GetView<TopupHistoryController> {
                   child: ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
                     controller: controller.scrollController,
+                    physics: AlwaysScrollableScrollPhysics(),
                     itemCount: controller.listTopTup.length,
                     itemBuilder: (context, index) {
                       return Padding(

@@ -371,7 +371,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: percentWidth(context, 2)),
                           Text(
-                            'trans_title_xau'.tr,
+                            'trans_title_idr'.tr,
                             style: textTitle,
                           ),
                         ],
@@ -387,7 +387,7 @@ class TransactionView extends GetView<TransactionController> {
                         ),
                         child: GridView.count(
                           padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 2)),
-                          crossAxisCount: 5,
+                          crossAxisCount: 4,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           crossAxisSpacing: 5,
@@ -416,19 +416,19 @@ class TransactionView extends GetView<TransactionController> {
                                 color: textWhiteColor,
                               ),
                             ),
+                            // MenuProduk(
+                            //   onTap: () => controller.router(6),
+                            //   labelTxt: 'trans_send_xau'.tr,
+                            //   menuIcon: FaIcon(
+                            //     FontAwesomeIcons.telegramPlane,
+                            //     color: textWhiteColor,
+                            //   ),
+                            // ),
                             MenuProduk(
-                              onTap: () => controller.router(6),
-                              labelTxt: 'trans_send_xau'.tr,
+                              onTap: () => controller.router(1),
+                              labelTxt: 'trans_top_up'.tr,
                               menuIcon: FaIcon(
-                                FontAwesomeIcons.telegramPlane,
-                                color: textWhiteColor,
-                              ),
-                            ),
-                            MenuProduk(
-                              onTap: () => controller.router(7),
-                              labelTxt: 'trans_receive_xau'.tr,
-                              menuIcon: FaIcon(
-                                FontAwesomeIcons.getPocket,
+                                FontAwesomeIcons.plus,
                                 color: textWhiteColor,
                               ),
                             ),
@@ -447,7 +447,7 @@ class TransactionView extends GetView<TransactionController> {
                           ),
                           SizedBox(width: percentWidth(context, 2)),
                           Text(
-                            'trans_title_crypto'.tr,
+                            'trans_title_xau'.tr,
                             style: textTitle,
                           ),
                         ],
@@ -456,25 +456,16 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerCard()
                     : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
-                        crossAxisCount: 3,
+                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
+                        crossAxisCount: 2,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 5,
                         children: [
                           MenuTransaction(
-                            onTap: () => controller.router(8),
-                            labelTxt: 'Deposit',
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleDown,
-                              color: textWhiteColor,
-                              size: 40,
-                            ),
-                          ),
-                          MenuTransaction(
                             onTap: () => controller.router(9),
-                            labelTxt: 'Withdraw',
+                            labelTxt: 'trans_send_xau'.tr,
                             menuIcon: FaIcon(
                               FontAwesomeIcons.arrowCircleUp,
                               color: textWhiteColor,
@@ -482,73 +473,83 @@ class TransactionView extends GetView<TransactionController> {
                             ),
                           ),
                           MenuTransaction(
-                            onTap: () => controller.router(10),
-                            labelTxt: 'trans_send'.tr,
+                            onTap: () => controller.router(8),
+                            labelTxt: 'trans_receive_xau'.tr,
                             menuIcon: FaIcon(
-                              FontAwesomeIcons.exchangeAlt,
+                              FontAwesomeIcons.arrowCircleDown,
                               color: textWhiteColor,
                               size: 40,
                             ),
                           ),
+
+                          // MenuTransaction(
+                          //   onTap: () => controller.router(10),
+                          //   labelTxt: 'trans_send'.tr,
+                          //   menuIcon: FaIcon(
+                          //     FontAwesomeIcons.exchangeAlt,
+                          //     color: textWhiteColor,
+                          //     size: 40,
+                          //   ),
+                          // ),
                         ],
                       ),
-                SizedBox(height: percentHeight(context, 5)),
-                controller.dash.isLoading.value
-                    ? ShimmerText()
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.mobileAlt,
-                            color: accentColor,
-                          ),
-                          SizedBox(width: percentWidth(context, 2)),
-                          Text(
-                            'trans_title_general'.tr,
-                            style: textTitle,
-                          ),
-                        ],
-                      ),
-                SizedBox(height: percentHeight(context, 2)),
-                controller.dash.isLoading.value
-                    ? ShimmerCard()
-                    : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
-                        crossAxisCount: 3,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 5,
-                        children: [
-                          MenuTransaction(
-                            onTap: () => controller.router(11),
-                            labelTxt: 'trans_credit_general'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.mobileAlt,
-                              color: textWhiteColor,
-                              size: 40,
-                            ),
-                          ),
-                          MenuTransaction(
-                            onTap: () => controller.router(12),
-                            labelTxt: 'trans_electricity_general'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.bolt,
-                              color: textWhiteColor,
-                              size: 40,
-                            ),
-                          ),
-                          MenuTransaction(
-                            onTap: () => controller.router(13),
-                            labelTxt: 'trans_package_general'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.globeAsia,
-                              color: textWhiteColor,
-                              size: 40,
-                            ),
-                          ),
-                        ],
-                      ),
+                // SizedBox(height: percentHeight(context, 5)),
+                // controller.dash.isLoading.value
+                //     ? ShimmerText()
+                //     : Row(
+                //         mainAxisAlignment: MainAxisAlignment.start,
+                //         children: [
+                //           Icon(
+                //             FontAwesomeIcons.mobileAlt,
+                //             color: accentColor,
+                //           ),
+                //           SizedBox(width: percentWidth(context, 2)),
+                //           Text(
+                //             'trans_title_general'.tr,
+                //             style: textTitle,
+                //           ),
+                //         ],
+                //       ),
+                // SizedBox(height: percentHeight(context, 2)),
+                // controller.dash.isLoading.value
+                //     ? ShimmerCard()
+                //     : GridView.count(
+                //         padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1)),
+                //         crossAxisCount: 3,
+                //         shrinkWrap: true,
+                //         physics: NeverScrollableScrollPhysics(),
+                //         crossAxisSpacing: 10,
+                //         mainAxisSpacing: 5,
+                //         children: [
+                //           MenuTransaction(
+                //             onTap: () => controller.router(11),
+                //             labelTxt: 'trans_credit_general'.tr,
+                //             menuIcon: FaIcon(
+                //               FontAwesomeIcons.mobileAlt,
+                //               color: textWhiteColor,
+                //               size: 40,
+                //             ),
+                //           ),
+                //           MenuTransaction(
+                //             onTap: () => controller.router(12),
+                //             labelTxt: 'trans_electricity_general'.tr,
+                //             menuIcon: FaIcon(
+                //               FontAwesomeIcons.bolt,
+                //               color: textWhiteColor,
+                //               size: 40,
+                //             ),
+                //           ),
+                //           MenuTransaction(
+                //             onTap: () => controller.router(13),
+                //             labelTxt: 'trans_package_general'.tr,
+                //             menuIcon: FaIcon(
+                //               FontAwesomeIcons.globeAsia,
+                //               color: textWhiteColor,
+                //               size: 40,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
               ],
             ),
           ),

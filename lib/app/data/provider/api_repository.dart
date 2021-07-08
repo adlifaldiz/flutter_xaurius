@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
+import 'package:flutter_xaurius/app/data/model/deposit/resp_deposit/resp_withdraw.dart';
 import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_checkout/resp_checkout.dart';
 import 'package:flutter_xaurius/app/data/model/buy_xau/resp_create/resp_create_buy.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_xaurius/app/data/model/top_up/resp_detail_topup/resp_det
 import 'package:flutter_xaurius/app/data/model/top_up/resp_list_topup/resp_list_top.dart';
 import 'package:flutter_xaurius/app/data/model/top_up/resp_post_topup/resp_post_top.dart';
 import 'package:flutter_xaurius/app/data/model/va_merchant/resp_va_merchant/resp_va_merchant.dart';
+import 'package:flutter_xaurius/app/data/model/withdraw/resp_withdraw/resp_withdraw.dart';
 import 'package:flutter_xaurius/app/data/provider/api_provider.dart';
 import 'package:flutter_xaurius/app/data/model/auth/login_resp.dart';
 import 'package:flutter_xaurius/app/data/model/auth/user_resp.dart';
@@ -95,9 +98,9 @@ class ApiRepository {
     final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
       'orang[orang_id_type]': idType,
       'orang[orang_id_num]': idNum,
-      'orang[orang_id_file]': idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last) ?? null,
+      'orang[orang_id_file_atc]': idFile.toString().isEmpty ? null : MultipartFile(idFile, filename: idFile.split('/').last),
       'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last) ?? null,
+      'orang[orang_npwp_file_atc_url]': npwpFile.toString().isEmpty ? null : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
     });
     return UserResp.fromJson(response.body);
   }
@@ -190,5 +193,30 @@ class ApiRepository {
   Future<ResponseDashboard> getDashboard(String token) async {
     final response = await _http.call(url.dashboard, token: token, method: MethodRequest.GET);
     return ResponseDashboard.fromJson(response.body);
+  }
+
+  Future<BaseResp> getOTP(String jwt) async {
+    final response = await _http.call(url.getOtp, token: jwt, method: MethodRequest.GET);
+    return BaseResp.fromJson(response.body);
+  }
+
+  Future<BaseResp> postWdXau(String wdAddress, String qty, String networkAddress, String otp, String jwt) async {
+    final response = await _http.call(url.wdXau, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
+      'wd[wd_address]': wdAddress,
+      'wd[wd_value]': qty,
+      'wd[wd_network]': networkAddress,
+      'otp': otp,
+    });
+    return BaseResp.fromJson(response.body);
+  }
+
+  Future<ResponseWithdraw> getWdXau(String jwt) async {
+    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET);
+    return ResponseWithdraw.fromJson(response.body);
+  }
+
+  Future<ResponseDeposit> getDepoXau(String jwt) async {
+    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET);
+    return ResponseDeposit.fromJson(response.body);
   }
 }

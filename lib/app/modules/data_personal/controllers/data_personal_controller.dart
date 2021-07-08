@@ -86,10 +86,10 @@ class DataPersonalController extends GetxController {
     isLoading(false);
   }
 
-  onPhoneNumberChange(String value) {
-    if (value[0] == '0') {
-      nomorControl.text = value.replaceAll('0', '');
-      nomorControl.selection = TextSelection.fromPosition(TextPosition(offset: nomorControl.text.length));
-    }
-  }
+  // onPhoneNumberChange(String value) {
+  //   if (value[0] == '0') {
+  //     nomorControl.text = value.replaceAll('0', '');
+  //     nomorControl.selection = TextSelection.fromPosition(TextPosition(offset: nomorControl.text.length));
+  //   }
+  // }
 }

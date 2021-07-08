@@ -71,9 +71,9 @@ class BuyHistoryController extends GetxController {
   }
 
   Future onRefresh() async {
+    listBuys.clear();
     isLoadMore(true);
     onPaginate();
-    listBuys.clear();
     page(1);
     getBuys(page);
     update();
