@@ -18,7 +18,7 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
       onTap: () => Get.focusScope.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Deposit Crypto'),
+          title: Text('trans_receive_xau'.tr),
         ),
         body: Obx(
           () => SafeArea(

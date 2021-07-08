@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -14,12 +15,11 @@ import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import '../controllers/upload_document_controller.dart';
 
 class UploadDocumentView extends GetView<UploadDocumentController> {
-  var mode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => AbsorbPointer(
-        absorbing: controller.isLoading.value,
+        absorbing: false,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
@@ -31,7 +31,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                 padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                 child: Form(
                   key: controller.kyc2Key,
-                  autovalidateMode: mode,
+                  autovalidateMode: controller.mode,
                   child: Column(
                     children: [
                       Container(
@@ -53,11 +53,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                 child: Text(value),
                               );
                             }).toList(),
-                            onChanged: !controller.auth.userData.orangKycEditAvailable
-                                ? null
-                                : (value) {
-                                    controller.valueIdType.value = value;
-                                  },
+                            onChanged: !controller.auth.userData.orangKycEditAvailable ? null : (value) => controller.valueIdType.value = value,
                           ),
                         ),
                       ),
@@ -72,24 +68,46 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         labelText: 'id_num'.tr,
                       ),
                       SizedBox(height: percentHeight(context, 2)),
-                      // controller.selectedImagePathKtp.value.isEmpty
-                      //     ? Column(
-                      //         children: [
-                      //           Icon(
-                      //             CupertinoIcons.photo,
-                      //             size: percentWidth(context, 50),
-                      //             color: brokenWhiteColor,
-                      //           ),
-                      //           Text('id_pict_notif'.tr),
-                      //         ],
-                      //       )
-                      //     : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile
-                      //         ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
-                      //         : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathKtp.value)),
-                      CachedNetworkImage(
-                        placeholder: (context, url) => CircularProgressIndicator(),
-                        imageUrl: 'https://picsum.photos/250?image=9',
-                      ),
+                      controller.selectedImagePathKtp.value.isEmpty
+                          ? Column(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.photo,
+                                  size: percentWidth(context, 50),
+                                  color: brokenWhiteColor,
+                                ),
+                                Text('id_pict_notif'.tr),
+                              ],
+                            )
+                          : controller.selectedImagePathKtp.value != controller.auth.userData.orangIdFile
+                              ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathKtp.value)))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: CachedNetworkImage(
+                                    imageUrl: controller.selectedImagePathKtp.value,
+                                    placeholder: (context, url) => ShimmerCard(
+                                      height: percentHeight(context, 25),
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                  ),
+                                ),
+                      SizedBox(height: percentHeight(context, 1)),
+                      controller.selectedImagePathKtp.value.isEmpty || controller.selectedImagePathKtp.value == controller.auth.userData.orangIdFile
+                          ? Container()
+                          : RichText(
+                              text: TextSpan(
+                                text: 'Size: ',
+                                style: textTitle,
+                                children: [
+                                  TextSpan(
+                                      text: '${controller.sizeID.value} Mb',
+                                      style: textTitle.copyWith(color: double.parse(controller.sizeID.value) > 1 ? redColor : textWhiteColor)),
+                                  double.parse(controller.sizeID.value) < 1
+                                      ? TextSpan()
+                                      : TextSpan(text: ' (Max 1 Mb)', style: textTitle.copyWith(color: redColor)),
+                                ],
+                              ),
+                            ),
                       !controller.auth.userData.orangKycEditAvailable
                           ? Container()
                           : FlatButton(
@@ -127,7 +145,34 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                             )
                           : controller.selectedImagePathNpwp.value != controller.auth.userData.orangNpwpFile
                               ? ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.file(File(controller.selectedImagePathNpwp.value)))
-                              : ClipRRect(borderRadius: BorderRadius.circular(20), child: Image.network(controller.selectedImagePathNpwp.value)),
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: CachedNetworkImage(
+                                    imageUrl: controller.selectedImagePathNpwp.value,
+                                    placeholder: (context, url) => ShimmerCard(
+                                      height: percentHeight(context, 25),
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                  ),
+                                ),
+                      SizedBox(height: percentHeight(context, 1)),
+                      controller.selectedImagePathNpwp.value.isEmpty ||
+                              controller.selectedImagePathNpwp.value == controller.auth.userData.orangNpwpFile
+                          ? Container()
+                          : RichText(
+                              text: TextSpan(
+                                text: 'Size: ',
+                                style: textTitle,
+                                children: [
+                                  TextSpan(
+                                      text: '${controller.sizeNpwp.value} Mb',
+                                      style: textTitle.copyWith(color: double.parse(controller.sizeNpwp.value) > 1 ? redColor : textWhiteColor)),
+                                  double.parse(controller.sizeNpwp.value) < 1
+                                      ? TextSpan()
+                                      : TextSpan(text: ' (Max 1 Mb)', style: textTitle.copyWith(color: redColor)),
+                                ],
+                              ),
+                            ),
                       !controller.auth.userData.orangKycEditAvailable
                           ? Container()
                           : FlatButton(
@@ -154,7 +199,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                           onPressed: !controller.auth.userData.orangKycEditAvailable
                               ? null
                               : () {
-                                  mode = AutovalidateMode.onUserInteraction;
+                                  controller.mode = AutovalidateMode.onUserInteraction;
                                   controller.checkIdentity();
                                 },
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

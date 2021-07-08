@@ -24,7 +24,7 @@ class SendXauView extends GetView<SendXauController> {
           onTap: () => Get.focusScope.unfocus(),
           child: Scaffold(
             appBar: AppBar(
-              title: Text('trans_send_xau'.tr + ' Crypto'),
+              title: Text('trans_send_xau'.tr),
             ),
             body: Obx(
               () => SafeArea(
@@ -210,13 +210,12 @@ class SendXauView extends GetView<SendXauController> {
                                   ),
                                 ],
                               ),
-                              controller.isStart.value ? Text('Wait ${controller.start.value} sec') : Container(),
+                              controller.isStart.value && !controller.isLoadingOTP.value ? Text('Wait ${controller.start.value} sec') : Container(),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(height: percentHeight(context, 5)),
-
                       Obx(
                         () {
                           if (controller.isLoading.value) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_xaurius/app/data/model/base_resp.dart';
 import 'package:flutter_xaurius/app/data/model/deposit/resp_deposit/resp_withdraw.dart';
 import 'package:flutter_xaurius/app/data/model/resp_buys/resp_buys.dart';
@@ -97,9 +98,9 @@ class ApiRepository {
     final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
       'orang[orang_id_type]': idType,
       'orang[orang_id_num]': idNum,
-      'orang[orang_id_file_atc_url]': idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last) ?? null,
+      'orang[orang_id_file_atc]': idFile.toString().isEmpty ? null : MultipartFile(idFile, filename: idFile.split('/').last),
       'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file_atc_url]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last) ?? null,
+      'orang[orang_npwp_file_atc_url]': npwpFile.toString().isEmpty ? null : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
     });
     return UserResp.fromJson(response.body);
   }
