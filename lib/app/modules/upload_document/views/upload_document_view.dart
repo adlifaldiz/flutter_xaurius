@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
+import 'package:flutter_xaurius/app/widget/xau_container.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -19,7 +22,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
   Widget build(BuildContext context) {
     return Obx(
       () => AbsorbPointer(
-        absorbing: false,
+        absorbing: controller.isLoading.value,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
@@ -64,6 +67,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         validator: validateKTP,
                         controller: controller.nomorKTP,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         maxLines: 1,
                         labelText: 'id_num'.tr,
                       ),
@@ -88,7 +92,12 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                                     placeholder: (context, url) => ShimmerCard(
                                       height: percentHeight(context, 25),
                                     ),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    errorWidget: (context, url, error) => XauriusContainer(
+                                        child: Column(children: [
+                                      Icon(Icons.error_rounded, size: 40),
+                                      SizedBox(height: percentHeight(context, 1)),
+                                      Text('Image couldn\'t be loaded')
+                                    ])),
                                   ),
                                 ),
                       SizedBox(height: percentHeight(context, 1)),
@@ -128,6 +137,7 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                         validator: controller.selectedImagePathNpwp.isNotEmpty ? validateNPWP : null,
                         controller: controller.nomorNPWP,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         maxLines: 1,
                         labelText: 'npwp_notif'.tr + ' (optional)',
                       ),
