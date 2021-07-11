@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
@@ -6,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var mode = AutovalidateMode.disabled.obs;
   final auth = Get.find<AuthController>();
   final storage = GetStorage();
   ApiRepository _repo = ApiRepository();
@@ -25,6 +28,7 @@ class LoginController extends GetxController {
 
   void login() async {
     isLoading(true);
+
     var resp = await _repo.login(email, pin);
     if (resp.success) {
       auth.token = resp.token;

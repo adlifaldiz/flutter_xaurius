@@ -210,8 +210,10 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<ResponseWithdraw> getWdXau(String jwt) async {
-    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET);
+  Future<ResponseWithdraw> getWdXau(String page, String jwt) async {
+    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET, request: {
+      'page': page,
+    });
     return ResponseWithdraw.fromJson(response.body);
   }
 

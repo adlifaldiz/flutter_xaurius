@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  community_material_icon:
+    dependency: "direct main"
+    description:
+      name: community_material_icon
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.9.55"
   convert:
     dependency: transitive
     description:
@@ -216,13 +223,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-  flutter_smart_dialog:
-    dependency: "direct main"
-    description:
-      name: flutter_smart_dialog
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter

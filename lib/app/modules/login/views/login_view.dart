@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
-import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
@@ -11,9 +10,6 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  var mode = AutovalidateMode.disabled;
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -71,8 +67,8 @@ class LoginView extends GetView<LoginController> {
                         ),
                         SizedBox(height: 50),
                         Form(
-                          key: formKey,
-                          autovalidateMode: mode,
+                          key: controller.formKey,
+                          autovalidateMode: controller.mode.value,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -99,9 +95,7 @@ class LoginView extends GetView<LoginController> {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.done,
                                 maxLength: 6,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(6)
-                                ],
+                                inputFormatters: [LengthLimitingTextInputFormatter(6)],
                                 useObscure: true,
                                 hintText: 'Pin',
                                 prefixIcon: Icon(
@@ -110,21 +104,16 @@ class LoginView extends GetView<LoginController> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         'login_no_account'.tr,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subhead
-                                            .copyWith(
+                                        style: Theme.of(context).textTheme.subhead.copyWith(
                                               color: textWhiteColor,
                                               fontWeight: FontWeight.normal,
                                             ),
@@ -134,10 +123,7 @@ class LoginView extends GetView<LoginController> {
                                         child: Text(
                                           'login_regis_btn'.tr,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subhead
-                                              .copyWith(
+                                          style: Theme.of(context).textTheme.subhead.copyWith(
                                                 color: accentColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -157,28 +143,24 @@ class LoginView extends GetView<LoginController> {
                                 }
 
                                 return Container(
-                                  width: double.infinity,
+                                  width: Get.width,
                                   child: RaisedButton(
                                     color: accentColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      child: Text('login_btn'.tr,
-                                          style: buttonStyle),
+                                      padding: const EdgeInsets.symmetric(vertical: 12),
+                                      child: Text('login_btn'.tr, style: buttonStyle),
                                     ),
                                     onPressed: () {
                                       FocusScope.of(context).unfocus();
-                                      final isValid =
-                                          formKey.currentState.validate();
+                                      final isValid = controller.formKey.currentState.validate();
                                       if (!isValid) {
-                                        mode =
-                                            AutovalidateMode.onUserInteraction;
+                                        controller.mode.value = AutovalidateMode.onUserInteraction;
                                         return;
                                       }
-                                      formKey.currentState.save();
+                                      controller.formKey.currentState.save();
                                       controller.login();
                                     },
                                   ),
@@ -193,10 +175,9 @@ class LoginView extends GetView<LoginController> {
                           child: Text(
                             '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                             textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.subtitle1.copyWith(
-                                      color: accentColor,
-                                    ),
+                            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                                  color: accentColor,
+                                ),
                           ),
                         ),
                       ],

@@ -144,10 +144,10 @@ class SendXauController extends GetxController {
     isLoading(true);
     final resp = await _repo.postWdXau(addressController.text, xauController.text, valueNetwork.value, otpController.text, auth.token);
     if (resp.success) {
-      sendHis.getWd();
+      sendHis.getWd(1);
       successSnackbar('succes_alert'.tr, resp.message);
     } else {
-      sendHis.getWd();
+      sendHis.getWd(1);
       dialogConnection('Oops', resp.message, () {
         Get.back();
       });

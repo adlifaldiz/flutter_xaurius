@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 
 import '../controllers/transaction_controller.dart';
+import 'dart:math' as math;
 
 class TransactionView extends GetView<TransactionController> {
   final GlobalKey<LiquidPullToRefreshState> refreshTransaction = GlobalKey<LiquidPullToRefreshState>();
@@ -466,8 +468,8 @@ class TransactionView extends GetView<TransactionController> {
                           MenuTransaction(
                             onTap: () => controller.router(9),
                             labelTxt: 'trans_send_xau'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleUp,
+                            menuIcon: Icon(
+                              FontAwesomeIcons.telegramPlane,
                               color: textWhiteColor,
                               size: 40,
                             ),
@@ -475,10 +477,13 @@ class TransactionView extends GetView<TransactionController> {
                           MenuTransaction(
                             onTap: () => controller.router(8),
                             labelTxt: 'trans_receive_xau'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleDown,
-                              color: textWhiteColor,
-                              size: 40,
+                            menuIcon: Transform.rotate(
+                              angle: 180 * math.pi / 180,
+                              child: Icon(
+                                FontAwesomeIcons.telegramPlane,
+                                color: textWhiteColor,
+                                size: 40,
+                              ),
                             ),
                           ),
 
