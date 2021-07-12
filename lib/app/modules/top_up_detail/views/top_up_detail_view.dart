@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -284,23 +285,32 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                   if (controller.responseDetailInvoices.value.data.invoice.invoiceBayar) {
                     return Container();
                   }
-                  return RaisedButton(
-                    onPressed: () {
+
+                  return XauriusButton(
+                    pressAble: true,
+                    text: 'made_payment_btn'.tr,
+                    onpressed: () {
                       Get.focusScope.unfocus();
                       controller.madePayment();
                     },
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    color: primaryColor,
-                    child: Container(
-                      width: percentWidth(context, 100),
-                      child: Center(
-                        child: Text(
-                          'made_payment_btn'.tr,
-                          style: buttonStyle,
-                        ),
-                      ),
-                    ),
                   );
+                  // return RaisedButton(
+                  //   onPressed: () {
+                  //     Get.focusScope.unfocus();
+                  //     controller.madePayment();
+                  //   },
+                  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  //   color: primaryColor,
+                  //   child: Container(
+                  //     width: percentWidth(context, 100),
+                  //     child: Center(
+                  //       child: Text(
+                  //         'made_payment_btn'.tr,
+                  //         style: buttonStyle,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // );
                 }),
                 SizedBox(height: 10),
                 controller.isLoading.value

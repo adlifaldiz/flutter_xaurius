@@ -126,7 +126,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               // Row(
                               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               //   children: [
@@ -177,7 +177,7 @@ class InvoiceView extends GetView<InvoiceController> {
                             ],
                           ),
                         ),
-                  SizedBox(height: percentHeight(context, 5)),
+                  SizedBox(height: percentHeight(context, 1)),
                   controller.isLoading.value
                       ? ShimmerCard(
                           height: percentHeight(context, 35),
@@ -206,7 +206,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   )),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -221,7 +221,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   )),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -235,7 +235,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
