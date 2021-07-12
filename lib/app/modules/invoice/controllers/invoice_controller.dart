@@ -55,7 +55,7 @@ class InvoiceController extends GetxController {
     if (resp.success) {
       successSnackbar('Status', resp.message);
       getDetailInvoice();
-      buys.getBuys(1);
+      buys.onRefresh();
       auth.onInit();
       dash.onInit();
     } else {

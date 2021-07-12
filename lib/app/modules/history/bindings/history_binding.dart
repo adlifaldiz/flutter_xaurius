@@ -11,10 +11,10 @@ class HistoryBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<HistoryController>(() => HistoryController());
-    Get.lazyPut<BuyHistoryController>(() => BuyHistoryController());
-    Get.lazyPut<SellHistoryController>(() => SellHistoryController());
-    Get.lazyPut<TopupHistoryController>(() => TopupHistoryController());
-    Get.lazyPut<ReceiveHistoryController>(() => ReceiveHistoryController());
-    Get.lazyPut<SendHistoryController>(() => SendHistoryController());
+    Get.put<BuyHistoryController>(BuyHistoryController());
+    Get.put<SellHistoryController>(SellHistoryController());
+    Get.put<TopupHistoryController>(TopupHistoryController());
+    Get.put<ReceiveHistoryController>(ReceiveHistoryController());
+    Get.put<SendHistoryController>(SendHistoryController());
   }
 }

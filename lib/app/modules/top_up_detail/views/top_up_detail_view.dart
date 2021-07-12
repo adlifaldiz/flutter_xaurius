@@ -53,7 +53,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                           ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: percentHeight(context, 2)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -98,7 +98,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                           )
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: percentHeight(context, 2)),
                 controller.isLoading.value
                     ? ShimmerCard(
                         height: percentHeight(context, 35),
@@ -122,7 +122,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 Text(controller.responseDetailInvoices.value.data.invoice.invoiceVa.bankName),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: percentHeight(context, 2)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -139,7 +139,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: percentHeight(context, 2)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -156,7 +156,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: percentHeight(context, 2)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -173,7 +173,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: percentHeight(context, 2)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -193,7 +193,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                           ],
                         ),
                       ),
-                // SizedBox(height: 20),
+                // SizedBox(height: percentHeight(context, 2)),
                 // XauriusContainer(
                 //   child: Column(
                 //     children: [
@@ -201,7 +201,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                 //         'Cara Pembayaran',
                 //         style: textTitle,
                 //       ),
-                //       // SizedBox(height: 20),
+                //       // SizedBox(height: percentHeight(context, 2)),
                 //       Divider(thickness: 2, height: 30, color: primaryColor),
                 //       ExpansionTile(
                 //         title: Text("ATM Bersama"),
@@ -269,7 +269,7 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                 //     ],
                 //   ),
                 // ),
-                SizedBox(height: 20),
+                SizedBox(height: percentHeight(context, 2)),
                 Obx(() {
                   if (controller.isLoading.value) {
                     return ShimmerText(
