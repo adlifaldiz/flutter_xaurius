@@ -41,7 +41,11 @@ class BuyXauController extends GetxController {
   }
 
   void setNewController({int precision = 0, double initialValue = 0}) {
-    totalController = NumericTextController(thousandSeparator: '.', decimalSeparator: ',', precision: precision, initialValue: initialValue);
+    totalController = NumericTextController(
+        thousandSeparator: '.',
+        decimalSeparator: ',',
+        precision: precision,
+        initialValue: initialValue);
     qtyController = TextEditingController();
     update();
   }
@@ -52,7 +56,8 @@ class BuyXauController extends GetxController {
 
   Future postBuys() async {
     isLoading(true);
-    final resp = await _repo.createBuys(qtyController.text, valueIdType, auth.token);
+    final resp =
+        await _repo.createBuys(qtyController.text, valueIdType, auth.token);
     if (resp.success) {
       Get.toNamed(Routes.CHECKOUT, arguments: resp.data.buy.id.toString());
       update();
@@ -75,24 +80,29 @@ class BuyXauController extends GetxController {
   }
 
   onQtyChange(val) {
+    var total = 0;
     if (val.isEmpty) {
       qtyController.text = '';
-      qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+      qtyController.selection = TextSelection.fromPosition(
+          TextPosition(offset: qtyController.text.length));
     } else if (val[0] == '.') {
       qtyController.text = '0.';
-      qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+      qtyController.selection = TextSelection.fromPosition(
+          TextPosition(offset: qtyController.text.length));
     } else if (val[0] == '0' && val[1].toString().isNum) {
       qtyController.text = '0.';
-      qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+      qtyController.selection = TextSelection.fromPosition(
+          TextPosition(offset: qtyController.text.length));
     } else if (val.contains(',')) {
       qtyController.text = val.replaceAll(',', '.');
-      qtyController.selection = TextSelection.fromPosition(TextPosition(offset: qtyController.text.length));
+      qtyController.selection = TextSelection.fromPosition(
+          TextPosition(offset: qtyController.text.length));
     } else {
       var value = double.parse(val);
       var subtotal = double.parse(dash.goldPrice.value.chartpriceBuy) * value;
-      var total = subtotal.toInt();
-      totalController.text = total.toString();
+      total = subtotal.toInt();
     }
+    totalController.text = total.toString();
   }
 
   onTotalChange(val) {
@@ -100,7 +110,8 @@ class BuyXauController extends GetxController {
 
     if (val.toString().isEmpty) {
       totalController.text = '';
-      totalController.selection = TextSelection.fromPosition(TextPosition(offset: totalController.text.length));
+      totalController.selection = TextSelection.fromPosition(
+          TextPosition(offset: totalController.text.length));
     }
     // else if (val[0] == '.') {
     //   totalController.text = '5';

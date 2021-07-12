@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class TopUpController extends GetxController {
-  final GlobalKey<LiquidPullToRefreshState> refreshTopUp = GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTopUp =
+      GlobalKey<LiquidPullToRefreshState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ApiRepository _repo = ApiRepository();
   NumericTextController nominalTopUpControl;
@@ -73,7 +74,8 @@ class TopUpController extends GetxController {
 
   void postTopUp() async {
     isLoadingForm(true);
-    final resp = await _repo.postTopUp(merchantId.value.toString(), nominalTopUpControl.numberValue, auth.token);
+    final resp = await _repo.postTopUp(merchantId.value.toString(),
+        nominalTopUpControl.numberValue, auth.token);
     if (resp.success) {
       getTopUp(1);
       topHis.getTopUp(1);

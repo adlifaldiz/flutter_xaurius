@@ -2,9 +2,11 @@ const Map<String, String> enUS = {
   'on_boarding_title_1': 'Welcome to XAURIUS ',
   'on_boarding_sub_1': 'Indonesia’s First Gold-Backed Cryptocurrency',
   'on_boarding_title_2': 'Transact Gold Easily All Around The World',
-  'on_boarding_sub_2': 'Buy, Sell and Transfer gold anytime anywhere in a matter of seconds.',
+  'on_boarding_sub_2':
+      'Buy, Sell and Transfer gold anytime anywhere in a matter of seconds.',
   'on_boarding_title_3': 'Safety and Comfortable',
-  'on_boarding_sub_3': 'Ensuring security and transparency through blockchain technology ',
+  'on_boarding_sub_3':
+      'Ensuring security and transparency through blockchain technology ',
   'on_boarding_skip_btn': 'Skip',
   'on_boarding_next_btn': 'Next',
   'on_boarding_lang_title': 'Welcome to XAURIUS',
@@ -29,7 +31,8 @@ const Map<String, String> enUS = {
   'relog_not_account': 'Not your account?',
   'relog_change': 'Change account',
   'verif_app_bar': 'Verification code ',
-  'verif_ex': 'Please enter the 6 digit verification code that we sent to your email address to ',
+  'verif_ex':
+      'Please enter the 6 digit verification code that we sent to your email address to ',
   'create_pin_app_bar': 'Create Your Pin',
   'create_pin_ex': 'Add 6 unique digits to create your pin.',
   'confirm_pin_app_bar': 'Verify Pin ',
@@ -84,7 +87,8 @@ const Map<String, String> enUS = {
   'payment_voucher_q': 'You have vouchers\nWant to use it now?',
   'payment_voucher_active': 'You are using voucher',
   'wallet_address': 'wallet address',
-  'wallet_address_ex': 'You can use Metamask wallet to create an address for free,',
+  'wallet_address_ex':
+      'You can use Metamask wallet to create an address for free,',
   'voucher': 'voucher *(optional)',
   'quantity_xau': 'Quantity (XAU)',
   'total_xau': 'Total IDR',
@@ -161,4 +165,6 @@ const Map<String, String> enUS = {
   'fail_timeout': 'Time out',
   'fail_conn': 'No internet connection',
   'fail_down': 'Server is under maintenance',
+  "qr_small": "Scan for faster\ntransactions",
+  "qr_big": "Your QR",
 };

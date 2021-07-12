@@ -2,22 +2,26 @@ const Map<String, String> inID = {
   'on_boarding_title_1': 'Selamat datang di XAURIUS',
   'on_boarding_sub_1': 'Cryptocurrency pertama di Indonesia yang didukung Emas',
   'on_boarding_title_2': 'Bertransaksi Emas dengan Mudah ke Seluruh Dunia',
-  'on_boarding_sub_2': 'Beli, Jual dan Transfer Emas Di Mana Saja, Kapan Saja dalam Hitungan Detik',
+  'on_boarding_sub_2':
+      'Beli, Jual dan Transfer Emas Di Mana Saja, Kapan Saja dalam Hitungan Detik',
   'on_boarding_title_3': 'Aman dan nyaman',
-  'on_boarding_sub_3': 'Memastikan keamanan & transparansi berkat teknologi blockchain',
+  'on_boarding_sub_3':
+      'Memastikan keamanan & transparansi berkat teknologi blockchain',
   'on_boarding_skip_btn': 'Lewati',
   'on_boarding_next_btn': 'Lanjut',
   'on_boarding_lang_title': 'Selamat datang di XAURIUS',
   'on_boarding_lang_subtitle': 'Pertama, pilih bahasa',
   'login_welcome': 'Selamat Datang',
-  'login_exp': 'Untuk memulai aplikasi,\nSilahkan login dengan email dan pin kamu',
+  'login_exp':
+      'Untuk memulai aplikasi,\nSilahkan login dengan email dan pin kamu',
   'login_email': 'Alamat email',
   'login_pin': 'Pin',
   'login_no_account': 'Belum punya akun?',
   'login_regis_btn': 'Daftar disini',
   'login_btn': 'Masuk',
   'regis_welcome': 'Selamat Datang',
-  'regis_exp': 'Untuk mendaftarkan diri, Silahkan mendaftar dengan mengisi alamat email kamu',
+  'regis_exp':
+      'Untuk mendaftarkan diri, Silahkan mendaftar dengan mengisi alamat email kamu',
   'regis_email': 'Alamat email',
   'regis_has_account': 'Sudah punya akun?',
   'regis_regis_btn': 'Masuk disini',
@@ -29,9 +33,11 @@ const Map<String, String> inID = {
   'relog_not_account': 'Bukan akun kamu?',
   'relog_change': 'Change account',
   'verif_app_bar': 'Verifikasi Kode',
-  'verif_ex': 'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email:',
+  'verif_ex':
+      'Silahkan masukkan 6 digit kode verifikasi yang kami kirim ke alamat email:',
   'create_pin_app_bar': 'Buat Pin',
-  'create_pin_ex': 'Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat',
+  'create_pin_ex':
+      'Sekarang buat pin kamu dengan memasukkan 6 digit unik yang mudah diingat',
   'confirm_pin_app_bar': 'Konfirmasi Pin',
   'confirm_pin_ex': 'Sekarang masukkan lagi pin yang sudah kamu buat',
   'notif_kyc': 'Kamu belum melakukan KYC',
@@ -82,7 +88,8 @@ const Map<String, String> inID = {
   'gas_fee': 'Biaya GAS',
   'payment': 'Pembayaran',
   'wallet_address': 'Alamat dompet',
-  'wallet_address_ex': 'Kamu bisa menggunakan Metamask Wallet untuk membuat Wallet Address secara gratis',
+  'wallet_address_ex':
+      'Kamu bisa menggunakan Metamask Wallet untuk membuat Wallet Address secara gratis',
   'voucher': 'voucher *(optional)',
   'quantity_xau': 'Kuantitas (XAU)',
   'total_xau': 'Total IDR',
@@ -159,4 +166,6 @@ const Map<String, String> inID = {
   'fail_timeout': 'Waktu habis',
   'fail_conn': 'Tidak ada koneksi internet',
   'fail_down': 'Server sedang maintenance',
+  "qr_small": "pindai untuk transaksi\n lebih cepat",
+  "qr_big": "QR Anda"
 };

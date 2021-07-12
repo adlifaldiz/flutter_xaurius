@@ -24,15 +24,22 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
         body: Obx(
           () => SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: percentWidth(context, 5),
+                  vertical: percentHeight(context, 2)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView(
                     shrinkWrap: true,
-                    children: controller.balance.where((itemBalance) => itemBalance.balanceSymbol == "XAU").map((itemBalance) {
+                    children: controller.balance
+                        .where(
+                            (itemBalance) => itemBalance.balanceSymbol == "XAU")
+                        .map((itemBalance) {
                       return Container(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: percentWidth(context, 5),
+                            vertical: percentHeight(context, 3)),
                         width: Get.width,
                         decoration: BoxDecoration(
                           color: backgroundPanelColor.withOpacity(0.5),
@@ -69,7 +76,9 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                     children: [
                       Container(
                         padding: EdgeInsets.all(percentWidth(context, 2.5)),
-                        decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: backgroundPanelColor,
+                            borderRadius: BorderRadius.circular(5)),
                         child: QrImage(
                           padding: EdgeInsets.all(0),
                           data: controller.addressController.text,
@@ -82,8 +91,9 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                       SizedBox(width: percentWidth(context, 5)),
                       Column(
                         children: [
-                          Text('Your QR', style: textTitle.copyWith(fontSize: 25)),
-                          Text('Scan for faster\ntransactions', style: stylePrimary),
+                          Text('qr_big'.tr,
+                              style: textTitle.copyWith(fontSize: 25)),
+                          Text('qr_small'.tr, style: stylePrimary),
                         ],
                       )
                     ],
@@ -95,8 +105,10 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                     controller: controller.addressController,
                     suffixIcon: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(ClipboardData(text: controller.addressController.text));
-                        successSnackbar('Copied', controller.addressController.text);
+                        Clipboard.setData(ClipboardData(
+                            text: controller.addressController.text));
+                        successSnackbar(
+                            'Copied', controller.addressController.text);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
