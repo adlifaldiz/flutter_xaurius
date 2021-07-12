@@ -314,7 +314,8 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                           Get.back();
                           Get.back();
                         },
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                         color: backgroundPanelColor,
                         child: Container(
                           width: percentWidth(context, 100),

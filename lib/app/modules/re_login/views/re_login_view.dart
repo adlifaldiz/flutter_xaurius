@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -48,7 +50,7 @@ class ReLoginView extends GetView<ReLoginController> {
                         'assets/images/logo_ss.png',
                         width: 150,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: percentHeight(context, 3)),
                       Text(
                         'relog_welcome'.tr,
                         style: Theme.of(context).textTheme.headline4.copyWith(
@@ -56,7 +58,7 @@ class ReLoginView extends GetView<ReLoginController> {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: percentHeight(context, 3)),
                       Text(
                         'relog_exp'.tr,
                         style: Theme.of(context).textTheme.subhead.copyWith(
@@ -64,7 +66,7 @@ class ReLoginView extends GetView<ReLoginController> {
                               fontWeight: FontWeight.normal,
                             ),
                       ),
-                      SizedBox(height: 50),
+                      SizedBox(height: percentHeight(context, 8)),
                       Form(
                         key: formKey,
                         autovalidateMode: mode,
@@ -75,9 +77,7 @@ class ReLoginView extends GetView<ReLoginController> {
                             // SizedBox(height: 5),
                             PinInputTextFormField(
                               keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(6)
-                              ],
+                              inputFormatters: [LengthLimitingTextInputFormatter(6)],
                               onSaved: (value) => controller.pin = value,
                               onChanged: (value) {
                                 return controller.onPinChange(value);
@@ -96,13 +96,8 @@ class ReLoginView extends GetView<ReLoginController> {
                                   height: 0,
                                 ),
                                 obscureStyle: ObscureStyle(isTextObscure: true),
-                                textStyle: TextStyle(
-                                    color: textWhiteColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 20.0),
-                                colorBuilder: PinListenColorBuilder(
-                                    primaryColor, textWhiteColor),
+                                textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                                colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                               ),
                             ),
                             // TextFormField(
@@ -139,7 +134,7 @@ class ReLoginView extends GetView<ReLoginController> {
                             //     ),
                             //   ),
                             // ),
-                            SizedBox(height: 30),
+                            SizedBox(height: percentHeight(context, 5)),
 
                             Obx(() {
                               if (controller.isLoading.value) {
@@ -149,33 +144,43 @@ class ReLoginView extends GetView<ReLoginController> {
                                   color: primaryColor,
                                 );
                               }
-
-                              return Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                  color: accentColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                    child: Text('login_btn'.tr,
-                                        style: buttonStyle),
-                                  ),
-                                  onPressed: () {
-                                    FocusScope.of(context).unfocus();
-                                    final isValid =
-                                        formKey.currentState.validate();
-                                    if (!isValid) {
-                                      mode = AutovalidateMode.onUserInteraction;
-                                      return;
-                                    }
-                                    formKey.currentState.save();
-                                    controller.login();
-                                  },
-                                ),
+                              return XauriusButton(
+                                pressAble: true,
+                                text: 'login_btn'.tr,
+                                onpressed: () {
+                                  Get.focusScope.unfocus();
+                                  final isValid = formKey.currentState.validate();
+                                  if (!isValid) {
+                                    mode = AutovalidateMode.onUserInteraction;
+                                    return;
+                                  }
+                                  formKey.currentState.save();
+                                  controller.login();
+                                },
                               );
+                              // return Container(
+                              //   width: double.infinity,
+                              //   child: RaisedButton(
+                              //     color: accentColor,
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //     ),
+                              //     child: Padding(
+                              //       padding: const EdgeInsets.symmetric(vertical: 12),
+                              //       child: Text('login_btn'.tr, style: buttonStyle),
+                              //     ),
+                              //     onPressed: () {
+                              //       FocusScope.of(context).unfocus();
+                              //       final isValid = formKey.currentState.validate();
+                              //       if (!isValid) {
+                              //         mode = AutovalidateMode.onUserInteraction;
+                              //         return;
+                              //       }
+                              //       formKey.currentState.save();
+                              //       controller.login();
+                              //     },
+                              //   ),
+                              // );
                             }),
                           ],
                         ),
@@ -190,10 +195,7 @@ class ReLoginView extends GetView<ReLoginController> {
                               Text(
                                 'relog_not_account'.tr,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subhead
-                                    .copyWith(
+                                style: Theme.of(context).textTheme.subhead.copyWith(
                                       color: textWhiteColor,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -205,10 +207,7 @@ class ReLoginView extends GetView<ReLoginController> {
                                 child: Text(
                                   'relog_change'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subhead
-                                      .copyWith(
+                                  style: Theme.of(context).textTheme.subhead.copyWith(
                                         color: accentColor,
                                         fontWeight: FontWeight.bold,
                                       ),

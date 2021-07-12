@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/modules/create_pin/controllers/create_pin_controller.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -83,28 +84,40 @@ class CreatePinView extends GetView<CreatePinController> {
                             color: primaryColor,
                           );
                         }
-
-                        return Container(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            color: accentColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Text('next_btn'.tr, style: buttonStyle),
-                            ),
-                            onPressed: () {
-                              final isValid = formKey.currentState.validate();
-                              if (!isValid) {
-                                return;
-                              }
-                              formKey.currentState.save();
-                              controller.createPin();
-                            },
-                          ),
+                        return XauriusButton(
+                          pressAble: true,
+                          text: 'next_btn'.tr,
+                          onpressed: () {
+                            Get.focusScope.unfocus();
+                            final isValid = formKey.currentState.validate();
+                            if (!isValid) {
+                              return;
+                            }
+                            formKey.currentState.save();
+                            controller.createPin();
+                          },
                         );
+                        // return Container(
+                        //   width: double.infinity,
+                        //   child: RaisedButton(
+                        //     color: accentColor,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //     ),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(vertical: 12),
+                        //       child: Text('next_btn'.tr, style: buttonStyle),
+                        //     ),
+                        //     onPressed: () {
+                        //       final isValid = formKey.currentState.validate();
+                        //       if (!isValid) {
+                        //         return;
+                        //       }
+                        //       formKey.currentState.save();
+                        //       controller.createPin();
+                        //     },
+                        //   ),
+                        // );
                       },
                     ),
                   ],

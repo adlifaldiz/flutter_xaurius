@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -153,29 +154,42 @@ class DataPersonalView extends GetView<DataPersonalController> {
                             fontSize: 40,
                           );
                         }
-                        return RaisedButton(
-                          onPressed: !controller.auth.userData.orangKycEditAvailable
-                              ? () {}
-                              : () {
-                                  Get.focusScope.unfocus();
-                                  final isValid = formKey.currentState.validate();
-                                  if (!isValid) {
-                                    mode = AutovalidateMode.onUserInteraction;
-                                    return;
-                                  }
-                                  formKey.currentState.save();
-
-                                  controller.kycPersonalData();
-                                },
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          color: !!controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
-                          child: Center(
-                            child: Text(
-                              'save_btn'.tr,
-                              style: buttonStyle,
-                            ),
-                          ),
+                        return XauriusButton(
+                          pressAble: controller.auth.userData.orangKycEditAvailable,
+                          text: 'save_btn'.tr,
+                          onpressed: () {
+                            Get.focusScope.unfocus();
+                            final isValid = formKey.currentState.validate();
+                            if (!isValid) {
+                              mode = AutovalidateMode.onUserInteraction;
+                              return;
+                            }
+                            formKey.currentState.save();
+                            controller.kycPersonalData();
+                          },
                         );
+                        // return RaisedButton(
+                        //   onPressed: !controller.auth.userData.orangKycEditAvailable
+                        //       ? () {}
+                        //       : () {
+                        //           Get.focusScope.unfocus();
+                        //           final isValid = formKey.currentState.validate();
+                        //           if (!isValid) {
+                        //             mode = AutovalidateMode.onUserInteraction;
+                        //             return;
+                        //           }
+                        //           formKey.currentState.save();
+                        //           controller.kycPersonalData();
+                        //         },
+                        //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        //   color: !!controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
+                        //   child: Center(
+                        //     child: Text(
+                        //       'save_btn'.tr,
+                        //       style: buttonStyle,
+                        //     ),
+                        //   ),
+                        // );
                       }),
                     ],
                   ),

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -149,22 +150,30 @@ class BuyXauView extends GetView<BuyXauController> {
                               color: primaryColor,
                             );
                           }
-                          return RaisedButton(
-                            onPressed: () {
+                          return XauriusButton(
+                            pressAble: true,
+                            text: 'next_btn'.tr,
+                            onpressed: () {
                               Get.focusScope.unfocus();
                               controller.checkBuy();
                             },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            color: primaryColor,
-                            child: Container(
-                              width: percentWidth(context, 100),
-                              child: Center(
-                                  child: Text(
-                                'next_btn'.tr,
-                                style: buttonStyle,
-                              )),
-                            ),
                           );
+                          // return RaisedButton(
+                          //   onPressed: () {
+                          //     Get.focusScope.unfocus();
+                          //     controller.checkBuy();
+                          //   },
+                          //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          //   color: primaryColor,
+                          //   child: Container(
+                          //     width: percentWidth(context, 100),
+                          //     child: Center(
+                          //         child: Text(
+                          //       'next_btn'.tr,
+                          //       style: buttonStyle,
+                          //     )),
+                          //   ),
+                          // );
                         })
                       ],
                     ),

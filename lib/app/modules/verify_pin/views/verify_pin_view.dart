@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/modules/verify_pin/controllers/verify_pin_controller.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -71,13 +72,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(
-                            color: textWhiteColor,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -90,28 +86,42 @@ class VerifyPinView extends GetView<VerifyPinController> {
                         );
                       }
 
-                      return Container(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          color: accentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('save_btn'.tr, style: buttonStyle),
-                          ),
-                          onPressed: () {
-                            final isValid = formKey.currentState.validate();
-                            if (!isValid) {
-                              mode = AutovalidateMode.onUserInteraction;
-                              return;
-                            }
-                            formKey.currentState.save();
-                            controller.verifyPin();
-                          },
-                        ),
+                      return XauriusButton(
+                        pressAble: true,
+                        text: 'save_btn'.tr,
+                        onpressed: () {
+                          Get.focusScope.unfocus();
+                          final isValid = formKey.currentState.validate();
+                          if (!isValid) {
+                            mode = AutovalidateMode.onUserInteraction;
+                            return;
+                          }
+                          formKey.currentState.save();
+                          controller.verifyPin();
+                        },
                       );
+                      // return Container(
+                      //   width: double.infinity,
+                      //   child: RaisedButton(
+                      //     color: accentColor,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 12),
+                      //       child: Text('save_btn'.tr, style: buttonStyle),
+                      //     ),
+                      //     onPressed: () {
+                      //       final isValid = formKey.currentState.validate();
+                      //       if (!isValid) {
+                      //         mode = AutovalidateMode.onUserInteraction;
+                      //         return;
+                      //       }
+                      //       formKey.currentState.save();
+                      //       controller.verifyPin();
+                      //     },
+                      //   ),
+                      // );
                     }),
                   ],
                 ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -205,22 +206,31 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                             color: primaryColor,
                           );
                         }
-                        return RaisedButton(
-                          onPressed: !controller.auth.userData.orangKycEditAvailable
-                              ? null
-                              : () {
-                                  controller.mode = AutovalidateMode.onUserInteraction;
-                                  controller.checkIdentity();
-                                },
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
-                          child: Center(
-                            child: Text(
-                              'save_btn'.tr,
-                              style: buttonStyle,
-                            ),
-                          ),
+                        return XauriusButton(
+                          pressAble: controller.auth.userData.orangKycEditAvailable,
+                          text: 'save_btn'.tr,
+                          onpressed: () {
+                            Get.focusScope.unfocus();
+                            controller.mode = AutovalidateMode.onUserInteraction;
+                            controller.checkIdentity();
+                          },
                         );
+                        // return RaisedButton(
+                        //   onPressed: !controller.auth.userData.orangKycEditAvailable
+                        //       ? null
+                        //       : () {
+                        //           controller.mode = AutovalidateMode.onUserInteraction;
+                        //           controller.checkIdentity();
+                        //         },
+                        //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        //   color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
+                        //   child: Center(
+                        //     child: Text(
+                        //       'save_btn'.tr,
+                        //       style: buttonStyle,
+                        //     ),
+                        //   ),
+                        // );
                       })
                     ],
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -57,7 +58,7 @@ class LoginView extends GetView<LoginController> {
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: percentHeight(context, 3)),
                         Text(
                           'login_exp'.tr,
                           style: Theme.of(context).textTheme.subhead.copyWith(
@@ -65,7 +66,7 @@ class LoginView extends GetView<LoginController> {
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: percentHeight(context, 5)),
                         Form(
                           key: controller.formKey,
                           autovalidateMode: controller.mode.value,
@@ -86,7 +87,7 @@ class LoginView extends GetView<LoginController> {
                                   color: primaryColor,
                                 ),
                               ),
-                              SizedBox(height: percentHeight(context, 3)),
+                              SizedBox(height: percentHeight(context, 2)),
                               Text('Pin', style: styleLabel),
                               SizedBox(height: percentHeight(context, 1)),
                               XauTextField(
@@ -103,36 +104,35 @@ class LoginView extends GetView<LoginController> {
                                   color: primaryColor,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'login_no_account'.tr,
+                              SizedBox(height: percentHeight(context, 3)),
+                              Container(
+                                width: Get.width,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'login_no_account'.tr,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.subhead.copyWith(
+                                            color: textWhiteColor,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => controller.router(),
+                                      child: Text(
+                                        'login_regis_btn'.tr,
                                         textAlign: TextAlign.center,
                                         style: Theme.of(context).textTheme.subhead.copyWith(
-                                              color: textWhiteColor,
-                                              fontWeight: FontWeight.normal,
+                                              color: accentColor,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                       ),
-                                      GestureDetector(
-                                        onTap: () => controller.router(),
-                                        child: Text(
-                                          'login_regis_btn'.tr,
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.subhead.copyWith(
-                                                color: accentColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
+                              SizedBox(height: percentHeight(context, 3)),
                               Obx(() {
                                 if (controller.isLoading.value) {
                                   return JumpingDotsProgressIndicator(
@@ -142,36 +142,50 @@ class LoginView extends GetView<LoginController> {
                                   );
                                 }
 
-                                return Container(
-                                  width: Get.width,
-                                  child: RaisedButton(
-                                    color: accentColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      child: Text('login_btn'.tr, style: buttonStyle),
-                                    ),
-                                    onPressed: () {
-                                      FocusScope.of(context).unfocus();
-                                      final isValid = controller.formKey.currentState.validate();
-                                      if (!isValid) {
-                                        controller.mode.value = AutovalidateMode.onUserInteraction;
-                                        return;
-                                      }
-                                      controller.formKey.currentState.save();
-                                      controller.login();
-                                    },
-                                  ),
+                                return XauriusButton(
+                                  pressAble: true,
+                                  text: 'login_btn'.tr,
+                                  onpressed: () {
+                                    Get.focusScope.unfocus();
+                                    final isValid = controller.formKey.currentState.validate();
+                                    if (!isValid) {
+                                      controller.mode.value = AutovalidateMode.onUserInteraction;
+                                      return;
+                                    }
+                                    controller.formKey.currentState.save();
+                                    controller.login();
+                                  },
                                 );
+                                // return Container(
+                                //   width: Get.width,
+                                //   child: RaisedButton(
+                                //     color: accentColor,
+                                //     shape: RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(10),
+                                //     ),
+                                //     child: Padding(
+                                //       padding: const EdgeInsets.symmetric(vertical: 12),
+                                //       child: Text('login_btn'.tr, style: buttonStyle),
+                                //     ),
+                                //     onPressed: () {
+                                //       FocusScope.of(context).unfocus();
+                                //       final isValid = controller.formKey.currentState.validate();
+                                //       if (!isValid) {
+                                //         controller.mode.value = AutovalidateMode.onUserInteraction;
+                                //         return;
+                                //       }
+                                //       controller.formKey.currentState.save();
+                                //       controller.login();
+                                //     },
+                                //   ),
+                                // );
                               }),
                             ],
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(vertical: 30),
+                          width: Get.width,
+                          padding: EdgeInsets.symmetric(vertical: percentHeight(context, 5)),
                           child: Text(
                             '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                             textAlign: TextAlign.center,

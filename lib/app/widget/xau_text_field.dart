@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -110,18 +111,18 @@ class _XauTextFieldState extends State<XauTextField> {
       readOnly: widget.readOnly ?? false,
       maxLength: widget.maxLength,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          contentPadding: EdgeInsets.symmetric(vertical: percentHeight(context, 2.5), horizontal: percentWidth(context, 5)),
           fillColor: fillColor,
           filled: true,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(percentWidth(context, 3)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(percentWidth(context, 3)),
             borderSide: BorderSide(color: primaryColor, width: 2),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(percentWidth(context, 3)),
             borderSide: BorderSide(color: brokenWhiteColor),
           ),
           prefixIcon: widget.prefixIcon,

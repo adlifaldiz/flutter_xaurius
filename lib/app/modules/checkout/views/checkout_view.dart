@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -363,25 +364,33 @@ class CheckoutView extends GetView<CheckoutController> {
                                     if (controller.isLoadingForm.value) {
                                       return JumpingDotsProgressIndicator(color: primaryColor, fontSize: 40);
                                     }
-                                    return RaisedButton(
-                                      onPressed: () {
+                                    return XauriusButton(
+                                      pressAble: true,
+                                      text: 'next_btn'.tr,
+                                      onpressed: () {
                                         Get.focusScope.unfocus();
                                         controller.checkCheckOut();
                                       },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      color: primaryColor,
-                                      child: Container(
-                                        width: percentWidth(context, 100),
-                                        child: Center(
-                                          child: Text(
-                                            'next_btn'.tr,
-                                            style: buttonStyle,
-                                          ),
-                                        ),
-                                      ),
                                     );
+                                    // return RaisedButton(
+                                    //   onPressed: () {
+                                    //     Get.focusScope.unfocus();
+                                    //     controller.checkCheckOut();
+                                    //   },
+                                    //   shape: RoundedRectangleBorder(
+                                    //     borderRadius: BorderRadius.circular(10),
+                                    //   ),
+                                    //   color: primaryColor,
+                                    //   child: Container(
+                                    //     width: percentWidth(context, 100),
+                                    //     child: Center(
+                                    //       child: Text(
+                                    //         'next_btn'.tr,
+                                    //         style: buttonStyle,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // );
                                   }),
                                 ],
                               ),

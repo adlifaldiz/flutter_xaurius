@@ -4,6 +4,7 @@ import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
@@ -109,16 +110,10 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                     ),
                   ),
                   SizedBox(height: percentHeight(context, 5)),
-                  RaisedButton(
-                    onPressed: () => Get.back(),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    color: primaryColor,
-                    child: Center(
-                      child: Text(
-                        'Done',
-                        style: buttonStyle,
-                      ),
-                    ),
+                  XauriusButton(
+                    pressAble: true,
+                    text: 'done_btn'.tr,
+                    onpressed: () => Get.back(),
                   )
                 ],
               ),

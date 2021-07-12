@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
 import 'package:flutter_xaurius/app/modules/verify_code/controllers/verify_code_controller.dart';
 import 'package:flutter_xaurius/app/widget/xau_tooltip.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -127,30 +128,44 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                           color: primaryColor,
                         );
                       }
-
-                      return Container(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          color: accentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text('next_btn'.tr, style: buttonStyle),
-                          ),
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                            final isValid = formKey.currentState.validate();
-                            if (!isValid) {
-                              mode = AutovalidateMode.onUserInteraction;
-                              return;
-                            }
-                            formKey.currentState.save();
-                            controller.verifyCode();
-                          },
-                        ),
+                      return XauriusButton(
+                        pressAble: true,
+                        text: 'next_btn'.tr,
+                        onpressed: () {
+                          Get.focusScope.unfocus();
+                          final isValid = formKey.currentState.validate();
+                          if (!isValid) {
+                            mode = AutovalidateMode.onUserInteraction;
+                            return;
+                          }
+                          formKey.currentState.save();
+                          controller.verifyCode();
+                        },
                       );
+
+                      // return Container(
+                      //   width: double.infinity,
+                      //   child: RaisedButton(
+                      //     color: accentColor,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 12),
+                      //       child: Text('next_btn'.tr, style: buttonStyle),
+                      //     ),
+                      //     onPressed: () {
+                      //       FocusScope.of(context).unfocus();
+                      //       final isValid = formKey.currentState.validate();
+                      //       if (!isValid) {
+                      //         mode = AutovalidateMode.onUserInteraction;
+                      //         return;
+                      //       }
+                      //       formKey.currentState.save();
+                      //       controller.verifyCode();
+                      //     },
+                      //   ),
+                      // );
                     }),
                   ],
                 ),

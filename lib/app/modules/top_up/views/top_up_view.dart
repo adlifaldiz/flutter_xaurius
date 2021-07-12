@@ -8,6 +8,7 @@ import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_list.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -55,12 +56,12 @@ class TopUpView extends GetView<TopUpController> {
                                         SizedBox(height: 20),
                                         Obx(() {
                                           return Container(
-                                            padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                                            padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1), horizontal: percentWidth(context, 5)),
                                             width: percentWidth(context, 100),
                                             decoration: BoxDecoration(
                                                 color: fillColor,
                                                 border: Border.all(color: brokenWhiteColor),
-                                                borderRadius: BorderRadius.circular(10)),
+                                                borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                                             child: DropdownButtonHideUnderline(
                                               child: DropdownButton(
                                                 iconEnabledColor: primaryColor,
@@ -104,30 +105,44 @@ class TopUpView extends GetView<TopUpController> {
                                               fontSize: 40,
                                             );
                                           }
-                                          return Container(
-                                            width: Get.width,
-                                            // ignore: deprecated_member_use
-                                            child: RaisedButton(
-                                              color: accentColor,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                                child: Text('next_btn'.tr, style: buttonStyle),
-                                              ),
-                                              onPressed: () {
-                                                FocusScope.of(context).unfocus();
-                                                final isValid = controller.formKey.currentState.validate();
-                                                if (!isValid) {
-                                                  // controller.mode.value = AutovalidateMode.onUserInteraction;
-                                                  return;
-                                                }
-                                                controller.formKey.currentState.save();
-                                                controller.postTopUp();
-                                              },
-                                            ),
+                                          return XauriusButton(
+                                            pressAble: true,
+                                            text: 'next_btn'.tr,
+                                            onpressed: () {
+                                              Get.focusScope.unfocus();
+                                              final isValid = controller.formKey.currentState.validate();
+                                              if (!isValid) {
+                                                // controller.mode.value = AutovalidateMode.onUserInteraction;
+                                                return;
+                                              }
+                                              controller.formKey.currentState.save();
+                                              controller.postTopUp();
+                                            },
                                           );
+                                          // return Container(
+                                          //   width: Get.width,
+                                          //   // ignore: deprecated_member_use
+                                          //   child: RaisedButton(
+                                          //     color: accentColor,
+                                          //     shape: RoundedRectangleBorder(
+                                          //       borderRadius: BorderRadius.circular(10),
+                                          //     ),
+                                          //     child: Padding(
+                                          //       padding: const EdgeInsets.symmetric(vertical: 12),
+                                          //       child: Text('next_btn'.tr, style: buttonStyle),
+                                          //     ),
+                                          //     onPressed: () {
+                                          //       FocusScope.of(context).unfocus();
+                                          //       final isValid = controller.formKey.currentState.validate();
+                                          //       if (!isValid) {
+                                          //         // controller.mode.value = AutovalidateMode.onUserInteraction;
+                                          //         return;
+                                          //       }
+                                          //       controller.formKey.currentState.save();
+                                          //       controller.postTopUp();
+                                          //     },
+                                          //   ),
+                                          // );
                                         }),
                                       ],
                                     ),
