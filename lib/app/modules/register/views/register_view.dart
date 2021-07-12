@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -52,11 +53,10 @@ class RegisterView extends GetView<RegisterController> {
                           SizedBox(height: percentHeight(context, 3)),
                           Text(
                             'welcome'.tr,
-                            style:
-                                Theme.of(context).textTheme.headline4.copyWith(
-                                      color: textWhiteColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context).textTheme.headline4.copyWith(
+                                  color: textWhiteColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           SizedBox(height: percentHeight(context, 5)),
                           Text(
@@ -66,7 +66,7 @@ class RegisterView extends GetView<RegisterController> {
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
-                          SizedBox(height: percentHeight(context, 8)),
+                          SizedBox(height: percentHeight(context, 5)),
                           Form(
                             key: _formKey,
                             autovalidateMode: mode,
@@ -87,21 +87,16 @@ class RegisterView extends GetView<RegisterController> {
                                 ),
                                 SizedBox(height: percentHeight(context, 3)),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           'regis_has_account'.tr,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subhead
-                                              .copyWith(
+                                          style: Theme.of(context).textTheme.subhead.copyWith(
                                                 color: textWhiteColor,
                                                 fontWeight: FontWeight.normal,
                                               ),
@@ -111,10 +106,7 @@ class RegisterView extends GetView<RegisterController> {
                                           child: Text(
                                             'regis_regis_btn'.tr,
                                             textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subhead
-                                                .copyWith(
+                                            style: Theme.of(context).textTheme.subhead.copyWith(
                                                   color: accentColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -132,34 +124,43 @@ class RegisterView extends GetView<RegisterController> {
                                       color: primaryColor,
                                     );
                                   }
-
-                                  return Container(
-                                    width: double.infinity,
-                                    child: RaisedButton(
-                                      color: accentColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 12),
-                                        child: Text('regis_btn'.tr,
-                                            style: buttonStyle),
-                                      ),
-                                      onPressed: () {
-                                        FocusScope.of(context).unfocus();
-                                        final isValidEmail =
-                                            _formKey.currentState.validate();
-                                        if (!isValidEmail) {
-                                          mode = AutovalidateMode
-                                              .onUserInteraction;
-                                          return;
-                                        }
-                                        _formKey.currentState.save();
-                                        controller.register();
-                                      },
-                                    ),
+                                  return XauriusButton(
+                                    pressAble: true,
+                                    text: 'regis_btn'.tr,
+                                    onpressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      final isValidEmail = _formKey.currentState.validate();
+                                      if (!isValidEmail) {
+                                        mode = AutovalidateMode.onUserInteraction;
+                                        return;
+                                      }
+                                      _formKey.currentState.save();
+                                      controller.register();
+                                    },
                                   );
+                                  // return Container(
+                                  //   width: double.infinity,
+                                  //   child: RaisedButton(
+                                  //     color: accentColor,
+                                  //     shape: RoundedRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(10),
+                                  //     ),
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.symmetric(vertical: 12),
+                                  //       child: Text('regis_btn'.tr, style: buttonStyle),
+                                  //     ),
+                                  //     onPressed: () {
+                                  //       FocusScope.of(context).unfocus();
+                                  //       final isValidEmail = _formKey.currentState.validate();
+                                  //       if (!isValidEmail) {
+                                  //         mode = AutovalidateMode.onUserInteraction;
+                                  //         return;
+                                  //       }
+                                  //       _formKey.currentState.save();
+                                  //       controller.register();
+                                  //     },
+                                  //   ),
+                                  // );
                                 }),
                               ],
                             ),
@@ -170,10 +171,7 @@ class RegisterView extends GetView<RegisterController> {
                             child: Text(
                               '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(
+                              style: Theme.of(context).textTheme.subtitle1.copyWith(
                                     color: accentColor,
                                   ),
                             ),

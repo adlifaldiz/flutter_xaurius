@@ -181,8 +181,8 @@ String validateNominalTopTup(NumericTextController value) {
     return 'Nominal' + 'empty_field'.tr;
   } else if (value.numberValue <= 0) {
     return 'Nominal' + 'cant_0'.tr;
-  } else if (value.numberValue <= 100000) {
-    return 'min_buy'.tr + ' IDR 101000';
+  } else if (value.numberValue < 100000) {
+    return 'min_buy'.tr + ' IDR 100000';
   } else {
     return null;
   }

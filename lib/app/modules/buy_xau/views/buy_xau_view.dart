@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -15,6 +16,8 @@ import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import '../controllers/buy_xau_controller.dart';
 
 class BuyXauView extends GetView<BuyXauController> {
+  AutovalidateMode mode = AutovalidateMode.disabled;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -29,10 +32,12 @@ class BuyXauView extends GetView<BuyXauController> {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: percentWidth(context, 5),
+                      vertical: percentHeight(context, 3)),
                   child: Form(
                     key: controller.buyKey,
-                    autovalidateMode: AutovalidateMode.always,
+                    autovalidateMode: mode,
                     child: Column(
                       children: [
                         XauriusContainer(
@@ -41,12 +46,18 @@ class BuyXauView extends GetView<BuyXauController> {
                             children: [
                               Text(
                                 'XAU/IDR',
-                                style: stylePrimary.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
+                                style: stylePrimary.copyWith(
+                                    color: primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
                               ),
                               SizedBox(width: 10),
                               Text(
-                                customCurrency(controller.dash.goldPrice.value.chartpriceBuy) ?? '000.000',
-                                style: stylePrimary.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+                                customCurrency(controller
+                                        .dash.goldPrice.value.chartpriceBuy) ??
+                                    '000.000',
+                                style: stylePrimary.copyWith(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -104,9 +115,11 @@ class BuyXauView extends GetView<BuyXauController> {
                           labelText: 'quantity_xau'.tr,
                           inputFormatters: [
                             // FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\,?\d*)')),
-                            FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\,?\.?\d*')),
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^(\d+)?\,?\.?\d*')),
                           ],
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           suffixIcon: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -127,6 +140,7 @@ class BuyXauView extends GetView<BuyXauController> {
                           labelText: 'total_xau'.tr + ' (*min 50.000)',
                           keyboardType: TextInputType.number,
                           controller: controller.totalController,
+                          readOnly: false,
                           prefixIcon: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -149,22 +163,30 @@ class BuyXauView extends GetView<BuyXauController> {
                               color: primaryColor,
                             );
                           }
-                          return RaisedButton(
-                            onPressed: () {
+                          return XauriusButton(
+                            pressAble: true,
+                            text: 'next_btn'.tr,
+                            onpressed: () {
                               Get.focusScope.unfocus();
                               controller.checkBuy();
                             },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            color: primaryColor,
-                            child: Container(
-                              width: percentWidth(context, 100),
-                              child: Center(
-                                  child: Text(
-                                'next_btn'.tr,
-                                style: buttonStyle,
-                              )),
-                            ),
                           );
+                          // return RaisedButton(
+                          //   onPressed: () {
+                          //     Get.focusScope.unfocus();
+                          //     controller.checkBuy();
+                          //   },
+                          //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          //   color: primaryColor,
+                          //   child: Container(
+                          //     width: percentWidth(context, 100),
+                          //     child: Center(
+                          //         child: Text(
+                          //       'next_btn'.tr,
+                          //       style: buttonStyle,
+                          //     )),
+                          //   ),
+                          // );
                         })
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 
 class MenuTransaction extends StatelessWidget {
@@ -13,6 +14,8 @@ class MenuTransaction extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: percentWidth(context, 27),
+        height: percentHeight(context, 15),
         decoration: BoxDecoration(color: backgroundPanelColor.withOpacity(0.5), borderRadius: BorderRadius.circular(20)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

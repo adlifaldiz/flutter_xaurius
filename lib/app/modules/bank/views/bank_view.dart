@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -21,9 +22,7 @@ class BankView extends GetView<BankController> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-              horizontal: percentWidth(context, 5),
-              vertical: percentHeight(context, 2)),
+          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
           child: Form(
             key: _formKey,
             autovalidateMode: mode,
@@ -32,9 +31,7 @@ class BankView extends GetView<BankController> {
                 XauTextField(
                   useObscure: false,
                   validator: validateNameBank,
-                  controller: controller.namaBankControl == null
-                      ? ''
-                      : controller.namaBankControl,
+                  controller: controller.namaBankControl == null ? '' : controller.namaBankControl,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
                   labelText: 'bank_name'.tr,
@@ -43,9 +40,7 @@ class BankView extends GetView<BankController> {
                 XauTextField(
                   useObscure: false,
                   validator: validateNameAccBank,
-                  controller: controller.namaAkunControl == null
-                      ? ''
-                      : controller.namaAkunControl,
+                  controller: controller.namaAkunControl == null ? '' : controller.namaAkunControl,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
                   labelText: 'bank_acc_name'.tr,
@@ -70,8 +65,11 @@ class BankView extends GetView<BankController> {
                       ),
                     );
                   }
-                  return RaisedButton(
-                    onPressed: () {
+                  return XauriusButton(
+                    pressAble: true,
+                    text: 'save_btn'.tr,
+                    onpressed: () {
+                      Get.focusScope.unfocus();
                       final isValid = _formKey.currentState.validate();
                       if (!isValid) {
                         mode = AutovalidateMode.onUserInteraction;
@@ -80,16 +78,27 @@ class BankView extends GetView<BankController> {
                       _formKey.currentState.save();
                       controller.updateBank();
                     },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    color: primaryColor,
-                    child: Center(
-                      child: Text(
-                        'save_btn'.tr,
-                        style: buttonStyle,
-                      ),
-                    ),
                   );
+                  // return RaisedButton(
+                  //   onPressed: () {
+                  //     final isValid = _formKey.currentState.validate();
+                  //     if (!isValid) {
+                  //       mode = AutovalidateMode.onUserInteraction;
+                  //       return;
+                  //     }
+                  //     _formKey.currentState.save();
+                  //     controller.updateBank();
+                  //   },
+                  //   shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10)),
+                  //   color: primaryColor,
+                  //   child: Center(
+                  //     child: Text(
+                  //       'save_btn'.tr,
+                  //       style: buttonStyle,
+                  //     ),
+                  //   ),
+                  // );
                 })
               ],
             ),

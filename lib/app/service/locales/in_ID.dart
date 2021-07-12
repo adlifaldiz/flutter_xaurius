@@ -159,4 +159,6 @@ const Map<String, String> inID = {
   'fail_timeout': 'Waktu habis',
   'fail_conn': 'Tidak ada koneksi internet',
   'fail_down': 'Server sedang maintenance',
+  "qr_small": "pindai untuk transaksi\n lebih cepat",
+  "qr_big": "QR Anda"
 };

@@ -37,7 +37,7 @@ class BuyHistoryController extends GetxController {
     super.onClose();
   }
 
-  void getBuys(var page) async {
+  Future getBuys(var page) async {
     isLoading(true);
     isLoadMore(true);
     final resp = await _repo.getBuys(page, auth.token);

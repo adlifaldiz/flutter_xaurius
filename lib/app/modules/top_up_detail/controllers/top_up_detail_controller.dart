@@ -3,6 +3,7 @@ import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:flutter_xaurius/app/modules/history/topup_history/controllers/topup_history_controller.dart';
 import 'package:flutter_xaurius/app/modules/top_up/controllers/top_up_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,7 @@ class TopUpDetailController extends GetxController {
   final auth = Get.find<AuthController>();
   final topUp = Get.find<TopUpController>();
   final dash = Get.find<DashboardController>();
+  final topHis = Get.find<TopupHistoryController>();
   var responseDetailInvoices = ResponseDetailInvoiceTopUp().obs;
   var isLoading = false.obs;
   var isLoadingForm = false.obs;
@@ -57,6 +59,7 @@ class TopUpDetailController extends GetxController {
       topUp.onInit();
       auth.getProfileData();
       dash.onInit();
+      topHis.getTopUp(1);
     } else {
       dialogConnection('Oops', resp.message, () {
         getDetailInvoices();

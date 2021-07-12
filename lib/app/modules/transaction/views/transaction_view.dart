@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 
 import '../controllers/transaction_controller.dart';
+import 'dart:math' as math;
 
 class TransactionView extends GetView<TransactionController> {
   final GlobalKey<LiquidPullToRefreshState> refreshTransaction = GlobalKey<LiquidPullToRefreshState>();
@@ -297,13 +299,12 @@ class TransactionView extends GetView<TransactionController> {
                                     // minimum: controller.dashboard.charts.first.cdate,
                                     // maximum: controller.dashboard.charts.last.cdate,
                                     // visibleMinimum: controller.dash.charts.value[controller.dash.charts.length ].cdate,
-                                    rangePadding: ChartRangePadding.additional,
+                                    rangePadding: ChartRangePadding.none,
                                   ),
                                   primaryYAxis: NumericAxis(
                                     minimum: double.parse(controller.dash.charts[2].chigh) - 10000,
                                     maximum: double.parse(controller.dash.charts.last.chigh) + 10000,
-                                    rangePadding: ChartRangePadding.additional,
-
+                                    rangePadding: ChartRangePadding.none,
                                     numberFormat: NumberFormat.compactCurrency(
                                       locale: "in_In",
                                       symbol: "",
@@ -337,18 +338,33 @@ class TransactionView extends GetView<TransactionController> {
                                   //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: false),
                                   // ],
                                   series: <ChartSeries>[
-                                    HiloOpenCloseSeries<ChartData, dynamic>(
-                                      dataSource: controller.dash.charts,
-                                      xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
-                                      highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                                      lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                                      openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                                      closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                      volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                                      bearColor: primaryColor,
-                                      bullColor: textWhiteColor,
-                                      enableTooltip: true,
-                                    )
+                                    SplineAreaSeries<ChartData, dynamic>(
+                                        // markerSettings: MarkerSettings(isVisible: true),
+                                        dataSource: controller.dash.charts,
+                                        xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
+                                        yValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                                        color: primaryColor.withOpacity(0.3),
+                                        borderWidth: 5,
+                                        borderGradient: LinearGradient(
+                                          colors: [
+                                            primaryColor,
+                                            accentColor,
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        )),
+                                    // HiloOpenCloseSeries<ChartData, dynamic>(
+                                    //   dataSource: controller.dash.charts,
+                                    //   xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
+                                    //   highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                                    //   lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
+                                    //   openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
+                                    //   closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                    //   volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+                                    //   bearColor: primaryColor,
+                                    //   bullColor: textWhiteColor,
+                                    //   enableTooltip: true,
+                                    // )
                                   ],
                                 );
                               }),
@@ -453,46 +469,94 @@ class TransactionView extends GetView<TransactionController> {
                         ],
                       ),
                 SizedBox(height: percentHeight(context, 2)),
-                controller.dash.isLoading.value
-                    ? ShimmerCard()
-                    : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 5,
-                        children: [
-                          MenuTransaction(
+                Wrap(
+                  spacing: percentHeight(context, 2),
+                  children: [
+                    controller.dash.isLoading.value
+                        ? ShimmerCard(
+                            width: percentWidth(context, 27),
+                            height: percentHeight(context, 15),
+                          )
+                        : MenuTransaction(
                             onTap: () => controller.router(9),
                             labelTxt: 'trans_send_xau'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleUp,
+                            menuIcon: Icon(
+                              FontAwesomeIcons.telegramPlane,
                               color: textWhiteColor,
                               size: 40,
                             ),
                           ),
-                          MenuTransaction(
+                    controller.dash.isLoading.value
+                        ? ShimmerCard(
+                            width: percentWidth(context, 27),
+                            height: percentHeight(context, 15),
+                          )
+                        : MenuTransaction(
                             onTap: () => controller.router(8),
                             labelTxt: 'trans_receive_xau'.tr,
-                            menuIcon: FaIcon(
-                              FontAwesomeIcons.arrowCircleDown,
-                              color: textWhiteColor,
-                              size: 40,
+                            menuIcon: Transform.rotate(
+                              angle: 180 * math.pi / 180,
+                              child: Icon(
+                                FontAwesomeIcons.telegramPlane,
+                                color: textWhiteColor,
+                                size: 40,
+                              ),
                             ),
                           ),
+                    // MenuTransaction(
+                    //   onTap: () => controller.router(9),
+                    //   labelTxt: 'trans_send_xau'.tr,
+                    //   menuIcon: Icon(
+                    //     FontAwesomeIcons.telegramPlane,
+                    //     color: textWhiteColor,
+                    //     size: 40,
+                    //   ),
+                    // ),
+                  ],
+                ),
+                // controller.dash.isLoading.value
+                //     ? ShimmerCard()
+                //     : GridView.count(
+                //         padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
+                //         crossAxisCount: 2,
+                //         shrinkWrap: true,
+                //         physics: NeverScrollableScrollPhysics(),
+                //         crossAxisSpacing: 10,
+                //         mainAxisSpacing: 5,
+                //         children: [
+                //           MenuTransaction(
+                //             onTap: () => controller.router(9),
+                //             labelTxt: 'trans_send_xau'.tr,
+                //             menuIcon: Icon(
+                //               FontAwesomeIcons.telegramPlane,
+                //               color: textWhiteColor,
+                //               size: 40,
+                //             ),
+                //           ),
+                //           MenuTransaction(
+                //             onTap: () => controller.router(8),
+                //             labelTxt: 'trans_receive_xau'.tr,
+                //             menuIcon: Transform.rotate(
+                //               angle: 180 * math.pi / 180,
+                //               child: Icon(
+                //                 FontAwesomeIcons.telegramPlane,
+                //                 color: textWhiteColor,
+                //                 size: 40,
+                //               ),
+                //             ),
+                //           ),
 
-                          // MenuTransaction(
-                          //   onTap: () => controller.router(10),
-                          //   labelTxt: 'trans_send'.tr,
-                          //   menuIcon: FaIcon(
-                          //     FontAwesomeIcons.exchangeAlt,
-                          //     color: textWhiteColor,
-                          //     size: 40,
-                          //   ),
-                          // ),
-                        ],
-                      ),
+                // MenuTransaction(
+                //   onTap: () => controller.router(10),
+                //   labelTxt: 'trans_send'.tr,
+                //   menuIcon: FaIcon(
+                //     FontAwesomeIcons.exchangeAlt,
+                //     color: textWhiteColor,
+                //     size: 40,
+                //   ),
+                // ),
+                //   ],
+                // ),
                 // SizedBox(height: percentHeight(context, 5)),
                 // controller.dash.isLoading.value
                 //     ? ShimmerText()

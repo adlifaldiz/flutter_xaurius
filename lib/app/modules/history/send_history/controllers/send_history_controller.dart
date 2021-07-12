@@ -11,11 +11,16 @@ class SendHistoryController extends GetxController {
   ScrollController scrollController = ScrollController();
   final _repo = ApiRepository();
   final auth = Get.find<AuthController>();
+  var page = 1.obs;
   var wdData = <WithdrawData>[].obs;
   var isLoading = false.obs;
+  var isLoadMore = true.obs;
+
   @override
   void onInit() async {
-    await getWd();
+    await getWd(page);
+    onPaginate();
+
     super.onInit();
   }
 
@@ -25,13 +30,23 @@ class SendHistoryController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 
-  Future getWd() async {
+  Future getWd(var page) async {
     isLoading(true);
-    final resp = await _repo.getWdXau(auth.token);
+    isLoadMore(true);
+    final resp = await _repo.getWdXau(page.toString(), auth.token);
     if (resp.success) {
-      wdData(resp.data.withdraws);
+      if (resp.data.withdraws.length > 0) {
+        wdData.addAll(resp.data.withdraws);
+        isLoading(false);
+      } else {
+        print('no more data');
+        isLoadMore(false);
+      }
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
@@ -40,9 +55,24 @@ class SendHistoryController extends GetxController {
     isLoading(false);
   }
 
+  void onPaginate() {
+    scrollController
+      ..addListener(() {
+        if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+          page.value++;
+          if (isLoadMore.value) {
+            getWd(page.value);
+          }
+        }
+      });
+  }
+
   Future onRefresh() async {
     wdData.clear();
-    onInit();
+    isLoadMore(true);
+    onPaginate();
+    page(1);
+    getWd(page);
     update();
   }
 }

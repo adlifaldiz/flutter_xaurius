@@ -109,5 +109,7 @@
     "change_btn": "Ganti gambar",
     "click_here_btn": "Klik disini",
     "here_btn": "disini",
-    "made_payment_btn": "Saya sudah bayar"
+    "made_payment_btn": "Saya sudah bayar",
+    "QR_big":"pindai untuk\ntransactions",
+    "QR_small":"QR Anda"
 }

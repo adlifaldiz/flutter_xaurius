@@ -98,9 +98,9 @@ class ApiRepository {
     final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
       'orang[orang_id_type]': idType,
       'orang[orang_id_num]': idNum,
-      'orang[orang_id_file_atc]': idFile.toString().isEmpty ? null : MultipartFile(idFile, filename: idFile.split('/').last),
+      'orang[orang_id_file_atc]': idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last),
       'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file_atc_url]': npwpFile.toString().isEmpty ? null : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
+      'orang[orang_npwp_file_atc]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
     });
     return UserResp.fromJson(response.body);
   }
@@ -210,13 +210,17 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<ResponseWithdraw> getWdXau(String jwt) async {
-    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET);
+  Future<ResponseWithdraw> getWdXau(String page, String jwt) async {
+    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET, request: {
+      'page': page,
+    });
     return ResponseWithdraw.fromJson(response.body);
   }
 
-  Future<ResponseDeposit> getDepoXau(String jwt) async {
-    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET);
+  Future<ResponseDeposit> getDepoXau(String page, String jwt) async {
+    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET, request: {
+      'page': page,
+    });
     return ResponseDeposit.fromJson(response.body);
   }
 }

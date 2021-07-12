@@ -62,12 +62,12 @@ class ChartViewView extends GetView<ChartViewController> {
               // minimum: controller.dashboardboard.charts.first.cdate,
               // maximum: controller.dashboardboard.charts.last.cdate,
               // visibleMinimum: controller.dashboard.charts.value[controller.dashboard.charts.length ].cdate,
-              rangePadding: ChartRangePadding.additional,
+              rangePadding: ChartRangePadding.none,
             ),
             primaryYAxis: NumericAxis(
-              minimum: double.parse(controller.dashboard.charts[2].chigh) - 10000,
-              maximum: double.parse(controller.dashboard.charts.last.chigh) + 10000,
-              rangePadding: ChartRangePadding.additional,
+              minimum: double.parse(controller.dashboard.charts[2].chigh) - 15000,
+              maximum: double.parse(controller.dashboard.charts.last.chigh) + 5000,
+              rangePadding: ChartRangePadding.none,
 
               numberFormat: NumberFormat.compactCurrency(
                 locale: "in_In",
@@ -77,13 +77,15 @@ class ChartViewView extends GetView<ChartViewController> {
               //   text: 'Stock price in \$',
               // ),
             ),
-            axes: [
-              NumericAxis(
-                name: "secondyaxis",
-                opposedPosition: true,
-              ),
-            ],
+            // axes: [
+            //   NumericAxis(
+            //     name: "secondyaxis",
+            //     opposedPosition: true,
+            //   ),
+            // ],
             trackballBehavior: TrackballBehavior(
+              lineWidth: 5,
+              lineColor: greenColor,
               enable: true,
               tooltipSettings: InteractiveTooltip(
                 enable: true,
@@ -93,26 +95,34 @@ class ChartViewView extends GetView<ChartViewController> {
               isVisible: false,
             ),
             title: ChartTitle(text: "XAU/IDR", textStyle: TextStyle(color: textWhiteColor)),
-            // indicators: <TechnicalIndicators<Chart, dynamic>>[
-            //   BollingerBandIndicator<Chart, dynamic>(
-            //     seriesName: "XAU",
-            //     period: 3,
-            //     isVisible: false,
-            //   ),
-            //   MacdIndicator(seriesName: "XAU", period: 3, shortPeriod: 5, longPeriod: 10, yAxisName: "secondyaxis", isVisible: false),
-            // ],
+
             series: <ChartSeries>[
-              HiloOpenCloseSeries<ChartData, dynamic>(
+              SplineAreaSeries<ChartData, dynamic>(
+                  // markerSettings: MarkerSettings(isVisible: true),
                   dataSource: controller.dashboard.charts,
                   xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
-                  highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
-                  lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
-                  openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
-                  closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                  volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
-                  name: "XAU",
-                  bearColor: primaryColor,
-                  bullColor: textWhiteColor)
+                  yValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                  color: primaryColor.withOpacity(0.3),
+                  borderWidth: 5,
+                  borderGradient: LinearGradient(
+                    colors: [
+                      primaryColor,
+                      accentColor,
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )),
+              // HiloOpenCloseSeries<ChartData, dynamic>(
+              //     dataSource: controller.dashboard.charts,
+              //     xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
+              //     highValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+              //     lowValueMapper: (ChartData gold, _) => num.parse(gold.clow),
+              //     openValueMapper: (ChartData gold, _) => num.parse(gold.copen),
+              //     closeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+              //     volumeValueMapper: (ChartData gold, _) => num.parse(gold.cclose),
+              //     name: "XAU",
+              //     bearColor: primaryColor,
+              //     bullColor: textWhiteColor)
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:get/get.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -125,7 +126,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               // Row(
                               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               //   children: [
@@ -176,7 +177,7 @@ class InvoiceView extends GetView<InvoiceController> {
                             ],
                           ),
                         ),
-                  SizedBox(height: percentHeight(context, 5)),
+                  SizedBox(height: percentHeight(context, 1)),
                   controller.isLoading.value
                       ? ShimmerCard(
                           height: percentHeight(context, 35),
@@ -205,7 +206,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   )),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -220,7 +221,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   )),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -234,7 +235,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: percentHeight(context, 5)),
+                              SizedBox(height: percentHeight(context, 1)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -365,26 +366,37 @@ class InvoiceView extends GetView<InvoiceController> {
                         controller.responseDetailInvoice.value.data.buy.buyStatus == 'done') {
                       return Container();
                     }
-                    return RaisedButton(
-                      onPressed: () {
+                    return XauriusButton(
+                      pressAble: true,
+                      text: controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
+                          ? 'invoice_confirm'.tr
+                          : 'made_payment_btn'.tr,
+                      onpressed: () {
                         Get.focusScope.unfocus();
                         controller.madePayment();
                       },
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      color: primaryColor,
-                      child: Container(
-                        width: percentWidth(context, 100),
-                        child: Center(
-                          child: Text(
-                            controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
-                                ? 'invoice_confirm'.tr
-                                : 'made_payment_btn'.tr,
-                            style: buttonStyle,
-                          ),
-                        ),
-                      ),
                     );
+                    // return RaisedButton(
+                    //   onPressed: () {
+                    //     Get.focusScope.unfocus();
+                    //     controller.madePayment();
+                    //   },
+                    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    //   color: primaryColor,
+                    //   child: Container(
+                    //     width: percentWidth(context, 100),
+                    //     child: Center(
+                    //       child: Text(
+                    //         controller.responseDetailInvoice.value.data.invoice.invoiceVa.vaNumber == '000'
+                    //             ? 'invoice_confirm'.tr
+                    //             : 'made_payment_btn'.tr,
+                    //         style: buttonStyle,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // );
                   }),
+                  SizedBox(height: percentHeight(context, 1)),
                   !controller.fromBuy.value
                       ? Container()
                       : controller.isLoading.value
@@ -398,7 +410,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                 Get.back();
                                 Get.back();
                               },
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                               color: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done' ? primaryColor : backgroundPanelColor,
                               child: Container(
                                 width: percentWidth(context, 100),

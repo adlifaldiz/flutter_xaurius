@@ -5,6 +5,7 @@ import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
+import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
@@ -78,7 +79,7 @@ class SendXauView extends GetView<SendXauController> {
                       SizedBox(height: percentHeight(context, 5)),
                       Text('Network Adress'),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.9), horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
                         decoration: BoxDecoration(
                             color: backgroundPanelColor.withOpacity(0.3),
@@ -195,17 +196,22 @@ class SendXauView extends GetView<SendXauController> {
                                           color: primaryColor,
                                         );
                                       }
-                                      return RaisedButton(
-                                        onPressed: () => controller.isStart.value ? null : controller.sendOTP(),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                        color: controller.isStart.value ? disableColor : primaryColor,
-                                        child: Center(
-                                          child: Text(
-                                            'trans_send_xau'.tr + ' OTP',
-                                            style: buttonStyle,
-                                          ),
-                                        ),
+                                      return XauriusButton(
+                                        pressAble: true,
+                                        text: 'trans_send_xau'.tr + ' OTP',
+                                        onpressed: () => controller.isStart.value ? null : controller.sendOTP(),
                                       );
+                                      // return RaisedButton(
+                                      //   onPressed: () => controller.isStart.value ? null : controller.sendOTP(),
+                                      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      //   color: controller.isStart.value ? disableColor : primaryColor,
+                                      //   child: Center(
+                                      //     child: Text(
+                                      //       'trans_send_xau'.tr + ' OTP',
+                                      //       style: buttonStyle,
+                                      //     ),
+                                      //   ),
+                                      // );
                                     },
                                   ),
                                 ],
@@ -224,20 +230,28 @@ class SendXauView extends GetView<SendXauController> {
                               color: primaryColor,
                             );
                           }
-                          return RaisedButton(
-                            onPressed: () {
+                          return XauriusButton(
+                            pressAble: true,
+                            text: 'trans_send_xau'.tr,
+                            onpressed: () {
                               Get.focusScope.unfocus();
                               controller.checkWD();
                             },
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            color: primaryColor,
-                            child: Center(
-                              child: Text(
-                                'Proceed',
-                                style: buttonStyle,
-                              ),
-                            ),
                           );
+                          // return RaisedButton(
+                          //   onPressed: () {
+                          //     Get.focusScope.unfocus();
+                          //     controller.checkWD();
+                          //   },
+                          //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          //   color: primaryColor,
+                          //   child: Center(
+                          //     child: Text(
+                          //       'Proceed',
+                          //       style: buttonStyle,
+                          //     ),
+                          //   ),
+                          // );
                         },
                       )
                     ],

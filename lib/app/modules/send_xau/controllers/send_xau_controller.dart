@@ -7,6 +7,7 @@ import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/text_controller_utils.dart';
 import 'package:flutter_xaurius/app/modules/auth/controllers/auth_controller.dart';
 import 'package:flutter_xaurius/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:flutter_xaurius/app/modules/history/send_history/controllers/send_history_controller.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -15,7 +16,8 @@ class SendXauController extends GetxController {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController qrController;
   final _repo = ApiRepository();
-  final auth = Get.find<AuthController>();
+  var auth = Get.find<AuthController>();
+  var sendHis = Get.find<SendHistoryController>();
   Timer timer;
   var start = 60.obs;
   var isLoadingOTP = false.obs;
@@ -140,11 +142,12 @@ class SendXauController extends GetxController {
 
   Future postWD() async {
     isLoading(true);
-
     final resp = await _repo.postWdXau(addressController.text, xauController.text, valueNetwork.value, otpController.text, auth.token);
     if (resp.success) {
+      sendHis.getWd(1);
       successSnackbar('succes_alert'.tr, resp.message);
     } else {
+      sendHis.getWd(1);
       dialogConnection('Oops', resp.message, () {
         Get.back();
       });

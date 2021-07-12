@@ -12,10 +12,13 @@ class ReceiveHistoryController extends GetxController {
   final _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   var depoData = <DepositData>[].obs;
+  var page = 1.obs;
   var isLoading = false.obs;
+  var isLoadMore = true.obs;
   @override
   void onInit() async {
-    await getDepo();
+    await getDepo(page);
+    onPaginate();
     super.onInit();
   }
 
@@ -25,13 +28,23 @@ class ReceiveHistoryController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 
-  Future getDepo() async {
+  Future getDepo(var page) async {
     isLoading(true);
-    final resp = await _repo.getDepoXau(auth.token);
+    isLoadMore(true);
+    final resp = await _repo.getDepoXau(page.toString(), auth.token);
     if (resp.success) {
-      depoData(resp.data.deposits);
+      if (resp.data.deposits.length > 0) {
+        depoData.addAll(resp.data.deposits);
+        isLoading(false);
+      } else {
+        print('no more data');
+        isLoadMore(false);
+      }
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();
@@ -40,9 +53,24 @@ class ReceiveHistoryController extends GetxController {
     isLoading(false);
   }
 
+  void onPaginate() {
+    scrollController
+      ..addListener(() {
+        if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+          page.value++;
+          if (isLoadMore.value) {
+            getDepo(page.value);
+          }
+        }
+      });
+  }
+
   Future onRefresh() async {
     depoData.clear();
-    onInit();
+    isLoadMore(true);
+    onPaginate();
+    page(1);
+    getDepo(page);
     update();
   }
 }
