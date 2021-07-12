@@ -21,7 +21,7 @@ class _ShimmerCardState extends State<ShimmerCard> {
       baseColor: backgroundPanelColor.withOpacity(0.9),
       highlightColor: textWhiteColor.withOpacity(0.1),
       child: Container(
-        width: Get.width ?? widget.width,
+        width: widget.width ?? Get.width,
         height: widget.height ?? percentHeight(context, 15),
         decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(20)),
       ),

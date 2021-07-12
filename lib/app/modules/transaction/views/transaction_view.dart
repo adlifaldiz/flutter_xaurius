@@ -455,17 +455,15 @@ class TransactionView extends GetView<TransactionController> {
                         ],
                       ),
                 SizedBox(height: percentHeight(context, 2)),
-                controller.dash.isLoading.value
-                    ? ShimmerCard()
-                    : GridView.count(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 5,
-                        children: [
-                          MenuTransaction(
+                Wrap(
+                  spacing: percentHeight(context, 2),
+                  children: [
+                    controller.dash.isLoading.value
+                        ? ShimmerCard(
+                            width: percentWidth(context, 27),
+                            height: percentHeight(context, 15),
+                          )
+                        : MenuTransaction(
                             onTap: () => controller.router(9),
                             labelTxt: 'trans_send_xau'.tr,
                             menuIcon: Icon(
@@ -474,7 +472,12 @@ class TransactionView extends GetView<TransactionController> {
                               size: 40,
                             ),
                           ),
-                          MenuTransaction(
+                    controller.dash.isLoading.value
+                        ? ShimmerCard(
+                            width: percentWidth(context, 27),
+                            height: percentHeight(context, 15),
+                          )
+                        : MenuTransaction(
                             onTap: () => controller.router(8),
                             labelTxt: 'trans_receive_xau'.tr,
                             menuIcon: Transform.rotate(
@@ -486,18 +489,60 @@ class TransactionView extends GetView<TransactionController> {
                               ),
                             ),
                           ),
+                    // MenuTransaction(
+                    //   onTap: () => controller.router(9),
+                    //   labelTxt: 'trans_send_xau'.tr,
+                    //   menuIcon: Icon(
+                    //     FontAwesomeIcons.telegramPlane,
+                    //     color: textWhiteColor,
+                    //     size: 40,
+                    //   ),
+                    // ),
+                  ],
+                ),
+                // controller.dash.isLoading.value
+                //     ? ShimmerCard()
+                //     : GridView.count(
+                //         padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 15)),
+                //         crossAxisCount: 2,
+                //         shrinkWrap: true,
+                //         physics: NeverScrollableScrollPhysics(),
+                //         crossAxisSpacing: 10,
+                //         mainAxisSpacing: 5,
+                //         children: [
+                //           MenuTransaction(
+                //             onTap: () => controller.router(9),
+                //             labelTxt: 'trans_send_xau'.tr,
+                //             menuIcon: Icon(
+                //               FontAwesomeIcons.telegramPlane,
+                //               color: textWhiteColor,
+                //               size: 40,
+                //             ),
+                //           ),
+                //           MenuTransaction(
+                //             onTap: () => controller.router(8),
+                //             labelTxt: 'trans_receive_xau'.tr,
+                //             menuIcon: Transform.rotate(
+                //               angle: 180 * math.pi / 180,
+                //               child: Icon(
+                //                 FontAwesomeIcons.telegramPlane,
+                //                 color: textWhiteColor,
+                //                 size: 40,
+                //               ),
+                //             ),
+                //           ),
 
-                          // MenuTransaction(
-                          //   onTap: () => controller.router(10),
-                          //   labelTxt: 'trans_send'.tr,
-                          //   menuIcon: FaIcon(
-                          //     FontAwesomeIcons.exchangeAlt,
-                          //     color: textWhiteColor,
-                          //     size: 40,
-                          //   ),
-                          // ),
-                        ],
-                      ),
+                // MenuTransaction(
+                //   onTap: () => controller.router(10),
+                //   labelTxt: 'trans_send'.tr,
+                //   menuIcon: FaIcon(
+                //     FontAwesomeIcons.exchangeAlt,
+                //     color: textWhiteColor,
+                //     size: 40,
+                //   ),
+                // ),
+                //   ],
+                // ),
                 // SizedBox(height: percentHeight(context, 5)),
                 // controller.dash.isLoading.value
                 //     ? ShimmerText()

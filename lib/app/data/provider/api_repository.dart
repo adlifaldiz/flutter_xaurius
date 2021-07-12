@@ -217,8 +217,10 @@ class ApiRepository {
     return ResponseWithdraw.fromJson(response.body);
   }
 
-  Future<ResponseDeposit> getDepoXau(String jwt) async {
-    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET);
+  Future<ResponseDeposit> getDepoXau(String page, String jwt) async {
+    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET, request: {
+      'page': page,
+    });
     return ResponseDeposit.fromJson(response.body);
   }
 }
