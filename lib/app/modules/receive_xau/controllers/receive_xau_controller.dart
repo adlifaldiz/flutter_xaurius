@@ -19,7 +19,13 @@ class ReceiveXauController extends GetxController {
   Future onInit() async {
     setTextController();
     balance.value = dash.balance;
-    addressController.text = auth.userData.orangEthAddress.toString();
+    print("address = " + auth.userData.orangEthAddress.toString());
+    if (auth.userData.orangEthAddress.toString().isEmpty ||
+        auth.userData.orangEthAddress.toString() == " ") {
+      addressController.text = auth.userData.orangEthAddress.toString();
+    } else {
+      addressController.clear();
+    }
     super.onInit();
   }
 
