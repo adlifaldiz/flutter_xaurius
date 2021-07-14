@@ -87,8 +87,8 @@ class UploadDocumentController extends GetxController {
     isLoading(true);
     final resp = await _repo.kycDocument(valueIdType.value.toString(), nomorKTP.text, idFile, nomorNPWP.text, nFile, auth.token);
     if (resp.success) {
-      onInit();
-      auth.getProfileData();
+      await onInit();
+      await auth.getProfileData();
       Get.back();
       Get.back();
       successSnackbar('success'.tr, 'suc_ud'.tr);
@@ -138,7 +138,7 @@ class UploadDocumentController extends GetxController {
 
   void takeImageKTP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 1);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
       if (pickedFile != null) {
         selectedImagePathKtp.value = pickedFile.path;
         sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
@@ -156,7 +156,7 @@ class UploadDocumentController extends GetxController {
 
   void takeImageNPWP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 1);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
       if (pickedFile != null) {
         selectedImagePathNpwp.value = pickedFile.path;
         sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);

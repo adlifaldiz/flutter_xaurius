@@ -17,8 +17,10 @@ class ReceiveHistoryController extends GetxController {
   var isLoadMore = true.obs;
   @override
   void onInit() async {
-    await getDepo(page);
-    onPaginate();
+    if (auth.userData.orangKycStatus == 'approve') {
+      await getDepo(page);
+      onPaginate();
+    }
     super.onInit();
   }
 
@@ -66,11 +68,13 @@ class ReceiveHistoryController extends GetxController {
   }
 
   Future onRefresh() async {
-    depoData.clear();
-    isLoadMore(true);
-    onPaginate();
-    page(1);
-    getDepo(page);
-    update();
+    if (auth.userData.orangKycStatus == 'approve') {
+      depoData.clear();
+      isLoadMore(true);
+      onPaginate();
+      page(1);
+      getDepo(page);
+      update();
+    }
   }
 }
