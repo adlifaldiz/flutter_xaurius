@@ -175,13 +175,7 @@ class AppPages {
         ),
       ],
     ),
-    GetPage(name: _Paths.MENU, page: () => MenuView(), bindings: [
-      MenuBinding(),
-      DashboardBinding(),
-      HistoryBinding(),
-      TransactionBinding(),
-      SettingBinding(),
-    ]),
+    GetPage(name: _Paths.MENU, page: () => MenuView(), binding: MenuBinding()),
     GetPage(
       name: _Paths.SETTING,
       page: () => SettingView(),
