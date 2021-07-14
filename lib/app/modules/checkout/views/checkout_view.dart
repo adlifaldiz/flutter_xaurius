@@ -330,7 +330,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                               visible: controller.useVoucher.value,
                                               child: Container(
                                                 padding:
-                                                    EdgeInsets.symmetric(vertical: percentHeight(context, 0.8), horizontal: percentWidth(context, 5)),
+                                                    EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                                                 width: Get.width,
                                                 decoration: BoxDecoration(
                                                     color: fillColor,

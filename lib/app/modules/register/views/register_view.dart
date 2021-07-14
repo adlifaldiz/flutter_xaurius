@@ -24,22 +24,22 @@ class RegisterView extends GetView<RegisterController> {
             body: SafeArea(
               child: Stack(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          width: MediaQuery.of(context).size.width / 2,
-                          bottom: 0,
-                          left: 0,
-                          child: Image.asset(
-                            'assets/images/mesh-left.png',
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: double.infinity,
+                  //   child: Stack(
+                  //     children: [
+                  //       Positioned(
+                  //         width: MediaQuery.of(context).size.width / 2,
+                  //         bottom: 0,
+                  //         left: 0,
+                  //         child: Image.asset(
+                  //           'assets/images/mesh-left.png',
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.all(20),

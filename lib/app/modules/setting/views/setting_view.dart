@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
-import 'package:flutter_xaurius/app/routes/app_pages.dart';
-import 'package:flutter_xaurius/app/widget/coming_soon.dart';
 import 'package:flutter_xaurius/app/widget/menu_tile.dart';
-import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xau_container_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -39,11 +35,11 @@ class SettingView extends GetView<SettingController> {
                       title: 'setting_profile'.tr,
                       onTap: () => controller.router(1),
                     ),
-                    MenuTile(
-                      icon: FontAwesomeIcons.userLock,
-                      title: 'setting_pin'.tr,
-                      onTap: () {},
-                    ),
+                    // MenuTile(
+                    //   icon: FontAwesomeIcons.userLock,
+                    //   title: 'setting_pin'.tr,
+                    //   onTap: () {},
+                    // ),
                     MenuTile(
                       icon: FontAwesomeIcons.building,
                       title: 'bank_account'.tr,

@@ -79,7 +79,7 @@ class SendXauView extends GetView<SendXauController> {
                       SizedBox(height: percentHeight(context, 5)),
                       Text('Network Adress'),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.8), horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
                         decoration:
                             BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),

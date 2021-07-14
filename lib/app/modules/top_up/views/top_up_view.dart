@@ -57,7 +57,7 @@ class TopUpView extends GetView<TopUpController> {
                                         Obx(() {
                                           return Container(
                                             padding:
-                                                EdgeInsets.symmetric(vertical: percentHeight(context, 0.8), horizontal: percentWidth(context, 5)),
+                                                EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                                             width: percentWidth(context, 100),
                                             decoration: BoxDecoration(
                                                 color: fillColor,
