@@ -21,9 +21,9 @@ class TopUpDetailController extends GetxController {
   var invoiceId;
 
   @override
-  void onInit() {
+  void onInit() async {
     invoiceId = Get.arguments;
-    getDetailInvoices();
+    await getDetailInvoices();
     super.onInit();
   }
 
@@ -54,17 +54,18 @@ class TopUpDetailController extends GetxController {
     isLoadingForm(true);
     final resp = await _repo.postMadePayment(invoiceId.toString(), auth.token);
     if (resp.success) {
-      successSnackbar('Status', resp.message);
+      topHis.onRefresh();
       getDetailInvoices();
       topUp.onInit();
       auth.getProfileData();
       dash.onInit();
-      topHis.getTopUp(1);
+      successSnackbar('Status', resp.message);
     } else {
       dialogConnection('Oops', resp.message, () {
         getDetailInvoices();
         topUp.onInit();
         auth.getProfileData();
+        topHis.onRefresh();
         Get.back();
       });
     }

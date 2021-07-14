@@ -328,76 +328,76 @@ class DashboardView extends GetView<DashboardController> {
                           ),
                     SizedBox(height: percentHeight(context, 5)),
 
-                    controller.isLoading.value
-                        ? ShimmerText()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    FontAwesomeIcons.bullhorn,
-                                    color: accentColor,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'dash_promo'.tr,
-                                    style: textTitle,
-                                  ),
-                                ],
-                              ),
-                              // GestureDetector(
-                              //   onTap: () => Get.toNamed(Routes.SOCIAL_MEDIA),
-                              //   child: Text(
-                              //     'see_all'.tr,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                    SizedBox(height: percentHeight(context, 2)),
-                    controller.isLoading.value
-                        ? ShimmerCard()
-                        : CarouselSlider(
-                            options: CarouselOptions(
-                              // aspectRatio: 16 / 5,
-                              initialPage: controller.indexPromos.value,
-                              autoPlay: true,
-                              autoPlayInterval: Duration(seconds: 3),
-                              autoPlayAnimationDuration: Duration(milliseconds: 800),
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              pauseAutoPlayOnTouch: true,
-                              viewportFraction: 1.0,
-                              enlargeCenterPage: true,
-                              enableInfiniteScroll: false,
-                              onPageChanged: (index, reason) {
-                                return controller.onPromosChange(index, reason);
-                              },
-                            ),
-                            items: controller.promoList.map((promo) {
-                              return Builder(builder: (BuildContext context) {
-                                return Container(child: promo);
-                              });
-                            }).toList(),
-                          ),
-                    controller.isLoading.value
-                        ? ShimmerText()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: controller.map<Widget>(controller.promoList, (index, url) {
-                              return AnimatedContainer(
-                                width: controller.indexPromos.value == index ? 20.0 : 7,
-                                height: 7.0,
-                                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: controller.indexPromos.value == index ? Colors.yellow : Colors.grey,
-                                ),
-                                duration: Duration(milliseconds: 300),
-                              );
-                            }),
-                          ),
-                    SizedBox(height: percentHeight(context, 5)),
+                    // controller.isLoading.value
+                    //     ? ShimmerText()
+                    //     : Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Row(
+                    //             mainAxisAlignment: MainAxisAlignment.start,
+                    //             children: [
+                    //               Icon(
+                    //                 FontAwesomeIcons.bullhorn,
+                    //                 color: accentColor,
+                    //               ),
+                    //               SizedBox(width: 10),
+                    //               Text(
+                    //                 'dash_promo'.tr,
+                    //                 style: textTitle,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           // GestureDetector(
+                    //           //   onTap: () => Get.toNamed(Routes.SOCIAL_MEDIA),
+                    //           //   child: Text(
+                    //           //     'see_all'.tr,
+                    //           //   ),
+                    //           // ),
+                    //         ],
+                    //       ),
+                    // SizedBox(height: percentHeight(context, 2)),
+                    // controller.isLoading.value
+                    //     ? ShimmerCard()
+                    //     : CarouselSlider(
+                    //         options: CarouselOptions(
+                    //           // aspectRatio: 16 / 5,
+                    //           initialPage: controller.indexPromos.value,
+                    //           autoPlay: true,
+                    //           autoPlayInterval: Duration(seconds: 3),
+                    //           autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    //           autoPlayCurve: Curves.fastOutSlowIn,
+                    //           pauseAutoPlayOnTouch: true,
+                    //           viewportFraction: 1.0,
+                    //           enlargeCenterPage: true,
+                    //           enableInfiniteScroll: false,
+                    //           onPageChanged: (index, reason) {
+                    //             return controller.onPromosChange(index, reason);
+                    //           },
+                    //         ),
+                    //         items: controller.promoList.map((promo) {
+                    //           return Builder(builder: (BuildContext context) {
+                    //             return Container(child: promo);
+                    //           });
+                    //         }).toList(),
+                    //       ),
+                    // controller.isLoading.value
+                    //     ? ShimmerText()
+                    //     : Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: controller.map<Widget>(controller.promoList, (index, url) {
+                    //           return AnimatedContainer(
+                    //             width: controller.indexPromos.value == index ? 20.0 : 7,
+                    //             height: 7.0,
+                    //             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    //             decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               color: controller.indexPromos.value == index ? Colors.yellow : Colors.grey,
+                    //             ),
+                    //             duration: Duration(milliseconds: 300),
+                    //           );
+                    //         }),
+                    //       ),
+                    // SizedBox(height: percentHeight(context, 5)),
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //   children: [

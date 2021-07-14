@@ -14,7 +14,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 class HistoryController extends GetxController {
   final GlobalKey<LiquidPullToRefreshState> refreshHistory = GlobalKey<LiquidPullToRefreshState>();
   final auth = Get.find<AuthController>();
-  final buyHistory = Get.find<BuyHistoryController>();
+  // final buyHistory = Get.find<BuyHistoryController>();
   var isLoading = false.obs;
   var chipValue = 0.obs;
   PageController pageController;
@@ -34,10 +34,11 @@ class HistoryController extends GetxController {
     ChipsModel(3, 'trans_receive_xau'.tr),
     ChipsModel(4, 'trans_send_xau'.tr),
   ];
+
   @override
   void onInit() async {
-    pageController = PageController(keepPage: true);
-    auth.getProfileData();
+    pageController = PageController();
+    // auth.getProfileData();
     super.onInit();
   }
 

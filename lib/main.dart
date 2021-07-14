@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
       onInit: () {
         Get.lazyPut(() => AuthController());
       },
+      smartManagement: SmartManagement.full,
       theme: ThemeData(
         unselectedWidgetColor: primaryColor,
         primaryColor: primaryColor,

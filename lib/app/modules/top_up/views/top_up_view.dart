@@ -36,23 +36,18 @@ class TopUpView extends GetView<TopUpController> {
               child: CustomScrollView(
                 slivers: [
                   SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                       if (index == 0) {
                         return Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: percentWidth(context, 5),
-                              vertical: percentHeight(context, 1)),
-                          child: controller.isLoading.value ||
-                                  controller.isLoadingList.value
+                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+                          child: controller.isLoading.value || controller.isLoadingList.value
                               ? ShimmerCard(height: percentHeight(context, 25))
                               : XauriusContainer(
                                   child: Form(
                                     key: controller.formKey,
                                     autovalidateMode: controller.mode.value,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Top Up IDR',
@@ -61,44 +56,27 @@ class TopUpView extends GetView<TopUpController> {
                                         SizedBox(height: 20),
                                         Obx(() {
                                           return Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical:
-                                                    percentHeight(context, 1),
-                                                horizontal:
-                                                    percentWidth(context, 5)),
+                                            padding:
+                                                EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                                             width: percentWidth(context, 100),
                                             decoration: BoxDecoration(
                                                 color: fillColor,
-                                                border: Border.all(
-                                                    color: brokenWhiteColor),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        percentWidth(
-                                                            context, 3))),
+                                                border: Border.all(color: brokenWhiteColor),
+                                                borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                                             child: DropdownButtonHideUnderline(
                                               child: DropdownButton(
                                                 iconEnabledColor: primaryColor,
-                                                iconDisabledColor:
-                                                    brokenWhiteColor,
-                                                dropdownColor:
-                                                    backgroundPanelColor,
-                                                value: controller
-                                                    .merchantId.value
-                                                    .toString(),
-                                                items: controller.listMerchant
-                                                    .map<
-                                                        DropdownMenuItem<
-                                                            String>>((element) {
+                                                iconDisabledColor: brokenWhiteColor,
+                                                dropdownColor: backgroundPanelColor,
+                                                value: controller.merchantId.value.toString(),
+                                                items: controller.listMerchant.map<DropdownMenuItem<String>>((element) {
                                                   return new DropdownMenuItem(
-                                                    child: Text(
-                                                        element.merchantName),
-                                                    value: element.merchantId
-                                                        .toString(),
+                                                    child: Text(element.merchantName),
+                                                    value: element.merchantId.toString(),
                                                   );
                                                 }).toList(),
                                                 onChanged: (value) {
-                                                  controller.merchantId.value =
-                                                      value.toString();
+                                                  controller.merchantId.value = value.toString();
                                                 },
                                               ),
                                             ),
@@ -107,19 +85,15 @@ class TopUpView extends GetView<TopUpController> {
                                         SizedBox(height: 10),
                                         XauTextField(
                                           useObscure: false,
-                                          labelText:
-                                              'Top up IDR minimal Rp100.000',
-                                          controller:
-                                              controller.nominalTopUpControl,
+                                          labelText: 'Top up IDR minimal Rp100.000',
+                                          controller: controller.nominalTopUpControl,
                                           keyboardType: TextInputType.number,
                                           // inputFormatters: [WhitelistingTextInputFormatter(RegExp(numberValidationRule))],
                                           validator: (value) {
-                                            return validateNominalTopTup(
-                                                controller.nominalTopUpControl);
+                                            return validateNominalTopTup(controller.nominalTopUpControl);
                                           },
                                           prefixIcon: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Text('Rp'),
                                             ],
@@ -138,15 +112,12 @@ class TopUpView extends GetView<TopUpController> {
                                             text: 'next_btn'.tr,
                                             onpressed: () {
                                               Get.focusScope.unfocus();
-                                              final isValid = controller
-                                                  .formKey.currentState
-                                                  .validate();
+                                              final isValid = controller.formKey.currentState.validate();
                                               if (!isValid) {
                                                 // controller.mode.value = AutovalidateMode.onUserInteraction;
                                                 return;
                                               }
-                                              controller.formKey.currentState
-                                                  .save();
+                                              controller.formKey.currentState.save();
                                               controller.postTopUp();
                                             },
                                           );
@@ -181,45 +152,35 @@ class TopUpView extends GetView<TopUpController> {
                                 ),
                         );
                       } else {
-                        final Depoidr depoList =
-                            controller.listTopTup.value[index - 1];
+                        final Depoidr depoList = controller.listTopTup.value[index - 1];
 
-                        return controller.isLoading.value ||
-                                controller.isLoadingList.value
+                        return controller.isLoading.value || controller.isLoadingList.value
                             ? ShimmerList(itemCount: 6)
                             : Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: percentWidth(context, 5),
-                                    vertical: percentHeight(context, 1)),
+                                padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
                                 child: InkWell(
-                                  onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL,
-                                      arguments: depoList.invoiceId),
+                                  onTap: () => Get.toNamed(Routes.TOP_UP_DETAIL, arguments: depoList.invoiceId),
                                   child: XauriusContainer(
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Invoice #' +
-                                                  depoList.invoiceId.toString(),
+                                              'Invoice #' + depoList.invoiceId.toString(),
                                               style: textTitle,
                                             ),
                                             Text(
                                               depoList.depoidrStatus,
-                                              style: textTitle.copyWith(
-                                                  color: primaryColor),
+                                              style: textTitle.copyWith(color: primaryColor),
                                               textAlign: TextAlign.end,
                                             ),
                                           ],
                                         ),
                                         SizedBox(height: 10),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               'Total Top up:',

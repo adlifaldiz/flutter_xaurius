@@ -24,22 +24,22 @@ class ReLoginView extends GetView<ReLoginController> {
         body: SafeArea(
           child: Stack(
             children: [
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      width: MediaQuery.of(context).size.width / 2,
-                      top: 0,
-                      right: 0,
-                      child: Image.asset(
-                        'assets/images/mesh-right.png',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   height: double.infinity,
+              //   child: Stack(
+              //     children: [
+              //       Positioned(
+              //         width: MediaQuery.of(context).size.width / 2,
+              //         top: 0,
+              //         right: 0,
+              //         child: Image.asset(
+              //           'assets/images/mesh-right.png',
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(20),

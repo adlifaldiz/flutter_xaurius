@@ -123,6 +123,7 @@ class SendXauController extends GetxController {
   }
 
   Future sendOTP() async {
+    otpController.clear();
     isLoadingOTP(true);
     isStart(true);
     final resp = await _repo.getOTP(auth.token);

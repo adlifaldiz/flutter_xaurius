@@ -39,10 +39,10 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.9), horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
                         decoration: BoxDecoration(
-                            color: backgroundPanelColor.withOpacity(0.3),
+                            color: fillColor,
                             border: Border.all(color: brokenWhiteColor),
                             borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                         child: DropdownButtonHideUnderline(

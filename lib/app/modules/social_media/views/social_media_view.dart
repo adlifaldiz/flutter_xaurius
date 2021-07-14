@@ -125,7 +125,7 @@ class SocialMediaView extends GetView<SocialMediaController> {
                   color: brokenWhiteColor,
                   title: 'Twitter',
                   style: stylePrimary.copyWith(fontSize: 20),
-                  onTap: () {},
+                  onTap: () => launch('https://twitter.com/XauriusOfficial'),
                 ),
               ),
             ),
@@ -141,7 +141,7 @@ class SocialMediaView extends GetView<SocialMediaController> {
                   title: 'Linked In',
                   style: stylePrimary.copyWith(fontSize: 20),
                   onTap: () {
-                    launch('https://twitter.com/XauriusOfficial');
+                    launch('https://www.linkedin.com/company/xaurius/');
                   },
                 ),
               ),
