@@ -18,9 +18,10 @@ class SendHistoryController extends GetxController {
 
   @override
   void onInit() async {
-    await getWd(page);
-    onPaginate();
-
+    if (auth.userData.orangKycStatus == 'approve') {
+      await getWd(page);
+      onPaginate();
+    }
     super.onInit();
   }
 
@@ -68,11 +69,13 @@ class SendHistoryController extends GetxController {
   }
 
   Future onRefresh() async {
-    wdData.clear();
-    isLoadMore(true);
-    onPaginate();
-    page(1);
-    getWd(page);
-    update();
+    if (auth.userData.orangKycStatus == 'approve') {
+      wdData.clear();
+      isLoadMore(true);
+      onPaginate();
+      page(1);
+      getWd(page);
+      update();
+    }
   }
 }

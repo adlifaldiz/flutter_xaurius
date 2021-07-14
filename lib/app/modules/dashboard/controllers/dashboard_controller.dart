@@ -14,8 +14,7 @@ import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class DashboardController extends GetxController {
-  final GlobalKey<LiquidPullToRefreshState> refreshDash =
-      GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshDash = GlobalKey<LiquidPullToRefreshState>();
   final _repo = ApiRepository();
   final auth = Get.find<AuthController>();
   var isBuy = true.obs;
@@ -39,7 +38,6 @@ class DashboardController extends GetxController {
   void onInit() {
     auth.getProfileData();
     getDashboardContent();
-
     super.onInit();
   }
 
@@ -48,8 +46,7 @@ class DashboardController extends GetxController {
     final resp = await _repo.getDashboard(auth.token);
     if (resp.success) {
       charts(resp.data.charts);
-      balance(resp.data.myBalances)
-          .sort((a, b) => (a.balanceSymbol).compareTo(b.balanceSymbol));
+      balance(resp.data.myBalances).sort((a, b) => (a.balanceSymbol).compareTo(b.balanceSymbol));
       goldPrice(resp.data.currentGoldPrice);
       // balance.sort(a,b)
     } else {
