@@ -52,11 +52,12 @@ class RegisterView extends GetView<RegisterController> {
                           ),
                           SizedBox(height: percentHeight(context, 3)),
                           Text(
-                            'welcome'.tr,
-                            style: Theme.of(context).textTheme.headline4.copyWith(
-                                  color: textWhiteColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            'regis_welcome'.tr,
+                            style:
+                                Theme.of(context).textTheme.headline4.copyWith(
+                                      color: textWhiteColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                           ),
                           SizedBox(height: percentHeight(context, 5)),
                           Text(
@@ -87,16 +88,21 @@ class RegisterView extends GetView<RegisterController> {
                                 ),
                                 SizedBox(height: percentHeight(context, 3)),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           'regis_has_account'.tr,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.subhead.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subhead
+                                              .copyWith(
                                                 color: textWhiteColor,
                                                 fontWeight: FontWeight.normal,
                                               ),
@@ -106,7 +112,10 @@ class RegisterView extends GetView<RegisterController> {
                                           child: Text(
                                             'regis_regis_btn'.tr,
                                             textAlign: TextAlign.center,
-                                            style: Theme.of(context).textTheme.subhead.copyWith(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subhead
+                                                .copyWith(
                                                   color: accentColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -129,9 +138,11 @@ class RegisterView extends GetView<RegisterController> {
                                     text: 'regis_btn'.tr,
                                     onpressed: () {
                                       FocusScope.of(context).unfocus();
-                                      final isValidEmail = _formKey.currentState.validate();
+                                      final isValidEmail =
+                                          _formKey.currentState.validate();
                                       if (!isValidEmail) {
-                                        mode = AutovalidateMode.onUserInteraction;
+                                        mode =
+                                            AutovalidateMode.onUserInteraction;
                                         return;
                                       }
                                       _formKey.currentState.save();
@@ -171,7 +182,10 @@ class RegisterView extends GetView<RegisterController> {
                             child: Text(
                               '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .copyWith(
                                     color: accentColor,
                                   ),
                             ),
