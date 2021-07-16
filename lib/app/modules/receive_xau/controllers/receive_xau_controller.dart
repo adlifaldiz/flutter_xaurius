@@ -20,11 +20,10 @@ class ReceiveXauController extends GetxController {
     setTextController();
     balance.value = dash.balance;
     print("address = " + auth.userData.orangEthAddress.toString());
-    if (auth.userData.orangEthAddress.toString().isEmpty ||
-        auth.userData.orangEthAddress.toString() == " ") {
-      addressController.text = auth.userData.orangEthAddress.toString();
-    } else {
+    if (auth.userData.orangEthAddress.toString().isEmpty || auth.userData.orangEthAddress.toString() == "") {
       addressController.clear();
+    } else {
+      addressController.text = auth.userData.orangEthAddress.toString();
     }
     super.onInit();
   }
@@ -42,6 +41,7 @@ class ReceiveXauController extends GetxController {
   @override
   void dispose() {
     qrController.dispose();
+    super.dispose();
   }
 
   void setTextController() {
