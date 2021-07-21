@@ -228,6 +228,7 @@ String validateWdOtp(String value) {
   }
 }
 
+
 // String validateEmail(String value) {
 //   if (value.isEmpty) {
 //     return 'Alamat email tidak boleh kosong';

@@ -66,7 +66,9 @@ class DashboardView extends GetView<DashboardController> {
                                     ),
                                     FlatButton(
                                       color: primaryColor,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
                                       onPressed: () => controller.router(2),
                                       child: Text(
                                         'kyc_btn'.tr,
@@ -82,7 +84,8 @@ class DashboardView extends GetView<DashboardController> {
                             ],
                           )
                         : Container(),
-                    controller.auth.userData.orangKycAskForReview && !controller.auth.userData.orangKycEditAvailable
+                    controller.auth.userData.orangKycAskForReview &&
+                            !controller.auth.userData.orangKycEditAvailable
                         ? Column(
                             children: [
                               XauriusContainer(
@@ -106,15 +109,23 @@ class DashboardView extends GetView<DashboardController> {
                       children: [
                         Text(
                           controller.greeting(),
-                          style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.normal, fontSize: 16),
+                          style: TextStyle(
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16),
                         ),
                         SizedBox(height: 5),
                         controller.isLoading.value
                             ? ShimmerText()
                             : Text(
-                                controller.auth.userData.orangName == null ? controller.auth.userData.orangEmail : controller.auth.userData.orangName,
+                                controller.auth.userData.orangName == null
+                                    ? controller.auth.userData.orangEmail
+                                    : controller.auth.userData.orangName,
                                 overflow: TextOverflow.fade,
-                                style: TextStyle(letterSpacing: 1, fontWeight: FontWeight.bold, fontSize: 16),
+                                style: TextStyle(
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
                               ),
                       ],
                     ),
@@ -148,25 +159,36 @@ class DashboardView extends GetView<DashboardController> {
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               InkWell(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 onTap: () {
                                                   controller.onChangeBuy(true);
                                                 },
                                                 child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
                                                   decoration: BoxDecoration(
-                                                    color: controller.isBuy.value ? greyColor : Colors.transparent,
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    color: controller
+                                                            .isBuy.value
+                                                        ? greyColor
+                                                        : Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                   ),
                                                   child: Text(
                                                     'Buy',
@@ -178,15 +200,23 @@ class DashboardView extends GetView<DashboardController> {
                                               ),
                                               SizedBox(width: 10),
                                               InkWell(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 onTap: () {
                                                   controller.onChangeBuy(false);
                                                 },
                                                 child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
                                                   decoration: BoxDecoration(
-                                                    color: controller.isBuy.value ? Colors.transparent : greyColor,
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    color:
+                                                        controller.isBuy.value
+                                                            ? Colors.transparent
+                                                            : greyColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                   ),
                                                   child: Text(
                                                     'Sell',
@@ -198,14 +228,20 @@ class DashboardView extends GetView<DashboardController> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: percentHeight(context, 2)),
+                                          SizedBox(
+                                              height:
+                                                  percentHeight(context, 2)),
                                           Text(
                                             controller.isLoading.value
                                                 ? '-'
                                                 : controller.isBuy.value
-                                                    ? "IDR: ${controller.goldPrice.value.chartpriceBuy}" ?? '-'
-                                                    : "IDR: ${controller.goldPrice.value.chartpriceSell}" ?? '-',
-                                            style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                                                    ? "IDR: ${controller.goldPrice.value.chartpriceBuy}" ??
+                                                        '-'
+                                                    : "IDR: ${controller.goldPrice.value.chartpriceSell}" ??
+                                                        '-',
+                                            style: stylePrimary.copyWith(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ],
@@ -215,8 +251,11 @@ class DashboardView extends GetView<DashboardController> {
                                       onTap: () => controller.router(3),
                                       child: Container(
                                         padding: EdgeInsets.all(5),
-                                        decoration:
-                                            BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: primaryColor, width: 2)),
                                         child: Icon(
                                           FontAwesomeIcons.chartLine,
                                           size: 14,
@@ -261,7 +300,8 @@ class DashboardView extends GetView<DashboardController> {
                               enlargeCenterPage: true,
                               enableInfiniteScroll: false,
                               onPageChanged: (index, reason) {
-                                return controller.onBalancesChange(index, reason);
+                                return controller.onBalancesChange(
+                                    index, reason);
                               },
                             ),
                             items: controller.balance.isEmpty
@@ -273,35 +313,50 @@ class DashboardView extends GetView<DashboardController> {
                                     ),
                                   ]
                                 : controller.balance.map((balances) {
-                                    return Builder(builder: (BuildContext context) {
+                                    return Builder(
+                                        builder: (BuildContext context) {
                                       return Container(
-                                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                percentWidth(context, 5),
+                                            vertical:
+                                                percentHeight(context, 3)),
                                         width: Get.width,
                                         decoration: BoxDecoration(
-                                          color: backgroundPanelColor.withOpacity(0.5),
-                                          borderRadius: BorderRadius.circular(20),
+                                          color: backgroundPanelColor
+                                              .withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         foregroundDecoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             image: DecorationImage(
-                                                alignment: Alignment.bottomRight,
+                                                alignment:
+                                                    Alignment.bottomRight,
                                                 image: AssetImage(
                                                   'assets/images/mesh-bottom.png',
                                                 ))),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               balances.balanceSymbol,
-                                              style: textTitle.copyWith(color: primaryColor),
+                                              style: textTitle.copyWith(
+                                                  color: primaryColor),
                                             ),
                                             SizedBox(height: 5),
                                             Text(
                                               balances.balanceSymbol == 'IDR'
-                                                  ? customCurrency(balances.balanceValue, symbol: 'Rp ')
+                                                  ? customCurrency(
+                                                      balances.balanceValue,
+                                                      symbol: 'Rp ')
                                                   : balances.balanceValue,
-                                              style: textTitle.copyWith(fontSize: 20),
+                                              style: textTitle.copyWith(
+                                                  fontSize: 20),
                                             ),
                                           ],
                                         ),
@@ -313,14 +368,20 @@ class DashboardView extends GetView<DashboardController> {
                         ? ShimmerText()
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: controller.map<Widget>(controller.balance, (index, url) {
+                            children: controller.map<Widget>(controller.balance,
+                                (index, url) {
                               return AnimatedContainer(
-                                width: controller.indexBalances.value == index ? 20.0 : 6,
+                                width: controller.indexBalances.value == index
+                                    ? 20.0
+                                    : 6,
                                 height: 6.0,
-                                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 2.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: controller.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                                  color: controller.indexBalances.value == index
+                                      ? Colors.yellow
+                                      : Colors.grey,
                                 ),
                                 duration: Duration(milliseconds: 300),
                               );
@@ -522,9 +583,12 @@ class DashboardView extends GetView<DashboardController> {
                                     launch("https://t.me/xauriusindonesia");
                                   },
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: percentWidth(context, 5),
+                                        vertical: percentHeight(context, 2)),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Icon(
                                           FontAwesomeIcons.telegram,
@@ -546,12 +610,16 @@ class DashboardView extends GetView<DashboardController> {
                                 InkWell(
                                   borderRadius: BorderRadius.circular(20),
                                   onTap: () {
-                                    launch('https://www.instagram.com/xaurius/?igshid=1nv4wja78ge4i');
+                                    launch(
+                                        'https://www.instagram.com/xaurius/?igshid=1nv4wja78ge4i');
                                   },
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: percentWidth(context, 5),
+                                        vertical: percentHeight(context, 2)),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Icon(
                                           FontAwesomeIcons.instagram,

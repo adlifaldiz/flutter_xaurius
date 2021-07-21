@@ -30,6 +30,7 @@ class SendXauController extends GetxController {
   var valueNetwork = 'ETH'.obs;
   var xauBalance = 0.0.obs;
   var mode = AutovalidateMode.disabled.obs;
+  final approve = 'approve';
 
   List<String> listNetwork = ['ETH', 'BSC'];
 
@@ -40,7 +41,11 @@ class SendXauController extends GetxController {
   Future onInit() async {
     setTextController();
     balance.value = dash.balance;
-    xauBalance.value = double.parse(balance.where((itemBalance) => itemBalance.balanceSymbol == "XAU").single.balanceValue.toString());
+    xauBalance.value = double.parse(balance
+        .where((itemBalance) => itemBalance.balanceSymbol == "XAU")
+        .single
+        .balanceValue
+        .toString());
     super.onInit();
   }
 
@@ -80,17 +85,21 @@ class SendXauController extends GetxController {
   onQtyChange(val) {
     if (val.isEmpty) {
       xauController.text = '';
-      xauController.selection = TextSelection.fromPosition(TextPosition(offset: xauController.text.length));
+      xauController.selection = TextSelection.fromPosition(
+          TextPosition(offset: xauController.text.length));
       idrController.text = '0';
     } else if (val[0] == '.') {
       xauController.text = '0.';
-      xauController.selection = TextSelection.fromPosition(TextPosition(offset: xauController.text.length));
+      xauController.selection = TextSelection.fromPosition(
+          TextPosition(offset: xauController.text.length));
     } else if (val[0] == '0' && val[1].toString().isNum) {
       xauController.text = '0.';
-      xauController.selection = TextSelection.fromPosition(TextPosition(offset: xauController.text.length));
+      xauController.selection = TextSelection.fromPosition(
+          TextPosition(offset: xauController.text.length));
     } else if (val.contains(',')) {
       xauController.text = val.replaceAll(',', '.');
-      xauController.selection = TextSelection.fromPosition(TextPosition(offset: xauController.text.length));
+      xauController.selection = TextSelection.fromPosition(
+          TextPosition(offset: xauController.text.length));
     } else {
       var value = double.parse(val);
       var subtotal = double.parse(dash.goldPrice.value.chartpriceBuy) * value;
@@ -104,7 +113,8 @@ class SendXauController extends GetxController {
 
     if (val.toString().isEmpty) {
       idrController.text = '';
-      idrController.selection = TextSelection.fromPosition(TextPosition(offset: idrController.text.length));
+      idrController.selection = TextSelection.fromPosition(
+          TextPosition(offset: idrController.text.length));
     }
     // else if (val[0] == '.') {
     //   idrController.text = '5';
@@ -143,7 +153,8 @@ class SendXauController extends GetxController {
 
   Future postWD() async {
     isLoading(true);
-    final resp = await _repo.postWdXau(addressController.text, xauController.text, valueNetwork.value, otpController.text, auth.token);
+    final resp = await _repo.postWdXau(addressController.text,
+        xauController.text, valueNetwork.value, otpController.text, auth.token);
     if (resp.success) {
       sendHis.getWd(1);
       successSnackbar('succes_alert'.tr, resp.message);
@@ -187,4 +198,31 @@ class SendXauController extends GetxController {
     wdKey.currentState.save();
     postWD();
   }
+
+  bool checkkys() {
+    if (auth.userData.orangKycAskForReview &&
+        !auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+    if (auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  //controller.auth.userData.orangKycAskForReview && !controller.auth.userData.orangKycEditAvailable
+  // } else {
+  //    return true;
+  //   dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+  //     Get.back();
+  //   });
+  //   return false;
+  // }
 }
