@@ -43,6 +43,8 @@ const Map<String, String> inID = {
   'notif_kyc': 'Kamu belum melakukan KYC',
   'notif_title': 'Notifikasi',
   'notif_kyc_review': 'Akun kamu sedang di review\nMohon tunggu approval',
+  'notif_kyc_review_no_space':
+      'Akun kamu sedang di review Mohon tunggu approval',
   'dash_greeting_morning': 'Selamat pagi',
   'dash_greeting_day': 'Selamat siang',
   'dash_greeting_afternoon': 'Selamat sore',

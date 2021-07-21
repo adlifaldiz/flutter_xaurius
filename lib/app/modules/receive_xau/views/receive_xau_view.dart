@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,15 +25,22 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
         body: Obx(
           () => SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: percentWidth(context, 5),
+                  vertical: percentHeight(context, 2)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView(
                     shrinkWrap: true,
-                    children: controller.balance.where((itemBalance) => itemBalance.balanceSymbol == "XAU").map((itemBalance) {
+                    children: controller.balance
+                        .where(
+                            (itemBalance) => itemBalance.balanceSymbol == "XAU")
+                        .map((itemBalance) {
                       return Container(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: percentWidth(context, 5),
+                            vertical: percentHeight(context, 3)),
                         width: Get.width,
                         decoration: BoxDecoration(
                           color: backgroundPanelColor.withOpacity(0.5),
@@ -63,26 +71,64 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                       );
                     }).toList(),
                   ),
+                  controller.auth.userData.orangKycEditAvailable
+                      ? XauriusContainer(
+                          child: Column(
+                            children: [
+                              Text(
+                                'notif_kyc'.tr,
+                                textAlign: TextAlign.center,
+                              ),
+                              FlatButton(
+                                color: primaryColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                onPressed: () => controller.router(),
+                                child: Text(
+                                  'kyc_btn'.tr,
+                                  style: stylePrimaryDark,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Column(),
+                  controller.auth.userData.orangKycAskForReview &&
+                          !controller.auth.userData.orangKycEditAvailable
+                      ? XauriusContainer(
+                          child: Column(
+                            children: [
+                              Text(
+                                'notif_kyc_review'.tr,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Column(),
                   SizedBox(height: percentHeight(context, 5)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         padding: EdgeInsets.all(percentWidth(context, 2.5)),
-                        decoration: BoxDecoration(color: backgroundPanelColor, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: backgroundPanelColor,
+                            borderRadius: BorderRadius.circular(5)),
                         child: QrImage(
                           padding: EdgeInsets.all(0),
                           data: controller.addressController.text,
                           version: QrVersions.auto,
                           size: percentWidth(context, 30),
                           gapless: true,
-                          foregroundColor: brokenWhiteColor,
+                          foregroundColor: controller.checkapr(),
                         ),
                       ),
                       SizedBox(width: percentWidth(context, 5)),
                       Column(
                         children: [
-                          Text('qr_big'.tr, style: textTitle.copyWith(fontSize: 25)),
+                          Text('qr_big'.tr,
+                              style: textTitle.copyWith(fontSize: 25)),
                           Text('qr_small'.tr, style: stylePrimary),
                         ],
                       )
@@ -96,8 +142,10 @@ class ReceiveXauView extends GetView<ReceiveXauController> {
                     controller: controller.addressController,
                     suffixIcon: GestureDetector(
                       onTap: () {
-                        Clipboard.setData(ClipboardData(text: controller.addressController.text));
-                        successSnackbar('Copied', controller.addressController.text);
+                        Clipboard.setData(ClipboardData(
+                            text: controller.addressController.text));
+                        successSnackbar(
+                            'Copied', controller.addressController.text);
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
