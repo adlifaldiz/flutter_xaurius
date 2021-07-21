@@ -49,6 +49,7 @@ class ReceiveXauController extends GetxController {
   @override
   void dispose() {
     qrController.dispose();
+    super.dispose();
   }
 
   void setTextController() {
