@@ -5,8 +5,10 @@ import 'dart:math';
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
@@ -136,12 +138,13 @@ class UploadDocumentController extends GetxController {
     }
   }
 
-  void takeImageKTP() async {
+  void captureImageKTP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
       if (pickedFile != null) {
-        selectedImagePathKtp.value = pickedFile.path;
-        sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+        cropImageKtp(pickedFile.path);
+        // selectedImagePathKtp.value = pickedFile.path;
+        // sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
 
         print('image selected:' + pickedFile.path.toString());
       } else {
@@ -154,12 +157,34 @@ class UploadDocumentController extends GetxController {
     }
   }
 
-  void takeImageNPWP() async {
+  void takeImageKTP() async {
     try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, imageQuality: 50);
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        selectedImagePathNpwp.value = pickedFile.path;
-        sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+        cropImageKtp(pickedFile.path);
+
+        // selectedImagePathKtp.value = pickedFile.path;
+        // sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+
+        print('image selected:' + pickedFile.path.toString());
+      } else {
+        successSnackbar('ID', 'id_pict'.tr);
+        print('No image selected.');
+      }
+      update();
+    } catch (e) {
+      successSnackbar('Fail', 'fail_wrong'.tr);
+    }
+  }
+
+  void captureImageNPWP() async {
+    try {
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        cropImageNpwp(pickedFile.path);
+
+        // selectedImagePathNpwp.value = pickedFile.path;
+        // sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
 
         print('image selected:' + pickedFile.path.toString());
       } else {
@@ -169,6 +194,101 @@ class UploadDocumentController extends GetxController {
       update();
     } catch (e) {
       successSnackbar('Fail', 'fail_wrong'.tr);
+    }
+  }
+
+  void takeImageNPWP() async {
+    try {
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        cropImageNpwp(pickedFile.path);
+
+        // selectedImagePathNpwp.value = pickedFile.path;
+        // sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+
+        print('image selected:' + pickedFile.path.toString());
+      } else {
+        successSnackbar('NPWP', 'npwp_pict'.tr);
+        print('No image selected.');
+      }
+      update();
+    } catch (e) {
+      // successSnackbar('Fail', 'fail_wrong'.tr);
+      print('No image selected.');
+    }
+  }
+
+  void cropImageKtp(String path) async {
+    try {
+      final croppedFile = await ImageCropper.cropImage(
+          sourcePath: path,
+          compressQuality: 50,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9
+          ],
+          androidUiSettings: AndroidUiSettings(
+              toolbarTitle: 'Crop Image',
+              toolbarColor: backgroundColor,
+              toolbarWidgetColor: textWhiteColor,
+              // backgroundColor: backgroundPanelColor,
+              activeControlsWidgetColor: primaryColor,
+              dimmedLayerColor: backgroundColor.withOpacity(0.3),
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          iosUiSettings: IOSUiSettings(
+            aspectRatioLockEnabled: false,
+            resetAspectRatioEnabled: true,
+            showCancelConfirmationDialog: true,
+          ));
+
+      if (croppedFile != null) {
+        selectedImagePathKtp.value = croppedFile.path;
+        sizeID.value = ((File(selectedImagePathKtp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('No image selected.');
+    }
+  }
+
+  void cropImageNpwp(String path) async {
+    try {
+      final croppedFile = await ImageCropper.cropImage(
+          sourcePath: path,
+          compressQuality: 50,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9
+          ],
+          androidUiSettings: AndroidUiSettings(
+              toolbarTitle: 'Crop Image',
+              toolbarColor: backgroundColor,
+              toolbarWidgetColor: textWhiteColor,
+              // backgroundColor: backgroundPanelColor,
+              activeControlsWidgetColor: primaryColor,
+              dimmedLayerColor: backgroundColor.withOpacity(0.3),
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          iosUiSettings: IOSUiSettings(
+            minimumAspectRatio: 1.0,
+          ));
+
+      if (croppedFile != null) {
+        selectedImagePathNpwp.value = croppedFile.path;
+        sizeNpwp.value = ((File(selectedImagePathNpwp.value).readAsBytesSync().lengthInBytes / 1024) / 1024).toStringAsFixed(2);
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('No image selected.');
     }
   }
 }

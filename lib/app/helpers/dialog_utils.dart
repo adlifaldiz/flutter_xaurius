@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/modules/setting/controllers/setting_controller.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 successSnackbar(String title, String message) {
@@ -59,6 +60,58 @@ dialogConnection(String title, String subTitle, VoidCallback onTap) {
       child: Text(
         'ok',
         style: buttonStyle,
+      ),
+    ),
+  );
+}
+
+dialogImagePicker(VoidCallback onCameraTap, VoidCallback onGalleryTap) {
+  Get.defaultDialog(
+    backgroundColor: backgroundPanelColor,
+    title: 'Choose Method',
+    middleText: 'Choose method to upload image',
+    buttonColor: primaryColor,
+    barrierDismissible: true,
+    confirm: RaisedButton(
+      color: primaryColor,
+      onPressed: onCameraTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Icon(
+            FontAwesomeIcons.camera,
+            color: backgroundColor,
+          ),
+          SizedBox(width: 5),
+          Text(
+            'Camera',
+            style: buttonStyle,
+          ),
+        ],
+      ),
+    ),
+    cancel: RaisedButton(
+      color: primaryColor,
+      onPressed: onGalleryTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Icon(
+            FontAwesomeIcons.image,
+            color: backgroundColor,
+          ),
+          SizedBox(width: 5),
+          Text(
+            'Gallery',
+            style: buttonStyle,
+          ),
+        ],
       ),
     ),
   );
