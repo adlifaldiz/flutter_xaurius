@@ -16,10 +16,9 @@ import 'package:flutter_xaurius/app/widget/xau_text_field.dart';
 import '../controllers/buy_xau_controller.dart';
 
 class BuyXauView extends GetView<BuyXauController> {
-  AutovalidateMode mode = AutovalidateMode.disabled;
-
   @override
   Widget build(BuildContext context) {
+    AutovalidateMode mode = AutovalidateMode.disabled;
     return Obx(
       () => AbsorbPointer(
         absorbing: controller.isLoading.value,
@@ -32,9 +31,7 @@ class BuyXauView extends GetView<BuyXauController> {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: percentWidth(context, 5),
-                      vertical: percentHeight(context, 3)),
+                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                   child: Form(
                     key: controller.buyKey,
                     autovalidateMode: mode,
@@ -46,80 +43,25 @@ class BuyXauView extends GetView<BuyXauController> {
                             children: [
                               Text(
                                 'XAU/IDR',
-                                style: stylePrimary.copyWith(
-                                    color: primaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
+                                style: stylePrimary.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                               ),
                               SizedBox(width: 10),
                               Text(
-                                customCurrency(controller
-                                        .dash.goldPrice.value.chartpriceBuy) ??
-                                    '000.000',
-                                style: stylePrimary.copyWith(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
+                                customCurrency(controller.dash.goldPrice.value.chartpriceBuy) ?? '000.000',
+                                style: stylePrimary.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
-                        // Container(
-                        //   padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
-                        //   width: percentWidth(context, 100),
-                        //   decoration:
-                        //       BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
-                        //   child: DropdownButtonHideUnderline(
-                        //     child: StatefulBuilder(
-                        //       builder: (BuildContext context, StateSetter dropDownState) {
-                        //         return DropdownButton(
-                        //           iconEnabledColor: primaryColor,
-                        //           iconDisabledColor: brokenWhiteColor,
-                        //           dropdownColor: backgroundPanelColor,
-                        //           value: controller.value.floor(),
-                        //           items: [
-                        //             DropdownMenuItem(
-                        //               child: Text('ETH (Ethereum)'),
-                        //               value: 1,
-                        //               onTap: () {
-                        //                 controller.onChangeBuy(1);
-                        //               },
-                        //             ),
-                        //             DropdownMenuItem(
-                        //               child: Text('BSC (Binance Smart Chain)'),
-                        //               value: 2,
-                        //               onTap: () {
-                        //                 controller.onChangeBuy(2);
-                        //               },
-                        //             ),
-                        //             DropdownMenuItem(
-                        //               child: Text('Private'),
-                        //               value: 3,
-                        //               onTap: () {
-                        //                 controller.onChangeBuy(3);
-                        //               },
-                        //             ),
-                        //           ],
-                        //           onChanged: (value) {
-                        //             dropDownState(() {
-                        //               controller.value = value;
-                        //             });
-                        //           },
-                        //         );
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         XauTextField(
                           useObscure: false,
                           labelText: 'quantity_xau'.tr,
                           inputFormatters: [
                             // FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\,?\d*)')),
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^(\d+)?\,?\.?\d*')),
+                            FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\,?\.?\d*')),
                           ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           suffixIcon: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

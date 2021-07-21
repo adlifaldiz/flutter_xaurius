@@ -30,22 +30,15 @@ class SendXauView extends GetView<SendXauController> {
             body: Obx(
               () => SafeArea(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: percentWidth(context, 5),
-                      vertical: percentHeight(context, 2)),
+                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListView(
                         shrinkWrap: true,
-                        children: controller.balance
-                            .where((itemBalance) =>
-                                itemBalance.balanceSymbol == "XAU")
-                            .map((itemBalance) {
+                        children: controller.balance.where((itemBalance) => itemBalance.balanceSymbol == "XAU").map((itemBalance) {
                           return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: percentWidth(context, 5),
-                                vertical: percentHeight(context, 3)),
+                            padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                             width: Get.width,
                             decoration: BoxDecoration(
                               color: backgroundPanelColor.withOpacity(0.5),
@@ -64,8 +57,7 @@ class SendXauView extends GetView<SendXauController> {
                               children: [
                                 Text(
                                   itemBalance.balanceSymbol,
-                                  style:
-                                      textTitle.copyWith(color: primaryColor),
+                                  style: textTitle.copyWith(color: primaryColor),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
@@ -87,22 +79,17 @@ class SendXauView extends GetView<SendXauController> {
                       SizedBox(height: percentHeight(context, 5)),
                       Text('Network Adress'),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: percentHeight(context, 0.6),
-                            horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
-                        decoration: BoxDecoration(
-                            color: fillColor,
-                            border: Border.all(color: brokenWhiteColor),
-                            borderRadius: BorderRadius.circular(10)),
+                        decoration:
+                            BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             iconEnabledColor: primaryColor,
                             iconDisabledColor: brokenWhiteColor,
                             dropdownColor: backgroundPanelColor,
                             value: controller.valueNetwork.toString(),
-                            items: controller.listNetwork
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: controller.listNetwork.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -138,28 +125,21 @@ class SendXauView extends GetView<SendXauController> {
                               SizedBox(height: percentHeight(context, 2)),
                               Text('amount'.tr),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: XauTextField(
                                       useObscure: false,
-                                      onChanged: (value) =>
-                                          controller.onQtyChange(value),
+                                      onChanged: (value) => controller.onQtyChange(value),
                                       controller: controller.xauController,
-                                      validator: (value) => validateWdToken(
-                                          value, controller.xauBalance.value),
+                                      validator: (value) => validateWdToken(value, controller.xauBalance.value),
                                       textInputAction: TextInputAction.done,
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                              decimal: true),
+                                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'^(\d+)?\,?\.?\d*')),
+                                        FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\,?\.?\d*')),
                                       ],
                                       suffixIcon: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text('XAU'),
                                         ],
@@ -167,8 +147,7 @@ class SendXauView extends GetView<SendXauController> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: percentWidth(context, 5)),
+                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
                                     child: Icon(
                                       FontAwesomeIcons.exchangeAlt,
                                       color: brokenWhiteColor,
@@ -178,16 +157,12 @@ class SendXauView extends GetView<SendXauController> {
                                     child: XauTextField(
                                       useObscure: false,
                                       controller: controller.idrController,
-                                      onChanged: (value) =>
-                                          controller.onTotalChange(value),
-                                      validator: (value) => validateWdIdr(
-                                          controller.xauController.text,
-                                          controller.xauBalance.value),
+                                      onChanged: (value) => controller.onTotalChange(value),
+                                      validator: (value) => validateWdIdr(controller.xauController.text, controller.xauBalance.value),
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
                                       suffixIcon: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text('IDR'),
                                         ],
@@ -204,14 +179,10 @@ class SendXauView extends GetView<SendXauController> {
                                     child: XauTextField(
                                       useObscure: false,
                                       controller: controller.otpController,
-                                      validator: (value) =>
-                                          validateWdOtp(value),
+                                      validator: (value) => validateWdOtp(value),
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(numberValidationRule))
-                                      ],
+                                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(numberValidationRule))],
                                     ),
                                   ),
                                   SizedBox(width: percentWidth(context, 5)),
@@ -227,29 +198,13 @@ class SendXauView extends GetView<SendXauController> {
                                           pressAble: true,
                                           text: 'trans_send_xau'.tr + ' OTP',
                                           onpressed: () {
-                                            controller.isStart.value
-                                                ? null
-                                                : controller.sendOTP();
+                                            controller.isStart.value ? null : controller.sendOTP();
                                           });
-                                      // return RaisedButton(
-                                      //   onPressed: () => controller.isStart.value ? null : controller.sendOTP(),
-                                      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      //   color: controller.isStart.value ? disableColor : primaryColor,
-                                      //   child: Center(
-                                      //     child: Text(
-                                      //       'trans_send_xau'.tr + ' OTP',
-                                      //       style: buttonStyle,
-                                      //     ),
-                                      //   ),
-                                      // );
                                     },
                                   ),
                                 ],
                               ),
-                              controller.isStart.value &&
-                                      !controller.isLoadingOTP.value
-                                  ? Text('Wait ${controller.start.value} sec')
-                                  : Container(),
+                              controller.isStart.value && !controller.isLoadingOTP.value ? Text('Wait ${controller.start.value} sec') : Container(),
                             ],
                           ),
                         ),
@@ -268,25 +223,9 @@ class SendXauView extends GetView<SendXauController> {
                             text: 'trans_send_xau'.tr,
                             onpressed: () {
                               Get.focusScope.unfocus();
-                              controller.checkkys()
-                                  ? true
-                                  : controller.checkWD();
+                              controller.checkWD();
                             },
                           );
-                          // return RaisedButton(
-                          //   onPressed: () {
-                          //     Get.focusScope.unfocus();
-                          //     controller.checkWD();
-                          //   },
-                          //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          //   color: primaryColor,
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Proceed',
-                          //       style: buttonStyle,
-                          //     ),
-                          //   ),
-                          // );
                         },
                       )
                     ],
@@ -315,11 +254,7 @@ class SendXauView extends GetView<SendXauController> {
                 key: controller.qrKey,
                 onQRViewCreated: controller.onQRViewCreated,
                 overlay: QrScannerOverlayShape(
-                    borderColor: Colors.red,
-                    borderRadius: 10,
-                    borderLength: 30,
-                    borderWidth: 10,
-                    cutOutSize: controller.scanArea),
+                    borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: controller.scanArea),
               ),
             ],
           ),
