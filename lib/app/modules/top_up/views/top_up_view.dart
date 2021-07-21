@@ -112,39 +112,9 @@ class TopUpView extends GetView<TopUpController> {
                                             text: 'next_btn'.tr,
                                             onpressed: () {
                                               Get.focusScope.unfocus();
-                                              final isValid = controller.formKey.currentState.validate();
-                                              if (!isValid) {
-                                                // controller.mode.value = AutovalidateMode.onUserInteraction;
-                                                return;
-                                              }
-                                              controller.formKey.currentState.save();
-                                              controller.postTopUp();
+                                              controller.checkTopUp();
                                             },
                                           );
-                                          // return Container(
-                                          //   width: Get.width,
-                                          //   // ignore: deprecated_member_use
-                                          //   child: RaisedButton(
-                                          //     color: accentColor,
-                                          //     shape: RoundedRectangleBorder(
-                                          //       borderRadius: BorderRadius.circular(10),
-                                          //     ),
-                                          //     child: Padding(
-                                          //       padding: const EdgeInsets.symmetric(vertical: 12),
-                                          //       child: Text('next_btn'.tr, style: buttonStyle),
-                                          //     ),
-                                          //     onPressed: () {
-                                          //       FocusScope.of(context).unfocus();
-                                          //       final isValid = controller.formKey.currentState.validate();
-                                          //       if (!isValid) {
-                                          //         // controller.mode.value = AutovalidateMode.onUserInteraction;
-                                          //         return;
-                                          //       }
-                                          //       controller.formKey.currentState.save();
-                                          //       controller.postTopUp();
-                                          //     },
-                                          //   ),
-                                          // );
                                         }),
                                       ],
                                     ),

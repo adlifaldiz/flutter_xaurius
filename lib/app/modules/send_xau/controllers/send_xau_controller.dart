@@ -30,6 +30,7 @@ class SendXauController extends GetxController {
   var valueNetwork = 'ETH'.obs;
   var xauBalance = 0.0.obs;
   var mode = AutovalidateMode.disabled.obs;
+  final approve = 'approve';
 
   List<String> listNetwork = ['ETH', 'BSC'];
 
@@ -176,6 +177,9 @@ class SendXauController extends GetxController {
   }
 
   void checkWD() {
+    if (!checkkys()) {
+      return;
+    }
     var isValid = wdKey.currentState.validate();
     timer.cancel();
     start(60);
@@ -186,5 +190,22 @@ class SendXauController extends GetxController {
     }
     wdKey.currentState.save();
     postWD();
+  }
+
+  bool checkkys() {
+    if (auth.userData.orangKycAskForReview && !auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+    if (auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+
+    return true;
   }
 }

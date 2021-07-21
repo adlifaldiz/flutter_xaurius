@@ -35,17 +35,13 @@ class TransactionController extends GetxController {
   void router(id) {
     switch (id) {
       case 1:
-        if (checkkys()) {
-          Get.toNamed(Routes.TOP_UP);
-        }
+        Get.toNamed(Routes.TOP_UP);
         break;
       case 2:
         Get.toNamed(Routes.CHART_VIEW);
         break;
       case 3:
-        if (checkkys()) {
-          Get.toNamed(Routes.BUY_XAU);
-        }
+        Get.toNamed(Routes.BUY_XAU);
         break;
       case 4:
         //sellxau
@@ -93,17 +89,6 @@ class TransactionController extends GetxController {
         // if need coming soon
         Get.to(ComingSoonScreen());
         break;
-    }
-  }
-
-  bool checkkys() {
-    if (auth.userData.orangKycStatus == approve) {
-      return true;
-    } else {
-      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
-        Get.back();
-      });
-      return false;
     }
   }
 }

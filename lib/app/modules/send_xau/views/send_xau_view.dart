@@ -195,21 +195,11 @@ class SendXauView extends GetView<SendXauController> {
                                         );
                                       }
                                       return XauriusButton(
-                                        pressAble: true,
-                                        text: 'trans_send_xau'.tr + ' OTP',
-                                        onpressed: () => controller.isStart.value ? null : controller.sendOTP(),
-                                      );
-                                      // return RaisedButton(
-                                      //   onPressed: () => controller.isStart.value ? null : controller.sendOTP(),
-                                      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      //   color: controller.isStart.value ? disableColor : primaryColor,
-                                      //   child: Center(
-                                      //     child: Text(
-                                      //       'trans_send_xau'.tr + ' OTP',
-                                      //       style: buttonStyle,
-                                      //     ),
-                                      //   ),
-                                      // );
+                                          pressAble: true,
+                                          text: 'trans_send_xau'.tr + ' OTP',
+                                          onpressed: () {
+                                            controller.isStart.value ? null : controller.sendOTP();
+                                          });
                                     },
                                   ),
                                 ],
@@ -236,20 +226,6 @@ class SendXauView extends GetView<SendXauController> {
                               controller.checkWD();
                             },
                           );
-                          // return RaisedButton(
-                          //   onPressed: () {
-                          //     Get.focusScope.unfocus();
-                          //     controller.checkWD();
-                          //   },
-                          //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          //   color: primaryColor,
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Proceed',
-                          //       style: buttonStyle,
-                          //     ),
-                          //   ),
-                          // );
                         },
                       )
                     ],

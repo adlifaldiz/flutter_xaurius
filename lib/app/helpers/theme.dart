@@ -12,6 +12,7 @@ const textBlackColor = Color(0xFF141414);
 const redColor = Color(0xFFee5253);
 const greenColor = Color(0xFF10ac84);
 const greyColor = Color(0xFF485460);
+const transparentColor = Colors.transparent;
 
 const disableColor = Color(0xFFbbbbbb);
 

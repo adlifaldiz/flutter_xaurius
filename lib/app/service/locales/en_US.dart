@@ -39,6 +39,8 @@ const Map<String, String> enUS = {
   'confirm_pin_ex': 'Now Enter Your Pin Again',
   'notif_kyc': 'You haven\'t completed the KYC.',
   'notif_kyc_review': 'Your account being reviewed\nPlease wait for approval',
+  'notif_kyc_review_no_space':
+      'Your account being reviewed Please wait for approval',
   'notif_title': 'Notifications',
   'dash_greeting_morning': 'Good Morning',
   'dash_greeting_day': 'Good Afternoon',

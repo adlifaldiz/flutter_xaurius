@@ -11,8 +11,7 @@ import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class TopUpController extends GetxController {
-  final GlobalKey<LiquidPullToRefreshState> refreshTopUp =
-      GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTopUp = GlobalKey<LiquidPullToRefreshState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ApiRepository _repo = ApiRepository();
   NumericTextController nominalTopUpControl;
@@ -32,7 +31,9 @@ class TopUpController extends GetxController {
   void onInit() async {
     nominalTopUpControl = NumericTextController();
     getVaMerchant();
-    getTopUp(page);
+    if (auth.userData.orangKycStatus == 'approve') {
+      getTopUp(page);
+    }
     super.onInit();
   }
 
@@ -47,7 +48,9 @@ class TopUpController extends GetxController {
   }
 
   Future onRefresh() async {
-    getTopUp(page);
+    if (auth.userData.orangKycStatus == 'approve') {
+      getTopUp(page);
+    }
     update();
   }
 
@@ -74,8 +77,7 @@ class TopUpController extends GetxController {
 
   void postTopUp() async {
     isLoadingForm(true);
-    final resp = await _repo.postTopUp(merchantId.value.toString(),
-        nominalTopUpControl.numberValue, auth.token);
+    final resp = await _repo.postTopUp(merchantId.value.toString(), nominalTopUpControl.numberValue, auth.token);
     if (resp.success) {
       getTopUp(1);
       topHis.getTopUp(1);
@@ -100,5 +102,34 @@ class TopUpController extends GetxController {
       });
     }
     isLoadingList(false);
+  }
+
+  void checkTopUp() {
+    if (!checkkys()) {
+      return;
+    }
+    final isValid = formKey.currentState.validate();
+    if (!isValid) {
+      mode.value = AutovalidateMode.onUserInteraction;
+      return;
+    }
+    formKey.currentState.save();
+    postTopUp();
+  }
+
+  bool checkkys() {
+    if (auth.userData.orangKycAskForReview && !auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc_review'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+    if (auth.userData.orangKycEditAvailable) {
+      dialogConnection('Oops', 'notif_kyc'.tr, () {
+        Get.back();
+      });
+      return false;
+    }
+    return true;
   }
 }

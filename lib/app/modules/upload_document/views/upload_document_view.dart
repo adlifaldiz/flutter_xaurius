@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
 import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
@@ -124,7 +125,13 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                               color: primaryColor,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                controller.takeImageKTP();
+                                dialogImagePicker(() {
+                                  Get.back();
+                                  controller.captureImageKTP();
+                                }, () {
+                                  Get.back();
+                                  controller.takeImageKTP();
+                                });
                               },
                               child: Text(
                                 controller.selectedImagePathKtp.value != '' ? 'change_btn'.tr : 'choose_btn'.tr,
@@ -190,7 +197,13 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                               color: primaryColor,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                controller.takeImageNPWP();
+                                dialogImagePicker(() {
+                                  Get.back();
+                                  controller.captureImageNPWP();
+                                }, () {
+                                  Get.back();
+                                  controller.takeImageNPWP();
+                                });
                               },
                               child: Text(
                                 controller.selectedImagePathNpwp.value != '' ? 'change_btn'.tr : 'choose_btn'.tr,
@@ -215,22 +228,6 @@ class UploadDocumentView extends GetView<UploadDocumentController> {
                             controller.checkIdentity();
                           },
                         );
-                        // return RaisedButton(
-                        //   onPressed: !controller.auth.userData.orangKycEditAvailable
-                        //       ? null
-                        //       : () {
-                        //           controller.mode = AutovalidateMode.onUserInteraction;
-                        //           controller.checkIdentity();
-                        //         },
-                        //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        //   color: controller.auth.userData.orangKycEditAvailable ? primaryColor : disableColor,
-                        //   child: Center(
-                        //     child: Text(
-                        //       'save_btn'.tr,
-                        //       style: buttonStyle,
-                        //     ),
-                        //   ),
-                        // );
                       })
                     ],
                   ),

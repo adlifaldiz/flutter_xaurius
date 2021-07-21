@@ -16,6 +16,8 @@ class XauriusButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
       color: !pressAble ? disableColor : primaryColor,
+      splashColor: !pressAble ? transparentColor : textWhiteColor.withOpacity(0.1),
+      highlightColor: !pressAble ? transparentColor : textWhiteColor.withOpacity(0.1),
       child: Center(
         child: Text(
           text,
