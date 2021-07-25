@@ -1,20 +1,26 @@
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class ResetPinCreatePinController extends GetxController {
-  //TODO: Implement ResetPinCreatePinController
+  var isLoading = false.obs;
+  var pin = '';
+  var email;
+  var code;
 
-  final count = 0.obs;
   @override
   void onInit() {
+    email = Get.arguments['email'];
+    code = Get.arguments['code'];
     super.onInit();
   }
 
   @override
-  void onReady() {
-    super.onReady();
+  void onClose() {
+    super.onClose();
   }
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+  void createPin() async {
+    Get.toNamed(Routes.RESET_PIN_VERIF_PIN,
+        arguments: {'email': email, 'code': code, 'pin': pin});
+  }
 }

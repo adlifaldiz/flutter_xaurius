@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 class SettingController extends GetxController {
   var appData = GetStorage();
   var menu = Get.find<MenuController>();
+  var email;
 
   void logout() {
     appData.remove('username');
@@ -16,6 +17,7 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
+    email = appData.read('username');
     super.onInit();
   }
 
@@ -60,6 +62,9 @@ class SettingController extends GetxController {
       case 8:
         //system setting
         Get.toNamed(Routes.SYSTEM);
+        break;
+      case 9:
+        Get.toNamed(Routes.RESET_PIN_EMAIL, arguments: {'email': email});
         break;
     }
   }
