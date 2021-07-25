@@ -41,7 +41,8 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> registerPin(String email, String otp, String pin, String pinConfirm) async {
+  Future<BaseResp> registerPin(
+      String email, String otp, String pin, String pinConfirm) async {
     final response = await _http.call(
       url.registerPin,
       method: MethodRequest.POST,
@@ -76,7 +77,8 @@ class ApiRepository {
     return UserResp.fromJson(response.body);
   }
 
-  Future<UserResp> kycPersonalData(nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
+  Future<UserResp> kycPersonalData(
+      nama, nomor, tanggal, alamat, kota, kodePos, negara, token) async {
     final response = await _http.call(
       url.kycPersonalInfo,
       useFormData: true,
@@ -94,37 +96,50 @@ class ApiRepository {
     return UserResp.fromJson(response.body);
   }
 
-  Future<UserResp> kycDocument(idType, idNum, idFile, npwpNum, npwpFile, jwt) async {
-    final response =
-        await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
-      'orang[orang_id_type]': idType,
-      'orang[orang_id_num]': idNum,
-      'orang[orang_id_file_atc]':
-          idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last),
-      'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file_atc]':
-          npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
-    });
+  Future<UserResp> kycDocument(
+      idType, idNum, idFile, npwpNum, npwpFile, jwt) async {
+    final response = await _http.call(url.kycDocument,
+        token: jwt,
+        method: MethodRequest.POST,
+        useFormData: true,
+        request: {
+          'orang[orang_id_type]': idType,
+          'orang[orang_id_num]': idNum,
+          'orang[orang_id_file_atc]': idFile.toString().isEmpty
+              ? ''
+              : MultipartFile(idFile, filename: idFile.split('/').last),
+          'orang[orang_npwp_num]': npwpNum,
+          'orang[orang_npwp_file_atc]': npwpFile.toString().isEmpty
+              ? ''
+              : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
+        });
     return UserResp.fromJson(response.body);
   }
 
   Future<ResponseBuys> getBuys(page, String token) async {
-    final response = await _http.call(url.buys + '?page=${page.toString()}', token: token, method: MethodRequest.GET);
+    final response = await _http.call(url.buys + '?page=${page.toString()}',
+        token: token, method: MethodRequest.GET);
     return ResponseBuys.fromJson(response.body);
   }
 
-  Future<UserResp> updateBankProfile(String token, String bankName, String holderName, String holderNumber) async {
-    final response =
-        await _http.call(url.profileBank, token: token, useFormData: true, method: MethodRequest.POST, request: {
-      'orang[orang_bank_name]': bankName,
-      'orang[orang_bank_holder]': holderName,
-      'orang[orang_bank_number]': holderNumber,
-    });
+  Future<UserResp> updateBankProfile(String token, String bankName,
+      String holderName, String holderNumber) async {
+    final response = await _http.call(url.profileBank,
+        token: token,
+        useFormData: true,
+        method: MethodRequest.POST,
+        request: {
+          'orang[orang_bank_name]': bankName,
+          'orang[orang_bank_holder]': holderName,
+          'orang[orang_bank_number]': holderNumber,
+        });
     return UserResp.fromJson(response.body);
   }
 
-  Future<ResponseCreateBuy> createBuys(String qty, String network, String jwt) async {
-    final response = await _http.call(url.createBuys, token: jwt, useFormData: true, request: {
+  Future<ResponseCreateBuy> createBuys(
+      String qty, String network, String jwt) async {
+    final response = await _http
+        .call(url.createBuys, token: jwt, useFormData: true, request: {
       'buy[buy_qty]': qty,
       'buy[buy_network]': network,
     });
@@ -140,8 +155,8 @@ class ApiRepository {
     return ResponseCheckOut.fromJson(response.body);
   }
 
-  Future<ResponsePostCheckOut> postCheckout(
-      String buyId, String walletAddress, String merchantId, String voucherCode, String token) async {
+  Future<ResponsePostCheckOut> postCheckout(String buyId, String walletAddress,
+      String merchantId, String voucherCode, String token) async {
     final response = await _http.call(url.buys + '/$buyId' + url.checkOut,
         token: token,
         useFormData: true,
@@ -156,7 +171,8 @@ class ApiRepository {
     return ResponsePostCheckOut.fromJson(response.body);
   }
 
-  Future<ResponseDetailInvoice> getInvoice(String invoiceId, String token) async {
+  Future<ResponseDetailInvoice> getInvoice(
+      String invoiceId, String token) async {
     final response = await _http.call(url.buys + '/$invoiceId' + url.invoice,
         token: token, useFormData: true, method: MethodRequest.GET);
     return ResponseDetailInvoice.fromJson(response.body);
@@ -172,20 +188,24 @@ class ApiRepository {
   }
 
   Future<ResponseGetTopUp> getTopUp(page, String jwt) async {
-    final response = await _http.call(url.getTopUp + '?page=${page.toString()}', token: jwt, method: MethodRequest.GET);
+    final response = await _http.call(url.getTopUp + '?page=${page.toString()}',
+        token: jwt, method: MethodRequest.GET);
     return ResponseGetTopUp.fromJson(response.body);
   }
 
   Future<ResponsePostTopUp> postTopUp(merchantId, amountIdr, String jwt) async {
-    final response = await _http.call(url.postTopUp, token: jwt, useFormData: true, request: {
+    final response = await _http
+        .call(url.postTopUp, token: jwt, useFormData: true, request: {
       'merchant_id': merchantId,
       'depoidr_amount': amountIdr,
     });
     return ResponsePostTopUp.fromJson(response.body);
   }
 
-  Future<ResponseDetailInvoiceTopUp> getDetailInvoices(invoiceId, String jwt) async {
-    final response = await _http.call(url.getDetailInvoices + invoiceId, token: jwt, method: MethodRequest.GET);
+  Future<ResponseDetailInvoiceTopUp> getDetailInvoices(
+      invoiceId, String jwt) async {
+    final response = await _http.call(url.getDetailInvoices + invoiceId,
+        token: jwt, method: MethodRequest.GET);
     return ResponseDetailInvoiceTopUp.fromJson(response.body);
   }
 
@@ -201,34 +221,43 @@ class ApiRepository {
   }
 
   Future<ResponseDashboard> getDashboard(String token) async {
-    final response = await _http.call(url.dashboard, token: token, method: MethodRequest.GET);
+    final response = await _http.call(url.dashboard,
+        token: token, method: MethodRequest.GET);
     return ResponseDashboard.fromJson(response.body);
   }
 
   Future<BaseResp> getOTP(String jwt) async {
-    final response = await _http.call(url.getOtp, token: jwt, method: MethodRequest.GET);
+    final response =
+        await _http.call(url.getOtp, token: jwt, method: MethodRequest.GET);
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> postWdXau(String wdAddress, String qty, String networkAddress, String otp, String jwt) async {
-    final response = await _http.call(url.wdXau, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
-      'wd[wd_address]': wdAddress,
-      'wd[wd_value]': qty,
-      'wd[wd_network]': networkAddress,
-      'otp': otp,
-    });
+  Future<BaseResp> postWdXau(String wdAddress, String qty,
+      String networkAddress, String otp, String jwt) async {
+    final response = await _http.call(url.wdXau,
+        token: jwt,
+        method: MethodRequest.POST,
+        useFormData: true,
+        request: {
+          'wd[wd_address]': wdAddress,
+          'wd[wd_value]': qty,
+          'wd[wd_network]': networkAddress,
+          'otp': otp,
+        });
     return BaseResp.fromJson(response.body);
   }
 
   Future<ResponseWithdraw> getWdXau(String page, String jwt) async {
-    final response = await _http.call(url.getWdXau, token: jwt, method: MethodRequest.GET, request: {
+    final response = await _http
+        .call(url.getWdXau, token: jwt, method: MethodRequest.GET, request: {
       'page': page,
     });
     return ResponseWithdraw.fromJson(response.body);
   }
 
   Future<ResponseDeposit> getDepoXau(String page, String jwt) async {
-    final response = await _http.call(url.getDepoXau, token: jwt, method: MethodRequest.GET, request: {
+    final response = await _http
+        .call(url.getDepoXau, token: jwt, method: MethodRequest.GET, request: {
       'page': page,
     });
     return ResponseDeposit.fromJson(response.body);
@@ -252,7 +281,8 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
-  Future<BaseResp> resetPinRecreate(String email, String otp, String pin, String pinConfirm) async {
+  Future<BaseResp> resetPinRecreate(
+      String email, String otp, String pin, String pinConfirm) async {
     final response = await _http.call(
       url.resetPinRecreate,
       method: MethodRequest.POST,

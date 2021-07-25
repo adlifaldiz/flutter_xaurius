@@ -23,7 +23,7 @@ class ResetPinCreatePinView extends GetView<ResetPinCreatePinController> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'create_pin_app_bar'.tr,
+          'chg_pin'.tr,
           style: textAppbarStyleWhite,
         ),
         leading: BackButton(
@@ -57,7 +57,7 @@ class ResetPinCreatePinView extends GetView<ResetPinCreatePinController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('create_pin_ex'.tr, style: stylePrimary),
+                    Text('chg_pin_dg_pin'.tr, style: stylePrimary),
                     SizedBox(height: 20),
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,

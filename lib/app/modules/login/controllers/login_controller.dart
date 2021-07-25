@@ -49,5 +49,12 @@ class LoginController extends GetxController {
     isLoading(false);
   }
 
-  void router() => Get.toNamed(Routes.REGISTER);
+  void router(var vals) {
+    if (vals == 1) {
+      Get.toNamed(Routes.REGISTER);
+    } else {
+      Get.toNamed(Routes.RESET_PIN_EMAIL,
+          arguments: {'email': email, 'froms': 2});
+    }
+  }
 }

@@ -6,11 +6,13 @@ class ResetPinCreatePinController extends GetxController {
   var pin = '';
   var email;
   var code;
+  var froms;
 
   @override
   void onInit() {
     email = Get.arguments['email'];
     code = Get.arguments['code'];
+    froms = Get.arguments['froms'];
     super.onInit();
   }
 
@@ -20,7 +22,11 @@ class ResetPinCreatePinController extends GetxController {
   }
 
   void createPin() async {
+    router();
+  }
+
+  void router() {
     Get.toNamed(Routes.RESET_PIN_VERIF_PIN,
-        arguments: {'email': email, 'code': code, 'pin': pin});
+        arguments: {'email': email, 'code': code, 'pin': pin, 'froms': froms});
   }
 }

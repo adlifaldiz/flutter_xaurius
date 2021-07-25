@@ -145,12 +145,14 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
                           Get.focusScope.unfocus();
                           final isValid = formKey.currentState.validate();
                           if (!isValid) {
+                            print('valid false');
                             mode = AutovalidateMode.onUserInteraction;
                             return;
                           }
-                          //formKey.currentState.save();
-                          // controller.verifyCode();
-                          controller.router();
+                          formKey.currentState.save();
+                          print('valid true');
+                          controller.verifyCodeReset();
+                          // controller.router();
                         },
                       );
 

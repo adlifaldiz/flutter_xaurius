@@ -96,7 +96,9 @@ class LoginView extends GetView<LoginController> {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.done,
                                 maxLength: 6,
-                                inputFormatters: [LengthLimitingTextInputFormatter(6)],
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(6)
+                                ],
                                 useObscure: true,
                                 hintText: 'Pin',
                                 prefixIcon: Icon(
@@ -113,17 +115,23 @@ class LoginView extends GetView<LoginController> {
                                     Text(
                                       'login_no_account'.tr,
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context).textTheme.subhead.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subhead
+                                          .copyWith(
                                             color: textWhiteColor,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
                                     GestureDetector(
-                                      onTap: () => controller.router(),
+                                      onTap: () => controller.router(1),
                                       child: Text(
                                         'login_regis_btn'.tr,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.subhead.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subhead
+                                            .copyWith(
                                               color: accentColor,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -147,15 +155,19 @@ class LoginView extends GetView<LoginController> {
                                   text: 'login_btn'.tr,
                                   onpressed: () {
                                     Get.focusScope.unfocus();
-                                    final isValid = controller.formKey.currentState.validate();
+                                    final isValid = controller
+                                        .formKey.currentState
+                                        .validate();
                                     if (!isValid) {
-                                      controller.mode.value = AutovalidateMode.onUserInteraction;
+                                      controller.mode.value =
+                                          AutovalidateMode.onUserInteraction;
                                       return;
                                     }
                                     controller.formKey.currentState.save();
                                     controller.login();
                                   },
                                 );
+
                                 // return Container(
                                 //   width: Get.width,
                                 //   child: RaisedButton(
@@ -180,18 +192,34 @@ class LoginView extends GetView<LoginController> {
                                 //   ),
                                 // );
                               }),
+                              GestureDetector(
+                                onTap: () => controller.router(2),
+                                child: Text(
+                                  'forgot_pass'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subhead
+                                      .copyWith(
+                                        color: accentColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              )
                             ],
                           ),
                         ),
                         Container(
                           width: Get.width,
-                          padding: EdgeInsets.symmetric(vertical: percentHeight(context, 5)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: percentHeight(context, 5)),
                           child: Text(
                             '\u00a9 2021 Xaurius. PT. Xaurius Asset Digital',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                  color: accentColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.subtitle1.copyWith(
+                                      color: accentColor,
+                                    ),
                           ),
                         ),
                       ],

@@ -8,11 +8,12 @@ class ResetPinEmailController extends GetxController {
   var isLoading = false.obs;
   TextEditingController emailController = TextEditingController();
   var email = '';
+  var froms = 0;
 
   @override
   void onInit() {
     email = Get.arguments['email'];
-
+    froms = Get.arguments['froms'];
     setTextController();
 
     if (email.toString().isEmpty || email.toString() == null) {
@@ -33,26 +34,27 @@ class ResetPinEmailController extends GetxController {
     emailController = TextEditingController();
   }
 
-  void register() async {
+  void reset() async {
     isLoading(true);
-    var resp = await _repo.register(email);
-    // if (resp.success) {
-    //   Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
-    // } else {
-    //   Get.toNamed(Routes.VERIFY_CODE, arguments: {'email': email});
+    var resp = await _repo.resetPinEmail(email);
+    if (resp.success) {
+      router();
+    } else {
+      router();
 
-    //   // dialogConnection(
-    //   //   'Oops',
-    //   //   resp.message,
-    //   //   () {
-    //   //     Get.back();
-    //   //   },
-    //   // );
-    // }
+      // dialogConnection(
+      //   'Oops',
+      //   resp.message,
+      //   () {
+      //     Get.back();
+      //   },
+      // );
+    }
     isLoading(false);
   }
 
   void router() {
-    Get.toNamed(Routes.RESET_PIN_VERIF_CODE, arguments: {'email': email});
+    Get.toNamed(Routes.RESET_PIN_VERIF_CODE,
+        arguments: {'email': email, 'froms': froms});
   }
 }

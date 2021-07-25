@@ -99,16 +99,16 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                       return XauriusButton(
                         pressAble: true,
                         text: 'save_btn'.tr,
-                        // onpressed: () {
-                        //   Get.focusScope.unfocus();
-                        //   final isValid = formKey.currentState.validate();
-                        //   if (!isValid) {
-                        //     mode = AutovalidateMode.onUserInteraction;
-                        //     return;
-                        //   }
-                        //   formKey.currentState.save();
-                        //controller.verifyPin();
-                        // },
+                        onpressed: () {
+                          Get.focusScope.unfocus();
+                          final isValid = formKey.currentState.validate();
+                          if (!isValid) {
+                            mode = AutovalidateMode.onUserInteraction;
+                            return;
+                          }
+                          formKey.currentState.save();
+                          controller.verifyResetPin();
+                        },
                       );
                       // return Container(
                       //   width: double.infinity,

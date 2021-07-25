@@ -25,7 +25,7 @@ class ResetPinEmailView extends GetView<ResetPinEmailController> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text(
-            'Email',
+            'chg_pin'.tr,
             style: textAppbarStyleWhite,
           ),
           leading: BackButton(
@@ -66,23 +66,26 @@ class ResetPinEmailView extends GetView<ResetPinEmailController> {
                             //     'assets/images/logo_ss.png',
                             //     width: 150,
                             //   ),
-                            //   SizedBox(height: percentHeight(context, 3)),
-                            //   Text(
-                            //     'regis_welcome'.tr,
-                            //     style:
-                            //         Theme.of(context).textTheme.headline4.copyWith(
-                            //               color: textWhiteColor,
-                            //               fontWeight: FontWeight.bold,
-                            //             ),
-                            //   ),
-                            //   SizedBox(height: percentHeight(context, 5)),
-                            //   Text(
-                            //     'regis_exp'.tr,
-                            //     style: Theme.of(context).textTheme.subhead.copyWith(
-                            //           color: brokenWhiteColor,
-                            //           fontWeight: FontWeight.normal,
-                            //         ),
-                            //   ),
+                            // SizedBox(height: percentHeight(context, 3)),
+                            // Text(
+                            //   'chg_pin_dg_email'.tr,
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .headline4
+                            //       .copyWith(
+                            //         color: textWhiteColor,
+                            //         fontWeight: FontWeight.bold,
+                            //       ),
+                            // ),
+                            // SizedBox(height: percentHeight(context, 5)),
+                            Text(
+                              'chg_pin_dg_email'.tr,
+                              style:
+                                  Theme.of(context).textTheme.subhead.copyWith(
+                                        color: brokenWhiteColor,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                            ),
                             SizedBox(height: percentHeight(context, 5)),
                             Form(
                               key: _formKey,
@@ -124,16 +127,15 @@ class ResetPinEmailView extends GetView<ResetPinEmailController> {
                                       text: 'next_btn'.tr,
                                       onpressed: () {
                                         FocusScope.of(context).unfocus();
-                                        // final isValidEmail =
-                                        //     _formKey.currentState.validate();
-                                        // if (!isValidEmail) {
-                                        //   mode =
-                                        //       AutovalidateMode.onUserInteraction;
-                                        //   return;
-                                        // }
-                                        //_formKey.currentState.save();
-                                        //  controller.register();
-                                        controller.router();
+                                        final isValidEmail =
+                                            _formKey.currentState.validate();
+                                        if (!isValidEmail) {
+                                          mode = AutovalidateMode
+                                              .onUserInteraction;
+                                          return;
+                                        }
+                                        _formKey.currentState.save();
+                                        controller.reset();
                                       },
                                     );
                                     // return Container(

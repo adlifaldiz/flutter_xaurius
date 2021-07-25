@@ -169,5 +169,10 @@ const Map<String, String> inID = {
   'fail_conn': 'Tidak ada koneksi internet',
   'fail_down': 'Server sedang maintenance',
   "qr_small": "pindai untuk transaksi\n lebih cepat",
-  "qr_big": "QR Anda"
+  "qr_big": "QR Anda",
+  "chg_pin": "Ganti Pin",
+  "chg_pin_dg_email": "Masukan email yang akan di ganti pin",
+  "chg_pin_dg_pin": "Sekarang buat pin baru untuk mengganti pin lama ",
+  "chg_pin_warning": "Setelah mengganti pin akun akan keluar secara automatis",
+  "forgot_pass": "lupa Password",
 };

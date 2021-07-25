@@ -64,7 +64,8 @@ class SettingController extends GetxController {
         Get.toNamed(Routes.SYSTEM);
         break;
       case 9:
-        Get.toNamed(Routes.RESET_PIN_EMAIL, arguments: {'email': email});
+        Get.toNamed(Routes.RESET_PIN_EMAIL,
+            arguments: {'email': email, 'froms': 2});
         break;
     }
   }

@@ -169,4 +169,10 @@ const Map<String, String> enUS = {
   'fail_down': 'Server is under maintenance',
   "qr_small": "Scan for faster\ntransactions",
   "qr_big": "Your QR",
+  "chg_pin": "Change pin",
+  "chg_pin_dg_email": "Insert email that pin want to be changed",
+  "chg_pin_dg_pin": "now Insert new pin to change to ",
+  "chg_pin_warning":
+      "After changing your pin your account will be automatically Loged out",
+  "forgot_pass": "Forgot Password",
 };

@@ -10,12 +10,13 @@ class ResetPinVerifCodeController extends GetxController {
   var code = '';
   var isAgree = false.obs;
   var showToolTip = false.obs;
+  var froms;
   String email = '';
-  TextEditingController emailController = TextEditingController();
 
   @override
   void onInit() {
     email = Get.arguments['email'];
+    froms = Get.arguments['froms'];
     super.onInit();
   }
 
@@ -26,41 +27,33 @@ class ResetPinVerifCodeController extends GetxController {
 
   @override
   void onReady() {
-    setTextController();
     email = Get.arguments['email'];
-
-    if (email.toString().isEmpty || email.toString() == null) {
-      emailController.text = '';
-    } else {
-      emailController.text = email.toString();
-    }
 
     successSnackbar('Sukses', 'Berhasil terkirim ke $email');
     super.onReady();
   }
 
-  void setTextController() {
-    emailController = TextEditingController();
+  void verifyCodeReset() async {
+    // if (!isAgree.value) {
+    //   print("1st Check");
+    //   showToolTip(true);
+    //   Future.delayed(Duration(seconds: 5)).then((value) {
+    //     showToolTip(false);
+    //   });
+    // } else {
+    isLoading(true);
+    print('Starting Verivication');
+    var resp = await _repo.resetPinVerifCode(email, code);
+    if (resp.success) {
+      print('codeResetTrue');
+      Get.toNamed(Routes.RESET_PIN_CREATE_PIN,
+          arguments: {'email': email, 'code': code, 'froms': froms});
+    } else {
+      failSnackbar('Fail', resp.message);
+    }
+    isLoading(false);
+    //}
   }
-
-  // void verifyCode() async {
-  //   if (!isAgree.value) {
-  //     showToolTip(true);
-  //     Future.delayed(Duration(seconds: 5)).then((value) {
-  //       showToolTip(false);
-  //     });
-  //   } else {
-  //     isLoading(true);
-  //     var resp = await _repo.verifyRegistrationCode(email, code);
-  //     if (resp.success) {
-  //       Get.toNamed(Routes.CREATE_PIN,
-  //           arguments: {'email': email, 'code': code});
-  //     } else {
-  //       failSnackbar('Fail', resp.message);
-  //     }
-  //     isLoading(false);
-  //   }
-  // }
 
   void onAgreeChange(bool value) {
     isAgree.value = value;
@@ -68,8 +61,8 @@ class ResetPinVerifCodeController extends GetxController {
     update();
   }
 
-  void router() {
-    Get.toNamed(Routes.RESET_PIN_CREATE_PIN,
-        arguments: {'email': email, 'code': code});
-  }
+  // void router() {
+  //   Get.toNamed(Routes.RESET_PIN_CREATE_PIN,
+  //       arguments: {'email': email, 'code': code});
+  // }
 }
