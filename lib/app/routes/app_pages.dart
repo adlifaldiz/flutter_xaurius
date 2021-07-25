@@ -58,6 +58,14 @@ import 'package:flutter_xaurius/app/modules/receive_xau/bindings/receive_xau_bin
 import 'package:flutter_xaurius/app/modules/receive_xau/views/receive_xau_view.dart';
 import 'package:flutter_xaurius/app/modules/register/bindings/register_binding.dart';
 import 'package:flutter_xaurius/app/modules/register/views/register_view.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_create_pin/bindings/reset_pin_create_pin_binding.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_create_pin/views/reset_pin_create_pin_view.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_email/bindings/reset_pin_email_binding.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_email/views/reset_pin_email_view.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_verif_code/bindings/reset_pin_verif_code_binding.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_verif_code/views/reset_pin_verif_code_view.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_verif_pin/bindings/reset_pin_verif_pin_binding.dart';
+import 'package:flutter_xaurius/app/modules/reset_pin_verif_pin/views/reset_pin_verif_pin_view.dart';
 import 'package:flutter_xaurius/app/modules/sell_xau/bindings/sell_xau_binding.dart';
 import 'package:flutter_xaurius/app/modules/sell_xau/views/sell_xau_view.dart';
 import 'package:flutter_xaurius/app/modules/send_xau/bindings/send_xau_binding.dart';
@@ -300,6 +308,26 @@ class AppPages {
       name: _Paths.RECEIVE_XAU,
       page: () => ReceiveXauView(),
       binding: ReceiveXauBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PIN_EMAIL,
+      page: () => ResetPinEmailView(),
+      binding: ResetPinEmailBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PIN_VERIF_CODE,
+      page: () => ResetPinVerifCodeView(),
+      binding: ResetPinVerifCodeBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PIN_CREATE_PIN,
+      page: () => ResetPinCreatePinView(),
+      binding: ResetPinCreatePinBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PIN_VERIF_PIN,
+      page: () => ResetPinVerifPinView(),
+      binding: ResetPinVerifPinBinding(),
     ),
   ];
 }
