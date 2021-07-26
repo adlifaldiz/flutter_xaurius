@@ -34,7 +34,8 @@ class VerifyPinController extends GetxController {
       Get.back();
       Get.back();
       Get.back();
-      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
+      successSnackbar(
+          'Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

@@ -35,11 +35,11 @@ class SettingView extends GetView<SettingController> {
                       title: 'setting_profile'.tr,
                       onTap: () => controller.router(1),
                     ),
-                    // MenuTile(
-                    //   icon: FontAwesomeIcons.userLock,
-                    //   title: 'setting_pin'.tr,
-                    //   onTap: () {},
-                    // ),
+                    MenuTile(
+                      icon: FontAwesomeIcons.userLock,
+                      title: 'setting_pin'.tr,
+                      onTap: () => controller.router(9),
+                    ),
                     MenuTile(
                       icon: FontAwesomeIcons.building,
                       title: 'bank_account'.tr,
