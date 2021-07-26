@@ -37,13 +37,16 @@ class SendHistoryView extends GetView<SendHistoryController> {
           children: [
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: percentWidth(context, 5),
+                    vertical: percentHeight(context, 1)),
                 controller: controller.scrollController,
                 physics: AlwaysScrollableScrollPhysics(),
                 itemCount: controller.wdData.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: percentWidth(context, 1)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: percentWidth(context, 1)),
                     child: XauriusContainer(
                       child: Column(
                         children: [
@@ -58,7 +61,8 @@ class SendHistoryView extends GetView<SendHistoryController> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    '#' + controller.wdData[index].id.toString(),
+                                    '#' +
+                                        controller.wdData[index].id.toString(),
                                   ),
                                 ],
                               ),
@@ -108,7 +112,7 @@ class SendHistoryView extends GetView<SendHistoryController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Send Fee ',
+                                'send_Fee'.tr,
                                 style: stylePrimary,
                               ),
                               SizedBox(width: percentWidth(context, 5)),
@@ -129,12 +133,14 @@ class SendHistoryView extends GetView<SendHistoryController> {
               ),
             ),
             AnimatedContainer(
-              height: controller.isLoading.value ? percentHeight(context, 2) : 0,
+              height:
+                  controller.isLoading.value ? percentHeight(context, 2) : 0,
               duration: Duration(milliseconds: 100),
               child: controller.isLoading.value
                   ? (GetPlatform.isIOS || GetPlatform.isMacOS)
                       ? CupertinoActivityIndicator()
-                      : CircularProgressIndicator(color: primaryColor, strokeWidth: 1.5)
+                      : CircularProgressIndicator(
+                          color: primaryColor, strokeWidth: 1.5)
                   : Container(),
             )
           ],

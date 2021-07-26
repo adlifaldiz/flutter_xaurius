@@ -89,7 +89,8 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                               fontSize: 20.0),
-                          colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
+                          colorBuilder: PinListenColorBuilder(
+                              primaryColor, textWhiteColor)),
                     ),
                     SizedBox(height: (percentHeight(context, 5))),
                     Obx(() {
@@ -100,13 +101,17 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
                         );
                       }
                       return GestureDetector(
-                        onTap: !controller.isStart.value ? () => controller.sendOTP() : () {},
-                        child: Text(controller.isStart.value && !controller.isLoadingOTP.value
+                        onTap: !controller.isStart.value
+                            ? () => controller.sendOTP()
+                            : () {},
+                        child: Text(controller.isStart.value &&
+                                !controller.isLoadingOTP.value
                             ? 'Wait ${controller.start.value} sec'
-                            : 'Hasn\'t receive verification code? Click here'),
+                            : 'Re_verif'.tr),
                       );
                     }),
                     Spacer(),
+
                     // Obx(
                     //   () => Row(
                     //     mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +215,8 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
   _showTnc(BuildContext context) {
     showMaterialModalBottomSheet(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       context: context,
       builder: (context) => TncView(),
     );

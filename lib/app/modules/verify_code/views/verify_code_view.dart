@@ -88,7 +88,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                               fontSize: 20.0),
-                          colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
+                          colorBuilder: PinListenColorBuilder(
+                              primaryColor, textWhiteColor)),
                     ),
                     SizedBox(
                       height: (percentHeight(context, 5)),
@@ -101,10 +102,13 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                         );
                       }
                       return GestureDetector(
-                        onTap: !controller.isStart.value ? () => controller.sendOTP() : () {},
-                        child: Text(controller.isStart.value && !controller.isLoadingOTP.value
+                        onTap: !controller.isStart.value
+                            ? () => controller.sendOTP()
+                            : () {},
+                        child: Text(controller.isStart.value &&
+                                !controller.isLoadingOTP.value
                             ? 'Wait ${controller.start.value} sec'
-                            : 'Hasn\'t receive verification code? Click here'),
+                            : 'Re_verif'.tr),
                       );
                     }),
                     Spacer(),
@@ -116,7 +120,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                             show: controller.showToolTip.value,
                             text: 'regis_agree_err'.tr,
                             child: Checkbox(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(1)),
                               checkColor: textWhiteColor,
                               activeColor: primaryColor,
                               value: controller.isAgree.value,
@@ -133,8 +138,11 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
                               children: [
                                 TextSpan(
                                   text: 'setting_terms'.tr,
-                                  style: stylePrimary.copyWith(color: primaryColor, fontWeight: FontWeight.bold),
-                                  recognizer: TapGestureRecognizer()..onTap = () => _showTnc(context),
+                                  style: stylePrimary.copyWith(
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => _showTnc(context),
                                 ),
                               ],
                             ),
@@ -205,7 +213,8 @@ class VerifyCodeView extends GetView<VerifyCodeController> {
   _showTnc(BuildContext context) {
     showMaterialModalBottomSheet(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       context: context,
       builder: (context) => TncView(),
     );

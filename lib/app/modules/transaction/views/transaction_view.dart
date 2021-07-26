@@ -22,7 +22,8 @@ import '../controllers/transaction_controller.dart';
 import 'dart:math' as math;
 
 class TransactionView extends GetView<TransactionController> {
-  final GlobalKey<LiquidPullToRefreshState> refreshTransaction = GlobalKey<LiquidPullToRefreshState>();
+  final GlobalKey<LiquidPullToRefreshState> refreshTransaction =
+      GlobalKey<LiquidPullToRefreshState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,9 @@ class TransactionView extends GetView<TransactionController> {
             onRefresh: controller.onRefresh,
             showChildOpacityTransition: false,
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 5)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: percentWidth(context, 5),
+                  vertical: percentHeight(context, 5)),
               children: [
                 controller.dash.isLoading.value
                     ? ShimmerText()
@@ -60,7 +63,8 @@ class TransactionView extends GetView<TransactionController> {
                           GestureDetector(
                             onTap: () => controller.router(1),
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -75,7 +79,8 @@ class TransactionView extends GetView<TransactionController> {
                                   SizedBox(width: 5),
                                   Text(
                                     'trans_top_up'.tr + ' IDR',
-                                    style: stylePrimary.copyWith(color: textBlackColor),
+                                    style: stylePrimary.copyWith(
+                                        color: textBlackColor),
                                   )
                                 ],
                               ),
@@ -99,7 +104,8 @@ class TransactionView extends GetView<TransactionController> {
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false,
                           onPageChanged: (index, reason) {
-                            return controller.dash.onBalancesChange(index, reason);
+                            return controller.dash
+                                .onBalancesChange(index, reason);
                           },
                         ),
                         items: controller.dash.balance.isEmpty
@@ -113,10 +119,13 @@ class TransactionView extends GetView<TransactionController> {
                             : controller.dash.balance.map((balances) {
                                 return Builder(builder: (BuildContext context) {
                                   return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: percentWidth(context, 5),
+                                        vertical: percentHeight(context, 3)),
                                     width: Get.width,
                                     decoration: BoxDecoration(
-                                      color: backgroundPanelColor.withOpacity(0.5),
+                                      color:
+                                          backgroundPanelColor.withOpacity(0.5),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     foregroundDecoration: BoxDecoration(
@@ -127,19 +136,25 @@ class TransactionView extends GetView<TransactionController> {
                                               'assets/images/mesh-bottom.png',
                                             ))),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           balances.balanceSymbol,
-                                          style: textTitle.copyWith(color: primaryColor),
+                                          style: textTitle.copyWith(
+                                              color: primaryColor),
                                         ),
                                         SizedBox(height: 5),
                                         Text(
                                           balances.balanceSymbol == 'IDR'
-                                              ? customCurrency(balances.balanceValue, symbol: 'Rp ')
+                                              ? customCurrency(
+                                                  balances.balanceValue,
+                                                  symbol: 'Rp ')
                                               : balances.balanceValue,
-                                          style: textTitle.copyWith(fontSize: 20),
+                                          style:
+                                              textTitle.copyWith(fontSize: 20),
                                         ),
                                       ],
                                     ),
@@ -150,17 +165,27 @@ class TransactionView extends GetView<TransactionController> {
                 controller.dash.isLoading.value
                     ? ShimmerText()
                     : Padding(
-                        padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: percentWidth(context, 5)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: controller.dash.map<Widget>(controller.dash.balance, (index, url) {
+                          children: controller.dash.map<Widget>(
+                              controller.dash.balance, (index, url) {
                             return AnimatedContainer(
-                              width: controller.dash.indexBalances.value == index ? 20.0 : 7,
+                              width:
+                                  controller.dash.indexBalances.value == index
+                                      ? 20.0
+                                      : 7,
                               height: 7.0,
-                              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: percentWidth(context, 0.5)),
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal: percentWidth(context, 0.5)),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: controller.dash.indexBalances.value == index ? Colors.yellow : Colors.grey,
+                                color:
+                                    controller.dash.indexBalances.value == index
+                                        ? Colors.yellow
+                                        : Colors.grey,
                               ),
                               duration: Duration(milliseconds: 300),
                             );
@@ -200,50 +225,78 @@ class TransactionView extends GetView<TransactionController> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         controller.dash.isLoading.value
                                             ? ShimmerText()
                                             : Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   InkWell(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                     onTap: () {
-                                                      controller.dash.onChangeBuy(true);
+                                                      controller.dash
+                                                          .onChangeBuy(true);
                                                     },
                                                     child: Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 10,
+                                                              vertical: 5),
                                                       decoration: BoxDecoration(
-                                                        color: controller.dash.isBuy.value ? greyColor : Colors.transparent,
-                                                        borderRadius: BorderRadius.circular(20),
+                                                        color: controller.dash
+                                                                .isBuy.value
+                                                            ? greyColor
+                                                            : Colors
+                                                                .transparent,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
                                                       ),
                                                       child: Text(
-                                                        'Buy',
+                                                        'dash_buy'.tr,
                                                         style: TextStyle(
                                                           color: greenColor,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(width: percentWidth(context, 2)),
+                                                  SizedBox(
+                                                      width: percentWidth(
+                                                          context, 2)),
                                                   InkWell(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                     onTap: () {
-                                                      controller.dash.onChangeBuy(false);
+                                                      controller.dash
+                                                          .onChangeBuy(false);
                                                     },
                                                     child: Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 10,
+                                                              vertical: 5),
                                                       decoration: BoxDecoration(
-                                                        color: controller.dash.isBuy.value ? Colors.transparent : greyColor,
-                                                        borderRadius: BorderRadius.circular(20),
+                                                        color: controller.dash
+                                                                .isBuy.value
+                                                            ? Colors.transparent
+                                                            : greyColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
                                                       ),
                                                       child: Text(
-                                                        'Sell',
+                                                        'dash_sell'.tr,
                                                         style: TextStyle(
                                                           color: redColor,
                                                         ),
@@ -252,14 +305,20 @@ class TransactionView extends GetView<TransactionController> {
                                                   ),
                                                 ],
                                               ),
-                                        SizedBox(height: percentHeight(context, 2)),
+                                        SizedBox(
+                                            height: percentHeight(context, 2)),
                                         controller.dash.isLoading.value
                                             ? ShimmerText()
                                             : Text(
                                                 controller.dash.isBuy.value
-                                                    ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ?? '-'
-                                                    : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ?? '-',
-                                                style: stylePrimary.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                                                    ? "IDR: ${controller.dash.goldPrice.value.chartpriceBuy}" ??
+                                                        '-'
+                                                    : "IDR: ${controller.dash.goldPrice.value.chartpriceSell}" ??
+                                                        '-',
+                                                style: stylePrimary.copyWith(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                       ],
@@ -269,8 +328,11 @@ class TransactionView extends GetView<TransactionController> {
                                     onTap: () => Get.toNamed(Routes.CHART_VIEW),
                                     child: Container(
                                       padding: EdgeInsets.all(5),
-                                      decoration:
-                                          BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor, width: 2)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: primaryColor, width: 2)),
                                       child: Icon(
                                         FontAwesomeIcons.expandAlt,
                                         size: 18,
@@ -302,8 +364,12 @@ class TransactionView extends GetView<TransactionController> {
                                     rangePadding: ChartRangePadding.none,
                                   ),
                                   primaryYAxis: NumericAxis(
-                                    minimum: double.parse(controller.dash.charts[2].chigh) - 10000,
-                                    maximum: double.parse(controller.dash.charts.last.chigh) + 10000,
+                                    minimum: double.parse(
+                                            controller.dash.charts[2].chigh) -
+                                        10000,
+                                    maximum: double.parse(
+                                            controller.dash.charts.last.chigh) +
+                                        10000,
                                     rangePadding: ChartRangePadding.none,
                                     numberFormat: NumberFormat.compactCurrency(
                                       locale: "in_In",
@@ -328,7 +394,10 @@ class TransactionView extends GetView<TransactionController> {
                                   legend: Legend(
                                     isVisible: false,
                                   ),
-                                  title: ChartTitle(text: "XAU/IDR", textStyle: TextStyle(color: textWhiteColor)),
+                                  title: ChartTitle(
+                                      text: "XAU/IDR",
+                                      textStyle:
+                                          TextStyle(color: textWhiteColor)),
                                   // indicators: <TechnicalIndicators<Chart, dynamic>>[
                                   //   BollingerBandIndicator<Chart, dynamic>(
                                   //     seriesName: "XAU",
@@ -341,8 +410,11 @@ class TransactionView extends GetView<TransactionController> {
                                     SplineAreaSeries<ChartData, dynamic>(
                                         // markerSettings: MarkerSettings(isVisible: true),
                                         dataSource: controller.dash.charts,
-                                        xValueMapper: (ChartData gold, _) => DateTime.parse(controller.formatter.format(gold.cdate)),
-                                        yValueMapper: (ChartData gold, _) => num.parse(gold.chigh),
+                                        xValueMapper: (ChartData gold, _) =>
+                                            DateTime.parse(controller.formatter
+                                                .format(gold.cdate)),
+                                        yValueMapper: (ChartData gold, _) =>
+                                            num.parse(gold.chigh),
                                         color: primaryColor.withOpacity(0.3),
                                         borderWidth: 5,
                                         borderGradient: LinearGradient(
@@ -402,7 +474,9 @@ class TransactionView extends GetView<TransactionController> {
                           color: backgroundPanelColor.withOpacity(0.5),
                         ),
                         child: GridView.count(
-                          padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 1), vertical: percentHeight(context, 2)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: percentWidth(context, 1),
+                              vertical: percentHeight(context, 2)),
                           crossAxisCount: 4,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),

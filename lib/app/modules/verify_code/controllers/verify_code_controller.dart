@@ -32,7 +32,7 @@ class VerifyCodeController extends GetxController {
   @override
   void onReady() {
     email = Get.arguments['email'];
-    successSnackbar('Sukses', 'Berhasil terkirim ke $email');
+    successSnackbar('succes_alert'.tr, 'success_Sent'.tr + email);
     super.onReady();
   }
 
@@ -46,9 +46,10 @@ class VerifyCodeController extends GetxController {
       isLoading(true);
       var resp = await _repo.verifyRegistrationCode(email, code);
       if (resp.success) {
-        Get.toNamed(Routes.CREATE_PIN, arguments: {'email': email, 'code': code});
+        Get.toNamed(Routes.CREATE_PIN,
+            arguments: {'email': email, 'code': code});
       } else {
-        failSnackbar('Fail', resp.message);
+        failSnackbar('fail_alert'.tr, resp.message);
       }
       isLoading(false);
     }

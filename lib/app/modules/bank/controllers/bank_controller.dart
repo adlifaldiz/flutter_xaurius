@@ -42,9 +42,10 @@ class BankController extends GetxController {
 
   Future updateBank() async {
     isLoading(true);
-    final resp = await _repo.updateBankProfile(auth.token, namaBankControl.text, namaAkunControl.text, nomorAkunControl.text);
+    final resp = await _repo.updateBankProfile(auth.token, namaBankControl.text,
+        namaAkunControl.text, nomorAkunControl.text);
     if (resp.success) {
-      successSnackbar('Sukses', 'Berhasil menambahkan data bank');
+      successSnackbar('succes_alert'.tr, 'bank_added'.tr);
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

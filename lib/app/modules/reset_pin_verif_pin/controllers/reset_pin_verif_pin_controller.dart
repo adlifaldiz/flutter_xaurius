@@ -39,7 +39,8 @@ class ResetPinVerifPinController extends GetxController {
     var resp = await _repo.resetPinRecreate(email, code, pin, pinConfirmation);
     if (resp.success) {
       logout();
-      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
+      successSnackbar(
+          'Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

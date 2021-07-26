@@ -175,4 +175,17 @@ const Map<String, String> inID = {
   "chg_pin_dg_pin": "Sekarang buat pin baru untuk mengganti pin lama ",
   "chg_pin_warning": "Setelah mengganti pin akun akan keluar secara automatis",
   "forgot_pass": "lupa Password",
+  "Re_verif": "Belum mendapatkan kode verifikasi? Tekan sini",
+  "voucher_A": "Voucher Anda",
+  "veriv_pin_bar": "Silahkan lakukan Login untuk masuk kedalam aplikasi",
+  "fail_alert": "Gagal",
+  "success_Sent": "Berhasil dikirim ke",
+  "image_cant_load": "Gambar tidak bisa dimuat",
+  "size": "Ukuran",
+  "min_topup": "Top up IDR minimal Rp100.000",
+  "success_invoice": "Berhasil membuat invoice",
+  "sell_title": "Jual XAU",
+  "sell_now": "Jual Sekarang",
+  "send_Fee": "Biyaya Pengiriman",
+  "bank_added": "Berhasil menambahkan data bank"
 };
