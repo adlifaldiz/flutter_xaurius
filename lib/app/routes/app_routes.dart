@@ -51,6 +51,10 @@ abstract class Routes {
   static const RECEIVE_XAU = _Paths.RECEIVE_XAU;
   static const SEND_HISTORY = _Paths.HISTORY + _Paths.SEND_HISTORY;
   static const RECEIVE_HISTORY = _Paths.HISTORY + _Paths.RECEIVE_HISTORY;
+  static const RESET_PIN_EMAIL = _Paths.RESET_PIN_EMAIL;
+  static const RESET_PIN_VERIF_CODE = _Paths.RESET_PIN_VERIF_CODE;
+  static const RESET_PIN_CREATE_PIN = _Paths.RESET_PIN_CREATE_PIN;
+  static const RESET_PIN_VERIF_PIN = _Paths.RESET_PIN_VERIF_PIN;
 }
 
 abstract class _Paths {
@@ -101,4 +105,8 @@ abstract class _Paths {
   static const RECEIVE_XAU = '/receive-xau';
   static const SEND_HISTORY = '/send-history';
   static const RECEIVE_HISTORY = '/receive-history';
+  static const RESET_PIN_EMAIL = '/reset-pin-email';
+  static const RESET_PIN_VERIF_CODE = '/reset-pin-verif-code';
+  static const RESET_PIN_CREATE_PIN = '/reset-pin-create-pin';
+  static const RESET_PIN_VERIF_PIN = '/reset-pin-verif-pin';
 }

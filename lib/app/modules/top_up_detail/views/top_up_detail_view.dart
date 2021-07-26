@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/intl_formats.dart';
 import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
+import 'package:flutter_xaurius/app/routes/app_pages.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_card.dart';
 import 'package:flutter_xaurius/app/widget/shimmer_text.dart';
 import 'package:flutter_xaurius/app/widget/xau_container.dart';
@@ -71,7 +72,8 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 ),
                                 Text(
                                   controller.responseDetailInvoices.value.data.invoice.invoiceVa.customerData.custName,
-                                  style: textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
+                                  style: textTitle.copyWith(
+                                      color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
@@ -92,7 +94,8 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                               ),
                               Text(
                                 formatCurrency(controller.responseDetailInvoices.value.data.invoice.invoiceTotal),
-                                style: textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
+                                style:
+                                    textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                               ),
                             ],
                           )
@@ -168,7 +171,8 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                                 ),
                                 SizedBox(width: percentWidth(context, 5)),
                                 Text(
-                                  customCurrency(controller.responseDetailInvoices.value.data.invoice.invoiceTotal) + ' IDR',
+                                  customCurrency(controller.responseDetailInvoices.value.data.invoice.invoiceTotal) +
+                                      ' IDR',
                                   textAlign: TextAlign.end,
                                 ),
                               ],
@@ -319,12 +323,10 @@ class TopUpDetailView extends GetView<TopUpDetailController> {
                       )
                     : RaisedButton(
                         onPressed: () async {
-                          // Get.toNamed(Routes.MENU);
-                          Get.back();
-                          Get.back();
-                          Get.back();
+                          Get.until((route) => Get.currentRoute == Routes.MENU);
                         },
-                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
                         color: backgroundPanelColor,
                         child: Container(

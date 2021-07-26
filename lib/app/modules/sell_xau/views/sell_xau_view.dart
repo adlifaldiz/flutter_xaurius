@@ -16,7 +16,7 @@ class SellXauView extends GetView<SellXauController> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Jual XAU'),
+            title: Text('sell_title'.tr),
           ),
           body: Obx(() {
             return SafeArea(
@@ -125,7 +125,7 @@ class SellXauView extends GetView<SellXauController> {
                                 width: percentWidth(context, 100),
                                 child: Center(
                                     child: Text(
-                                  'Jual Sekarang',
+                                  'sell_now'.tr,
                                   style: buttonStyle,
                                 )),
                               ),

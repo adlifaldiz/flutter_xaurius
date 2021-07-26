@@ -73,7 +73,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                   Text(
                                     controller.responseDetailInvoice.value.data.invoice.invoiceVa.customerData.custName,
-                                    style: textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
+                                    style: textTitle.copyWith(
+                                        color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -90,7 +91,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                 ),
                                 Text(
                                   formatCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal),
-                                  style: textTitle.copyWith(color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
+                                  style: textTitle.copyWith(
+                                      color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             )
@@ -121,7 +123,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                   SizedBox(width: percentWidth(context, 5)),
                                   Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.buy.buyUnitPrice) + ' IDR',
+                                    customCurrency(controller.responseDetailInvoice.value.data.buy.buyUnitPrice) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   ),
                                 ],
@@ -201,7 +204,9 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceDiscount) + ' IDR',
+                                    customCurrency(
+                                            controller.responseDetailInvoice.value.data.invoice.invoiceDiscount) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   )),
                                 ],
@@ -216,7 +221,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceAdmfee) + ' IDR',
+                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceAdmfee) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   )),
                                 ],
@@ -230,7 +236,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                     style: textTitle,
                                   ),
                                   Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceGas) + ' IDR',
+                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceGas) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   ),
                                 ],
@@ -244,7 +251,9 @@ class InvoiceView extends GetView<InvoiceController> {
                                     style: textTitle,
                                   ),
                                   Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceVoucherValue) + ' IDR',
+                                    customCurrency(
+                                            controller.responseDetailInvoice.value.data.invoice.invoiceVoucherValue) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   ),
                                 ],
@@ -258,7 +267,8 @@ class InvoiceView extends GetView<InvoiceController> {
                                     style: textTitle,
                                   ),
                                   Text(
-                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal) + ' IDR',
+                                    customCurrency(controller.responseDetailInvoice.value.data.invoice.invoiceTotal) +
+                                        ' IDR',
                                     textAlign: TextAlign.end,
                                   ),
                                 ],
@@ -405,14 +415,15 @@ class InvoiceView extends GetView<InvoiceController> {
                             )
                           : RaisedButton(
                               onPressed: () async {
-                                // Get.toNamed(Routes.HISTORY);
-                                Get.back();
-                                Get.back();
-                                Get.back();
+                                Get.until((route) => Get.currentRoute == Routes.MENU);
                               },
-                              padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
-                              color: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done' ? primaryColor : backgroundPanelColor,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: percentHeight(context, 1.9), horizontal: percentWidth(context, 5)),
+                              shape:
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(percentWidth(context, 3))),
+                              color: controller.responseDetailInvoice.value.data.buy.buyStatus == 'done'
+                                  ? primaryColor
+                                  : backgroundPanelColor,
                               child: Container(
                                 width: percentWidth(context, 100),
                                 child: Center(

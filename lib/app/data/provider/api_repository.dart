@@ -32,6 +32,15 @@ class ApiRepository {
     return BaseResp.fromJson(response.body);
   }
 
+  Future<BaseResp> resendCode(String email) async {
+    final response = await _http.call(
+      url.registerResendVerification,
+      method: MethodRequest.POST,
+      request: {'email': email},
+    );
+    return BaseResp.fromJson(response.body);
+  }
+
   Future<BaseResp> verifyRegistrationCode(String email, String otp) async {
     final response = await _http.call(
       url.registerVerification,
@@ -95,12 +104,15 @@ class ApiRepository {
   }
 
   Future<UserResp> kycDocument(idType, idNum, idFile, npwpNum, npwpFile, jwt) async {
-    final response = await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
+    final response =
+        await _http.call(url.kycDocument, token: jwt, method: MethodRequest.POST, useFormData: true, request: {
       'orang[orang_id_type]': idType,
       'orang[orang_id_num]': idNum,
-      'orang[orang_id_file_atc]': idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last),
+      'orang[orang_id_file_atc]':
+          idFile.toString().isEmpty ? '' : MultipartFile(idFile, filename: idFile.split('/').last),
       'orang[orang_npwp_num]': npwpNum,
-      'orang[orang_npwp_file_atc]': npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
+      'orang[orang_npwp_file_atc]':
+          npwpFile.toString().isEmpty ? '' : MultipartFile(npwpFile, filename: npwpFile.split('/').last),
     });
     return UserResp.fromJson(response.body);
   }
@@ -111,7 +123,8 @@ class ApiRepository {
   }
 
   Future<UserResp> updateBankProfile(String token, String bankName, String holderName, String holderNumber) async {
-    final response = await _http.call(url.profileBank, token: token, useFormData: true, method: MethodRequest.POST, request: {
+    final response =
+        await _http.call(url.profileBank, token: token, useFormData: true, method: MethodRequest.POST, request: {
       'orang[orang_bank_name]': bankName,
       'orang[orang_bank_holder]': holderName,
       'orang[orang_bank_number]': holderNumber,
@@ -136,19 +149,25 @@ class ApiRepository {
     return ResponseCheckOut.fromJson(response.body);
   }
 
-  Future<ResponsePostCheckOut> postCheckout(String buyId, String walletAddress, String merchantId, String voucherCode, String token) async {
-    final response = await _http.call(url.buys + '/$buyId' + url.checkOut, token: token, useFormData: true, method: MethodRequest.POST, request: {
-      'buy_id': buyId,
-      'buy_address': walletAddress,
-      'merchant_id': merchantId,
-      'voucher_code': voucherCode,
-    });
+  Future<ResponsePostCheckOut> postCheckout(
+      String buyId, String walletAddress, String merchantId, String voucherCode, String token) async {
+    final response = await _http.call(url.buys + '/$buyId' + url.checkOut,
+        token: token,
+        useFormData: true,
+        method: MethodRequest.POST,
+        request: {
+          'buy_id': buyId,
+          'buy_address': walletAddress,
+          'merchant_id': merchantId,
+          'voucher_code': voucherCode,
+        });
 
     return ResponsePostCheckOut.fromJson(response.body);
   }
 
   Future<ResponseDetailInvoice> getInvoice(String invoiceId, String token) async {
-    final response = await _http.call(url.buys + '/$invoiceId' + url.invoice, token: token, useFormData: true, method: MethodRequest.GET);
+    final response = await _http.call(url.buys + '/$invoiceId' + url.invoice,
+        token: token, useFormData: true, method: MethodRequest.GET);
     return ResponseDetailInvoice.fromJson(response.body);
   }
 
@@ -222,5 +241,37 @@ class ApiRepository {
       'page': page,
     });
     return ResponseDeposit.fromJson(response.body);
+  }
+
+  Future<BaseResp> resetPinEmail(String email) async {
+    final response = await _http.call(
+      url.resetPinEmail,
+      method: MethodRequest.POST,
+      request: {'email': email},
+    );
+    return BaseResp.fromJson(response.body);
+  }
+
+  Future<BaseResp> resetPinVerifCode(String email, String otp) async {
+    final response = await _http.call(
+      url.resetPinVerifCode,
+      method: MethodRequest.POST,
+      request: {'email': email, 'otp': otp},
+    );
+    return BaseResp.fromJson(response.body);
+  }
+
+  Future<BaseResp> resetPinRecreate(String email, String otp, String pin, String pinConfirm) async {
+    final response = await _http.call(
+      url.resetPinRecreate,
+      method: MethodRequest.POST,
+      request: {
+        'email': email,
+        'otp': otp,
+        'pin': pin,
+        'pin_confirm': pinConfirm,
+      },
+    );
+    return BaseResp.fromJson(response.body);
   }
 }

@@ -15,7 +15,7 @@ class VoucherView extends GetView<VoucherController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Voucher Kamu'),
+        title: Text('voucher_A'.tr),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -29,11 +29,14 @@ class VoucherView extends GetView<VoucherController> {
         //   return ShimmerList();
         // }
         return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 1)),
+            padding: EdgeInsets.symmetric(
+                horizontal: percentWidth(context, 5),
+                vertical: percentHeight(context, 1)),
             itemCount: controller.auth.userVouchers.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
+                padding:
+                    EdgeInsets.symmetric(vertical: percentHeight(context, 1)),
                 child: XauriusContainer(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -60,7 +63,9 @@ class VoucherView extends GetView<VoucherController> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        customCurrency(controller.auth.userVouchers[index].voucherValue, symbol: 'Rp '),
+                        customCurrency(
+                            controller.auth.userVouchers[index].voucherValue,
+                            symbol: 'Rp '),
                         style: textTitle,
                       ),
                     ],

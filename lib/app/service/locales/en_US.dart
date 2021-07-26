@@ -169,4 +169,23 @@ const Map<String, String> enUS = {
   'fail_down': 'Server is under maintenance',
   "qr_small": "Scan for faster\ntransactions",
   "qr_big": "Your QR",
+  "chg_pin": "Change pin",
+  "chg_pin_dg_email": "Insert email that pin want to be changed",
+  "chg_pin_dg_pin": "now Insert new pin to change to ",
+  "chg_pin_warning":
+      "After changing your pin your account will be automatically Loged out",
+  "forgot_pass": "Forgot Password",
+  "re_verif": "Haven't receeived verification code? Click here",
+  "voucher_A": "Your Voucher",
+  "veriv_pin_bar": "Please Login To Enter Aplication ",
+  "fail_alert": "Fail",
+  "success_Sent": "Successfully Sent to",
+  "image_cant_load": "Image couldn\'t be loaded",
+  "size": "Size",
+  "min_topup": "Minimum IDR top up is Rp100.000",
+  "success_invoice": "Invoice Created Successfully",
+  "sell_title": "Sell XAU",
+  "sell_now": "Sell now",
+  "send_Fee": "Send Fee",
+  "bank_added": "Bank data successfully added"
 };

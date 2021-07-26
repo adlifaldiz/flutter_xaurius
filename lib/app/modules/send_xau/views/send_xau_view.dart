@@ -30,15 +30,19 @@ class SendXauView extends GetView<SendXauController> {
             body: Obx(
               () => SafeArea(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 2)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListView(
                         shrinkWrap: true,
-                        children: controller.balance.where((itemBalance) => itemBalance.balanceSymbol == "XAU").map((itemBalance) {
+                        children: controller.balance
+                            .where((itemBalance) => itemBalance.balanceSymbol == "XAU")
+                            .map((itemBalance) {
                           return Container(
-                            padding: EdgeInsets.symmetric(horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: percentWidth(context, 5), vertical: percentHeight(context, 3)),
                             width: Get.width,
                             decoration: BoxDecoration(
                               color: backgroundPanelColor.withOpacity(0.5),
@@ -79,10 +83,13 @@ class SendXauView extends GetView<SendXauController> {
                       SizedBox(height: percentHeight(context, 5)),
                       Text('Network Adress'),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: percentHeight(context, 0.6), horizontal: percentWidth(context, 5)),
                         width: percentWidth(context, 100),
-                        decoration:
-                            BoxDecoration(color: fillColor, border: Border.all(color: brokenWhiteColor), borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            color: fillColor,
+                            border: Border.all(color: brokenWhiteColor),
+                            borderRadius: BorderRadius.circular(10)),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                             iconEnabledColor: primaryColor,
@@ -158,7 +165,8 @@ class SendXauView extends GetView<SendXauController> {
                                       useObscure: false,
                                       controller: controller.idrController,
                                       onChanged: (value) => controller.onTotalChange(value),
-                                      validator: (value) => validateWdIdr(controller.xauController.text, controller.xauBalance.value),
+                                      validator: (value) =>
+                                          validateWdIdr(controller.xauController.text, controller.xauBalance.value),
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
                                       suffixIcon: Column(
@@ -182,7 +190,9 @@ class SendXauView extends GetView<SendXauController> {
                                       validator: (value) => validateWdOtp(value),
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
-                                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(numberValidationRule))],
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(RegExp(numberValidationRule))
+                                      ],
                                     ),
                                   ),
                                   SizedBox(width: percentWidth(context, 5)),
@@ -195,7 +205,7 @@ class SendXauView extends GetView<SendXauController> {
                                         );
                                       }
                                       return XauriusButton(
-                                          pressAble: true,
+                                          pressAble: !controller.isStart.value,
                                           text: 'trans_send_xau'.tr + ' OTP',
                                           onpressed: () {
                                             controller.isStart.value ? null : controller.sendOTP();
@@ -204,7 +214,9 @@ class SendXauView extends GetView<SendXauController> {
                                   ),
                                 ],
                               ),
-                              controller.isStart.value && !controller.isLoadingOTP.value ? Text('Wait ${controller.start.value} sec') : Container(),
+                              controller.isStart.value && !controller.isLoadingOTP.value
+                                  ? Text('Wait ${controller.start.value} sec')
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -254,7 +266,11 @@ class SendXauView extends GetView<SendXauController> {
                 key: controller.qrKey,
                 onQRViewCreated: controller.onQRViewCreated,
                 overlay: QrScannerOverlayShape(
-                    borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: controller.scanArea),
+                    borderColor: Colors.red,
+                    borderRadius: 10,
+                    borderLength: 30,
+                    borderWidth: 10,
+                    cutOutSize: controller.scanArea),
               ),
             ],
           ),

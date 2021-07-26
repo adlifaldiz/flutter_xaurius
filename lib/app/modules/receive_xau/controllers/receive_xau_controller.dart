@@ -16,23 +16,20 @@ class ReceiveXauController extends GetxController {
   var auth = Get.find<AuthController>();
   var balance = <BalanceData>[].obs;
 
-  TextEditingController addressController;
+  TextEditingController addressController = TextEditingController();
 
   @override
   Future onInit() async {
     setTextController();
     balance.value = dash.balance;
     approved = auth.userData.orangKycStatus;
-    //if (auth.userData.orangKycStatus == 'approve') {
-    if (auth.userData.orangEthAddress.toString().isEmpty ||
-        auth.userData.orangEthAddress.toString() == " ") {
-      addressController.text = auth.userData.orangEthAddress.toString();
+
+    if (auth.userData.orangEthAddress.toString().isEmpty || auth.userData.orangEthAddress.toString() == null) {
+      addressController.text = '';
     } else {
-      addressController.clear();
+      addressController.text = auth.userData.orangEthAddress.toString();
     }
-    // } else {
-    //   addressController.text = 'notif_kyc_review_no_space'.tr;
-    // }
+
     super.onInit();
   }
 
@@ -57,7 +54,7 @@ class ReceiveXauController extends GetxController {
   }
 
   Color checkapr() {
-    if (approved == 'approved') {
+    if (approved == 'approve') {
       return brokenWhiteColor;
     } else {
       return backgroundPanelColor;

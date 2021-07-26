@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
@@ -7,12 +11,9 @@ import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-import 'package:flutter_xaurius/app/modules/verify_pin/controllers/verify_pin_controller.dart';
+import '../controllers/reset_pin_verif_pin_controller.dart';
 
-class VerifyPinView extends GetView<VerifyPinController> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  var mode = AutovalidateMode.disabled;
-
+class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +50,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: formKey,
-                autovalidateMode: mode,
+                key: controller.formKey,
+                autovalidateMode: controller.mode,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -59,9 +60,9 @@ class VerifyPinView extends GetView<VerifyPinController> {
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
                       onChanged: (value) => controller.pinConfirmation = value,
-                      validator: (value) {
-                        return validateVerifPin(value, controller.pin);
-                      },
+                      // validator: (value) {
+                      //   return validateVerifPin(value, controller.pin);
+                      // },
                       pinLength: 6,
                       cursor: Cursor(
                         enabled: true,
@@ -78,7 +79,8 @@ class VerifyPinView extends GetView<VerifyPinController> {
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
-                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                        colorBuilder:
+                            PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -96,15 +98,39 @@ class VerifyPinView extends GetView<VerifyPinController> {
                         text: 'save_btn'.tr,
                         onpressed: () {
                           Get.focusScope.unfocus();
-                          final isValid = formKey.currentState.validate();
+                          final isValid =
+                              controller.formKey.currentState.validate();
                           if (!isValid) {
-                            mode = AutovalidateMode.onUserInteraction;
+                            controller.mode =
+                                AutovalidateMode.onUserInteraction;
                             return;
                           }
-                          formKey.currentState.save();
-                          controller.verifyPin();
+                          controller.formKey.currentState.save();
+                          controller.verifyResetPin();
                         },
                       );
+                      // return Container(
+                      //   width: double.infinity,
+                      //   child: RaisedButton(
+                      //     color: accentColor,
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 12),
+                      //       child: Text('save_btn'.tr, style: buttonStyle),
+                      //     ),
+                      //     onPressed: () {
+                      //       final isValid = formKey.currentState.validate();
+                      //       if (!isValid) {
+                      //         mode = AutovalidateMode.onUserInteraction;
+                      //         return;
+                      //       }
+                      //       formKey.currentState.save();
+                      //       controller.verifyPin();
+                      //     },
+                      //   ),
+                      // );
                     }),
                   ],
                 ),

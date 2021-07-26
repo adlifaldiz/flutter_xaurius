@@ -7,6 +7,7 @@ const String hostAPI = 'https://dev.dev.xaurius.com/api/v1';
 
 const register = '/auth/register';
 const registerVerification = '/auth/register_verification';
+const registerResendVerification = '/auth/register_otp_resend';
 const registerPin = '/auth/register_pin';
 const login = '/auth/login';
 const profile = '/profile';
@@ -27,3 +28,6 @@ const getOtp = '/general/send_otp';
 const wdXau = '/wdxaus/create';
 const getWdXau = '/wdxaus';
 const getDepoXau = '/depoxaus';
+const resetPinEmail = '/auth/request_reset_pin';
+const resetPinVerifCode = '/auth/request_reset_pin/check_otp';
+const resetPinRecreate = '/auth/request_reset_pin/change_pass';

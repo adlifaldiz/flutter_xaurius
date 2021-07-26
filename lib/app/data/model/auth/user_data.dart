@@ -74,7 +74,7 @@ class UserData {
         orangNpwpFile: json["orang_npwp_file_atc_url"] == null ? null : hostImage + json["orang_npwp_file_atc_url"],
         orangRefcode: json["orang_refcode"],
         orangRefupline: json["orang_refupline"],
-        orangEthAddress: json["orang_eth_address"],
+        orangEthAddress: json["orang_eth_address"] == null ? '' : json["orang_eth_address"],
       );
 
   Map<String, dynamic> toJson() => {
