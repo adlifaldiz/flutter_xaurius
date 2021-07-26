@@ -7,6 +7,7 @@ const String hostAPI = 'https://dev.dev.xaurius.com/api/v1';
 
 const register = '/auth/register';
 const registerVerification = '/auth/register_verification';
+const registerResendVerification = '/auth/register_otp_resend';
 const registerPin = '/auth/register_pin';
 const login = '/auth/login';
 const profile = '/profile';

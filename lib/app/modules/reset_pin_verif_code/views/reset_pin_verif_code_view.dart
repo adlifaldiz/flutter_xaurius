@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xaurius/app/helpers/screen_utils.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
 import 'package:flutter_xaurius/app/modules/tnc/views/tnc_view.dart';
@@ -88,9 +89,23 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
                               fontSize: 20.0),
-                          colorBuilder: PinListenColorBuilder(
-                              primaryColor, textWhiteColor)),
+                          colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor)),
                     ),
+                    SizedBox(height: (percentHeight(context, 5))),
+                    Obx(() {
+                      if (controller.isLoadingOTP.value) {
+                        return JumpingDotsProgressIndicator(
+                          color: primaryColor,
+                          fontSize: 40,
+                        );
+                      }
+                      return GestureDetector(
+                        onTap: !controller.isStart.value ? () => controller.sendOTP() : () {},
+                        child: Text(controller.isStart.value && !controller.isLoadingOTP.value
+                            ? 'Wait ${controller.start.value} sec'
+                            : 'Hasn\'t receive verification code? Click here'),
+                      );
+                    }),
                     Spacer(),
                     // Obx(
                     //   () => Row(
@@ -149,8 +164,10 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
                             mode = AutovalidateMode.onUserInteraction;
                             return;
                           }
+                          controller.timer.cancel();
+                          controller.start(60);
+                          controller.isStart(false);
                           formKey.currentState.save();
-                          print('valid true');
                           controller.verifyCodeReset();
                           // controller.router();
                         },
@@ -193,8 +210,7 @@ class ResetPinVerifCodeView extends GetView<ResetPinVerifCodeController> {
   _showTnc(BuildContext context) {
     showMaterialModalBottomSheet(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       context: context,
       builder: (context) => TncView(),
     );

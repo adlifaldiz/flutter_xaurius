@@ -14,9 +14,6 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../controllers/reset_pin_verif_pin_controller.dart';
 
 class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  var mode = AutovalidateMode.disabled;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +50,8 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
-                key: formKey,
-                autovalidateMode: mode,
+                key: controller.formKey,
+                autovalidateMode: controller.mode,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -63,9 +60,9 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                     PinInputTextFormField(
                       keyboardType: TextInputType.number,
                       onChanged: (value) => controller.pinConfirmation = value,
-                      validator: (value) {
-                        return validateVerifPin(value, controller.pin);
-                      },
+                      // validator: (value) {
+                      //   return validateVerifPin(value, controller.pin);
+                      // },
                       pinLength: 6,
                       cursor: Cursor(
                         enabled: true,
@@ -82,8 +79,7 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -101,12 +97,12 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                         text: 'save_btn'.tr,
                         onpressed: () {
                           Get.focusScope.unfocus();
-                          final isValid = formKey.currentState.validate();
+                          final isValid = controller.formKey.currentState.validate();
                           if (!isValid) {
-                            mode = AutovalidateMode.onUserInteraction;
+                            controller.mode = AutovalidateMode.onUserInteraction;
                             return;
                           }
-                          formKey.currentState.save();
+                          controller.formKey.currentState.save();
                           controller.verifyResetPin();
                         },
                       );

@@ -29,13 +29,8 @@ class VerifyPinController extends GetxController {
     isLoading(true);
     var resp = await _repo.registerPin(email, code, pin, pinConfirmation);
     if (resp.success) {
-      // Get.offAllNamed(Routes.LOGIN).then((value) => successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi'));
-      Get.back();
-      Get.back();
-      Get.back();
-      Get.back();
-      successSnackbar(
-          'Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
+      Get.until((route) => Get.currentRoute == Routes.LOGIN);
+      successSnackbar('Sukses', 'Silahkan lakukan Login untuk masuk kedalam aplikasi');
     } else {
       dialogConnection('Oops', resp.message, () {
         Get.back();

@@ -78,8 +78,7 @@ class VerifyPinView extends GetView<VerifyPinController> {
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -106,28 +105,6 @@ class VerifyPinView extends GetView<VerifyPinController> {
                           controller.verifyPin();
                         },
                       );
-                      // return Container(
-                      //   width: double.infinity,
-                      //   child: RaisedButton(
-                      //     color: accentColor,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.symmetric(vertical: 12),
-                      //       child: Text('save_btn'.tr, style: buttonStyle),
-                      //     ),
-                      //     onPressed: () {
-                      //       final isValid = formKey.currentState.validate();
-                      //       if (!isValid) {
-                      //         mode = AutovalidateMode.onUserInteraction;
-                      //         return;
-                      //       }
-                      //       formKey.currentState.save();
-                      //       controller.verifyPin();
-                      //     },
-                      //   ),
-                      // );
                     }),
                   ],
                 ),

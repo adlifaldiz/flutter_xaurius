@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_xaurius/app/data/provider/api_repository.dart';
 import 'package:flutter_xaurius/app/helpers/dialog_utils.dart';
 import 'package:flutter_xaurius/app/routes/app_pages.dart';
@@ -10,6 +12,11 @@ class VerifyCodeController extends GetxController {
   var isAgree = false.obs;
   var showToolTip = false.obs;
   String email = '';
+
+  Timer timer;
+  var start = 60.obs;
+  var isLoadingOTP = false.obs;
+  var isStart = false.obs;
 
   @override
   void onInit() {
@@ -45,6 +52,42 @@ class VerifyCodeController extends GetxController {
       }
       isLoading(false);
     }
+  }
+
+  Future sendOTP() async {
+    isLoadingOTP(true);
+    isStart(true);
+    final resp = await _repo.resendCode(email);
+    if (resp.success) {
+      startTimer();
+      successSnackbar('succes_alert'.tr, resp.message);
+    } else {
+      isStart(false);
+      start.value = 60;
+      dialogConnection('Oops', resp.message, () {
+        Get.back();
+      });
+    }
+    isLoadingOTP(false);
+  }
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start.value == 0) {
+          timer.cancel();
+          isStart(false);
+          start.value = 60;
+          update();
+        } else {
+          start.value--;
+          isStart(true);
+          update();
+        }
+      },
+    );
   }
 
   void onAgreeChange(bool value) {
