@@ -79,7 +79,8 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
                             fontSize: 20.0),
-                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
+                        colorBuilder:
+                            PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
@@ -97,9 +98,11 @@ class ResetPinVerifPinView extends GetView<ResetPinVerifPinController> {
                         text: 'save_btn'.tr,
                         onpressed: () {
                           Get.focusScope.unfocus();
-                          final isValid = controller.formKey.currentState.validate();
+                          final isValid =
+                              controller.formKey.currentState.validate();
                           if (!isValid) {
-                            controller.mode = AutovalidateMode.onUserInteraction;
+                            controller.mode =
+                                AutovalidateMode.onUserInteraction;
                             return;
                           }
                           controller.formKey.currentState.save();

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xaurius/app/helpers/theme.dart';
 import 'package:flutter_xaurius/app/helpers/validator.dart';
+import 'package:flutter_xaurius/app/modules/create_pin/controllers/create_pin_controller.dart';
 import 'package:flutter_xaurius/app/widget/xaurius_button.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-
-import 'package:flutter_xaurius/app/modules/create_pin/controllers/create_pin_controller.dart';
 
 class CreatePinView extends GetView<CreatePinController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -71,13 +70,8 @@ class CreatePinView extends GetView<CreatePinController> {
                           height: 0,
                         ),
                         obscureStyle: ObscureStyle(isTextObscure: true),
-                        textStyle: TextStyle(
-                            color: textWhiteColor,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        colorBuilder:
-                            PinListenColorBuilder(primaryColor, textWhiteColor),
+                        textStyle: TextStyle(color: textWhiteColor, fontWeight: FontWeight.w400, fontStyle: FontStyle.normal, fontSize: 20.0),
+                        colorBuilder: PinListenColorBuilder(primaryColor, textWhiteColor),
                       ),
                     ),
                     Spacer(),
